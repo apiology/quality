@@ -71,9 +71,10 @@ module Quality
         quality_reek
         quality_flog
         quality_flay
+        quality_rubocop
       end
       
-      def quality_quality_cmd(cmd,
+      def ratchet_quality_cmd(cmd,
                               args: nil,
                               emacs_format: false,
                               &process_output_line)
@@ -126,7 +127,7 @@ module Quality
         if ! File.exist?(".cane")
           File.open(".cane", "w") {|f| f.write("-f *.rb lib/*.rb test/*.rb")}
         end        
-        quality_quality_cmd("cane",
+        ratchet_quality_cmd("cane",
                             emacs_format: true) { |line|
           if line =~ /\(([0-9]*)\):$/
             $1.to_i
@@ -137,7 +138,7 @@ module Quality
       end
 
       def quality_reek
-        quality_quality_cmd("reek",
+        ratchet_quality_cmd("reek",
                             args: "--line-number *.rb lib/*.rb 2>/dev/null",
                             emacs_format: true) { |line|
           if line =~ /^  .* (.*)$/
@@ -150,7 +151,7 @@ module Quality
 
       def quality_flog
         threshold = 50
-        quality_quality_cmd("flog",
+        ratchet_quality_cmd("flog",
                             args: "--all --continue --methods-only . 2>/dev/null",
                             emacs_format: true) { |line|
           if line =~ /^ *([0-9.]*): flog total$/
@@ -170,7 +171,7 @@ module Quality
       end
 
       def quality_flay
-        quality_quality_cmd("flay",
+        ratchet_quality_cmd("flay",
                             args: "-t 99999 . 2>/dev/null",
                             emacs_format: true) { |line|
           if line =~ /^[0-9]*\).* \(mass = ([0-9]*)\)$/
@@ -179,6 +180,17 @@ module Quality
             0
           end
         }  
+      end
+
+      def quality_rubocop
+        ratchet_quality_cmd("rubocop",
+                            args: "--format emacs 2>&1") { |line|
+          if line =~ /^.* files inspected, (.*) offences detected$/
+            $1.to_i
+          else
+            0
+          end
+        }        
       end
 
       def quality

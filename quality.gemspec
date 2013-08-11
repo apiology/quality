@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
   s.authors = ['Vince Broz']
   #s.default_executable = %q{quality}
   s.description = %q{Quality is a tool that runs quality checks on Ruby
-code using cane, reek, flog and flay, and makes sure 
+code using rubocop, cane, reek, flog and flay, and makes sure 
 your numbers don't get any worse over time.
 }
   s.email = ["vince@broz.cc"]
@@ -31,6 +31,10 @@ your numbers don't get any worse over time.
   s.add_runtime_dependency(%q<reek>, [">= 1.3.1"])
   s.add_runtime_dependency(%q<flog>, [">= 4.1.1"])
   s.add_runtime_dependency(%q<flay>, [">= 2.4"])
+  s.add_runtime_dependency(%q<rubocop>)
+
+  # need above this version to support Ruby 2.0 syntax
+  s.add_runtime_dependency(%q<ruby_parser>, [">= 3.2.2"])
 
   s.add_development_dependency(%q<bundler>, [">= 1.1"])
   s.add_development_dependency(%q<rake>)
