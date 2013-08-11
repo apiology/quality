@@ -123,6 +123,9 @@ module Quality
       end
 
       def quality_cane
+        if ! File.exist?(".cane")
+          File.open(".cane", "w") {|f| f.write("-f *.rb lib/*.rb test/*.rb")}
+        end        
         quality_quality_cmd("cane",
                             emacs_format: true) { |line|
           if line =~ /\(([0-9]*)\):$/
