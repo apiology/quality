@@ -41,5 +41,5 @@ Quality makes use of the following other gems, which do the actual checking:
 
 ### Learn More
 
-* Browse the code or install the latest development version from [https://github.com/troessner/reek/tree](https://github.com/troessner/reek/tree)
+* Browse the code or install the latest development version from [https://github.com/apiology/quality/tree](https://github.com/apiology/quality/tree)
 
