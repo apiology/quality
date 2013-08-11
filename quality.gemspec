@@ -22,6 +22,7 @@ your numbers don't get any worse over time.
                 "quality.gemspec" ] & `git ls-files -z`.split("\0")
   #s.rdoc_options = ["--main", "README.md"]
   s.require_paths = ["lib"]
+  s.homepage = %q{http://github.com/apiology/quality}
   #s.rubyforge_project = %q{quality}
   s.rubygems_version = %q{1.3.6}
   s.summary = %q{Code quality tools for Ruby}
