@@ -37,7 +37,7 @@ your numbers don't get any worse over time.
   s.add_runtime_dependency(%q<ruby_parser>, [">= 3.2.2"])
 
   # cane has an unadvertised dependency on json
-  s.add_runtime_dependency(%q<json)
+  s.add_runtime_dependency(%q<json>)
 
   s.add_development_dependency(%q<bundler>, [">= 1.1"])
   s.add_development_dependency(%q<rake>)
