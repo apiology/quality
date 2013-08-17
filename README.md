@@ -24,6 +24,12 @@ Then run:
 $ rake quality
 ```
 
+## Optional tools
+
+The 'reek' gem is supported, but not by default.  To support it, add the 'reek' gem to your Gemspec.  Once reek supports Ruby 2.0, it will presumably support newer versions of the 'ruby_parser' gem.  Currently it will disable Ruby 2.0 supports in other quality-check gems by forcing them to a lower version.
+
+https://github.com/troessner/reek/issues/165
+
 ## Contributing
 
 * Fork the repo

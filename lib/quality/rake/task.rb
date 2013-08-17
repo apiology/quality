@@ -60,15 +60,17 @@ module Quality
   private
 
       def define # :nodoc:
-        desc 'Verify quality has increased or stayed' +
-          'the same' unless ::Rake.application.last_comment
+        desc 'Verify quality has increased or stayed the ' +
+          'same ' unless ::Rake.application.last_comment
         task(name) { run_task }
         self
       end
 
       def run_task
         quality_cane
-        quality_reek
+        if Gem::Specification.find_by_name("reek").any?
+          quality_reek
+        end
         quality_flog
         quality_flay
         quality_rubocop
@@ -125,7 +127,7 @@ module Quality
 
       def quality_cane
         if ! File.exist?(".cane")
-          File.open(".cane", "w") {|f| f.write("-f *.rb lib/*.rb test/*.rb")}
+          File.open(".cane", "w") {|f| f.write("-f {lib,test,.}/*.rb")}
         end        
         ratchet_quality_cmd("cane",
                             emacs_format: true) { |line|
