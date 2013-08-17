@@ -41,8 +41,9 @@ module Quality
       attr_accessor :verbose
 
       # Defines a new task, using the name +name+.
-      def initialize(name = :quality)
-        @name = name
+      def initialize(args = {})
+        @name = args[:name]
+        @name = 'quality' if @name.nil?
         @libs = [File.expand_path(File.dirname(__FILE__) + '/../../../lib')]
         @config_files = nil
         @source_files = nil
@@ -60,8 +61,8 @@ module Quality
   private
 
       def define # :nodoc:
-        desc 'Verify quality has increased or stayed the ' +
-          'same ' unless ::Rake.application.last_comment
+        desc 'Verify quality has increased or stayed ' +
+          'the same' unless ::Rake.application.last_comment
         task(name) { run_task }
         self
       end
@@ -77,9 +78,12 @@ module Quality
       end
       
       def ratchet_quality_cmd(cmd,
-                              args: nil,
-                              emacs_format: false,
+                              options,
                               &process_output_line)
+
+        args ||= options[:args]
+        emacs_format ||= options[:emacs_format]
+
         violations = 0
         out = ""
         found_output = false
