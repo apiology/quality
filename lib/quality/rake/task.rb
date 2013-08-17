@@ -69,7 +69,7 @@ module Quality
 
       def run_task
         quality_cane
-        if Gem::Specification.find_by_name("reek").any?
+        if Gem::Specification.find_all_by_name("reek").any?
           quality_reek
         end
         quality_flog
@@ -131,7 +131,7 @@ module Quality
 
       def quality_cane
         if ! File.exist?(".cane")
-          File.open(".cane", "w") {|f| f.write("-f {lib,test,.}/*.rb")}
+          File.open(".cane", "w") {|f| f.write("-f **/*.rb")}
         end        
         ratchet_quality_cmd("cane",
                             emacs_format: true) { |line|
