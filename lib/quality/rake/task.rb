@@ -178,7 +178,7 @@ module Quality
 
       def quality_flay
         ratchet_quality_cmd("flay",
-                            args: "-t 99999 . 2>/dev/null",
+                            args: "-m 75 -t 99999 . 2>/dev/null",
                             emacs_format: true) { |line|
           if line =~ /^[0-9]*\).* \(mass = ([0-9]*)\)$/
             $1.to_i
