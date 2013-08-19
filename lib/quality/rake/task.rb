@@ -82,18 +82,22 @@ module Quality
                               options,
                               &process_output_line)
 
+        gives_error_code_on_violations ||= options[:gives_error_code_on_violations]
         args ||= options[:args]
         emacs_format ||= options[:emacs_format]
 
-
-        
         violations = 0
         out = ""
         found_output = false
-        if RbConfig::CONFIG['host_os'] =~ /mswin|mingw/
-          ext='.bat'
+        if defined? RUBY_ENGINE && RUBY_ENGINE == 'jruby'
+          full_cmd = "jruby -S #{cmd}"
+        elsif RbConfig::CONFIG['host_os'] =~ /mswin|mingw/
+          full_cmd = "#{cmd}.bat"
+        else
+          full_cmd = cmd
         end
-        full_cmd = "#{cmd}#{ext}"
+
+        
         if !args.nil?
           full_cmd = "#{full_cmd} #{args}"
         end
@@ -117,8 +121,10 @@ module Quality
           end
         end
         exit_status = $?.exitstatus
-        if !found_output
-          fail "#{full_cmd} execution failed!  Exit status is #{exit_status}"
+        if !gives_error_code_on_violations
+          if exit_status != 0
+            fail "Error detected running #{full_cmd}.  Exit status is #{exit_status}, output is [#{out}]"
+          end
         end
         filename = "#{cmd}_high_water_mark"
         if File.exist?(filename)
@@ -202,8 +208,9 @@ module Quality
 
       def quality_rubocop
         ratchet_quality_cmd("rubocop",
+                            gives_error_code_on_violations: true,
                             args: "--format emacs #{ruby_files}") { |line|
-          if line =~ /^.* files inspected, (.*) offences detected$/
+          if line =~ /^.* file[s|] inspected, (.*) offence[s|] detected$/
             $1.to_i
           else
             0
