@@ -2,6 +2,7 @@
 
 require 'rake'
 require 'rake/tasklib'
+require 'rbconfig'
 
 module Quality
 
@@ -82,13 +83,20 @@ module Quality
         args ||= options[:args]
         emacs_format ||= options[:emacs_format]
 
+
+        
         violations = 0
         out = ""
         found_output = false
-        full_cmd = cmd
-        if !args.nil?
-          full_cmd = "#{cmd} #{args}"
+        if RbConfig::CONFIG['host_os'] =~ /mswin|mingw/
+          ext='.bat'
         end
+        full_cmd = "cmd#{ext}"
+        if !args.nil?
+          full_cmd = "#{full_cmd} #{args}"
+        end
+
+        
         IO.popen(full_cmd) do |f|
           while line = f.gets
             if emacs_format
