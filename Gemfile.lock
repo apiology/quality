@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    quality (0.2.2)
+    quality (0.2.5)
       cane (>= 2.6)
       flay (>= 2.4)
       flog (>= 4.1.1)
