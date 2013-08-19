@@ -93,7 +93,7 @@ module Quality
         if RbConfig::CONFIG['host_os'] =~ /mswin|mingw/
           ext='.bat'
         end
-        full_cmd = "cmd#{ext}"
+        full_cmd = "#{cmd}#{ext}"
         if !args.nil?
           full_cmd = "#{full_cmd} #{args}"
         end
@@ -150,10 +150,14 @@ module Quality
           end
         }
       end
-
+      def ruby_files
+        Dir.glob('*.rb').concat(Dir.glob(File.join('{lib,test}', '**', '*.rb'))).join(' ')
+      end
       def quality_reek
+        
+        args = "--line-number #{ruby_files}"
         ratchet_quality_cmd("reek",
-                            args: "--line-number *.rb lib/*.rb 2>/dev/null",
+                            args: args,
                             emacs_format: true) { |line|
           if line =~ /^  .* (.*)$/
             1
@@ -166,7 +170,7 @@ module Quality
       def quality_flog
         threshold = 50
         ratchet_quality_cmd("flog",
-                            args: "--all --continue --methods-only . 2>/dev/null",
+                            args: "--all --continue --methods-only #{ruby_files}",
                             emacs_format: true) { |line|
           if line =~ /^ *([0-9.]*): flog total$/
             0
@@ -186,7 +190,7 @@ module Quality
 
       def quality_flay
         ratchet_quality_cmd("flay",
-                            args: "-m 75 -t 99999 . 2>/dev/null",
+                            args: "-m 75 -t 99999 #{ruby_files}",
                             emacs_format: true) { |line|
           if line =~ /^[0-9]*\).* \(mass = ([0-9]*)\)$/
             $1.to_i
@@ -198,7 +202,7 @@ module Quality
 
       def quality_rubocop
         ratchet_quality_cmd("rubocop",
-                            args: "--format emacs 2>&1") { |line|
+                            args: "--format emacs #{ruby_files}") { |line|
           if line =~ /^.* files inspected, (.*) offences detected$/
             $1.to_i
           else
