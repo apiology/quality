@@ -70,7 +70,9 @@ module Quality
 
       def run_task
         quality_cane
-        quality_reek
+        if Gem::Specification.find_all_by_name("reek").any?
+          quality_reek
+        end
         quality_flog
         quality_flay
         quality_rubocop
@@ -137,7 +139,7 @@ module Quality
 
       def quality_cane
         if ! File.exist?(".cane")
-          File.open(".cane", "w") {|f| f.write("-f *.rb lib/*.rb test/*.rb")}
+          File.open(".cane", "w") {|f| f.write("-f **/*.rb")}
         end        
         ratchet_quality_cmd("cane",
                             emacs_format: true) { |line|
@@ -184,7 +186,7 @@ module Quality
 
       def quality_flay
         ratchet_quality_cmd("flay",
-                            args: "-t 99999 . 2>/dev/null",
+                            args: "-m 75 -t 99999 . 2>/dev/null",
                             emacs_format: true) { |line|
           if line =~ /^[0-9]*\).* \(mass = ([0-9]*)\)$/
             $1.to_i
