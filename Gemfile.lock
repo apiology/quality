@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    quality (0.2.5)
+    quality (0.2.6)
       cane (>= 2.6)
       flay (>= 2.4)
       flog (>= 4.1.1)
@@ -37,7 +37,7 @@ GEM
       rainbow (>= 1.1.4)
     ruby_parser (3.2.2)
       sexp_processor (~> 4.1)
-    sexp_processor (4.2.1)
+    sexp_processor (4.3.0)
     slop (3.4.6)
 
 PLATFORMS
