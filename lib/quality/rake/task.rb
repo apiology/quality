@@ -89,20 +89,18 @@ module Quality
         violations = 0
         out = ""
         found_output = false
-        if defined? RUBY_ENGINE && RUBY_ENGINE == 'jruby'
+        if defined?(RUBY_ENGINE) && (RUBY_ENGINE == 'jruby')
           full_cmd = "jruby -S #{cmd}"
         elsif RbConfig::CONFIG['host_os'] =~ /mswin|mingw/
           full_cmd = "#{cmd}.bat"
         else
           full_cmd = cmd
         end
-
         
         if !args.nil?
           full_cmd = "#{full_cmd} #{args}"
         end
 
-        
         IO.popen(full_cmd) do |f|
           while line = f.gets
             if emacs_format
@@ -148,6 +146,7 @@ module Quality
           File.open(".cane", "w") {|f| f.write("-f **/*.rb")}
         end        
         ratchet_quality_cmd("cane",
+                            gives_error_code_on_violations: true,
                             emacs_format: true) { |line|
           if line =~ /\(([0-9]*)\):$/
             $1.to_i
@@ -156,11 +155,12 @@ module Quality
           end
         }
       end
+
       def ruby_files
         Dir.glob('*.rb').concat(Dir.glob(File.join('{lib,test}', '**', '*.rb'))).join(' ')
       end
+
       def quality_reek
-        
         args = "--line-number #{ruby_files}"
         ratchet_quality_cmd("reek",
                             args: args,
@@ -181,7 +181,7 @@ module Quality
           if line =~ /^ *([0-9.]*): flog total$/
             0
             #$1.to_i
-          elsif line =~ /^ *([0-9.]*): (.*) .\/.*.rb:[0-9]*$/
+          elsif line =~ /^ *([0-9.]*): (.*) .*.rb:[0-9]*$/
             score = $1.to_i
             if score > threshold
               1
