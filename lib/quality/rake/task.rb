@@ -71,15 +71,13 @@ module Quality
           installed = Gem::Specification.find_all_by_name(tool).any?
           suppressed = @skip_tools.include? tool
 
-          if installed
+          if !installed
             puts "#{tool} not installed"
           elsif suppressed
             puts "Suppressing use of #{tool}"
           else
             method("quality_#{tool}".to_sym).call
           end
-        elsif 
-          puts ""
         end
       end
       
