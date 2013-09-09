@@ -29,23 +29,14 @@ module Quality
     #
     class Task < ::Rake::TaskLib
 
-      # Name of reek task.
-      # Defaults to :reek.
+      # Name of quality task.
+      # Defaults to :quality.
       attr_accessor :name
-
-      # Array of directories to be added to $LOAD_PATH before running reek.
-      # Defaults to ['<the absolute path to reek's lib directory>']
-      attr_accessor :libs
-
-      # Use verbose output. If this is set to true, the task will print
-      # the reek command to stdout. Defaults to false.
-      attr_accessor :verbose
 
       # Defines a new task, using the name +name+.
       def initialize(args = {})
         @name = args[:name]
         @name = 'quality' if @name.nil?
-        @libs = [File.expand_path(File.dirname(__FILE__) + '/../../../lib')]
         @config_files = nil
         @source_files = nil
         @ruby_opts = []
