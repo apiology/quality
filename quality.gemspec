@@ -29,12 +29,7 @@ your numbers don't get any worse over time.
   s.summary = %q{Code quality tools for Ruby}
 
   s.add_runtime_dependency(%q<cane>, [">= 2.6"])
-  #
-  # disabled until Ruby 2.0 support is complete and newer ruby_parser is supported in reek's gemspec.
-  #
-  # See https://github.com/troessner/reek/issues/165
-  #
-  # s.add_runtime_dependency(%q<reek>, [">= 1.3.1"])
+  s.add_runtime_dependency(%q<reek>, [">= 1.3.2"])
   s.add_runtime_dependency(%q<flog>, [">= 4.1.1"])
   s.add_runtime_dependency(%q<flay>, [">= 2.4"])
   s.add_runtime_dependency(%q<rubocop>)

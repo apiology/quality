@@ -33,10 +33,16 @@ module Quality
       # Defaults to :quality.
       attr_accessor :name
 
+      # Array of strings describing tools to be skipped--e.g., ["cane"]
+      #
+      # Defaults to []
+      attr_accessor :skip_tools
+
       # Defines a new task, using the name +name+.
       def initialize(args = {})
         @name = args[:name]
         @name = 'quality' if @name.nil?
+        @skip_tools = [] if @skip_tools.nil?
         @config_files = nil
         @source_files = nil
         @ruby_opts = []
@@ -60,13 +66,21 @@ module Quality
       end
 
       def run_task
-        quality_cane
-        if Gem::Specification.find_all_by_name("reek").any?
-          quality_reek
+        tools = ['cane', 'flog', 'flay', 'reek', 'rubocop']
+        tools.each do |tool|
+          installed = Gem::Specification.find_all_by_name(tool).any?
+          suppressed = @skip_tools.include? tool
+
+          if installed
+            puts "#{tool} not installed"
+          elsif suppressed
+            puts "Suppressing use of #{tool}"
+          else
+            method("quality_#{tool}".to_sym).call
+          end
+        elsif 
+          puts ""
         end
-        quality_flog
-        quality_flay
-        quality_rubocop
       end
       
       def ratchet_quality_cmd(cmd,
