@@ -80,7 +80,7 @@ module Quality
           end
         end
       end
-      
+
       def ratchet_quality_cmd(cmd,
                               options,
                               &process_output_line)
@@ -99,7 +99,7 @@ module Quality
         else
           full_cmd = cmd
         end
-        
+
         if !args.nil?
           full_cmd = "#{full_cmd} #{args}"
         end
@@ -147,7 +147,7 @@ module Quality
       def quality_cane
         if ! File.exist?(".cane")
           File.open(".cane", "w") {|f| f.write("-f **/*.rb")}
-        end        
+        end
         ratchet_quality_cmd("cane",
                             gives_error_code_on_violations: true,
                             emacs_format: true) { |line|
@@ -206,7 +206,7 @@ module Quality
           else
             0
           end
-        }  
+        }
       end
 
       def quality_rubocop
@@ -214,11 +214,11 @@ module Quality
                             gives_error_code_on_violations: true,
                             args: "--format emacs #{ruby_files}") { |line|
           if line =~ /^.* file[s|] inspected, (.*) offence[s|] detected$/
-            $1.to_i
-          else
             0
+          else
+            1
           end
-        }        
+        }
       end
 
       def quality
