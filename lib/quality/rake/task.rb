@@ -38,6 +38,11 @@ module Quality
       # Defaults to []
       attr_accessor :skip_tools
 
+      # Array of directory names which contain ruby files to analyze.
+      #
+      # Defaults to %w{lib test features}, which translates to *.rb in the base directory, as well as lib, test, and features.
+      attr_writer :ruby_dirs
+
       # Defines a new task, using the name +name+.
       def initialize(args = {})
         @name = args[:name]
@@ -159,8 +164,12 @@ module Quality
         }
       end
 
+      def ruby_dirs
+        @ruby_dirs ||= %w{lib test features}
+      end
+
       def ruby_files
-        Dir.glob('*.rb').concat(Dir.glob(File.join('{lib,test}', '**', '*.rb'))).join(' ')
+        Dir.glob('*.rb').concat(Dir.glob(File.join("{#{ruby_dirs.join(',')}}", '**', '*.rb'))).join(' ')
       end
 
       def quality_reek
