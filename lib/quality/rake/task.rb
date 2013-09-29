@@ -176,7 +176,7 @@ module Quality
         args = "--line-number #{ruby_files}"
         ratchet_quality_cmd("reek",
                             args: args,
-                            emacs_format: true
+                            emacs_format: true,
                             gives_error_code_on_violations: true) { |line|
           if line =~ /^  .* (.*)$/
             1
