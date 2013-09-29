@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    quality (0.2.8)
+    quality (0.2.11)
       cane (>= 2.6)
       flay (>= 2.4)
       flog (>= 4.1.1)
@@ -14,31 +14,29 @@ GEM
   remote: https://rubygems.org/
   specs:
     ast (1.1.0)
-    backports (3.3.3)
     cane (2.6.0)
       parallel
     flay (2.4.0)
       ruby_parser (~> 3.0)
       sexp_processor (~> 4.0)
-    flog (4.1.1)
+    flog (4.1.2)
       ruby_parser (~> 3.1, > 3.1.0)
       sexp_processor (~> 4.0)
     json (1.8.0)
-    parallel (0.7.1)
-    parser (2.0.0.pre6)
+    parallel (0.8.4)
+    parser (2.0.0.pre8)
       ast (~> 1.1)
       slop (~> 3.4, >= 3.4.5)
-    powerpack (0.0.3)
+    powerpack (0.0.8)
     rainbow (1.1.4)
     rake (10.1.0)
-    reek (1.3.2)
+    reek (1.3.3)
       ruby2ruby (~> 2.0.2)
-      ruby_parser (>= 3.1.1)
+      ruby_parser (~> 3.1, >= 3.1.1)
       sexp_processor
-    rubocop (0.11.1)
-      backports (~> 3.3.3)
+    rubocop (0.13.1)
       parser (~> 2.0.0.pre6)
-      powerpack (~> 0.0.3)
+      powerpack (~> 0.0.6)
       rainbow (>= 1.1.4)
     ruby2ruby (2.0.6)
       ruby_parser (~> 3.1)
