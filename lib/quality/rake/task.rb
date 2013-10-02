@@ -43,6 +43,12 @@ module Quality
       # Defaults to %w{lib test features}, which translates to *.rb in the base directory, as well as lib, test, and features.
       attr_writer :ruby_dirs
 
+      # Relative path to output directory where *_high_water_mark
+      # files will be read/written
+      #
+      # Defaults to .
+      attr_writer :output_dir
+      
       # Defines a new task, using the name +name+.
       def initialize(args = {})
         @name = args[:name]
@@ -58,6 +64,7 @@ module Quality
         yield self if block_given?
         @config_files ||= 'config/**/*.reek'
         @source_files ||= 'lib/**/*.rb'
+        @output_dir   ||= "."
         define
       end
 
@@ -132,7 +139,7 @@ module Quality
             fail "Error detected running #{full_cmd}.  Exit status is #{exit_status}, output is [#{out}]"
           end
         end
-        filename = "#{cmd}_high_water_mark"
+        filename = File.join(@output_dir, "#{cmd}_high_water_mark")
         if File.exist?(filename)
           existing_violations = IO.read(filename).to_i
         else
