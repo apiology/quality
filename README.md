@@ -24,6 +24,33 @@ Then run:
 $ rake quality
 ```
 
+## Configuration options
+
+```ruby
+Quality::Rake::Task.new { |t|
+  # Name of quality task.
+  # Defaults to :quality.
+  t.name = "quality" 
+
+  # Array of strings describing tools to be skipped--e.g., ["cane"]
+  #
+  # Defaults to []
+  t.skip_tools = []
+
+  # Array of directory names which contain ruby files to analyze.
+  #
+  # Defaults to %w{lib test features}, which translates to *.rb in the base directory, as well as lib, test, and features.
+  t.ruby_dirs = %w{lib test features}
+
+  # Relative path to output directory where *_high_water_mark
+  # files will be read/written
+  #
+  # Defaults to .
+  t.output_dir = '.'
+}
+```
+
+
 ## Optional tools
 
 The 'reek' gem is supported, but not by default.  To support it, add the 'reek' gem to your Gemspec.  Once reek supports Ruby 2.0, it will presumably support newer versions of the 'ruby_parser' gem.  Currently it will disable Ruby 2.0 supports in other quality-check gems by forcing them to a lower version.
