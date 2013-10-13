@@ -24,13 +24,24 @@ Then run:
 $ rake quality
 ```
 
+If you want to ratchet up the quality and force yourself to improve
+code, run:
+
+```bash
+$ rake ratchet
+```
+
 ## Configuration options
 
 ```ruby
 Quality::Rake::Task.new { |t|
   # Name of quality task.
   # Defaults to :quality.
-  t.name = "quality" 
+  t.quality_name = "quality" 
+
+  # Name of ratchet task.
+  # Defaults to :ratchet.
+  t.ratchet_name = "ratchet"
 
   # Array of strings describing tools to be skipped--e.g., ["cane"]
   #

@@ -31,7 +31,11 @@ module Quality
 
       # Name of quality task.
       # Defaults to :quality.
-      attr_accessor :name
+      attr_accessor :quality_name
+
+      # Name of ratchet task.
+      # Defaults to :ratchet.
+      attr_accessor :ratchet_name
 
       # Array of strings describing tools to be skipped--e.g., ["cane"]
       #
@@ -40,7 +44,8 @@ module Quality
 
       # Array of directory names which contain ruby files to analyze.
       #
-      # Defaults to %w{lib test features}, which translates to *.rb in the base directory, as well as lib, test, and features.
+      # Defaults to %w{lib test features}, which translates to *.rb in
+      # the base directory, as well as lib, test, and features.
       attr_writer :ruby_dirs
 
       # Relative path to output directory where *_high_water_mark
@@ -48,17 +53,19 @@ module Quality
       #
       # Defaults to .
       attr_writer :output_dir
-      
+
       # Defines a new task, using the name +name+.
       def initialize(args = {})
-        @name = args[:name]
+        @quality_name = args[:quality_name] || 'quality'
+
+        @ratchet_name = args[:ratchet_name] || 'ratchet'
 
         # allow unit tests to override the class that Rake DSL
         # messages are sent to.
         @dsl = args[:dsl]
 
         # likewise, but for system()
-        @cmd_runner = args[:cmd_runner] || self
+        @cmd_runner = args[:cmd_runner] || Kernel
 
         # likewise, but for IO.popen()
         @popener = args[:popener] || IO
@@ -75,8 +82,7 @@ module Quality
         # uses exist?() and open() to write out configuration files
         # for tools if needed (e.g., .cane file)
         @configuration_writer = args[:configuration_writer] || File
-        
-        @name = 'quality' if @name.nil?
+
         @skip_tools = [] if @skip_tools.nil?
         @config_files = nil
         @source_files = nil
@@ -94,21 +100,19 @@ module Quality
 
   private
 
-      def dsl
-        @dsl || self
-      end
-
       def define # :nodoc:
         desc 'Verify quality has increased or stayed ' +
           'the same' unless ::Rake.application.last_comment
         if @dsl.nil?
-          task(name) { run_task }
+          task(quality_name) { run_quality }
+          task(ratchet_name) { run_ratchet }
         else
-          @dsl.task(name) { run_task }
+          @dsl.task(quality_name) { run_quality }
+          @dsl.task(ratchet_name) { run_ratchet }
         end
       end
 
-      def run_task
+      def run_quality
         tools = ['cane', 'flog', 'flay', 'reek', 'rubocop']
         tools.each do |tool|
           installed = Gem::Specification.find_all_by_name(tool).any?
@@ -124,11 +128,27 @@ module Quality
         end
       end
 
+      def run_ratchet
+        @globber.glob("*_high_water_mark").each { |filename|
+          puts "Processing #{filename}"
+          existing_violations = IO.read(filename).to_i
+          if existing_violations < 0
+            raise "Problem with file #{filename}"
+          end
+          new_violations = [0, existing_violations - 1].max
+          @count_file.open(filename, 'w') {|f| f.write(new_violations.to_s) }
+          if new_violations != existing_violations
+            @cmd_runner.system("git commit -m 'tighten quality standard' #{filename}")
+          end
+        }
+      end
+
       def ratchet_quality_cmd(cmd,
                               options,
                               &process_output_line)
 
         gives_error_code_on_violations ||= options[:gives_error_code_on_violations]
+
         args ||= options[:args]
         emacs_format ||= options[:emacs_format]
 
@@ -271,18 +291,6 @@ module Quality
         }
       end
 
-      def quality
-        @globber.glob("*_high_water_mark").each { |filename|
-          puts "Processing #{filename}"
-          existing_violations = IO.read(filename).to_i
-          if existing_violations <= 0
-            raise "Problem with file #{filename}"
-          end
-          new_violations = existing_violations - 1
-          @count_io.open(filename, 'w') {|f| f.write(new_violations.to_s) }
-          @cmd_runner.system("git commit -m 'tighten quality standard' #{filename}")
-        }
-      end
     end
   end
 end

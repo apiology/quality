@@ -1,6 +1,6 @@
 # Unit test the Task class
 class TestTask < Test::Unit::TestCase
-  def test_task
+  def test_quality_task
     task = get_test_object do |mocks|
       mocks[:dsl].expects(:task).with('quality').yields
       expect_cane_run(mocks)
@@ -8,6 +8,7 @@ class TestTask < Test::Unit::TestCase
       expect_flay_run(mocks)
       expect_reek_run(mocks)
       expect_rubocop_run(mocks)
+      mocks[:dsl].expects(:task).with('ratchet')
     end
   end
 
@@ -22,7 +23,11 @@ class TestTask < Test::Unit::TestCase
   def expect_flog_run(mocks)
     expect_find_ruby_files(mocks)
     flog_file = StringIO.new(flog_output)
-    mocks[:popener].expects(:popen).with('flog --all --continue --methods-only fake1.rb fake2.rb lib/libfake1.rb test/testfake1.rb features/featuresfake1.rb')
+    flog_cmd =
+      'flog --all --continue --methods-only ' +
+      'fake1.rb fake2.rb lib/libfake1.rb test/testfake1.rb features/featuresfake1.rb'
+    mocks[:popener].expects(:popen)
+      .with(flog_cmd)
       .yields(flog_file)
     mock_high_water_mark(mocks, 'flog', 555)
     expect_write_new_high_water_mark(mocks, 'flog', 0)
@@ -31,19 +36,25 @@ class TestTask < Test::Unit::TestCase
   def expect_flay_run(mocks)
     expect_find_ruby_files(mocks)
     flay_file = StringIO.new(flay_output)
-    mocks[:popener].expects(:popen).with('flay -m 75 -t 99999 fake1.rb fake2.rb lib/libfake1.rb test/testfake1.rb features/featuresfake1.rb')
+    flay_cmd =
+      'flay -m 75 -t 99999 ' +
+      'fake1.rb fake2.rb lib/libfake1.rb test/testfake1.rb features/featuresfake1.rb'
+    mocks[:popener].expects(:popen).with(flay_cmd)
       .yields(flay_file)
     mock_high_water_mark(mocks, 'flay', 555)
-    expect_write_new_high_water_mark(mocks, 'flay', 0)    
+    expect_write_new_high_water_mark(mocks, 'flay', 0)
   end
 
   def expect_reek_run(mocks)
     expect_find_ruby_files(mocks)
     reek_file = StringIO.new(reek_output)
-    mocks[:popener].expects(:popen).with('reek --line-number fake1.rb fake2.rb lib/libfake1.rb test/testfake1.rb features/featuresfake1.rb')
+    reek_cmd =
+      'reek --line-number fake1.rb fake2.rb ' +
+      'lib/libfake1.rb test/testfake1.rb features/featuresfake1.rb'
+    mocks[:popener].expects(:popen).with(reek_cmd)
       .yields(reek_file)
     mock_high_water_mark(mocks, 'reek', 555)
-    expect_write_new_high_water_mark(mocks, 'reek', 22)    
+    expect_write_new_high_water_mark(mocks, 'reek', 22)
   end
 
   def expect_rubocop_run(mocks)
@@ -52,11 +63,11 @@ class TestTask < Test::Unit::TestCase
     mocks[:popener].expects(:popen).with('rubocop --format emacs fake1.rb fake2.rb lib/libfake1.rb test/testfake1.rb features/featuresfake1.rb')
       .yields(rubocop_file)
     mock_high_water_mark(mocks, 'rubocop', 555)
-    expect_write_new_high_water_mark(mocks, 'rubocop', 35)        
+    expect_write_new_high_water_mark(mocks, 'rubocop', 35)
   end
 
   def rubocop_output
-    output = <<END    
+    output = <<END
 /Users/broz/src/quality/lib/quality/version.rb:1:1: C: Missing top-level module documentation comment.
 /Users/broz/src/quality/test/unit/test_task.rb:4:5: W: Useless assignment to variable - task
 /Users/broz/src/quality/test/unit/test_task.rb:24:80: C: Line is too long. [158/79]
@@ -131,7 +142,7 @@ END
 END
   end
 
-  
+
   def expect_find_ruby_files(mocks)
     mocks[:globber].expects(:glob).with('*.rb').returns(['fake1.rb', 'fake2.rb'])
     mocks[:globber].expects(:glob).with('{lib,test,features}/**/*.rb')
@@ -165,7 +176,7 @@ END
      1.0: TestTask#cane_output             test/unit/test_task.rb:31
 END
   end
-  
+
   def cane_output
     output = <<END
 Methods exceeded maximum allowed ABC complexity (2):
