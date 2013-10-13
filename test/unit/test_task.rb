@@ -12,6 +12,29 @@ class TestTask < Test::Unit::TestCase
     end
   end
 
+  def test_ratchet_task
+    task = get_test_object do |mocks|
+      mocks[:dsl].expects(:task).with('quality')
+      mocks[:dsl].expects(:task).with('ratchet').yields
+      mocks[:globber].expects(:glob)
+        .with('*_high_water_mark').returns(['foo_high_water_mark',
+                                            'bar_high_water_mark'])
+      expect_ratchet(mocks, 'foo', 12)
+      expect_ratchet(mocks, 'bar', 96)
+    end
+  end
+
+  def expect_ratchet(mocks, tool_name, old_high_water_mark)
+    filename = "#{tool_name}_high_water_mark"
+    mocks[:count_io].expects(:read).with(filename)
+      .returns(old_high_water_mark.to_s)
+    file = mock('file')
+    mocks[:count_file].expects(:open).with(filename, 'w').yields(file)
+    file.expects(:write).with((old_high_water_mark-1).to_s)
+    mocks[:cmd_runner].expects(:system)
+      .with("git commit -m 'tighten quality standard' #{filename}")
+  end
+
   def expect_cane_run(mocks)
     mocks[:configuration_writer].expects(:exist?).with('.cane').returns(true)
     cane_file = StringIO.new(cane_output)

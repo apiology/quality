@@ -131,7 +131,7 @@ module Quality
       def run_ratchet
         @globber.glob("*_high_water_mark").each { |filename|
           puts "Processing #{filename}"
-          existing_violations = IO.read(filename).to_i
+          existing_violations = @count_io.read(filename).to_i
           if existing_violations < 0
             raise "Problem with file #{filename}"
           end
