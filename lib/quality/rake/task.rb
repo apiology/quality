@@ -8,8 +8,6 @@ module Quality
 
   #
   # Defines a task library for running quality's various tools
-  # (Classes here will be configured via the Rakefile, and therefore will
-  # possess a :reek:attribute or two.)
   #
   module Rake
 
@@ -87,7 +85,6 @@ module Quality
         @config_files = nil
         @source_files = nil
         @ruby_opts = []
-        @reek_opts = ''
         @fail_on_error = true
         @sort = nil
 
@@ -233,7 +230,7 @@ module Quality
       end
 
       def quality_reek
-        args = "--line-number #{ruby_files}"
+        args = "--single-line #{ruby_files}"
         ratchet_quality_cmd("reek",
                             args: args,
                             emacs_format: true,
