@@ -204,12 +204,15 @@ END
   def expect_find_ruby_files(globber_mock)
     globber_mock.expects(:glob).with('*.rb').returns(['fake1.rb', 'fake2.rb'])
     globber_mock.expects(:glob).with('{lib,test,features}/**/*.rb')
-      .returns(['lib/libfake1.rb', 'test/testfake1.rb', 'features/featuresfake1.rb'])
+      .returns(['lib/libfake1.rb',
+                'test/testfake1.rb',
+                'features/featuresfake1.rb'])
   end
 
   def expect_write_new_high_water_mark(tool_name, violations)
     high_water_mark_file = mock("#{tool_name}_high_water_mark_file")
-    @mocks[:count_file].expects(:open).with("./#{tool_name}_high_water_mark", 'w')
+    @mocks[:count_file].expects(:open)
+      .with("./#{tool_name}_high_water_mark", 'w')
       .yields(high_water_mark_file)
     # number of violations in 'cane_output' below
     high_water_mark_file.expects(:write).with(violations.to_s)

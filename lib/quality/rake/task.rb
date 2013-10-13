@@ -248,11 +248,11 @@ module Quality
                             args: args,
                             emacs_format: true,
                             gives_error_code_on_violations: true) do |line|
-          count_reek_violations(line)
+          self.class.count_reek_violations(line)
         end
       end
 
-      def count_reek_violations(line)
+      def self.count_reek_violations(line)
         if line =~ /^  .* (.*)$/
           1
         else
@@ -264,11 +264,11 @@ module Quality
         ratchet_quality_cmd("flog",
                        args: "--all --continue --methods-only #{ruby_files}",
                        emacs_format: true) do |line|
-          count_violations_in_flog_output(line)
+          self.class.count_violations_in_flog_output(line)
         end
       end
 
-      def count_violations_in_flog_output(line, threshold = 50)
+      def self.count_violations_in_flog_output(line, threshold = 50)
         if line =~ /^ *([0-9.]*): flog total$/
           0
         elsif line =~ /^ *([0-9.]*): (.*) .*.rb:[0-9]*$/
@@ -299,11 +299,11 @@ module Quality
         ratchet_quality_cmd("rubocop",
                             gives_error_code_on_violations: true,
                             args: "--format emacs #{ruby_files}") do |line|
-          count_rubocop_violations(line)
+          self.class.count_rubocop_violations(line)
         end
       end
 
-      def count_rubocop_violations(line)
+      def self.count_rubocop_violations(line)
         if line =~ /^.* file[s|] inspected, (.*) offence[s|] detected$/
           0
         else
