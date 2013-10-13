@@ -19,3 +19,14 @@ Dir['tasks/**/*.rake'].each { |t| load t }
 task :default => [:test]
 
 Quality::Rake::Task.new
+
+task :clear_metrics do |t|
+  puts Time.now
+  ret =
+    system("git checkout coverage/.last_run.json *_high_water_mark")
+  if !ret
+    fail
+  end
+end
+
+task :localtest => [:clear_metrics, :test, :quality]
