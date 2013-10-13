@@ -332,34 +332,34 @@ module Quality
 
       def process_file(file, &count_violations_on_line)
         out = ""
-        while line = file.gets
+        while @current_line = file.gets
           out <<
-            process_line(line, &count_violations_on_line)
+            process_line(&count_violations_on_line)
         end
         out
       end
 
-      def process_line(line, &count_violations_on_line)
+      def process_line( &count_violations_on_line)
         output =
           if emacs_format
-            preprocess_line_for_emacs(line)
+            preprocess_line_for_emacs
           else
-            line
+            @current_line
           end
         found_output = true
-        @violations += yield line
+        @violations += yield @current_line
         output
       end
 
-      def preprocess_line_for_emacs(line)
-        if line =~ /^ *(\S*.rb:[0-9]*) *(.*)/
+      def preprocess_line_for_emacs
+        if @current_line =~ /^ *(\S*.rb:[0-9]*) *(.*)/
           $1 + ": " + $2 + "\n"
-        elsif line =~ /^ *(.*) +(\S*.rb:[0-9]*) *(.*)/
+        elsif @current_line =~ /^ *(.*) +(\S*.rb:[0-9]*) *(.*)/
           $2 + ": " + $1 + "\n"
         else
-          line
-        end        
+          @current_line
+        end
       end
-    end    
+    end
   end
 end
