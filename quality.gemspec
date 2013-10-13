@@ -45,4 +45,6 @@ your numbers don't get any worse over time.
   s.add_development_dependency(%q<rake>)
   s.add_development_dependency(%q<simplecov>)
   s.add_development_dependency(%q<mocha>)
+  # depend on myself, so I can use my own features for development..
+  s.add_development_dependency(%q<quality>)
 end

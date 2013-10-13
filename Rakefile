@@ -1,5 +1,6 @@
 require 'rake/clean'
 require "bundler/gem_tasks"
+require 'quality/rake/task'
 
 $:.unshift File.dirname(__FILE__) + '/lib'
 
@@ -17,3 +18,4 @@ Dir['tasks/**/*.rake'].each { |t| load t }
 
 task :default => [:test]
 
+Quality::Rake::Task.new
