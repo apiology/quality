@@ -30,7 +30,6 @@ your numbers don't get any worse over time.
 
   s.add_runtime_dependency(%q<cane>, [">= 2.6"])
   s.add_runtime_dependency(%q<reek>, [">= 1.3.2"])
-#  s.add_runtime_dependency(%q<reek>, ['>=1.3.2'], github: 'hatmanbit/reek', branch: 'master')
   s.add_runtime_dependency(%q<flog>, [">= 4.1.1"])
   s.add_runtime_dependency(%q<flay>, [">= 2.4"])
   s.add_runtime_dependency(%q<rubocop>)
