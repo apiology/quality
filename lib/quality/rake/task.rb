@@ -52,6 +52,30 @@ module Quality
       # Defines a new task, using the name +name+.
       def initialize(args = {})
         @name = args[:name]
+
+        # allow unit tests to override the class that Rake DSL
+        # messages are sent to.
+        @dsl = args[:dsl] || self
+
+        # likewise, but for system()
+        @cmd_runner = args[:cmd_runner] || self
+
+        # likewise, but for IO.popen()
+        @popener = args[:popener] || IO
+
+        # likewise, but for File.open() on the count files
+        @count_writer = args[:count_writer] || File
+
+        # likewise, but for IO.read()/IO.exist? on the count files
+        @count_io = args[:count_io] || IO
+
+        # likewise, but for Dir.glob() on target Ruby files
+        @globber = args[:globber] || Dir
+
+        # uses exist?() and open() to write out configuration files
+        # for tools if needed (e.g., .cane file)
+        @configuration_writer = args[:configuration_writer] || File
+        
         @name = 'quality' if @name.nil?
         @skip_tools = [] if @skip_tools.nil?
         @config_files = nil
@@ -73,7 +97,7 @@ module Quality
       def define # :nodoc:
         desc 'Verify quality has increased or stayed ' +
           'the same' unless ::Rake.application.last_comment
-        task(name) { run_task }
+        @dsl.task(name) { run_task }
         self
       end
 
@@ -116,7 +140,7 @@ module Quality
           full_cmd = "#{full_cmd} #{args}"
         end
 
-        IO.popen(full_cmd) do |f|
+        @popener.popen(full_cmd) do |f|
           while line = f.gets
             if emacs_format
               if line =~ /^ *(\S*.rb:[0-9]*) *(.*)/
@@ -140,8 +164,8 @@ module Quality
           end
         end
         filename = File.join(@output_dir, "#{cmd}_high_water_mark")
-        if File.exist?(filename)
-          existing_violations = IO.read(filename).to_i
+        if @count_io.exist?(filename)
+          existing_violations = @count_io.read(filename).to_i
         else
           existing_violations = 9999999999
         end
@@ -152,13 +176,13 @@ module Quality
             "Reduce total number of #{cmd} violations to #{existing_violations} or below!"
         elsif violations < existing_violations
           puts "Ratcheting quality up..."
-          File.open(filename, 'w') {|f| f.write(violations.to_s) }
+          @count_io.open(filename, 'w') {|f| f.write(violations.to_s) }
         end
       end
 
       def quality_cane
-        if ! File.exist?(".cane")
-          File.open(".cane", "w") {|f| f.write("-f **/*.rb")}
+        if ! @configuration_writer.exist?(".cane")
+          @configuration_writer.open(".cane", "w") {|f| f.write("-f **/*.rb")}
         end
         ratchet_quality_cmd("cane",
                             gives_error_code_on_violations: true,
@@ -176,7 +200,7 @@ module Quality
       end
 
       def ruby_files
-        Dir.glob('*.rb').concat(Dir.glob(File.join("{#{ruby_dirs.join(',')}}", '**', '*.rb'))).join(' ')
+        @globber.glob('*.rb').concat(@globber.glob(File.join("{#{ruby_dirs.join(',')}}", '**', '*.rb'))).join(' ')
       end
 
       def quality_reek
@@ -239,15 +263,15 @@ module Quality
       end
 
       def quality
-        Dir.glob("*_high_water_mark").each { |filename|
+        @globber.glob("*_high_water_mark").each { |filename|
           puts "Processing #{filename}"
           existing_violations = IO.read(filename).to_i
           if existing_violations <= 0
             raise "Problem with file #{filename}"
           end
           new_violations = existing_violations - 1
-          File.open(filename, 'w') {|f| f.write(new_violations.to_s) }
-          system("git commit -m 'tighten quality standard' #{filename}")
+          @count_io.open(filename, 'w') {|f| f.write(new_violations.to_s) }
+          @cmd_runner.system("git commit -m 'tighten quality standard' #{filename}")
         }
       end
     end

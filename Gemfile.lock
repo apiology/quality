@@ -23,6 +23,10 @@ GEM
       ruby_parser (~> 3.1, > 3.1.0)
       sexp_processor (~> 4.0)
     json (1.8.0)
+    metaclass (0.0.1)
+    mocha (0.14.0)
+      metaclass (~> 0.0.1)
+    multi_json (1.8.1)
     parallel (0.8.4)
     parser (2.0.0.pre8)
       ast (~> 1.1)
@@ -44,6 +48,10 @@ GEM
     ruby_parser (3.2.2)
       sexp_processor (~> 4.1)
     sexp_processor (4.3.0)
+    simplecov (0.7.1)
+      multi_json (~> 1.0)
+      simplecov-html (~> 0.7.1)
+    simplecov-html (0.7.1)
     slop (3.4.6)
 
 PLATFORMS
@@ -51,5 +59,7 @@ PLATFORMS
 
 DEPENDENCIES
   bundler (>= 1.1)
+  mocha
   quality!
   rake
+  simplecov
