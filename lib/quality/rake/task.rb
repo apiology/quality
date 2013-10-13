@@ -60,7 +60,7 @@ module Quality
 
         # allow unit tests to override the class that Rake DSL
         # messages are sent to.
-        @dsl = args[:dsl]
+        @dsl = args[:dsl] || ::Rake::Task
 
         # likewise, but for system()
         @cmd_runner = args[:cmd_runner] || Kernel
@@ -100,13 +100,8 @@ module Quality
       def define # :nodoc:
         desc 'Verify quality has increased or stayed ' +
           'the same' unless ::Rake.application.last_comment
-        if @dsl.nil?
-          task(quality_name) { run_quality }
-          task(ratchet_name) { run_ratchet }
-        else
-          @dsl.task(quality_name) { run_quality }
-          @dsl.task(ratchet_name) { run_ratchet }
-        end
+        @dsl.define_task(quality_name) { run_quality }
+        @dsl.define_task(ratchet_name) { run_ratchet }
       end
 
       def run_quality
@@ -166,15 +161,14 @@ module Quality
 
       def ratchet_quality_cmd(cmd,
                               options,
-                              &process_output_line)
+                              &count_violations_on_line)
 
-        gives_error_code_on_violations ||= options[:gives_error_code_on_violations]
+        gives_error_code_on_violations ||=
+          options[:gives_error_code_on_violations]
 
         args ||= options[:args]
         emacs_format ||= options[:emacs_format]
 
-        violations = 0
-        out = ""
         found_output = false
         if defined?(RUBY_ENGINE) && (RUBY_ENGINE == 'jruby')
           full_cmd = "jruby -S #{cmd}"
@@ -188,27 +182,19 @@ module Quality
           full_cmd = "#{full_cmd} #{args}"
         end
 
+        processor = CommandOutputProcessor.new
+        processor.emacs_format = emacs_format
+        out = nil
         @popener.popen(full_cmd) do |file|
-          while line = file.gets
-            if emacs_format
-              if line =~ /^ *(\S*.rb:[0-9]*) *(.*)/
-                out << $1 << ": " << $2 << "\n"
-              elsif line =~ /^ *(.*) +(\S*.rb:[0-9]*) *(.*)/
-                out << $2 << ": " << $1 << "\n"
-              else
-                out << line
-              end
-            else
-              out << line
-            end
-            found_output = true
-            violations += yield line
-          end
+          processor.file = file
+          out = processor.process!(&count_violations_on_line)
         end
+        violations = processor.violations
         exit_status = $?.exitstatus
         if !gives_error_code_on_violations
           if exit_status != 0
-            fail "Error detected running #{full_cmd}.  Exit status is #{exit_status}, output is [#{out}]"
+            fail("Error detected running #{full_cmd}.  " +
+                 "Exit status is #{exit_status}, output is [#{out}]")
           end
         end
         filename = File.join(@output_dir, "#{cmd}_high_water_mark")
@@ -220,8 +206,9 @@ module Quality
         puts "Existing violations: #{existing_violations}"
         puts "Found #{violations} #{cmd} violations"
         if violations > existing_violations
-          fail "Output from #{cmd}\n\n#{out}\n\n" +
-            "Reduce total number of #{cmd} violations to #{existing_violations} or below!"
+          fail("Output from #{cmd}\n\n#{out}\n\n" +
+               "Reduce total number of #{cmd} violations " +
+               "to #{existing_violations} or below!")
         elsif violations < existing_violations
           puts "Ratcheting quality up..."
           write_violations(filename, violations)
@@ -230,17 +217,19 @@ module Quality
 
       def quality_cane
         if ! @configuration_writer.exist?(".cane")
-          @configuration_writer.open(".cane", "w") { |file| file.write("-f **/*.rb") }
+          @configuration_writer.open(".cane", "w") do |file|
+            file.write("-f **/*.rb")
+          end
         end
         ratchet_quality_cmd("cane",
                             gives_error_code_on_violations: true,
-                            emacs_format: true) { |line|
+                            emacs_format: true) do |line|
           if line =~ /\(([0-9]*)\):$/
             $1.to_i
           else
             0
           end
-        }
+        end
       end
 
       def ruby_dirs
@@ -248,7 +237,9 @@ module Quality
       end
 
       def ruby_files
-        @globber.glob('*.rb').concat(@globber.glob(File.join("{#{ruby_dirs.join(',')}}", '**', '*.rb'))).join(' ')
+        @globber.glob('*.rb')
+          .concat(@globber.glob(File.join("{#{ruby_dirs.join(',')}}",
+                                          '**', '*.rb'))).join(' ')
       end
 
       def quality_reek
@@ -271,8 +262,8 @@ module Quality
 
       def quality_flog
         ratchet_quality_cmd("flog",
-                            args: "--all --continue --methods-only #{ruby_files}",
-                            emacs_format: true) do |line|
+                       args: "--all --continue --methods-only #{ruby_files}",
+                       emacs_format: true) do |line|
           count_violations_in_flog_output(line)
         end
       end
@@ -320,5 +311,55 @@ module Quality
         end
       end
     end
+
+    # Class processes output from a code quality command, tweaking it
+    # for editor output and counting the number of violations found
+    class CommandOutputProcessor
+      attr_accessor :emacs_format
+      attr_accessor :file
+      attr_reader :found_output
+      attr_reader :violations
+
+      def initialize
+        @emacs_format = false
+        @found_output = false
+        @violations = 0
+      end
+
+      def process!(&count_violations_on_line)
+        process_file(file, &count_violations_on_line)
+      end
+
+      def process_file(file, &count_violations_on_line)
+        out = ""
+        while line = file.gets
+          out <<
+            process_line(line, &count_violations_on_line)
+        end
+        out
+      end
+
+      def process_line(line, &count_violations_on_line)
+        output =
+          if emacs_format
+            preprocess_line_for_emacs(line)
+          else
+            line
+          end
+        found_output = true
+        @violations += yield line
+        output
+      end
+
+      def preprocess_line_for_emacs(line)
+        if line =~ /^ *(\S*.rb:[0-9]*) *(.*)/
+          $1 + ": " + $2 + "\n"
+        elsif line =~ /^ *(.*) +(\S*.rb:[0-9]*) *(.*)/
+          $2 + ": " + $1 + "\n"
+        else
+          line
+        end        
+      end
+    end    
   end
 end

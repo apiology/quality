@@ -8,17 +8,17 @@ class TestTask < Test::Unit::TestCase
 
   def setup_quality_task_mocks(mocks)
     dsl_mock = mocks[:dsl]
-    dsl_mock.expects(:task).with('quality').yields
+    dsl_mock.expects(:define_task).with('quality').yields
     expect_tools_run(mocks)
     expect_rubocop_run(mocks)
-    dsl_mock.expects(:task).with('ratchet')
+    dsl_mock.expects(:define_task).with('ratchet')
   end
 
   def expect_tools_run(mocks)
     expect_cane_run(mocks)
     expect_flog_run(mocks)
     expect_flay_run(mocks)
-    expect_reek_run(mocks)    
+    expect_reek_run(mocks)
   end
 
   def test_ratchet_task
@@ -28,8 +28,8 @@ class TestTask < Test::Unit::TestCase
   end
 
   def setup_ratchet_task_mocks(mocks)
-    mocks[:dsl].expects(:task).with('quality')
-    mocks[:dsl].expects(:task).with('ratchet').yields
+    mocks[:dsl].expects(:define_task).with('quality')
+    mocks[:dsl].expects(:define_task).with('ratchet').yields
     mocks[:globber].expects(:glob)
       .with('*_high_water_mark').returns(['foo_high_water_mark',
                                           'bar_high_water_mark'])
