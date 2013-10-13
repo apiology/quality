@@ -55,7 +55,7 @@ module Quality
 
         # allow unit tests to override the class that Rake DSL
         # messages are sent to.
-        @dsl = args[:dsl] || self
+        @dsl = args[:dsl]
 
         # likewise, but for system()
         @cmd_runner = args[:cmd_runner] || self
@@ -64,7 +64,7 @@ module Quality
         @popener = args[:popener] || IO
 
         # likewise, but for File.open() on the count files
-        @count_writer = args[:count_writer] || File
+        @count_file = args[:count_file] || File
 
         # likewise, but for IO.read()/IO.exist? on the count files
         @count_io = args[:count_io] || IO
@@ -94,11 +94,18 @@ module Quality
 
   private
 
+      def dsl
+        @dsl || self
+      end
+
       def define # :nodoc:
         desc 'Verify quality has increased or stayed ' +
           'the same' unless ::Rake.application.last_comment
-        @dsl.task(name) { run_task }
-        self
+        if @dsl.nil?
+          task(name) { run_task }
+        else
+          @dsl.task(name) { run_task }
+        end
       end
 
       def run_task
@@ -164,7 +171,7 @@ module Quality
           end
         end
         filename = File.join(@output_dir, "#{cmd}_high_water_mark")
-        if @count_io.exist?(filename)
+        if @count_file.exist?(filename)
           existing_violations = @count_io.read(filename).to_i
         else
           existing_violations = 9999999999
@@ -176,7 +183,9 @@ module Quality
             "Reduce total number of #{cmd} violations to #{existing_violations} or below!"
         elsif violations < existing_violations
           puts "Ratcheting quality up..."
-          @count_io.open(filename, 'w') {|f| f.write(violations.to_s) }
+          @count_file.open(filename, 'w') do |f|
+            f.write(violations.to_s)
+          end
         end
       end
 

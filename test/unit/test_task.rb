@@ -140,14 +140,14 @@ END
 
   def expect_write_new_high_water_mark(mocks, tool_name, violations)
     high_water_mark_file = mock("#{tool_name}_high_water_mark_file")
-    mocks[:count_io].expects(:open).with("./#{tool_name}_high_water_mark", 'w')
+    mocks[:count_file].expects(:open).with("./#{tool_name}_high_water_mark", 'w')
       .yields(high_water_mark_file)
     # number of violations in 'cane_output' below
     high_water_mark_file.expects(:write).with(violations.to_s)
   end
 
   def mock_high_water_mark(mocks, tool_name, num_violations)
-    mocks[:count_io].expects(:exist?).with("./#{tool_name}_high_water_mark")
+    mocks[:count_file].expects(:exist?).with("./#{tool_name}_high_water_mark")
       .returns(true)
     mocks[:count_io].expects(:read).with("./#{tool_name}_high_water_mark")
       .returns(num_violations.to_s)
@@ -196,7 +196,7 @@ END
       popener: mock('popener'),
       globber: mock('globber'),
       count_io: mock('count_io'),
-      count_reader: mock('count_reader'),
+      count_file: mock('count_file'),
       configuration_writer: mock('configuration_writer'),
     }
   end
