@@ -2,38 +2,60 @@
 class TestTask < Test::Unit::TestCase
   def test_quality_task
     task = get_test_object do |mocks|
-      mocks[:dsl].expects(:task).with('quality').yields
-      expect_cane_run(mocks)
-      expect_flog_run(mocks)
-      expect_flay_run(mocks)
-      expect_reek_run(mocks)
-      expect_rubocop_run(mocks)
-      mocks[:dsl].expects(:task).with('ratchet')
+      setup_quality_task_mocks(mocks)
     end
+  end
+
+  def setup_quality_task_mocks(mocks)
+    dsl_mock = mocks[:dsl]
+    dsl_mock.expects(:task).with('quality').yields
+    expect_tools_run(mocks)
+    expect_rubocop_run(mocks)
+    dsl_mock.expects(:task).with('ratchet')
+  end
+
+  def expect_tools_run(mocks)
+    expect_cane_run(mocks)
+    expect_flog_run(mocks)
+    expect_flay_run(mocks)
+    expect_reek_run(mocks)    
   end
 
   def test_ratchet_task
     task = get_test_object do |mocks|
-      mocks[:dsl].expects(:task).with('quality')
-      mocks[:dsl].expects(:task).with('ratchet').yields
-      mocks[:globber].expects(:glob)
-        .with('*_high_water_mark').returns(['foo_high_water_mark',
-                                            'bar_high_water_mark'])
-      expect_ratchet(mocks, 'foo', 12)
-      expect_ratchet(mocks, 'bar', 96)
+      setup_ratchet_task_mocks(mocks)
     end
+  end
+
+  def setup_ratchet_task_mocks(mocks)
+    mocks[:dsl].expects(:task).with('quality')
+    mocks[:dsl].expects(:task).with('ratchet').yields
+    mocks[:globber].expects(:glob)
+      .with('*_high_water_mark').returns(['foo_high_water_mark',
+                                          'bar_high_water_mark'])
+    expect_ratchet(mocks, 'foo', 12)
+    expect_ratchet(mocks, 'bar', 96)
   end
 
   def expect_ratchet(mocks, tool_name, old_high_water_mark)
     filename = "#{tool_name}_high_water_mark"
-    mocks[:count_io].expects(:read).with(filename)
-      .returns(old_high_water_mark.to_s)
-    file = mock('file')
-    mocks[:count_file].expects(:open).with(filename, 'w').yields(file)
-    file.expects(:write).with((old_high_water_mark-1).to_s)
+    expect_read_from_high_water_mark(mocks, filename, old_high_water_mark)
+    expect_write_to_high_water_mark(mocks, filename, old_high_water_mark-1)
     mocks[:cmd_runner].expects(:system)
       .with("git commit -m 'tighten quality standard' #{filename}")
   end
+
+  def expect_read_from_high_water_mark(mocks, filename, old_high_water_mark)
+    mocks[:count_io].expects(:read).with(filename)
+      .returns(old_high_water_mark.to_s)
+  end
+
+  def expect_write_to_high_water_mark(mocks, filename, new_high_water_mark)
+    file = mock('file')
+    mocks[:count_file].expects(:open).with(filename, 'w').yields(file)
+    file.expects(:write).with((new_high_water_mark).to_s)
+  end
+
 
   def expect_cane_run(mocks)
     mocks[:configuration_writer].expects(:exist?).with('.cane').returns(true)
@@ -43,12 +65,14 @@ class TestTask < Test::Unit::TestCase
     expect_write_new_high_water_mark(mocks, 'cane', 11)
   end
 
-  def expect_flog_run(mocks)
-    expect_find_ruby_files(mocks)
-    flog_file = StringIO.new(flog_output)
-    flog_cmd =
-      'flog --all --continue --methods-only ' +
+  def flog_cmd
+    'flog --all --continue --methods-only ' +
       'fake1.rb fake2.rb lib/libfake1.rb test/testfake1.rb features/featuresfake1.rb'
+  end
+
+  def expect_flog_run(mocks)
+    expect_find_ruby_files(mocks[:globber])
+    flog_file = StringIO.new(flog_output)
     mocks[:popener].expects(:popen)
       .with(flog_cmd)
       .yields(flog_file)
@@ -57,33 +81,41 @@ class TestTask < Test::Unit::TestCase
   end
 
   def expect_flay_run(mocks)
-    expect_find_ruby_files(mocks)
+    expect_find_ruby_files(mocks[:globber])
     flay_file = StringIO.new(flay_output)
-    flay_cmd =
-      'flay -m 75 -t 99999 ' +
-      'fake1.rb fake2.rb lib/libfake1.rb test/testfake1.rb features/featuresfake1.rb'
     mocks[:popener].expects(:popen).with(flay_cmd)
       .yields(flay_file)
     mock_high_water_mark(mocks, 'flay', 555)
     expect_write_new_high_water_mark(mocks, 'flay', 0)
   end
 
-  def expect_reek_run(mocks)
-    expect_find_ruby_files(mocks)
-    reek_file = StringIO.new(reek_output)
-    reek_cmd =
-      'reek --line-number fake1.rb fake2.rb ' +
+  def flay_cmd
+    'flay -m 75 -t 99999 ' +
+      'fake1.rb fake2.rb lib/libfake1.rb test/testfake1.rb features/featuresfake1.rb'
+  end
+
+  def reek_cmd
+    'reek --single-line fake1.rb fake2.rb ' +
       'lib/libfake1.rb test/testfake1.rb features/featuresfake1.rb'
-    mocks[:popener].expects(:popen).with(reek_cmd)
+  end
+
+  def expect_reek_run(mocks)
+    expect_find_ruby_files(mocks[:globber])
+    reek_file = StringIO.new(reek_output)
+      mocks[:popener].expects(:popen).with(reek_cmd)
       .yields(reek_file)
     mock_high_water_mark(mocks, 'reek', 555)
     expect_write_new_high_water_mark(mocks, 'reek', 22)
   end
 
+  def rubocop_cmd
+    'rubocop --format emacs fake1.rb fake2.rb lib/libfake1.rb test/testfake1.rb features/featuresfake1.rb'
+  end
+
   def expect_rubocop_run(mocks)
-    expect_find_ruby_files(mocks)
+    expect_find_ruby_files(mocks[:globber])
     rubocop_file = StringIO.new(rubocop_output)
-    mocks[:popener].expects(:popen).with('rubocop --format emacs fake1.rb fake2.rb lib/libfake1.rb test/testfake1.rb features/featuresfake1.rb')
+    mocks[:popener].expects(:popen).with(rubocop_cmd)
       .yields(rubocop_file)
     mock_high_water_mark(mocks, 'rubocop', 555)
     expect_write_new_high_water_mark(mocks, 'rubocop', 35)
@@ -166,9 +198,9 @@ END
   end
 
 
-  def expect_find_ruby_files(mocks)
-    mocks[:globber].expects(:glob).with('*.rb').returns(['fake1.rb', 'fake2.rb'])
-    mocks[:globber].expects(:glob).with('{lib,test,features}/**/*.rb')
+  def expect_find_ruby_files(globber_mock)
+    globber_mock.expects(:glob).with('*.rb').returns(['fake1.rb', 'fake2.rb'])
+    globber_mock.expects(:glob).with('{lib,test,features}/**/*.rb')
       .returns(['lib/libfake1.rb', 'test/testfake1.rb', 'features/featuresfake1.rb'])
   end
 
@@ -181,10 +213,10 @@ END
   end
 
   def mock_high_water_mark(mocks, tool_name, num_violations)
-    mocks[:count_file].expects(:exist?).with("./#{tool_name}_high_water_mark")
+    filename = "./#{tool_name}_high_water_mark"
+    mocks[:count_file].expects(:exist?).with(filename)
       .returns(true)
-    mocks[:count_io].expects(:read).with("./#{tool_name}_high_water_mark")
-      .returns(num_violations.to_s)
+    expect_read_from_high_water_mark(mocks, filename, num_violations)
   end
 
   def flog_output

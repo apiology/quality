@@ -112,32 +112,56 @@ module Quality
       def run_quality
         tools = ['cane', 'flog', 'flay', 'reek', 'rubocop']
         tools.each do |tool|
-          installed = Gem::Specification.find_all_by_name(tool).any?
-          suppressed = @skip_tools.include? tool
+          run_quality_with_tool(tool)
+        end
+      end
 
-          if !installed
-            puts "#{tool} not installed"
-          elsif suppressed
-            puts "Suppressing use of #{tool}"
-          else
-            method("quality_#{tool}".to_sym).call
-          end
+      def run_quality_with_tool(tool)
+        installed = Gem::Specification.find_all_by_name(tool).any?
+        suppressed = @skip_tools.include? tool
+
+        if !installed
+          puts "#{tool} not installed"
+        elsif suppressed
+          puts "Suppressing use of #{tool}"
+        else
+          method("quality_#{tool}".to_sym).call
         end
       end
 
       def run_ratchet
-        @globber.glob("*_high_water_mark").each { |filename|
-          puts "Processing #{filename}"
-          existing_violations = @count_io.read(filename).to_i
-          if existing_violations < 0
-            raise "Problem with file #{filename}"
-          end
-          new_violations = [0, existing_violations - 1].max
-          @count_file.open(filename, 'w') {|f| f.write(new_violations.to_s) }
-          if new_violations != existing_violations
-            @cmd_runner.system("git commit -m 'tighten quality standard' #{filename}")
-          end
-        }
+        @globber.glob("*_high_water_mark").each do |filename|
+          run_ratchet_on_file(filename)
+        end
+      end
+
+      def run_ratchet_on_file(filename)
+        puts "Processing #{filename}"
+        existing_violations = count_existing_violations(filename)
+        new_violations = [0, existing_violations - 1].max
+        write_violations(filename, new_violations)
+        if new_violations != existing_violations
+          tighten_standard(filename)
+        end
+      end
+
+      def count_existing_violations(filename)
+        existing_violations = @count_io.read(filename).to_i
+        if existing_violations < 0
+          raise "Problem with file #{filename}"
+        end
+        existing_violations
+      end
+
+      def tighten_standard(filename)
+        @cmd_runner
+          .system("git commit -m 'tighten quality standard' #{filename}")
+      end
+
+      def write_violations(filename, new_violations)
+        @count_file.open(filename, 'w') do |file|
+          file.write(new_violations.to_s)
+        end
       end
 
       def ratchet_quality_cmd(cmd,
@@ -164,8 +188,8 @@ module Quality
           full_cmd = "#{full_cmd} #{args}"
         end
 
-        @popener.popen(full_cmd) do |f|
-          while line = f.gets
+        @popener.popen(full_cmd) do |file|
+          while line = file.gets
             if emacs_format
               if line =~ /^ *(\S*.rb:[0-9]*) *(.*)/
                 out << $1 << ": " << $2 << "\n"
@@ -200,15 +224,13 @@ module Quality
             "Reduce total number of #{cmd} violations to #{existing_violations} or below!"
         elsif violations < existing_violations
           puts "Ratcheting quality up..."
-          @count_file.open(filename, 'w') do |f|
-            f.write(violations.to_s)
-          end
+          write_violations(filename, violations)
         end
       end
 
       def quality_cane
         if ! @configuration_writer.exist?(".cane")
-          @configuration_writer.open(".cane", "w") {|f| f.write("-f **/*.rb")}
+          @configuration_writer.open(".cane", "w") { |file| file.write("-f **/*.rb") }
         end
         ratchet_quality_cmd("cane",
                             gives_error_code_on_violations: true,
@@ -234,34 +256,40 @@ module Quality
         ratchet_quality_cmd("reek",
                             args: args,
                             emacs_format: true,
-                            gives_error_code_on_violations: true) { |line|
-          if line =~ /^  .* (.*)$/
+                            gives_error_code_on_violations: true) do |line|
+          count_reek_violations(line)
+        end
+      end
+
+      def count_reek_violations(line)
+        if line =~ /^  .* (.*)$/
+          1
+        else
+          0
+        end
+      end
+
+      def quality_flog
+        ratchet_quality_cmd("flog",
+                            args: "--all --continue --methods-only #{ruby_files}",
+                            emacs_format: true) do |line|
+          count_violations_in_flog_output(line)
+        end
+      end
+
+      def count_violations_in_flog_output(line, threshold = 50)
+        if line =~ /^ *([0-9.]*): flog total$/
+          0
+        elsif line =~ /^ *([0-9.]*): (.*) .*.rb:[0-9]*$/
+          score = $1.to_i
+          if score > threshold
             1
           else
             0
           end
-        }
-      end
-
-      def quality_flog
-        threshold = 50
-        ratchet_quality_cmd("flog",
-                            args: "--all --continue --methods-only #{ruby_files}",
-                            emacs_format: true) { |line|
-          if line =~ /^ *([0-9.]*): flog total$/
-            0
-            #$1.to_i
-          elsif line =~ /^ *([0-9.]*): (.*) .*.rb:[0-9]*$/
-            score = $1.to_i
-            if score > threshold
-              1
-            else
-              0
-            end
-          else
-            0
-          end
-        }
+        else
+          0
+        end
       end
 
       def quality_flay
@@ -279,15 +307,18 @@ module Quality
       def quality_rubocop
         ratchet_quality_cmd("rubocop",
                             gives_error_code_on_violations: true,
-                            args: "--format emacs #{ruby_files}") { |line|
-          if line =~ /^.* file[s|] inspected, (.*) offence[s|] detected$/
-            0
-          else
-            1
-          end
-        }
+                            args: "--format emacs #{ruby_files}") do |line|
+          count_rubocop_violations(line)
+        end
       end
 
+      def count_rubocop_violations(line)
+        if line =~ /^.* file[s|] inspected, (.*) offence[s|] detected$/
+          0
+        else
+          1
+        end
+      end
     end
   end
 end
