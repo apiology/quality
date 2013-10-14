@@ -1,0 +1,35 @@
+/Users/broz/src/quality/lib/quality/version.rb:1:1: C: Missing top-level module documentation comment.
+/Users/broz/src/quality/test/unit/test_task.rb:4:5: W: Useless assignment to variable - task
+/Users/broz/src/quality/test/unit/test_task.rb:24:80: C: Line is too long. [158/79]
+/Users/broz/src/quality/test/unit/test_task.rb:33:80: C: Line is too long. [141/79]
+/Users/broz/src/quality/test/unit/test_task.rb:36:55: C: Trailing whitespace detected.
+/Users/broz/src/quality/test/unit/test_task.rb:42:80: C: Line is too long. [140/79]
+/Users/broz/src/quality/test/unit/test_task.rb:45:56: C: Trailing whitespace detected.
+/Users/broz/src/quality/test/unit/test_task.rb:48:3: C: Method has too many lines. [27/10]
+/Users/broz/src/quality/test/unit/test_task.rb:49:5: W: Useless assignment to variable - output
+/Users/broz/src/quality/test/unit/test_task.rb:51:80: C: Line is too long. [88/79]
+/Users/broz/src/quality/test/unit/test_task.rb:53:80: C: Line is too long. [86/79]
+/Users/broz/src/quality/test/unit/test_task.rb:55:80: C: Line is too long. [91/79]
+/Users/broz/src/quality/test/unit/test_task.rb:56:80: C: Line is too long. [96/79]
+/Users/broz/src/quality/test/unit/test_task.rb:57:80: C: Line is too long. [84/79]
+/Users/broz/src/quality/test/unit/test_task.rb:58:80: C: Line is too long. [100/79]
+/Users/broz/src/quality/test/unit/test_task.rb:59:80: C: Line is too long. [92/79]
+/Users/broz/src/quality/test/unit/test_task.rb:60:80: C: Line is too long. [108/79]
+/Users/broz/src/quality/test/unit/test_task.rb:61:80: C: Line is too long. [80/79]
+/Users/broz/src/quality/test/unit/test_task.rb:62:80: C: Line is too long. [80/79]
+/Users/broz/src/quality/test/unit/test_task.rb:65:80: C: Line is too long. [92/79]
+/Users/broz/src/quality/test/unit/test_task.rb:66:80: C: Line is too long. [107/79]
+/Users/broz/src/quality/test/unit/test_task.rb:67:80: C: Line is too long. [89/79]
+/Users/broz/src/quality/test/unit/test_task.rb:68:80: C: Line is too long. [83/79]
+/Users/broz/src/quality/test/unit/test_task.rb:70:80: C: Line is too long. [91/79]
+/Users/broz/src/quality/test/unit/test_task.rb:71:80: C: Line is too long. [87/79]
+/Users/broz/src/quality/test/unit/test_task.rb:72:80: C: Line is too long. [81/79]
+/Users/broz/src/quality/test/unit/test_task.rb:79:5: W: Useless assignment to variable - output
+/Users/broz/src/quality/test/unit/test_task.rb:79:12: C: Surrounding space missing for operator '='.
+/Users/broz/src/quality/test/unit/test_task.rb:84:1: C: Trailing whitespace detected.
+/Users/broz/src/quality/test/unit/test_task.rb:86:80: C: Line is too long. [81/79]
+/Users/broz/src/quality/test/unit/test_task.rb:88:80: C: Line is too long. [85/79]
+/Users/broz/src/quality/test/unit/test_task.rb:107:5: W: Useless assignment to variable - output
+/Users/broz/src/quality/test/unit/test_task.rb:118:1: C: Trailing whitespace detected.
+/Users/broz/src/quality/test/unit/test_task.rb:119:3: C: Method has too many lines. [16/10]
+/Users/broz/src/quality/test/unit/test_task.rb:120:5: W: Useless assignment to variable - output

@@ -140,6 +140,12 @@ module Quality
         end
       end
 
+      def write_violations(filename, new_violations)
+        @count_file.open(filename, 'w') do |file|
+          file.write(new_violations.to_s)
+        end
+      end      
+
       def count_existing_violations(filename)
         existing_violations = @count_io.read(filename).to_i
         if existing_violations < 0
@@ -153,66 +159,16 @@ module Quality
           .system("git commit -m 'tighten quality standard' #{filename}")
       end
 
-      def write_violations(filename, new_violations)
-        @count_file.open(filename, 'w') do |file|
-          file.write(new_violations.to_s)
-        end
-      end
-
       def ratchet_quality_cmd(cmd,
-                              options,
+                              command_options,
                               &count_violations_on_line)
-
-        gives_error_code_on_violations ||=
-          options[:gives_error_code_on_violations]
-
-        args ||= options[:args]
-        emacs_format ||= options[:emacs_format]
-
-        found_output = false
-        if defined?(RUBY_ENGINE) && (RUBY_ENGINE == 'jruby')
-          full_cmd = "jruby -S #{cmd}"
-        elsif RbConfig::CONFIG['host_os'] =~ /mswin|mingw/
-          full_cmd = "#{cmd}.bat"
-        else
-          full_cmd = cmd
-        end
-
-        if !args.nil?
-          full_cmd = "#{full_cmd} #{args}"
-        end
-
-        processor = CommandOutputProcessor.new
-        processor.emacs_format = emacs_format
-        out = nil
-        @popener.popen(full_cmd) do |file|
-          processor.file = file
-          out = processor.process!(&count_violations_on_line)
-        end
-        violations = processor.violations
-        exit_status = $?.exitstatus
-        if !gives_error_code_on_violations
-          if exit_status != 0
-            fail("Error detected running #{full_cmd}.  " +
-                 "Exit status is #{exit_status}, output is [#{out}]")
-          end
-        end
-        filename = File.join(@output_dir, "#{cmd}_high_water_mark")
-        if @count_file.exist?(filename)
-          existing_violations = @count_io.read(filename).to_i
-        else
-          existing_violations = 9999999999
-        end
-        puts "Existing violations: #{existing_violations}"
-        puts "Found #{violations} #{cmd} violations"
-        if violations > existing_violations
-          fail("Output from #{cmd}\n\n#{out}\n\n" +
-               "Reduce total number of #{cmd} violations " +
-               "to #{existing_violations} or below!")
-        elsif violations < existing_violations
-          puts "Ratcheting quality up..."
-          write_violations(filename, violations)
-        end
+        quality_checker = QualityChecker.new(cmd,
+                                             command_options,
+                                             @output_dir,
+                                             :popener => @popener,
+                                             :count_file => @count_file,
+                                             :count_io => @count_io)
+        quality_checker.execute(&count_violations_on_line)
       end
 
       def quality_cane
@@ -262,8 +218,8 @@ module Quality
 
       def quality_flog
         ratchet_quality_cmd("flog",
-                       args: "--all --continue --methods-only #{ruby_files}",
-                       emacs_format: true) do |line|
+                            args: "--all --continue --methods-only #{ruby_files}",
+                            emacs_format: true) do |line|
           self.class.count_violations_in_flog_output(line)
         end
       end
@@ -358,6 +314,106 @@ module Quality
           $2 + ": " + $1 + "\n"
         else
           @current_line
+        end
+      end
+    end
+
+    # Runs a quality-checking, command, checks it agaist the existing
+    # number of violations for that command, and decreases that number
+    # if possible, or outputs data if the number of violations increased.
+    class QualityChecker
+      def initialize(cmd, command_options, output_dir, dependencies = {})
+        @popener = dependencies[:popener] || IO
+        @count_file = dependencies[:count_file] || File
+        @count_io = dependencies[:count_io] || IO
+        @cmd = cmd
+        @command_options = command_options
+        @filename = File.join(output_dir, "#{cmd}_high_water_mark")
+      end
+
+      def execute(&count_violations_on_line)
+        processor, exit_status = process_command(&count_violations_on_line)
+        @violations = processor.violations
+        check_exit_status(exit_status)
+        ratchet_violations
+      end
+
+      def process_command(&count_violations_on_line)
+        processor = CommandOutputProcessor.new
+        processor.emacs_format = @command_options[:emacs_format]
+        exit_status = run_command(processor, &count_violations_on_line)
+        [processor, $?.exitstatus]
+      end
+
+      def run_command(processor, &count_violations_on_line)
+        @popener.popen(full_cmd) do |file|
+          processor.file = file
+          @command_output = processor.process!(&count_violations_on_line)
+        end
+      end
+
+      def check_exit_status(exit_status)
+        if !@command_options[:gives_error_code_on_violations]
+          if exit_status != 0
+            fail("Error detected running #{full_cmd}.  " +
+                 "Exit status is #{exit_status}, output is [#{out}]")
+          end
+        end
+      end
+
+      def existing_violations
+        if @count_file.exist?(@filename)
+          @count_io.read(@filename).to_i
+        else
+          9999999999
+        end
+      end
+
+      def ratchet_violations
+        existing = existing_violations
+        report_violations(existing)
+        if @violations > existing
+          fail("Output from #{@cmd}\n\n#{@command_output}\n\n" +
+               "Reduce total number of #{@cmd} violations " +
+               "to #{existing} or below!")
+        elsif @violations < existing
+          puts "Ratcheting quality up..."
+          write_violations(@violations)
+        end        
+      end
+
+      def report_violations(existing)
+        puts "Existing violations: #{existing}"
+        puts "Found #{@violations} #{@cmd} violations"
+      end
+
+      private
+
+      def full_cmd
+        args = @command_options[:args]
+        args ||= ''
+
+        found_output = false
+        if args.size > 0
+          full_cmd = "#{get_cmd_with_ruby_hack_prefix} #{args}"
+        else
+          full_cmd = "#{get_cmd_with_ruby_hack_prefix}"
+        end
+      end
+
+      def get_cmd_with_ruby_hack_prefix
+        if defined?(RUBY_ENGINE) && (RUBY_ENGINE == 'jruby')
+          "jruby -S #{@cmd}"
+        elsif RbConfig::CONFIG['host_os'] =~ /mswin|mingw/
+          "#{@cmd}.bat"
+        else
+          @cmd
+        end
+      end
+
+      def write_violations(new_violations)
+        @count_file.open(@filename, 'w') do |file|
+          file.write(new_violations.to_s)
         end
       end
     end
