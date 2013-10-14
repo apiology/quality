@@ -31,8 +31,8 @@ class TestTask < Test::Unit::TestCase
     @mocks[:dsl].expects(:define_task).with('quality')
     @mocks[:dsl].expects(:define_task).with('ratchet').yields
     @mocks[:globber].expects(:glob)
-      .with('*_high_water_mark').returns(['foo_high_water_mark',
-                                          'bar_high_water_mark'])
+      .with('*_high_water_mark').returns(%w{foo_high_water_mark
+                                            bar_high_water_mark})
     expect_ratchet('foo', 12)
     expect_ratchet('bar', 96)
   end
@@ -40,7 +40,7 @@ class TestTask < Test::Unit::TestCase
   def expect_ratchet(tool_name, old_high_water_mark)
     filename = "#{tool_name}_high_water_mark"
     expect_read_from_high_water_mark(filename, old_high_water_mark)
-    expect_write_to_high_water_mark(filename, old_high_water_mark-1)
+    expect_write_to_high_water_mark(filename, old_high_water_mark - 1)
     @mocks[:cmd_runner].expects(:system)
       .with("git commit -m 'tighten quality standard' #{filename}")
   end
@@ -55,7 +55,6 @@ class TestTask < Test::Unit::TestCase
     @mocks[:count_file].expects(:open).with(filename, 'w').yields(file)
     file.expects(:write).with((new_high_water_mark).to_s)
   end
-
 
   def expect_cane_run
     @mocks[:configuration_writer].expects(:exist?).with('.cane').returns(true)
@@ -124,12 +123,12 @@ class TestTask < Test::Unit::TestCase
     expect_write_new_high_water_mark('rubocop', 35)
   end
 
-  def sample_output(tool_name)
+  def self.sample_output(tool_name)
     IO.read("#{File.dirname(__FILE__)}/samples/#{tool_name}_sample_output")
   end
 
   def rubocop_output
-    output = sample_output('rubocop')
+    self.class.sample_output('rubocop')
   end
 
   def reek_output
@@ -167,7 +166,6 @@ END
     Total score (lower is better) = 0
 END
   end
-
 
   def expect_find_ruby_files(globber_mock)
     globber_mock.expects(:glob).with('*.rb').returns(['fake1.rb', 'fake2.rb'])

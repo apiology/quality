@@ -91,7 +91,7 @@ module Quality
         yield self if block_given?
         @config_files ||= 'config/**/*.reek'
         @source_files ||= 'lib/**/*.rb'
-        @output_dir   ||= "."
+        @output_dir   ||= '.'
         define
       end
 
@@ -125,7 +125,7 @@ module Quality
       end
 
       def run_ratchet
-        @globber.glob("*_high_water_mark").each do |filename|
+        @globber.glob('*_high_water_mark').each do |filename|
           run_ratchet_on_file(filename)
         end
       end
@@ -172,12 +172,12 @@ module Quality
       end
 
       def quality_cane
-        if ! @configuration_writer.exist?(".cane")
-          @configuration_writer.open(".cane", "w") do |file|
-            file.write("-f **/*.rb")
+        if ! @configuration_writer.exist?('.cane')
+          @configuration_writer.open('.cane', 'w') do |file|
+            file.write('-f **/*.rb')
           end
         end
-        ratchet_quality_cmd("cane",
+        ratchet_quality_cmd('cane',
                             gives_error_code_on_violations: true,
                             emacs_format: true) do |line|
           if line =~ /\(([0-9]*)\):$/
@@ -200,7 +200,7 @@ module Quality
 
       def quality_reek
         args = "--single-line #{ruby_files}"
-        ratchet_quality_cmd("reek",
+        ratchet_quality_cmd('reek',
                             args: args,
                             emacs_format: true,
                             gives_error_code_on_violations: true) do |line|
@@ -217,9 +217,9 @@ module Quality
       end
 
       def quality_flog
-        ratchet_quality_cmd("flog",
-                            args: "--all --continue --methods-only #{ruby_files}",
-                            emacs_format: true) do |line|
+        ratchet_quality_cmd('flog',
+                       args: "--all --continue --methods-only #{ruby_files}",
+                       emacs_format: true) do |line|
           self.class.count_violations_in_flog_output(line)
         end
       end
@@ -240,19 +240,19 @@ module Quality
       end
 
       def quality_flay
-        ratchet_quality_cmd("flay",
+        ratchet_quality_cmd('flay',
                             args: "-m 75 -t 99999 #{ruby_files}",
-                            emacs_format: true) { |line|
+                            emacs_format: true) do |line|
           if line =~ /^[0-9]*\).* \(mass = ([0-9]*)\)$/
             $1.to_i
           else
             0
           end
-        }
+        end
       end
 
       def quality_rubocop
-        ratchet_quality_cmd("rubocop",
+        ratchet_quality_cmd('rubocop',
                             gives_error_code_on_violations: true,
                             args: "--format emacs #{ruby_files}") do |line|
           self.class.count_rubocop_violations(line)
@@ -287,31 +287,31 @@ module Quality
       end
 
       def process_file(file, &count_violations_on_line)
-        out = ""
-        while @current_line = file.gets
+        out = ''
+        while (@current_line = file.gets)
           out <<
             process_line(&count_violations_on_line)
         end
         out
       end
 
-      def process_line( &count_violations_on_line)
+      def process_line(&count_violations_on_line)
         output =
           if emacs_format
             preprocess_line_for_emacs
           else
             @current_line
           end
-        found_output = true
+        @found_output = true
         @violations += yield @current_line
         output
       end
 
       def preprocess_line_for_emacs
         if @current_line =~ /^ *(\S*.rb:[0-9]*) *(.*)/
-          $1 + ": " + $2 + "\n"
+          $1 + ': ' + $2 + "\n"
         elsif @current_line =~ /^ *(.*) +(\S*.rb:[0-9]*) *(.*)/
-          $2 + ": " + $1 + "\n"
+          $2 + ': ' + $1 + "\n"
         else
           @current_line
         end
@@ -353,7 +353,7 @@ module Quality
       end
 
       def check_exit_status(exit_status)
-        if !@command_options[:gives_error_code_on_violations]
+        unless @command_options[:gives_error_code_on_violations]
           if exit_status != 0
             fail("Error detected running #{full_cmd}.  " +
                  "Exit status is #{exit_status}, output is [#{out}]")
@@ -393,11 +393,11 @@ module Quality
         args = @command_options[:args]
         args ||= ''
 
-        found_output = false
+        @found_output = false
         if args.size > 0
-          full_cmd = "#{get_cmd_with_ruby_hack_prefix} #{args}"
+          "#{get_cmd_with_ruby_hack_prefix} #{args}"
         else
-          full_cmd = "#{get_cmd_with_ruby_hack_prefix}"
+          "#{get_cmd_with_ruby_hack_prefix}"
         end
       end
 
