@@ -83,19 +83,19 @@ class TestTask < Test::Unit::TestCase
   def expect_flay_run
     expect_find_ruby_files(@mocks[:globber])
     flay_file = StringIO.new(flay_output)
-    @mocks[:popener].expects(:popen).with(flay_cmd)
+    @mocks[:popener].expects(:popen).with(self.class.flay_cmd)
       .yields(flay_file)
     mock_high_water_mark('flay', 555)
     expect_write_new_high_water_mark('flay', 0)
   end
 
-  def flay_cmd
+  def self.flay_cmd
     'flay -m 75 -t 99999 ' +
       'fake1.rb fake2.rb lib/libfake1.rb ' +
       'test/testfake1.rb features/featuresfake1.rb'
   end
 
-  def reek_cmd
+  def self.reek_cmd
     'reek --single-line fake1.rb fake2.rb ' +
       'lib/libfake1.rb test/testfake1.rb features/featuresfake1.rb'
   end
@@ -103,13 +103,13 @@ class TestTask < Test::Unit::TestCase
   def expect_reek_run
     expect_find_ruby_files(@mocks[:globber])
     reek_file = StringIO.new(reek_output)
-    @mocks[:popener].expects(:popen).with(reek_cmd)
+    @mocks[:popener].expects(:popen).with(self.class.reek_cmd)
       .yields(reek_file)
     mock_high_water_mark('reek', 555)
     expect_write_new_high_water_mark('reek', 22)
   end
 
-  def rubocop_cmd
+  def self.rubocop_cmd
     'rubocop --format emacs fake1.rb fake2.rb lib/libfake1.rb ' +
       'test/testfake1.rb features/featuresfake1.rb'
   end
@@ -117,7 +117,7 @@ class TestTask < Test::Unit::TestCase
   def expect_rubocop_run
     expect_find_ruby_files(@mocks[:globber])
     rubocop_file = StringIO.new(rubocop_output)
-    @mocks[:popener].expects(:popen).with(rubocop_cmd)
+    @mocks[:popener].expects(:popen).with(self.class.rubocop_cmd)
       .yields(rubocop_file)
     mock_high_water_mark('rubocop', 555)
     expect_write_new_high_water_mark('rubocop', 35)
@@ -132,33 +132,7 @@ class TestTask < Test::Unit::TestCase
   end
 
   def reek_output
-    output = <<END
-    lib/quality/rake/task.rb -- 12 warnings:
-  [30]:Quality::Rake::Task has at least 16 instance variables (TooManyInstanceVariables)
-  [75]:Quality::Rake::Task#initialize performs a nil-check. (NilCheck)
-  [269]:Quality::Rake::Task#quality contains iterators nested 2 deep (NestedIterators)
-  [261]:Quality::Rake::Task#quality has approx 7 statements (TooManyStatements)
-  [269]:Quality::Rake::Task#quality has the variable name 'f' (UncommunicativeVariableName)
-  [181]:Quality::Rake::Task#quality_cane has the variable name 'f' (UncommunicativeVariableName)
-  [216]:Quality::Rake::Task#quality_flog has approx 6 statements (TooManyStatements)
-  [147, 150]:Quality::Rake::Task#ratchet_quality_cmd calls (out << line) twice (DuplicateMethodCall)
-  [116]:Quality::Rake::Task#ratchet_quality_cmd has approx 26 statements (TooManyStatements)
-  [139, 175]:Quality::Rake::Task#ratchet_quality_cmd has the variable name 'f' (UncommunicativeVariableName)
-  [135]:Quality::Rake::Task#ratchet_quality_cmd performs a nil-check. (NilCheck)
-  [100]:Quality::Rake::Task#run_task has approx 7 statements (TooManyStatements)
-test/unit/test_helper.rb -- 0 warnings
-test/unit/test_task.rb -- 9 warnings:
-  [46, 47]:TestTask#expect_find_ruby_files calls mocks[:globber] twice (DuplicateMethodCall)
-  [46, 47]:TestTask#expect_find_ruby_files calls mocks[:globber].expects(:glob) twice (DuplicateMethodCall)
-  [45]:TestTask#expect_find_ruby_files doesn't depend on instance state (UtilityFunction)
-  [45]:TestTask#expect_find_ruby_files refers to mocks more than self (FeatureEnvy)
-  [115]:TestTask#get_test_object performs a nil-check. (NilCheck)
-  [60, 62]:TestTask#mock_high_water_mark calls mocks[:count_io] twice (DuplicateMethodCall)
-  [59]:TestTask#mock_high_water_mark doesn't depend on instance state (UtilityFunction)
-  [59]:TestTask#mock_high_water_mark refers to mocks more than self (FeatureEnvy)
-  [3]:TestTask#test_task has approx 6 statements (TooManyStatements)
-21 total warnings
-END
+    self.class.sample_output('reek')
   end
 
   def flay_output
