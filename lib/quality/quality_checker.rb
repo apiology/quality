@@ -53,7 +53,7 @@ module Quality
       if @count_file.exist?(@filename)
         @count_io.read(@filename).to_i
       else
-        9999999999
+        9_999_999_999
       end
     end
 
@@ -65,7 +65,7 @@ module Quality
              "Reduce total number of #{@cmd} violations " +
              "to #{existing} or below!")
       elsif @violations < existing
-        puts "Ratcheting quality up..."
+        puts 'Ratcheting quality up...'
         write_violations(@violations)
       end
     end

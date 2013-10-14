@@ -10,10 +10,10 @@ class TestQualityChecker < Test::Unit::TestCase
       get_test_object('foo',
                       command_options,
                       '.') do
-      setup_execute_mocks(command_options,
-                          num_violations,
-                          existing_violations)
-    end
+        setup_execute_mocks(command_options,
+                            num_violations,
+                            existing_violations)
+      end
     quality_checker.execute do |line|
       assert_equal(line, 'line')
     end

@@ -17,7 +17,7 @@ class TestTask < Test::Unit::TestCase
   end
 
   def expect_tools_run
-    ['cane', 'flog', 'flay', 'reek', 'rubocop'].each do |tool_name|
+    %w{ cane flog flay reek rubocop }.each do |tool_name|
       puts "Looking at #{tool_name}"
       expect_single_tool_run(tool_name)
     end
@@ -32,7 +32,7 @@ class TestTask < Test::Unit::TestCase
   end
 
   def test_ratchet_task
-    task = get_test_object do
+    get_test_object do
       setup_ratchet_task_mocks
     end
   end
@@ -71,7 +71,6 @@ class TestTask < Test::Unit::TestCase
   end
 
   def expect_cane_run(quality_checker)
-    puts "expect cane run!"
     @mocks[:quality_checker_class]
       .expects(:new).with('cane',
                           { gives_error_code_on_violations: true,
@@ -126,7 +125,7 @@ class TestTask < Test::Unit::TestCase
       .expects(:new).with('reek',
                           { args: self.class.reek_args,
                             emacs_format: true,
-                            gives_error_code_on_violations: true},
+                            gives_error_code_on_violations: true },
                           '.')
       .returns(quality_checker)
     expect_find_ruby_files

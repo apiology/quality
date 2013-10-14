@@ -25,7 +25,6 @@ module Quality
     # This will create a task that can be run with:
     #
     #   rake quality
-    #
     class Task < ::Rake::TaskLib
 
       # Name of quality task.
@@ -135,9 +134,7 @@ module Quality
         existing_violations = count_existing_violations(filename)
         new_violations = [0, existing_violations - 1].max
         write_violations(filename, new_violations)
-        if new_violations != existing_violations
-          tighten_standard(filename)
-        end
+        tighten_standard(filename) if new_violations != existing_violations
       end
 
       def write_violations(filename, new_violations)
@@ -148,9 +145,7 @@ module Quality
 
       def count_existing_violations(filename)
         existing_violations = @count_io.read(filename).to_i
-        if existing_violations < 0
-          raise "Problem with file #{filename}"
-        end
+        fail("Problem with file #{filename}") if existing_violations < 0
         existing_violations
       end
 
@@ -169,7 +164,7 @@ module Quality
       end
 
       def quality_cane
-        if ! @configuration_writer.exist?('.cane')
+        unless @configuration_writer.exist?('.cane')
           @configuration_writer.open('.cane', 'w') do |file|
             file.write('-f **/*.rb')
           end
