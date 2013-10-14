@@ -1,0 +1,8 @@
+    72.3: flog total
+    14.5: flog/method average
+
+    51.3: TestTask#test_task               test/unit/test_task.rb:3
+    11.6: TestTask#mock_high_water_mark    test/unit/test_task.rb:24
+     6.0: TestTask#test_mocks              test/unit/test_task.rb:54
+     4.3: TestTask#get_test_object         test/unit/test_task.rb:65
+     1.0: TestTask#cane_output             test/unit/test_task.rb:31

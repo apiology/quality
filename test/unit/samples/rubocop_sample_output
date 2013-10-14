@@ -33,3 +33,4 @@
 /Users/broz/src/quality/test/unit/test_task.rb:118:1: C: Trailing whitespace detected.
 /Users/broz/src/quality/test/unit/test_task.rb:119:3: C: Method has too many lines. [16/10]
 /Users/broz/src/quality/test/unit/test_task.rb:120:5: W: Useless assignment to variable - output
+999 files inspected, 2 offences detected

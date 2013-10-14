@@ -1,0 +1,6 @@
+Total score (lower is better) = 75
+
+1) Similar code found in :defn (mass = 75)
+  test/unit/test_task.rb:78
+  test/unit/test_task.rb:95
+  test/unit/test_task.rb:129

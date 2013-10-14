@@ -1,0 +1,18 @@
+Methods exceeded maximum allowed ABC complexity (2):
+
+  lib/quality/rake/task.rb  Quality::Rake::Task#ratchet_quality_cmd  24
+  lib/quality/rake/task.rb  Quality::Rake::Task#initialize           16
+
+Lines violated style requirements (9):
+
+  lib/quality/rake/task.rb:43   Line is >80 characters (126)
+  lib/quality/rake/task.rb:51   Line contains trailing whitespace
+  lib/quality/rake/task.rb:65   Line contains trailing whitespace
+  lib/quality/rake/task.rb:111  Line is >80 characters (83)
+  lib/quality/rake/task.rb:150  Line is >80 characters (105)
+  lib/quality/rake/task.rb:163  Line is >80 characters (90)
+  lib/quality/rake/task.rb:190  Line is >80 characters (104)
+  lib/quality/rake/task.rb:210  Line is >80 characters (82)
+  lib/quality/rake/task.rb:261  Line is >80 characters (84)
+
+Total Violations: 11
