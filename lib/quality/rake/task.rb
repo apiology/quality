@@ -81,7 +81,7 @@ module Quality
         # for tools if needed (e.g., .cane file)
         @configuration_writer = args[:configuration_writer] || File
 
-        @skip_tools = [] if @skip_tools.nil?
+        @skip_tools = []
         @config_files = nil
         @source_files = nil
         @ruby_opts = []
@@ -144,7 +144,7 @@ module Quality
         @count_file.open(filename, 'w') do |file|
           file.write(new_violations.to_s)
         end
-      end      
+      end
 
       def count_existing_violations(filename)
         existing_violations = @count_io.read(filename).to_i
@@ -379,7 +379,7 @@ module Quality
         elsif @violations < existing
           puts "Ratcheting quality up..."
           write_violations(@violations)
-        end        
+        end
       end
 
       def report_violations(existing)
