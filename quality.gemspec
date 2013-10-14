@@ -29,7 +29,7 @@ your numbers don't get any worse over time.
   s.summary = %q{Code quality tools for Ruby}
 
   s.add_runtime_dependency(%q<cane>, [">= 2.6"])
-  s.add_runtime_dependency(%q<reek>, [">= 1.3.2"])
+  s.add_runtime_dependency(%q<reek>, [">= 1.3.4"])
   s.add_runtime_dependency(%q<flog>, [">= 4.1.1"])
   s.add_runtime_dependency(%q<flay>, [">= 2.4"])
   s.add_runtime_dependency(%q<rubocop>)
