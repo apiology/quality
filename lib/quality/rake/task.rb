@@ -124,7 +124,7 @@ module Quality
       end
 
       def run_ratchet
-        @globber.glob('*_high_water_mark').each do |filename|
+        @globber.glob("#{@output_dir}/*_high_water_mark").each do |filename|
           run_ratchet_on_file(filename)
         end
       end
