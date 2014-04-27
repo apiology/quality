@@ -37,7 +37,7 @@ $ rake ratchet
 Quality::Rake::Task.new { |t|
   # Name of quality task.
   # Defaults to :quality.
-  t.quality_name = "quality" 
+  t.quality_name = "quality"
 
   # Name of ratchet task.
   # Defaults to :ratchet.
@@ -80,4 +80,3 @@ Quality makes use of the following other gems, which do the actual checking:
 ### Learn More
 
 * Browse the code or install the latest development version from [https://github.com/apiology/quality/tree](https://github.com/apiology/quality/tree)
-
