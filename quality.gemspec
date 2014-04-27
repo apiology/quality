@@ -10,7 +10,7 @@ Gem::Specification.new do |s|
   s.authors = ['Vince Broz']
   #s.default_executable = %q{quality}
   s.description = %q{Quality is a tool that runs quality checks on Ruby
-code using rubocop, cane, reek, flog and flay, and makes sure 
+code using rubocop, cane, reek, flog and flay, and makes sure
 your numbers don't get any worse over time.
 }
   s.email = ["vince@broz.cc"]
