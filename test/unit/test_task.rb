@@ -45,14 +45,14 @@ class TestTask < Test::Unit::TestCase
     expect_define_task.with('quality')
     expect_define_task.with('ratchet').yields
     @mocks[:globber].expects(:glob)
-      .with('*_high_water_mark').returns(%w{foo_high_water_mark
-                                            bar_high_water_mark})
+      .with('./*_high_water_mark').returns(%w{./foo_high_water_mark
+                                              ./bar_high_water_mark})
     expect_ratchet('foo', 12)
     expect_ratchet('bar', 96)
   end
 
   def expect_ratchet(tool_name, old_high_water_mark)
-    filename = "#{tool_name}_high_water_mark"
+    filename = "./#{tool_name}_high_water_mark"
     expect_read_from_high_water_mark(filename, old_high_water_mark)
     expect_write_to_high_water_mark(filename, old_high_water_mark - 1)
     @mocks[:cmd_runner].expects(:system)
