@@ -42,8 +42,8 @@ module Quality
 
       # Array of directory names which contain ruby files to analyze.
       #
-      # Defaults to %w{lib test features}, which translates to *.rb in
-      # the base directory, as well as lib, test, and features.
+      # Defaults to %w{lib test spec feature}, which translates to *.rb in
+      # the base directory, as well as lib, test, and feature.
       attr_writer :ruby_dirs
 
       # Relative path to output directory where *_high_water_mark
@@ -181,7 +181,7 @@ module Quality
       end
 
       def ruby_dirs
-        @ruby_dirs ||= %w{lib test features}
+        @ruby_dirs ||= %w{lib test spec feature}
       end
 
       def ruby_files
