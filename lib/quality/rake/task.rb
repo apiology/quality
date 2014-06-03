@@ -101,10 +101,16 @@ module Quality
           'the same' unless ::Rake.application.last_comment
         @dsl.define_task(quality_name) { run_quality }
         @dsl.define_task(ratchet_name) { run_ratchet }
+        tools.each do |tool|
+          @dsl.define_task(tool) { run_quality_with_tool(tool) }
+        end
+      end
+
+      def tools
+        ['cane', 'flog', 'flay', 'reek', 'rubocop']
       end
 
       def run_quality
-        tools = ['cane', 'flog', 'flay', 'reek', 'rubocop']
         tools.each do |tool|
           run_quality_with_tool(tool)
         end

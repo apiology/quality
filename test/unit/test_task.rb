@@ -7,6 +7,7 @@ class TestTask < Test::Unit::TestCase
   end
 
   def setup_quality_task_mocks
+    expect_tools_tasks_defined
     expect_define_task.with('quality').yields
     expect_define_task.with('ratchet')
     expect_tools_run
@@ -16,8 +17,18 @@ class TestTask < Test::Unit::TestCase
     @mocks[:dsl].expects(:define_task)
   end
 
+  def expect_tools_tasks_defined
+    all_tools.each do |tool|
+      expect_define_task.with(tool)
+    end
+  end
+
+  def all_tools
+    %w{ cane flog flay reek rubocop }
+  end
+
   def expect_tools_run
-    %w{ cane flog flay reek rubocop }.each do |tool_name|
+    all_tools.each do |tool_name|
       puts "Looking at #{tool_name}"
       expect_single_tool_run(tool_name)
     end
@@ -42,6 +53,7 @@ class TestTask < Test::Unit::TestCase
   end
 
   def setup_ratchet_task_mocks
+    expect_tools_tasks_defined
     expect_define_task.with('quality')
     expect_define_task.with('ratchet').yields
     @mocks[:globber].expects(:glob)
@@ -159,7 +171,7 @@ class TestTask < Test::Unit::TestCase
 
   def expect_find_ruby_files
     expect_glob.with('*.rb').returns(['fake1.rb', 'fake2.rb'])
-    expect_glob.with('{lib,test,features}/**/*.rb')
+    expect_glob.with('{lib,test,spec,feature}/**/*.rb')
       .returns(['lib/libfake1.rb',
                 'test/testfake1.rb',
                 'features/featuresfake1.rb'])
