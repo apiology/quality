@@ -1,7 +1,7 @@
 # Unit test the Task class
 class TestTask < Test::Unit::TestCase
   def test_quality_task
-    task = get_test_object do
+    get_test_object do
       setup_quality_task_mocks
     end
   end
@@ -24,7 +24,7 @@ class TestTask < Test::Unit::TestCase
   end
 
   def all_tools
-    %w{ cane flog flay reek rubocop }
+    %w(cane flog flay reek rubocop)
   end
 
   def expect_tools_run
@@ -57,8 +57,8 @@ class TestTask < Test::Unit::TestCase
     expect_define_task.with('quality')
     expect_define_task.with('ratchet').yields
     @mocks[:globber].expects(:glob)
-      .with('./*_high_water_mark').returns(%w{./foo_high_water_mark
-                                              ./bar_high_water_mark})
+      .with('./*_high_water_mark').returns(%w(./foo_high_water_mark
+                                              ./bar_high_water_mark))
     expect_ratchet('foo', 12)
     expect_ratchet('bar', 96)
   end
@@ -110,8 +110,8 @@ class TestTask < Test::Unit::TestCase
   end
 
   def self.flog_args
-    '--all --continue --methods-only ' +
-      'fake1.rb fake2.rb lib/libfake1.rb ' +
+    '--all --continue --methods-only ' \
+      'fake1.rb fake2.rb lib/libfake1.rb ' \
       'test/testfake1.rb features/featuresfake1.rb'
   end
 
@@ -127,8 +127,8 @@ class TestTask < Test::Unit::TestCase
   end
 
   def self.flay_args
-    '-m 75 -t 99999 ' +
-      'fake1.rb fake2.rb lib/libfake1.rb ' +
+    '-m 75 -t 99999 ' \
+      'fake1.rb fake2.rb lib/libfake1.rb ' \
       'test/testfake1.rb features/featuresfake1.rb'
   end
 
@@ -145,7 +145,7 @@ class TestTask < Test::Unit::TestCase
   end
 
   def self.reek_args
-    '--single-line fake1.rb fake2.rb ' +
+    '--single-line fake1.rb fake2.rb ' \
       'lib/libfake1.rb test/testfake1.rb features/featuresfake1.rb'
   end
 
@@ -161,7 +161,7 @@ class TestTask < Test::Unit::TestCase
   end
 
   def self.rubocop_args
-    '--format emacs fake1.rb fake2.rb lib/libfake1.rb ' +
+    '--format emacs fake1.rb fake2.rb lib/libfake1.rb ' \
       'test/testfake1.rb features/featuresfake1.rb'
   end
 

@@ -1,0 +1,4 @@
+# I like trailing commas in maps.  They let me insert new elements and
+# see them as one line in a diff, not two.
+TrailingComma:
+  Enabled: false

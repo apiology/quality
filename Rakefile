@@ -16,9 +16,9 @@ CLOBBER.include("#{BUILD_DIR}/*")
 
 Dir['tasks/**/*.rake'].each { |t| load t }
 
-task :default => [:test]
-
-Quality::Rake::Task.new
+Quality::Rake::Task.new do |t|
+  t.skip_tools = ['reek']
+end
 
 task :clear_metrics do |t|
   puts Time.now
@@ -30,3 +30,5 @@ task :clear_metrics do |t|
 end
 
 task :localtest => [:clear_metrics, :test, :quality]
+
+task :default => [:localtest]

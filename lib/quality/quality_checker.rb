@@ -1,4 +1,5 @@
 require_relative 'command_output_processor'
+require 'English'
 
 module Quality
   # Runs a quality-checking, command, checks it agaist the existing
@@ -30,7 +31,7 @@ module Quality
       processor = @command_output_processor_class.new
       processor.emacs_format = @command_options[:emacs_format]
       exit_status = run_command(processor, &count_violations_on_line)
-      [processor, $?.exitstatus]
+      [processor, exit_status]
     end
 
     def run_command(processor, &count_violations_on_line)
@@ -38,14 +39,15 @@ module Quality
         processor.file = file
         @command_output = processor.process!(&count_violations_on_line)
       end
+      $CHILD_STATUS.exitstatus
     end
 
     def check_exit_status(exit_status)
-      unless @command_options[:gives_error_code_on_violations]
-        if exit_status != 0
-          fail("Error detected running #{full_cmd}.  " +
-               "Exit status is #{exit_status}, output is [#{out}]")
-        end
+      return if @command_options[:gives_error_code_on_violations]
+
+      if exit_status != 0
+        fail("Error detected running #{full_cmd}.  " \
+             "Exit status is #{exit_status}, output is [#{out}]")
       end
     end
 
@@ -61,8 +63,8 @@ module Quality
       existing = existing_violations
       report_violations(existing)
       if @violations > existing
-        fail("Output from #{@cmd}\n\n#{@command_output}\n\n" +
-             "Reduce total number of #{@cmd} violations " +
+        fail("Output from #{@cmd}\n\n#{@command_output}\n\n" \
+             "Reduce total number of #{@cmd} violations " \
              "to #{existing} or below!")
       elsif @violations < existing
         puts 'Ratcheting quality up...'

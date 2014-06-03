@@ -27,10 +27,10 @@ class TestQualityChecker < Test::Unit::TestCase
       get_test_object('foo',
                       command_options,
                       '.') do
-      setup_execute_mocks(command_options,
-                          num_violations,
-                          existing_violations)
-    end
+        setup_execute_mocks(command_options,
+                            num_violations,
+                            existing_violations)
+      end
     quality_checker.execute do |line|
       assert_equal(line, 'line')
     end
@@ -58,7 +58,7 @@ class TestQualityChecker < Test::Unit::TestCase
     @mocks[:popener].expects(:popen).with('foo').yields(command_output)
     command_output_processor.expects(:file=).with(command_output)
     process_expectation = command_output_processor.expects(:process!)
-    ['line', 'line'].each do |line|
+    %w(line line).each do |line|
       process_expectation.yields(line)
     end
   end

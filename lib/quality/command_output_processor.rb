@@ -28,7 +28,7 @@ module Quality
       out
     end
 
-    def process_line(&count_violations_on_line)
+    def process_line
       output =
         if emacs_format
           preprocess_line_for_emacs

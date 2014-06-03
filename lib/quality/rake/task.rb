@@ -6,12 +6,10 @@ require 'rbconfig'
 require_relative '../quality_checker'
 
 module Quality
-
   #
   # Defines a task library for running quality's various tools
   #
   module Rake
-
     # A Rake task that run quality tools on a set of source files, and
     # enforce a ratcheting quality level.
     #
@@ -26,7 +24,6 @@ module Quality
     #
     #   rake quality
     class Task < ::Rake::TaskLib
-
       # Name of quality task.
       # Defaults to :quality.
       attr_accessor :quality_name
@@ -42,7 +39,7 @@ module Quality
 
       # Array of directory names which contain ruby files to analyze.
       #
-      # Defaults to %w{lib test spec feature}, which translates to *.rb in
+      # Defaults to %w(lib test spec feature), which translates to *.rb in
       # the base directory, as well as lib, test, and feature.
       attr_writer :ruby_dirs
 
@@ -97,7 +94,7 @@ module Quality
       private
 
       def define # :nodoc:
-        desc 'Verify quality has increased or stayed ' +
+        desc 'Verify quality has increased or stayed ' \
           'the same' unless ::Rake.application.last_comment
         @dsl.define_task(quality_name) { run_quality }
         @dsl.define_task(ratchet_name) { run_ratchet }
@@ -107,7 +104,7 @@ module Quality
       end
 
       def tools
-        ['cane', 'flog', 'flay', 'reek', 'rubocop']
+        %w(cane flog flay reek rubocop)
       end
 
       def run_quality
@@ -187,7 +184,7 @@ module Quality
       end
 
       def ruby_dirs
-        @ruby_dirs ||= %w{lib test spec feature}
+        @ruby_dirs ||= %w(lib test spec feature)
       end
 
       def ruby_files
