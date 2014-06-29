@@ -45,10 +45,9 @@ module Quality
     def check_exit_status(exit_status)
       return if @command_options[:gives_error_code_on_violations]
 
-      if exit_status != 0
-        fail("Error detected running #{full_cmd}.  " \
-             "Exit status is #{exit_status}, output is [#{out}]")
-      end
+      fail("Error detected running #{full_cmd}.  " \
+           "Exit status is #{exit_status}, " \
+           "output is [#{out}]") if exit_status != 0
     end
 
     def existing_violations
@@ -85,13 +84,13 @@ module Quality
 
       @found_output = false
       if args.size > 0
-        "#{get_cmd_with_ruby_hack_prefix} #{args}"
+        "#{cmd_with_ruby_hack_prefix} #{args}"
       else
-        "#{get_cmd_with_ruby_hack_prefix}"
+        "#{cmd_with_ruby_hack_prefix}"
       end
     end
 
-    def get_cmd_with_ruby_hack_prefix
+    def cmd_with_ruby_hack_prefix
       if defined?(RUBY_ENGINE) && (RUBY_ENGINE == 'jruby')
         "jruby -S #{@cmd}"
       elsif RbConfig::CONFIG['host_os'] =~ /mswin|mingw/
