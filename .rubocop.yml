@@ -2,5 +2,3 @@
 # see them as one line in a diff, not two.
 TrailingComma:
   Enabled: false
-Documentation:
-  Enabled: false
