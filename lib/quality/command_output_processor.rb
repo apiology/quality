@@ -42,9 +42,9 @@ module Quality
 
     def preprocess_line_for_emacs
       if @current_line =~ /^ *(\S*.rb:[0-9]*) *(.*)/
-        $1 + ': ' + $2 + "\n"
+        Regexp.last_match[1] + ': ' + Regexp.last_match[2] + "\n"
       elsif @current_line =~ /^ *(.*) +(\S*.rb:[0-9]*) *(.*)/
-        $2 + ': ' + $1 + "\n"
+        Regexp.last_match[2] + ': ' + Regexp.last_match[1] + "\n"
       else
         @current_line
       end

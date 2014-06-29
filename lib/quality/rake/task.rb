@@ -212,9 +212,8 @@ module Quality
       end
 
       def quality_flog
-        ratchet_quality_cmd('flog',
-                       args: "--all --continue --methods-only #{ruby_files}",
-                       emacs_format: true) do |line|
+        args = "--all --continue --methods-only #{ruby_files}"
+        ratchet_quality_cmd('flog', args: args, emacs_format: true) do |line|
           self.class.count_violations_in_flog_output(line)
         end
       end
