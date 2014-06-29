@@ -17,6 +17,7 @@ your numbers don't get any worse over time.
   s.email = ['vince@broz.cc']
   # s.executables = ["quality"]
   # s.extra_rdoc_files = ["CHANGELOG", "License.txt"]
+  s.license = 'MIT'
   s.files = Dir['License.txt', 'README.md',
                 'Rakefile',
                 # "bin/quality",
