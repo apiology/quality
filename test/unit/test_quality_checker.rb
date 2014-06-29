@@ -3,7 +3,7 @@ require_relative 'test_helper'
 # Unit test the QualityChecker class
 class TestQualityChecker < Test::Unit::TestCase
   def test_execute
-    command_options = { }
+    command_options = {}
     num_violations = 523
     existing_violations = 524
     quality_checker =
@@ -20,7 +20,7 @@ class TestQualityChecker < Test::Unit::TestCase
   end
 
   def test_execute_no_existing_violations
-    command_options = { }
+    command_options = {}
     num_violations = 523
     existing_violations = nil
     quality_checker =
