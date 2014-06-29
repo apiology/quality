@@ -3,8 +3,8 @@
 ##Overview
 
 Quality is a tool that runs quality checks on Ruby code using cane,
-reek, flog and flay, and makes sure your numbers don't get any worse
-over time.
+reek, flog, flay and rubocop and makes sure your numbers don't get any
+worse over time.
 
 ```bash
 $ gem install quality
