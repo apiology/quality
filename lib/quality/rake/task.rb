@@ -176,7 +176,7 @@ module Quality
                             gives_error_code_on_violations: true,
                             emacs_format: true) do |line|
           if line =~ /\(([0-9]*)\):$/
-            $1.to_i
+            Regexp.last_match[1].to_i
           else
             0
           end
@@ -223,7 +223,7 @@ module Quality
         if line =~ /^ *([0-9.]*): flog total$/
           0
         elsif line =~ /^ *([0-9.]*): (.*) .*.rb:[0-9]*$/
-          score = $1.to_i
+          score = Regexp.last_match[1].to_i
           if score > threshold
             1
           else
@@ -239,7 +239,7 @@ module Quality
                             args: "-m 75 -t 99999 #{ruby_files}",
                             emacs_format: true) do |line|
           if line =~ /^[0-9]*\).* \(mass = ([0-9]*)\)$/
-            $1.to_i
+            Regexp.last_match[1].to_i
           else
             0
           end
