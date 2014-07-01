@@ -2,24 +2,26 @@ require_relative 'test_helper'
 
 # Unit test the QualityChecker class
 class TestQualityChecker < Test::Unit::TestCase
-  def test_execute
+  def quality_checker_ratchet
     command_options = {}
     num_violations = 523
     existing_violations = 524
-    quality_checker =
-      get_test_object('foo',
-                      command_options,
-                      '.') do
-        setup_execute_mocks(command_options,
-                            num_violations,
-                            existing_violations)
-      end
-    quality_checker.execute do |line|
+    get_test_object('foo',
+                    command_options,
+                    '.') do
+      setup_execute_mocks(command_options,
+                          num_violations,
+                          existing_violations)
+    end
+  end
+
+  def test_execute
+    quality_checker_ratchet.execute do |line|
       assert_equal(line, 'line')
     end
   end
 
-  def quality_checker
+  def quality_checker_no_existing_violations
     command_options = {}
     num_violations = 523
     existing_violations = nil
@@ -34,7 +36,7 @@ class TestQualityChecker < Test::Unit::TestCase
   end
 
   def test_execute_no_existing_violations
-    quality_checker.execute do |line|
+    quality_checker_no_existing_violations.execute do |line|
       assert_equal(line, 'line')
     end
   end
