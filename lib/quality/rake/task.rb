@@ -51,10 +51,29 @@ module Quality
 
       # Defines a new task, using the name +name+.
       def initialize(args = {})
+        parse_args(args)
+
+        @skip_tools = []
+
+        @output_dir = '.'
+
+        yield self if block_given?
+
+        define
+      end
+
+      def parse_task_name_args(args)
         @quality_name = args[:quality_name] || 'quality'
 
         @ratchet_name = args[:ratchet_name] || 'ratchet'
+      end
 
+      def parse_args(args)
+        parse_task_name_args(args)
+        parse_unit_test_overrides(args)
+      end
+
+      def parse_unit_test_overrides(args)
         # allow unit tests to override the class that Rake DSL
         # messages are sent to.
         @dsl = args[:dsl] || ::Rake::Task
@@ -81,14 +100,6 @@ module Quality
         # Class which actually runs the quality check commands
         @quality_checker_class =
           args[:quality_checker_class] || Quality::QualityChecker
-
-        @skip_tools = []
-
-        @output_dir = '.'
-
-        yield self if block_given?
-
-        define
       end
 
       private
