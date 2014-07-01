@@ -13,10 +13,6 @@ class TestTask < Test::Unit::TestCase
     expect_tools_run
   end
 
-  def expect_define_task
-    @mocks[:dsl].expects(:define_task)
-  end
-
   def expect_tools_tasks_defined
     all_tools.each do |tool|
       expect_define_task.with(tool)

@@ -222,18 +222,15 @@ module Quality
       end
 
       def self.count_violations_in_flog_output(line, threshold = 50)
-        if line =~ /^ *([0-9.]*): flog total$/
-          0
-        elsif line =~ /^ *([0-9.]*): (.*) .*.rb:[0-9]*$/
-          score = Regexp.last_match[1].to_i
-          if score > threshold
-            1
-          else
-            0
-          end
-        else
-          0
-        end
+        return 0 if line =~ /^ *([0-9.]*): flog total$/
+
+        return 0 unless line =~ /^ *([0-9.]*): (.*) .*.rb:[0-9]*$/
+
+        score = Regexp.last_match[1].to_i
+
+        return 1 if score > threshold
+
+        0
       end
 
       def quality_flay
