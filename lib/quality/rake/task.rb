@@ -166,12 +166,15 @@ module Quality
         quality_checker.execute(&count_violations_on_line)
       end
 
-      def quality_cane
-        unless @configuration_writer.exist?('.cane')
-          @configuration_writer.open('.cane', 'w') do |file|
-            file.write('-f **/*.rb')
-          end
+      def write_out_dot_cane
+        @configuration_writer.open('.cane', 'w') do |file|
+          file.write('-f **/*.rb')
         end
+      end
+
+      def quality_cane
+        write_out_dot_cane unless @configuration_writer.exist?('.cane')
+
         ratchet_quality_cmd('cane',
                             gives_error_code_on_violations: true,
                             emacs_format: true) do |line|
