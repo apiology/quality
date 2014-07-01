@@ -19,18 +19,21 @@ class TestQualityChecker < Test::Unit::TestCase
     end
   end
 
-  def test_execute_no_existing_violations
+  def quality_checker
     command_options = {}
     num_violations = 523
     existing_violations = nil
-    quality_checker =
-      get_test_object('foo',
-                      command_options,
-                      '.') do
-        setup_execute_mocks(command_options,
-                            num_violations,
-                            existing_violations)
-      end
+
+    get_test_object('foo',
+                    command_options,
+                    '.') do
+      setup_execute_mocks(command_options,
+                          num_violations,
+                          existing_violations)
+    end
+  end
+
+  def test_execute_no_existing_violations
     quality_checker.execute do |line|
       assert_equal(line, 'line')
     end
