@@ -4,11 +4,11 @@ require 'rake'
 require 'rake/tasklib'
 require 'rbconfig'
 require_relative '../quality_checker'
-require_relative '../reek'
-require_relative '../flog'
-require_relative '../rubocop'
-require_relative '../flay'
-require_relative '../cane'
+require_relative '../tools/cane'
+require_relative '../tools/flay'
+require_relative '../tools/flog'
+require_relative '../tools/reek'
+require_relative '../tools/rubocop'
 
 module Quality
   #
@@ -29,11 +29,11 @@ module Quality
     #
     #   rake quality
     class Task < ::Rake::TaskLib
-      include Rubocop
-      include Cane
-      include Reek
-      include Flog
-      include Flay
+      include Tools::Cane
+      include Tools::Flay
+      include Tools::Flog
+      include Tools::Reek
+      include Tools::Rubocop
 
       # Name of quality task.
       # Defaults to :quality.
@@ -126,7 +126,11 @@ module Quality
       end
 
       def tools
-        %w(cane flog flay reek rubocop)
+        self.class.ancestors.collect do |ancestor|
+          ancestor_name = ancestor.to_s
+          next unless ancestor_name.start_with?('Quality::Tools::')
+          ancestor_name.split('::').last.downcase
+        end.compact
       end
 
       def run_quality
