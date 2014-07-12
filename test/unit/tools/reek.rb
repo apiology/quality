@@ -1,14 +1,15 @@
 module Test
   module Quality
     module Tools
+      # Test for the 'reek' tool within the quality gem
       module Reek
         def expect_reek_run(quality_checker)
           @mocks[:quality_checker_class]
             .expects(:new).with('reek',
-          { args: reek_args,
-            emacs_format: true,
-            gives_error_code_on_violations: true },
-            '.')
+                                { args: reek_args,
+                                  emacs_format: true,
+                                  gives_error_code_on_violations: true },
+                                '.')
             .returns(quality_checker)
           expect_find_ruby_files
           expect_installed('reek')

@@ -1,13 +1,14 @@
 module Test
   module Quality
     module Tools
+      # Test for the 'flog' tool within the quality gem
       module Flog
         def expect_flog_run(quality_checker)
           @mocks[:quality_checker_class]
             .expects(:new).with('flog',
-          { args: flog_args,
-            emacs_format: true },
-            '.')
+                                { args: flog_args,
+                                  emacs_format: true },
+                                '.')
             .returns(quality_checker)
           expect_find_ruby_files
           expect_installed('flog')

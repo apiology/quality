@@ -1,13 +1,14 @@
 module Test
   module Quality
     module Tools
+      # Test for the 'rubocop' tool within the quality gem
       module Rubocop
         def expect_rubocop_run(quality_checker)
           @mocks[:quality_checker_class]
             .expects(:new).with('rubocop',
-          { args: rubocop_args,
-            gives_error_code_on_violations: true },
-            '.')
+                                { args: rubocop_args,
+                                  gives_error_code_on_violations: true },
+                                '.')
             .returns(quality_checker)
           expect_find_ruby_files
           expect_installed('rubocop')

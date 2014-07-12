@@ -1,13 +1,14 @@
 module Test
   module Quality
     module Tools
+      # Test for the 'flay' tool within the quality gem
       module Flay
         def expect_flay_run(quality_checker)
           @mocks[:quality_checker_class]
             .expects(:new).with('flay',
-          { args: flay_args,
-            emacs_format: true },
-            '.')
+                                { args: flay_args,
+                                  emacs_format: true },
+                                '.')
             .returns(quality_checker)
           expect_find_ruby_files
           expect_installed('flay')
