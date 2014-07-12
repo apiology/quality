@@ -1,8 +1,9 @@
 module Quality
   module Flay
-    def quality_flay
-      private
 
+    private
+
+    def quality_flay
       ratchet_quality_cmd('flay',
                           args: "-m 75 -t 99999 #{ruby_files}",
                           emacs_format: true) do |line|
