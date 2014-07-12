@@ -1,7 +1,6 @@
 module Quality
   module Tools
     module Flay
-
       private
 
       def quality_flay

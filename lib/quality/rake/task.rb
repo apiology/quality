@@ -126,7 +126,7 @@ module Quality
       end
 
       def tools
-        self.class.ancestors.collect do |ancestor|
+        self.class.ancestors.map do |ancestor|
           ancestor_name = ancestor.to_s
           next unless ancestor_name.start_with?('Quality::Tools::')
           ancestor_name.split('::').last.downcase
