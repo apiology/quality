@@ -1,4 +1,5 @@
 module Quality
+  # Module configuring the quality gem for use with the rubocop tool
   module Rubocop
     private
 
@@ -14,6 +15,7 @@ module Quality
       base.extend ClassMethods
     end
 
+    # See Rubocop.included for use
     module ClassMethods
       def count_rubocop_violations(line)
         if line =~ /^.* file[s|] inspected, (.*) offence[s|] detected$/

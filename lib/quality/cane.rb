@@ -1,6 +1,7 @@
 module Quality
   private
 
+  # Module configuring the quality gem for use with the cane tool
   module Cane
     def write_out_dot_cane
       @configuration_writer.open('.cane', 'w') do |file|

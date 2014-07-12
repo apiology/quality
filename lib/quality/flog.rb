@@ -1,4 +1,5 @@
 module Quality
+  # Module configuring the quality gem for use with the flog tool
   module Flog
     private
 
@@ -13,6 +14,7 @@ module Quality
       base.extend ClassMethods
     end
 
+    # See Flog.included for use
     module ClassMethods
       def count_violations_in_flog_output(line, threshold = 50)
         return 0 if line =~ /^ *([0-9.]*): flog total$/
