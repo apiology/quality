@@ -1,8 +1,8 @@
-require 'tools/cane'
-require 'tools/flay'
-require 'tools/flog'
-require 'tools/reek'
-require 'tools/rubocop'
+require_relative 'tools/cane'
+require_relative 'tools/flay'
+require_relative 'tools/flog'
+require_relative 'tools/reek'
+require_relative 'tools/rubocop'
 
 # Unit test the Task class
 class TestTask < Test::Unit::TestCase
