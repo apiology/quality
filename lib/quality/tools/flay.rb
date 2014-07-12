@@ -1,7 +1,7 @@
 module Quality
   module Tools
+    # Adds 'flay' tool support to quality gem
     module Flay
-
       private
 
       def quality_flay

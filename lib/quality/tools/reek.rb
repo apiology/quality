@@ -1,5 +1,6 @@
 module Quality
   module Tools
+    # Adds 'reek' tool support to quality gem
     module Reek
       private
 
@@ -17,6 +18,7 @@ module Quality
         base.extend ClassMethods
       end
 
+      # See Reek.included
       module ClassMethods
         def count_reek_violations(line)
           if line =~ /^  .* (.*)$/

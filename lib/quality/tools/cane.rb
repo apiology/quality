@@ -1,5 +1,6 @@
 module Quality
   module Tools
+    # Adds 'cane' tool support to quality gem
     module Cane
       private
 
