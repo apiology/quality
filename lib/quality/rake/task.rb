@@ -4,6 +4,11 @@ require 'rake'
 require 'rake/tasklib'
 require 'rbconfig'
 require_relative '../quality_checker'
+require_relative '../reek'
+require_relative '../flog'
+require_relative '../rubocop'
+require_relative '../flay'
+require_relative '../cane'
 
 module Quality
   #
@@ -24,6 +29,12 @@ module Quality
     #
     #   rake quality
     class Task < ::Rake::TaskLib
+      include Rubocop
+      include Cane
+      include Reek
+      include Flog
+      include Flay
+
       # Name of quality task.
       # Defaults to :quality.
       attr_accessor :quality_name
@@ -177,26 +188,6 @@ module Quality
         quality_checker.execute(&count_violations_on_line)
       end
 
-      def write_out_dot_cane
-        @configuration_writer.open('.cane', 'w') do |file|
-          file.write('-f **/*.rb')
-        end
-      end
-
-      def quality_cane
-        write_out_dot_cane unless @configuration_writer.exist?('.cane')
-
-        ratchet_quality_cmd('cane',
-                            gives_error_code_on_violations: true,
-                            emacs_format: true) do |line|
-          if line =~ /\(([0-9]*)\):$/
-            Regexp.last_match[1].to_i
-          else
-            0
-          end
-        end
-      end
-
       def ruby_dirs
         @ruby_dirs ||= %w(lib test spec feature)
       end
@@ -205,71 +196,6 @@ module Quality
         @globber.glob('*.rb')
           .concat(@globber.glob(File.join("{#{ruby_dirs.join(',')}}",
                                           '**', '*.rb'))).join(' ')
-      end
-
-      def quality_reek
-        args = "--single-line #{ruby_files}"
-        ratchet_quality_cmd('reek',
-                            args: args,
-                            emacs_format: true,
-                            gives_error_code_on_violations: true) do |line|
-          self.class.count_reek_violations(line)
-        end
-      end
-
-      def self.count_reek_violations(line)
-        if line =~ /^  .* (.*)$/
-          1
-        else
-          0
-        end
-      end
-
-      def quality_flog
-        args = "--all --continue --methods-only #{ruby_files}"
-        ratchet_quality_cmd('flog', args: args, emacs_format: true) do |line|
-          self.class.count_violations_in_flog_output(line)
-        end
-      end
-
-      def self.count_violations_in_flog_output(line, threshold = 50)
-        return 0 if line =~ /^ *([0-9.]*): flog total$/
-
-        return 0 unless line =~ /^ *([0-9.]*): (.*) .*.rb:[0-9]*$/
-
-        score = Regexp.last_match[1].to_i
-
-        return 1 if score > threshold
-
-        0
-      end
-
-      def quality_flay
-        ratchet_quality_cmd('flay',
-                            args: "-m 75 -t 99999 #{ruby_files}",
-                            emacs_format: true) do |line|
-          if line =~ /^[0-9]*\).* \(mass = ([0-9]*)\)$/
-            Regexp.last_match[1].to_i
-          else
-            0
-          end
-        end
-      end
-
-      def quality_rubocop
-        ratchet_quality_cmd('rubocop',
-                            gives_error_code_on_violations: true,
-                            args: "--format emacs #{ruby_files}") do |line|
-          self.class.count_rubocop_violations(line)
-        end
-      end
-
-      def self.count_rubocop_violations(line)
-        if line =~ /^.* file[s|] inspected, (.*) offence[s|] detected$/
-          0
-        else
-          1
-        end
       end
     end
   end
