@@ -71,11 +71,11 @@ Quality::Rake::Task.new { |t|
 
 Quality makes use of the following other gems, which do the actual checking:
 
-* reek
-* cane
-* flog
-* flay
-* rubocop
+* [reek](https://github.com/troessner/reek)
+* [cane](https://github.com/square/cane)
+* [flog](https://github.com/seattlerb/flog)
+* [flay](https://github.com/seattlerb/flay)
+* [rubocop](https://github.com/bbatsov/rubocop)
 
 ### Learn More
 
