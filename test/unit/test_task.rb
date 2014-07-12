@@ -1,9 +1,3 @@
-module Test
-  # Owns test code for various modules in the quality gem
-  module Quality
-  end
-end
-
 require_relative 'tools/cane'
 require_relative 'tools/flay'
 require_relative 'tools/flog'
@@ -12,11 +6,11 @@ require_relative 'tools/rubocop'
 
 # Unit test the Task class
 class TestTask < Test::Unit::TestCase
-  include Test::Quality::Tools::Cane
-  include Test::Quality::Tools::Flay
-  include Test::Quality::Tools::Flog
-  include Test::Quality::Tools::Reek
-  include Test::Quality::Tools::Rubocop
+  include ::Test::Quality::Tools::Cane
+  include ::Test::Quality::Tools::Flay
+  include ::Test::Quality::Tools::Flog
+  include ::Test::Quality::Tools::Reek
+  include ::Test::Quality::Tools::Rubocop
 
   def test_quality_task
     get_test_object do
