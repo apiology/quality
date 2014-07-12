@@ -3,5 +3,5 @@
 TrailingComma:
   Enabled: false
 
-Style/Encoding:
-  EnforcedStyle: :when_needed
+Encoding:
+  Enabled: false
