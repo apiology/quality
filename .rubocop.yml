@@ -2,3 +2,6 @@
 # see them as one line in a diff, not two.
 TrailingComma:
   Enabled: false
+
+Style/Encoding:
+  EnforcedStyle: :when_needed
