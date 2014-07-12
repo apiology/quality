@@ -5,7 +5,7 @@ class TestCommandOutputProcessor < Test::Unit::TestCase
   def test_process_vanilla
     @processor = get_test_object
     @processor.file = vanilla_file
-    @processor.process! do
+    @processor.process do
       0
     end
   end
@@ -23,7 +23,7 @@ END
     @processor = get_test_object
     @processor.file = vanilla_file
     @processor.emacs_format = true
-    @processor.process! do
+    @processor.process do
       0
     end
   end

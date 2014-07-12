@@ -37,7 +37,7 @@ module Quality
     def run_command(processor, &count_violations_on_line)
       @popener.popen(full_cmd) do |file|
         processor.file = file
-        @command_output = processor.process!(&count_violations_on_line)
+        @command_output = processor.process(&count_violations_on_line)
       end
       $CHILD_STATUS.exitstatus
     end

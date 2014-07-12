@@ -13,7 +13,7 @@ module Quality
       @violations = 0
     end
 
-    def process!(&count_violations_on_line)
+    def process(&count_violations_on_line)
       process_file(file, &count_violations_on_line)
     end
 

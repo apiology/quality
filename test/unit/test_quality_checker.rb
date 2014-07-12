@@ -62,7 +62,7 @@ class TestQualityChecker < Test::Unit::TestCase
     command_output = mock('command_output')
     @mocks[:popener].expects(:popen).with('foo').yields(command_output)
     command_output_processor.expects(:file=).with(command_output)
-    process_expectation = command_output_processor.expects(:process!)
+    process_expectation = command_output_processor.expects(:process)
     %w(line line).each do |line|
       process_expectation.yields(line)
     end
