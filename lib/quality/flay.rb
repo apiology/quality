@@ -1,7 +1,6 @@
 module Quality
   # Module configuring the quality gem for use with the flay tool
   module Flay
-
     private
 
     def quality_flay
