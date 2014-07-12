@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/apiology/quality.png)](https://travis-ci.org/apiology/quality)
+
 # Quality -- code quality ratchet for Ruby
 
 ##Overview
