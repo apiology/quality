@@ -1,0 +1,26 @@
+module Test
+  module Quality
+    module Tools
+      module Reek
+        def expect_reek_run(quality_checker)
+          @mocks[:quality_checker_class]
+            .expects(:new).with('reek',
+          { args: reek_args,
+            emacs_format: true,
+            gives_error_code_on_violations: true },
+            '.')
+            .returns(quality_checker)
+          expect_find_ruby_files
+          expect_installed('reek')
+        end
+
+        private
+
+        def reek_args
+          '--single-line fake1.rb fake2.rb ' \
+            'lib/libfake1.rb test/testfake1.rb features/featuresfake1.rb'
+        end
+      end
+    end
+  end
+end

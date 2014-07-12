@@ -1,5 +1,17 @@
+require 'tools/cane'
+require 'tools/flay'
+require 'tools/flog'
+require 'tools/reek'
+require 'tools/rubocop'
+
 # Unit test the Task class
 class TestTask < Test::Unit::TestCase
+  include Test::Quality::Tools::Cane
+  include Test::Quality::Tools::Flay
+  include Test::Quality::Tools::Flog
+  include Test::Quality::Tools::Reek
+  include Test::Quality::Tools::Rubocop
+
   def test_quality_task
     get_test_object do
       setup_quality_task_mocks
@@ -78,87 +90,9 @@ class TestTask < Test::Unit::TestCase
     file.expects(:write).with(new_high_water_mark.to_s)
   end
 
-  def expect_cane_run(quality_checker)
-    @mocks[:quality_checker_class]
-      .expects(:new).with('cane',
-                          { gives_error_code_on_violations: true,
-                            emacs_format: true },
-                          '.')
-      .returns(quality_checker)
-    @mocks[:configuration_writer].expects(:exist?).with('.cane').returns(true)
-    expect_installed('cane')
-  end
-
   def expect_installed(tool_name)
     @mocks[:gem_spec].expects(:find_all_by_name)
       .with(tool_name).returns([true])
-  end
-
-  def expect_flog_run(quality_checker)
-    @mocks[:quality_checker_class]
-      .expects(:new).with('flog',
-                          { args: self.class.flog_args,
-                            emacs_format: true },
-                          '.')
-      .returns(quality_checker)
-    expect_find_ruby_files
-    expect_installed('flog')
-  end
-
-  def self.flog_args
-    '--all --continue --methods-only ' \
-      'fake1.rb fake2.rb lib/libfake1.rb ' \
-      'test/testfake1.rb features/featuresfake1.rb'
-  end
-
-  def expect_flay_run(quality_checker)
-    @mocks[:quality_checker_class]
-      .expects(:new).with('flay',
-                          { args: self.class.flay_args,
-                            emacs_format: true },
-                          '.')
-      .returns(quality_checker)
-    expect_find_ruby_files
-    expect_installed('flay')
-  end
-
-  def self.flay_args
-    '-m 75 -t 99999 ' \
-      'fake1.rb fake2.rb lib/libfake1.rb ' \
-      'test/testfake1.rb features/featuresfake1.rb'
-  end
-
-  def expect_reek_run(quality_checker)
-    @mocks[:quality_checker_class]
-      .expects(:new).with('reek',
-                          { args: self.class.reek_args,
-                            emacs_format: true,
-                            gives_error_code_on_violations: true },
-                          '.')
-      .returns(quality_checker)
-    expect_find_ruby_files
-    expect_installed('reek')
-  end
-
-  def self.reek_args
-    '--single-line fake1.rb fake2.rb ' \
-      'lib/libfake1.rb test/testfake1.rb features/featuresfake1.rb'
-  end
-
-  def expect_rubocop_run(quality_checker)
-    @mocks[:quality_checker_class]
-      .expects(:new).with('rubocop',
-                          { args: self.class.rubocop_args,
-                            gives_error_code_on_violations: true },
-                          '.')
-      .returns(quality_checker)
-    expect_find_ruby_files
-    expect_installed('rubocop')
-  end
-
-  def self.rubocop_args
-    '--format emacs fake1.rb fake2.rb lib/libfake1.rb ' \
-      'test/testfake1.rb features/featuresfake1.rb'
   end
 
   def self.sample_output(tool_name)
