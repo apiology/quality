@@ -8,7 +8,6 @@ module Quality
   class QualityChecker
     def initialize(cmd, command_options, output_dir, dependencies = {})
       @popener = dependencies[:popener] || IO
-      @count_file = dependencies[:count_file] || File
       @count_io = dependencies[:count_io] || IO
       @command_output_processor_class =
         dependencies[:command_output_processor_class] ||
@@ -51,7 +50,7 @@ module Quality
     end
 
     def existing_violations
-      if @count_file.exist?(@filename)
+      if File.exist?(@filename)
         @count_io.read(@filename).to_i
       else
         9_999_999_999
@@ -101,7 +100,7 @@ module Quality
     end
 
     def write_violations(new_violations)
-      @count_file.open(@filename, 'w') do |file|
+      File.open(@filename, 'w') do |file|
         file.write(new_violations.to_s)
       end
     end

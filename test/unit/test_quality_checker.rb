@@ -77,7 +77,7 @@ class TestQualityChecker < Test::Unit::TestCase
 
   def expect_write_new_violations(num_violations, hwm_filename)
     file = mock('file')
-    @mocks[:count_file].expects(:open).with(hwm_filename, 'w').yields(file)
+    File.expects(:open).with(hwm_filename, 'w').yields(file)
     file.expects(:write).with(num_violations.to_s)
   end
 
@@ -92,13 +92,12 @@ class TestQualityChecker < Test::Unit::TestCase
   end
 
   def expect_file_exist?(filename, exists)
-    @mocks[:count_file].expects(:exist?).with(filename).returns(exists)
+    File.expects(:exist?).with(filename).returns(exists)
   end
 
   def test_mocks
     {
       popener: mock('popener'),
-      count_file: mock('count_file'),
       count_io: mock('count_io'),
       command_output_processor_class: mock('command_output_processor_class'),
     }
