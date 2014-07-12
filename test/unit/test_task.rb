@@ -1,3 +1,9 @@
+module Test
+  # Owns test code for various modules in the quality gem
+  module Quality
+  end
+end
+
 require_relative 'tools/cane'
 require_relative 'tools/flay'
 require_relative 'tools/flog'
