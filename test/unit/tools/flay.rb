@@ -17,7 +17,7 @@ module Test
         private
 
         def flay_args
-          '-m 75 -t 99999 ' \
+          '--mass 75 --timeout 99999 ' \
             'fake1.rb fake2.rb lib/libfake1.rb ' \
             'test/testfake1.rb features/featuresfake1.rb'
         end
