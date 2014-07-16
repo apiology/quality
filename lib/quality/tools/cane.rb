@@ -6,7 +6,7 @@ module Quality
 
       def write_out_dot_cane
         @configuration_writer.open('.cane', 'w') do |file|
-          file.write('-f **/*.rb')
+          file.write("-f #{ruby_files_glob}")
         end
       end
 

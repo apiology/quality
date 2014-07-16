@@ -196,10 +196,14 @@ module Quality
         @ruby_dirs ||= %w(lib test spec feature)
       end
 
+      def ruby_files_glob
+        File.join("{#{ruby_dirs.join(',')}}",
+                  '**', '*.rb')
+      end
+
       def ruby_files
         @globber.glob('*.rb')
-          .concat(@globber.glob(File.join("{#{ruby_dirs.join(',')}}",
-                                          '**', '*.rb'))).join(' ')
+          .concat(@globber.glob(ruby_files_glob)).join(' ')
       end
     end
   end
