@@ -78,7 +78,7 @@ class TestQualityChecker < Test::Unit::TestCase
   def expect_write_new_violations(num_violations, hwm_filename)
     file = mock('file')
     @mocks[:count_file].expects(:open).with(hwm_filename, 'w').yields(file)
-    file.expects(:write).with(num_violations.to_s)
+    file.expects(:write).with(num_violations.to_s + "\n")
   end
 
   def expect_existing_violations_read(existing_violations, hwm_filename)
