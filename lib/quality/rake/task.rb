@@ -168,7 +168,7 @@ module Quality
 
       def write_violations(filename, new_violations)
         @count_file.open(filename, 'w') do |file|
-          file.write(new_violations.to_s)
+          file.write(new_violations.to_s + "\n")
         end
       end
 

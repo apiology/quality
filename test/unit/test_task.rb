@@ -87,7 +87,7 @@ class TestTask < Test::Unit::TestCase
   def expect_write_to_high_water_mark(filename, new_high_water_mark)
     file = mock('file')
     @mocks[:count_file].expects(:open).with(filename, 'w').yields(file)
-    file.expects(:write).with(new_high_water_mark.to_s)
+    file.expects(:write).with(new_high_water_mark.to_s + "\n")
   end
 
   def expect_installed(tool_name)
