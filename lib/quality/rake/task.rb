@@ -141,11 +141,12 @@ module Quality
 
       def run_quality_with_tool(tool)
         installed = @gem_spec.find_all_by_name(tool).any?
+        suppressed = @skip_tools.include? tool
 
-        if !installed
-          puts "#{tool} not installed"
-        else
+        if installed && !suppressed
           method("quality_#{tool}".to_sym).call
+        elsif !installed
+          puts "#{tool} not installed"
         end
       end
 
