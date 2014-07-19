@@ -75,8 +75,6 @@ class TestTask < Test::Unit::TestCase
     filename = "./#{tool_name}_high_water_mark"
     expect_read_from_high_water_mark(filename, old_high_water_mark)
     expect_write_to_high_water_mark(filename, old_high_water_mark - 1)
-    @mocks[:cmd_runner].expects(:system)
-      .with("git commit -m 'tighten quality standard' #{filename}")
   end
 
   def expect_read_from_high_water_mark(filename, old_high_water_mark)

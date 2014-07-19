@@ -163,7 +163,6 @@ module Quality
         existing_violations = count_existing_violations(filename)
         new_violations = [0, existing_violations - 1].max
         write_violations(filename, new_violations)
-        tighten_standard(filename) if new_violations != existing_violations
       end
 
       def write_violations(filename, new_violations)
@@ -176,11 +175,6 @@ module Quality
         existing_violations = @count_io.read(filename).to_i
         fail("Problem with file #{filename}") if existing_violations < 0
         existing_violations
-      end
-
-      def tighten_standard(filename)
-        @cmd_runner
-          .system("git commit -m 'tighten quality standard' #{filename}")
       end
 
       def ratchet_quality_cmd(cmd,
