@@ -99,7 +99,7 @@ class TestTask < Test::Unit::TestCase
 
   def expect_find_ruby_files
     expect_glob.with('*.rb').returns(['fake1.rb', 'fake2.rb'])
-    expect_glob.with('{lib,test,spec,feature}/**/*.rb')
+    expect_glob.with('{app,lib,test,spec,feature}/**/*.rb')
       .returns(['lib/libfake1.rb',
                 'test/testfake1.rb',
                 'features/featuresfake1.rb'])
