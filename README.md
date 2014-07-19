@@ -1,4 +1,6 @@
 [![Build Status](https://travis-ci.org/apiology/quality.png)](https://travis-ci.org/apiology/quality)
+[![Coverage Status](https://coveralls.io/repos/apiology/quality/badge.png?branch=master)](https://coveralls.io/r/apiology/quality?branch=master)
+
 
 # Quality -- code quality ratchet for Ruby
 
