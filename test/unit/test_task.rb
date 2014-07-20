@@ -5,7 +5,7 @@ require_relative 'tools/reek'
 require_relative 'tools/rubocop'
 
 # Unit test the Task class
-class TestTask < Test::Unit::TestCase
+class TestTask < MiniTest::Unit::TestCase
   include ::Test::Quality::Tools::Cane
   include ::Test::Quality::Tools::Flay
   include ::Test::Quality::Tools::Flog
