@@ -1,7 +1,7 @@
 require_relative 'test_helper'
 
 # Test the CommandOutputProcessor class
-class TestCommandOutputProcessor < Test::Unit::TestCase
+class TestCommandOutputProcessor < MiniTest::Unit::TestCase
   def test_process_vanilla
     @processor = get_test_object
     @processor.file = vanilla_file
