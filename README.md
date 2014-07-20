@@ -14,7 +14,20 @@ worse over time.
 $ gem install quality
 ```
 
-and add it to your Rakefile like this:
+or in your Gemfile:
+
+```ruby
+group :development do
+  gem 'quality'
+end
+```
+and then:
+
+```bash
+$ bundle install
+```
+
+Once you have the gem, configure your Rakefile like this:
 
 ```ruby
 require 'quality/rake/task'
@@ -65,11 +78,25 @@ Quality::Rake::Task.new { |t|
 }
 ```
 
+## Why
+
+See [this post for more information](http://blog.apiology.cc/2014/06/scalable-quality-part-1.html on the problem the quality gem solves.
+
+## Maturity
+
+Quality is rapidly evolving, but uses [semantic versioning](http://semver.org/)--any incompatible changes will come out as major number updates.
+
+## Supported Ruby Versions
+
+Tested against Ruby 1.9.3 and 2.1.2.  Feel free to submit issues if problems are found elsewhere.
+
 ## Contributing
 
 * Fork the repo
 * Create a feature branch
-* Submit a pull request
+* Submit a github pull request
+
+Many thanks to all contributors, especially [@andyw8](https://github.com/andyw8), who has contributed some great improvements.
 
 ### Dependencies
 
@@ -84,3 +111,7 @@ Quality makes use of the following other gems, which do the actual checking:
 ### Learn More
 
 * Browse the code or install the latest development version from [https://github.com/apiology/quality/tree](https://github.com/apiology/quality/tree)
+
+## License
+
+Licensed under the MIT license.
