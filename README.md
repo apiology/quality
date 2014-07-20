@@ -80,7 +80,7 @@ Quality::Rake::Task.new { |t|
 
 ## Why
 
-See [this post for more information](http://blog.apiology.cc/2014/06/scalable-quality-part-1.html on the problem the quality gem solves.
+See [this post for more information](http://blog.apiology.cc/2014/06/scalable-quality-part-1.html) on the problem the quality gem solves.
 
 ## Maturity
 
