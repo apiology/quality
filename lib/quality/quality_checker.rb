@@ -1,5 +1,5 @@
 require_relative 'command_output_processor'
-require 'English'
+require_relative 'process_runner'
 
 module Quality
   # Runs a quality-checking, command, checks it agaist the existing
@@ -35,11 +35,13 @@ module Quality
     end
 
     def run_command(processor, &count_violations_on_line)
-      @popener.popen(full_cmd) do |file|
+      runner = ProcessRunner.new(full_cmd,
+                                 popener: @popener)
+
+      runner.run do |file|
         processor.file = file
         @command_output = processor.process(&count_violations_on_line)
       end
-      $CHILD_STATUS.exitstatus
     end
 
     def check_exit_status(exit_status)
