@@ -65,7 +65,7 @@ class TestQualityChecker < MiniTest::Unit::TestCase
   def expect_run_command(command_output_processor)
     command_output = mock('command_output')
     @mocks[:process_runner_class]
-      .expects(:new).with('foo', popener: @mocks[:popener])
+      .expects(:new).with('foo')
       .returns(process_runner)
     process_runner.expects(:run).yields(command_output).returns(0)
     command_output_processor.expects(:file=).with(command_output)
@@ -104,7 +104,6 @@ class TestQualityChecker < MiniTest::Unit::TestCase
 
   def test_mocks
     {
-      popener: mock('popener'),
       count_file: mock('count_file'),
       count_io: mock('count_io'),
       command_output_processor_class: mock('command_output_processor_class'),

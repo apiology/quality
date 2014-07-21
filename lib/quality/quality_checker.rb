@@ -7,7 +7,6 @@ module Quality
   # if possible, or outputs data if the number of violations increased.
   class QualityChecker
     def initialize(cmd, command_options, output_dir, dependencies = {})
-      @popener = dependencies[:popener] || IO
       @count_file = dependencies[:count_file] || File
       @count_io = dependencies[:count_io] || IO
       @command_output_processor_class =
@@ -37,8 +36,7 @@ module Quality
     end
 
     def run_command(processor, &count_violations_on_line)
-      runner = @process_runner_class.new(full_cmd,
-                                         popener: @popener)
+      runner = @process_runner_class.new(full_cmd)
 
       runner.run do |file|
         processor.file = file
