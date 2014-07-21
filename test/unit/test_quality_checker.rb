@@ -58,9 +58,16 @@ class TestQualityChecker < MiniTest::Unit::TestCase
     expect_write_new_violations(num_violations, hwm_filename)
   end
 
+  def process_runner
+    @process_runner ||= mock('process_runner')
+  end
+
   def expect_run_command(command_output_processor)
     command_output = mock('command_output')
-    @mocks[:popener].expects(:popen).with('foo').yields(command_output)
+    @mocks[:process_runner_class]
+      .expects(:new).with('foo', popener: @mocks[:popener])
+      .returns(process_runner)
+    process_runner.expects(:run).yields(command_output).returns(0)
     command_output_processor.expects(:file=).with(command_output)
     process_expectation = command_output_processor.expects(:process)
     %w(line line).each do |line|
@@ -101,6 +108,7 @@ class TestQualityChecker < MiniTest::Unit::TestCase
       count_file: mock('count_file'),
       count_io: mock('count_io'),
       command_output_processor_class: mock('command_output_processor_class'),
+      process_runner_class: mock('process_runner_class'),
     }
   end
 
