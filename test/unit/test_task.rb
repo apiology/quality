@@ -12,21 +12,29 @@ class TestTask < MiniTest::Unit::TestCase
   include ::Test::Quality::Tools::Reek
   include ::Test::Quality::Tools::Rubocop
 
-  def test_quality_task
-    get_test_object do
-      setup_quality_task_mocks
+  def test_quality_task_all_tools
+    get_test_object do |task|
+      setup_quality_task_mocks(task, all_tools)
     end
   end
 
-  def setup_quality_task_mocks
-    expect_tools_tasks_defined
-    expect_define_task.with('quality').yields
-    expect_define_task.with('ratchet')
-    expect_tools_run
+  def test_quality_task_some_suppressed
+    get_test_object do |task|
+      task.skip_tools = ['flog']
+      setup_quality_task_mocks(task, all_tools_minus_flog)
+    end
   end
 
-  def expect_tools_tasks_defined
-    all_tools.each do |tool|
+  def setup_quality_task_mocks(task, tools)
+    expect_tools_tasks_defined(all_tools)
+    expect_define_task.with('quality').yields
+    expect_define_task.with('ratchet')
+    expect_tools_installed(all_tools)
+    expect_tools_run(tools)
+  end
+
+  def expect_tools_tasks_defined(tools)
+    tools.each do |tool|
       expect_define_task.with(tool)
     end
   end
@@ -35,15 +43,32 @@ class TestTask < MiniTest::Unit::TestCase
     %w(cane flog flay reek rubocop)
   end
 
-  def expect_tools_run
-    all_tools.each do |tool_name|
+  def all_tools_minus_flog
+    all_tools - ['flog']
+  end
+
+  def expect_tools_run(tools)
+    tools.each do |tool_name|
       puts "Looking at #{tool_name}"
       expect_single_tool_run(tool_name)
     end
   end
 
+  def expect_tools_installed(tools)
+    tools.each do |tool_name|
+      expect_single_tool_installed(tool_name)
+    end
+  end
+
+  def quality_checker
+    @quality_checker ||= mock('quality_checker')
+  end
+
+  def expect_single_tool_installed(tool_name)
+    expect_installed(tool_name)
+  end
+
   def expect_single_tool_run(tool_name)
-    quality_checker = mock('quality_checker')
     method("expect_#{tool_name}_run").call(quality_checker)
     file = self.class.sample_output(tool_name)
     lines = file.lines.map { |line| line.strip }
@@ -61,10 +86,10 @@ class TestTask < MiniTest::Unit::TestCase
   end
 
   def setup_ratchet_task_mocks
-    expect_tools_tasks_defined
+    expect_tools_tasks_defined(all_tools)
     expect_define_task.with('quality')
     expect_define_task.with('ratchet').yields
-    @mocks[:globber].expects(:glob)
+    expect_glob
       .with('./*_high_water_mark').returns(%w(./foo_high_water_mark
                                               ./bar_high_water_mark))
     expect_ratchet('foo', 12)
@@ -124,7 +149,8 @@ class TestTask < MiniTest::Unit::TestCase
 
   def get_test_object(&twiddle_mocks)
     @mocks = test_mocks
-    yield unless twiddle_mocks.nil?
-    Quality::Rake::Task.new(@mocks)
+    Quality::Rake::Task.new(@mocks) do |task|
+      yield task unless twiddle_mocks.nil?
+    end
   end
 end

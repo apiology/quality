@@ -12,7 +12,6 @@ module Test
             .returns(quality_checker)
           @mocks[:configuration_writer].expects(:exist?).with('.cane')
             .returns(true)
-          expect_installed('cane')
         end
       end
     end

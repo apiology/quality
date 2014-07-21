@@ -12,7 +12,6 @@ module Test
                                 '.')
             .returns(quality_checker)
           expect_find_ruby_files
-          expect_installed('reek')
         end
 
         private
