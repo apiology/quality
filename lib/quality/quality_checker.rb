@@ -16,6 +16,8 @@ module Quality
       @cmd = cmd
       @command_options = command_options
       @filename = File.join(output_dir, "#{cmd}_high_water_mark")
+      @process_runner_class =
+        dependencies[:process_runner_class] || ProcessRunner
     end
 
     def execute(&count_violations_on_line)
@@ -35,8 +37,8 @@ module Quality
     end
 
     def run_command(processor, &count_violations_on_line)
-      runner = ProcessRunner.new(full_cmd,
-                                 popener: @popener)
+      runner = @process_runner_class.new(full_cmd,
+                                         popener: @popener)
 
       runner.run do |file|
         processor.file = file
