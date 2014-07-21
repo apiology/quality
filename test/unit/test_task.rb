@@ -31,8 +31,9 @@ class TestTask < MiniTest::Unit::TestCase
     end
   end
 
-  def setup_quality_task_mocks(suppressed_tools: [],
-                               uninstalled_tools: [])
+  def setup_quality_task_mocks(options = {})
+    suppressed_tools = options[:suppressed_tools] || []
+    uninstalled_tools = options[:uninstalled_tools] || []
     expect_tools_tasks_defined(all_tools)
     expect_define_task.with('quality').yields
     expect_define_task.with('ratchet')
