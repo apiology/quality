@@ -9,8 +9,7 @@ module Quality
       @popener = popener
     end
 
-    def run(&block)
-      command_output = nil
+    def run
       @popener.popen(@full_cmd) do |file|
         yield file
       end
