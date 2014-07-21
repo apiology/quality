@@ -13,28 +13,25 @@ class TestTask < MiniTest::Unit::TestCase
   include ::Test::Quality::Tools::Rubocop
 
   def test_quality_task_all_tools
-    get_test_object do |task|
-      setup_quality_task_mocks(task)
+    get_test_object do |_task|
+      setup_quality_task_mocks
     end
   end
 
   def test_quality_task_some_suppressed
     get_test_object do |task|
       task.skip_tools = ['flog']
-      setup_quality_task_mocks(task,
-                               suppressed_tools: ['flog'])
+      setup_quality_task_mocks(suppressed_tools: ['flog'])
     end
   end
 
   def test_quality_task_some_not_installed
-    get_test_object do |task|
-      setup_quality_task_mocks(task,
-                               uninstalled_tools: ['cane'])
+    get_test_object do |_task|
+      setup_quality_task_mocks(uninstalled_tools: ['cane'])
     end
   end
 
-  def setup_quality_task_mocks(task,
-                               suppressed_tools: [],
+  def setup_quality_task_mocks(suppressed_tools: [],
                                uninstalled_tools: [])
     expect_tools_tasks_defined(all_tools)
     expect_define_task.with('quality').yields
