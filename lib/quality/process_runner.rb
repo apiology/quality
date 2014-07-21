@@ -4,9 +4,9 @@ module Quality
   # Wrapper around IO.popen that allows exit status to be mocked in tests.
   class ProcessRunner
     def initialize(full_cmd,
-                   popener: IO)
+                   dependencies = {})
       @full_cmd = full_cmd
-      @popener = popener
+      @popener = dependencies[:popener] || IO
     end
 
     def run
