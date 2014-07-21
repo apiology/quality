@@ -14,23 +14,34 @@ class TestTask < MiniTest::Unit::TestCase
 
   def test_quality_task_all_tools
     get_test_object do |task|
-      setup_quality_task_mocks(task, all_tools)
+      setup_quality_task_mocks(task)
     end
   end
 
   def test_quality_task_some_suppressed
     get_test_object do |task|
       task.skip_tools = ['flog']
-      setup_quality_task_mocks(task, all_tools_minus_flog)
+      setup_quality_task_mocks(task,
+                               suppressed_tools: ['flog'])
     end
   end
 
-  def setup_quality_task_mocks(task, tools)
+  def test_quality_task_some_not_installed
+    get_test_object do |task|
+      setup_quality_task_mocks(task,
+                               uninstalled_tools: ['cane'])
+    end
+  end
+
+  def setup_quality_task_mocks(task,
+                               suppressed_tools: [],
+                               uninstalled_tools: [])
     expect_tools_tasks_defined(all_tools)
     expect_define_task.with('quality').yields
     expect_define_task.with('ratchet')
-    expect_tools_installed(all_tools)
-    expect_tools_run(tools)
+    expect_tools_installed(all_tools - uninstalled_tools)
+    tools_that_actually_run = (all_tools - suppressed_tools) - uninstalled_tools
+    expect_tools_run(tools_that_actually_run)
   end
 
   def expect_tools_tasks_defined(tools)
@@ -43,29 +54,23 @@ class TestTask < MiniTest::Unit::TestCase
     %w(cane flog flay reek rubocop)
   end
 
-  def all_tools_minus_flog
-    all_tools - ['flog']
-  end
-
   def expect_tools_run(tools)
     tools.each do |tool_name|
-      puts "Looking at #{tool_name}"
       expect_single_tool_run(tool_name)
     end
   end
 
   def expect_tools_installed(tools)
     tools.each do |tool_name|
-      expect_single_tool_installed(tool_name)
+      expect_installed(tool_name)
+    end
+    (all_tools - tools).each do |tool_name|
+      expect_not_installed(tool_name)
     end
   end
 
   def quality_checker
     @quality_checker ||= mock('quality_checker')
-  end
-
-  def expect_single_tool_installed(tool_name)
-    expect_installed(tool_name)
   end
 
   def expect_single_tool_run(tool_name)
@@ -118,6 +123,11 @@ class TestTask < MiniTest::Unit::TestCase
       .with(tool_name).returns([true])
   end
 
+  def expect_not_installed(tool_name)
+    @mocks[:gem_spec].expects(:find_all_by_name)
+      .with(tool_name).returns([false])
+  end
+
   def self.sample_output(tool_name)
     IO.read("#{File.dirname(__FILE__)}/samples/#{tool_name}_sample_output")
   end
@@ -134,7 +144,7 @@ class TestTask < MiniTest::Unit::TestCase
     @mocks[:globber].expects(:glob)
   end
 
-  def test_mocks
+  def mocks_for_test
     {
       dsl: mock('dsl'),
       cmd_runner: mock('cmd_runner'),
@@ -148,7 +158,7 @@ class TestTask < MiniTest::Unit::TestCase
   end
 
   def get_test_object(&twiddle_mocks)
-    @mocks = test_mocks
+    @mocks = mocks_for_test
     Quality::Rake::Task.new(@mocks) do |task|
       yield task unless twiddle_mocks.nil?
     end
