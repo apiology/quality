@@ -74,7 +74,7 @@ class TestTask < MiniTest::Unit::TestCase
   def expect_single_tool_run(tool_name)
     method("expect_#{tool_name}_run").call(quality_checker)
     file = self.class.sample_output(tool_name)
-    lines = file.lines.map { |line| line.strip }
+    lines = file.lines.map(&:strip)
     quality_checker.expects(:execute).multiple_yields(*lines)
   end
 
