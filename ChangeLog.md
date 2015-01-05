@@ -4,5 +4,5 @@
 ### Remove auto-git-commit from 'rake ratchet'
 ### Cane now respects configured ruby directories by default
 ### Lots of internal maintainability improvements!
-
+### Change default output directory to 'metrics', and create directory if needed
 

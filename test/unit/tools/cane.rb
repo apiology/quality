@@ -8,7 +8,7 @@ module Test
             .expects(:new).with('cane',
                                 { gives_error_code_on_violations: true,
                                   emacs_format: true },
-                                '.')
+                                'metrics')
             .returns(quality_checker)
           @mocks[:configuration_writer].expects(:exist?).with('.cane')
             .returns(true)

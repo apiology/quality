@@ -73,8 +73,8 @@ Quality::Rake::Task.new { |t|
   # Relative path to output directory where *_high_water_mark
   # files will be read/written
   #
-  # Defaults to .
-  t.output_dir = '.'
+  # Defaults to 'metrics'
+  t.output_dir = 'metrics'
 }
 ```
 

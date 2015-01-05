@@ -66,7 +66,7 @@ module Quality
 
         @skip_tools = []
 
-        @output_dir = '.'
+        @output_dir = 'metrics'
 
         yield self if block_given?
 

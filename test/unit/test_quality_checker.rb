@@ -8,7 +8,7 @@ class TestQualityChecker < MiniTest::Unit::TestCase
     existing_violations = 524
     get_test_object('foo',
                     command_options,
-                    '.') do
+                    'my_output_dir') do
       setup_execute_mocks(command_options,
                           num_violations,
                           existing_violations)
@@ -28,7 +28,7 @@ class TestQualityChecker < MiniTest::Unit::TestCase
 
     get_test_object('foo',
                     command_options,
-                    '.') do
+                    'my_output_dir') do
       setup_execute_mocks(command_options,
                           num_violations,
                           existing_violations)
@@ -53,9 +53,13 @@ class TestQualityChecker < MiniTest::Unit::TestCase
   end
 
   def expect_twiddle_high_water_mark_files(num_violations, existing_violations)
-    hwm_filename = './foo_high_water_mark'
+    hwm_filename = 'my_output_dir/foo_high_water_mark'
     expect_existing_violations_read(existing_violations, hwm_filename)
     expect_write_new_violations(num_violations, hwm_filename)
+  end
+
+  def expect_metrics_dir_already_there
+    @mocks[:count_file].expects(:exists?).with('my_output_dir').returns(true)
   end
 
   def process_runner
@@ -64,19 +68,17 @@ class TestQualityChecker < MiniTest::Unit::TestCase
 
   def expect_run_command(command_output_processor)
     command_output = mock('command_output')
-    @mocks[:process_runner_class]
-      .expects(:new).with('foo')
+    @mocks[:process_runner_class].expects(:new).with('foo')
       .returns(process_runner)
     process_runner.expects(:run).yields(command_output).returns(0)
     command_output_processor.expects(:file=).with(command_output)
     process_expectation = command_output_processor.expects(:process)
-    %w(line line).each do |line|
-      process_expectation.yields(line)
-    end
+    %w(line line).each { |line| process_expectation.yields(line) }
   end
 
   def expect_create_new_processor
     command_output_processor = mock('command_output_processor')
+    expect_metrics_dir_already_there
     @mocks[:command_output_processor_class]
       .expects(:new).returns(command_output_processor)
     command_output_processor
@@ -108,6 +110,7 @@ class TestQualityChecker < MiniTest::Unit::TestCase
       count_io: mock('count_io'),
       command_output_processor_class: mock('command_output_processor_class'),
       process_runner_class: mock('process_runner_class'),
+      count_dir: mock('dir'),
     }
   end
 

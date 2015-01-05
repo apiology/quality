@@ -14,6 +14,8 @@ module Quality
         Quality::CommandOutputProcessor
       @cmd = cmd
       @command_options = command_options
+      @count_dir = dependencies[:count_dir] || Dir
+      @count_dir.mkdir(output_dir) unless @count_file.exists?(output_dir)
       @filename = File.join(output_dir, "#{cmd}_high_water_mark")
       @process_runner_class =
         dependencies[:process_runner_class] || ProcessRunner
