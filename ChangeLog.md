@@ -6,3 +6,7 @@
 ### Lots of internal maintainability improvements!
 ### Change default output directory to 'metrics', and create directory if needed
 
+
+## Changes since Quality 2.0.0
+
+### Exclude buggy version of 'flay'
