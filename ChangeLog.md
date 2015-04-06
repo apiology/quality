@@ -10,3 +10,7 @@
 ## Changes since Quality 2.0.0
 
 ### Exclude buggy version of 'flay'
+
+## Changes since Quality 2.0.1
+
+### Add .verbose option
