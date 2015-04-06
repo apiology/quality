@@ -14,3 +14,7 @@
 ## Changes since Quality 2.0.1
 
 ### Add .verbose option
+
+## Changes since Quality 2.1.0
+
+### Cane is now limited to the files specified by 'ruby_dirs'
