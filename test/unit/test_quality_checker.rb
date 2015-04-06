@@ -6,9 +6,8 @@ class TestQualityChecker < MiniTest::Unit::TestCase
     command_options = {}
     num_violations = 523
     existing_violations = 524
-    get_test_object('foo',
-                    command_options,
-                    'my_output_dir') do
+    get_test_object('foo', command_options,
+                    'my_output_dir', false) do
       setup_execute_mocks(command_options,
                           num_violations,
                           existing_violations)
@@ -26,9 +25,8 @@ class TestQualityChecker < MiniTest::Unit::TestCase
     num_violations = 523
     existing_violations = nil
 
-    get_test_object('foo',
-                    command_options,
-                    'my_output_dir') do
+    get_test_object('foo', command_options,
+                    'my_output_dir', false) do
       setup_execute_mocks(command_options,
                           num_violations,
                           existing_violations)
@@ -114,9 +112,10 @@ class TestQualityChecker < MiniTest::Unit::TestCase
     }
   end
 
-  def get_test_object(cmd, command_options, output_dir, &twiddle_mocks)
+  def get_test_object(cmd, command_options, output_dir, verbose, &twiddle_mocks)
     @mocks = test_mocks
     yield unless twiddle_mocks.nil?
-    Quality::QualityChecker.new(cmd, command_options, output_dir, @mocks)
+    Quality::QualityChecker.new(cmd, command_options, output_dir, verbose,
+                                @mocks)
   end
 end

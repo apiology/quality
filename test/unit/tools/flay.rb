@@ -8,7 +8,8 @@ module Test
             .expects(:new).with('flay',
                                 { args: flay_args,
                                   emacs_format: true },
-                                'metrics')
+                                'metrics',
+                                false)
             .returns(quality_checker)
           expect_find_ruby_files
         end

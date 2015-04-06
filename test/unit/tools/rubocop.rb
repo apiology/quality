@@ -8,7 +8,8 @@ module Test
             .expects(:new).with('rubocop',
                                 { args: rubocop_args,
                                   gives_error_code_on_violations: true },
-                                'metrics')
+                                'metrics',
+                                false)
             .returns(quality_checker)
           expect_find_ruby_files
         end

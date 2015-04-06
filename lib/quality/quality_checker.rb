@@ -6,14 +6,13 @@ module Quality
   # number of violations for that command, and decreases that number
   # if possible, or outputs data if the number of violations increased.
   class QualityChecker
-    def initialize(cmd, command_options, output_dir, dependencies = {})
+    def initialize(cmd, command_options, output_dir, verbose, dependencies = {})
       @count_file = dependencies[:count_file] || File
       @count_io = dependencies[:count_io] || IO
       @command_output_processor_class =
         dependencies[:command_output_processor_class] ||
         Quality::CommandOutputProcessor
-      @cmd = cmd
-      @command_options = command_options
+      @cmd, @command_options, @verbose = cmd, command_options, verbose
       @count_dir = dependencies[:count_dir] || Dir
       @count_dir.mkdir(output_dir) unless @count_file.exists?(output_dir)
       @filename = File.join(output_dir, "#{cmd}_high_water_mark")
@@ -40,6 +39,7 @@ module Quality
     def run_command(processor, &count_violations_on_line)
       runner = @process_runner_class.new(full_cmd)
 
+      puts full_cmd if @verbose
       runner.run do |file|
         processor.file = file
         @command_output = processor.process(&count_violations_on_line)

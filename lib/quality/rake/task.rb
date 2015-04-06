@@ -48,6 +48,11 @@ module Quality
       # Defaults to []
       attr_accessor :skip_tools
 
+      # Log command executation
+      #
+      # Defaults to false
+      attr_accessor :verbose
+
       # Array of directory names which contain ruby files to analyze.
       #
       # Defaults to %w(app lib test spec feature), which translates to *.rb in
@@ -65,6 +70,8 @@ module Quality
         parse_args(args)
 
         @skip_tools = []
+
+        @verbose = false
 
         @output_dir = 'metrics'
 
@@ -180,7 +187,8 @@ module Quality
                               &count_violations_on_line)
         quality_checker = @quality_checker_class.new(cmd,
                                                      command_options,
-                                                     @output_dir)
+                                                     @output_dir,
+                                                     verbose)
         quality_checker.execute(&count_violations_on_line)
       end
 

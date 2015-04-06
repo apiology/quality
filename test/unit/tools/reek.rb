@@ -9,7 +9,8 @@ module Test
                                 { args: reek_args,
                                   emacs_format: true,
                                   gives_error_code_on_violations: true },
-                                'metrics')
+                                'metrics',
+                                false)
             .returns(quality_checker)
           expect_find_ruby_files
         end

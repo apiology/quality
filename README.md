@@ -65,6 +65,11 @@ Quality::Rake::Task.new { |t|
   # Defaults to []
   t.skip_tools = []
 
+  # Log command executation
+  #
+  # Defaults to false
+  t.verbose = false
+
   # Array of directory names which contain ruby files to analyze.
   #
   # Defaults to %w{app lib test spec feature}, which translates to *.rb in the base directory, as well as those directories.
