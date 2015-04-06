@@ -1,0 +1,5 @@
+test:
+  override:
+    - bundle exec rake localtest
+          
+          
