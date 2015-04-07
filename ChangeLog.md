@@ -22,3 +22,4 @@
 ## Changes since Quality 2.1.1
 
 ### Added 'BigFiles' to limit the size of the largest files in your project.
+### Remove support for Ruby 1.9.x
