@@ -23,3 +23,7 @@
 
 ### Added 'BigFiles' to limit the size of the largest files in your project.
 ### Remove support for Ruby 1.9.x
+
+## Changes since Quality 3.0.0
+
+### Fix to bigfiles support to honor glob
