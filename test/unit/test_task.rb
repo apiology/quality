@@ -3,6 +3,7 @@ require_relative 'tools/flay'
 require_relative 'tools/flog'
 require_relative 'tools/reek'
 require_relative 'tools/rubocop'
+require_relative 'tools/bigfiles'
 
 # Unit test the Task class
 class TestTask < MiniTest::Unit::TestCase
@@ -11,6 +12,7 @@ class TestTask < MiniTest::Unit::TestCase
   include ::Test::Quality::Tools::Flog
   include ::Test::Quality::Tools::Reek
   include ::Test::Quality::Tools::Rubocop
+  include ::Test::Quality::Tools::BigFiles
 
   def test_quality_task_all_tools
     get_test_object do |_task|
@@ -49,7 +51,7 @@ class TestTask < MiniTest::Unit::TestCase
   end
 
   def all_tools
-    %w(cane flog flay reek rubocop)
+    %w(cane flog flay reek rubocop bigfiles)
   end
 
   def expect_tools_run(tools)
