@@ -32,4 +32,10 @@
 
 ### Add Rakefile to default Ruby glob
 ### Add configurable source_dirs for non-Ruby quality inspection
+
+
+## Changes since Quality 4.0.0
 ### Fix shell escaping bug with cane
+
+## Changes since Quality 4.0.1
+### Fix bug in source_dirs configuration

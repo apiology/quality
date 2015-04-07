@@ -104,13 +104,13 @@ module Quality
         @source_dirs ||= ruby_dirs.clone
       end
 
-      def source_files_glob(extensions = 'rb,swift,cpp,c,java,py')
-        File.join("{#{source_dirs.join(',')}}",
-                  '**', "*.{#{extensions}}")
+      def source_files_glob(dirs = source_dirs,
+                            extensions = 'rb,swift,cpp,c,java,py')
+        File.join("{#{dirs.join(',')}}", '**', "*.{#{extensions}}")
       end
 
       def ruby_files_glob
-        source_files_glob('rb')
+        source_files_glob(ruby_dirs, 'rb')
       end
 
       def ruby_files
