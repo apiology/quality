@@ -21,6 +21,7 @@ Dir['tasks/**/*.rake'].each { |t| load t }
 
 Quality::Rake::Task.new do |t|
   t.skip_tools = ['reek']
+  t.verbose = true
 end
 
 task :clear_metrics do |_t|
