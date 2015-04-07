@@ -6,6 +6,8 @@ require_relative 'tools/rubocop'
 require_relative 'tools/bigfiles'
 
 module Quality
+  # Knows how to run different quality tools based on a configuration
+  # already determined.
   class Runner
     include Tools::Cane
     include Tools::Flay
