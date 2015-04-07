@@ -20,14 +20,12 @@ module Quality
                    gem_spec: Gem::Specification,
                    quality_checker_class: Quality::QualityChecker,
                    count_io: IO,
-                   count_file: File,
-                   configuration_writer: File)
+                   count_file: File)
       @config = config
       @gem_spec = gem_spec
       @quality_checker_class = quality_checker_class
       @count_io = count_io
       @count_file = count_file
-      @configuration_writer = configuration_writer
     end
 
     def run_quality

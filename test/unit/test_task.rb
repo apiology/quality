@@ -152,7 +152,6 @@ class TestTask < MiniTest::Unit::TestCase
       globber: mock('globber'),
       count_io: mock('count_io'),
       count_file: mock('count_file'),
-      configuration_writer: mock('configuration_writer'),
       gem_spec: mock('gem_spec'),
       quality_checker_class: mock('quality_checker_class')
     }

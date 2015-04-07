@@ -4,9 +4,7 @@ module Test
       # Test for the 'cane' tool within the quality gem
       module Cane
         def cane_expected_args
-          '--doc-glob {app,lib,test,spec,feature}/**/*.{rb} ' \
-          '--style-glob {app,lib,test,spec,feature}/**/*.{rb} ' \
-          '--abc-glob {app,lib,test,spec,feature}/**/*.{rb}'
+          "-f '{app,lib,test,spec,feature}/**/*.{rb}'"
         end
 
         def expect_cane_run(quality_checker)
@@ -18,8 +16,6 @@ module Test
                                 'metrics',
                                 false)
             .returns(quality_checker)
-          @mocks[:configuration_writer].expects(:exist?).with('.cane')
-            .returns(true)
         end
       end
     end

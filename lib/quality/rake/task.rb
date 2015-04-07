@@ -90,9 +90,7 @@ module Quality
                                       quality_checker_class:
                                         quality_checker_class,
                                       count_io: count_io,
-                                      count_file: count_file,
-                                      configuration_writer:
-                                        configuration_writer)
+                                      count_file: count_file)
         define
       end
 
