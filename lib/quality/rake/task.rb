@@ -3,13 +3,8 @@
 require 'rake'
 require 'rake/tasklib'
 require 'rbconfig'
+require_relative '../runner'
 require_relative '../quality_checker'
-require_relative '../tools/cane'
-require_relative '../tools/flay'
-require_relative '../tools/flog'
-require_relative '../tools/reek'
-require_relative '../tools/rubocop'
-require_relative '../tools/bigfiles'
 
 module Quality
   #
@@ -30,13 +25,6 @@ module Quality
     #
     #   rake quality
     class Task < ::Rake::TaskLib
-      include Tools::Cane
-      include Tools::Flay
-      include Tools::Flog
-      include Tools::Reek
-      include Tools::Rubocop
-      include Tools::BigFiles
-
       # Name of quality task.
       # Defaults to :quality.
       attr_accessor :quality_name
@@ -71,7 +59,7 @@ module Quality
       # files will be read/written
       #
       # Defaults to .
-      attr_writer :output_dir
+      attr_accessor :output_dir
 
       # Defines a new task, using the name +name+.
       def initialize(dsl: ::Rake::Task,
@@ -85,10 +73,8 @@ module Quality
                        Quality::QualityChecker,
                      quality_name: 'quality',
                      ratchet_name: 'ratchet')
-        @dsl, @cmd_runner, @count_file = dsl, cmd_runner, count_file
-        @count_io, @globber, @gem_spec = count_io, globber, gem_spec
-        @configuration_writer = configuration_writer
-        @quality_checker_class = quality_checker_class
+        @dsl, @cmd_runner = dsl, cmd_runner
+        @globber = globber
         @quality_name, @ratchet_name = quality_name, ratchet_name
 
         @skip_tools = []
@@ -99,80 +85,18 @@ module Quality
 
         yield self if block_given?
 
+        @runner = Quality::Runner.new(self,
+                                      gem_spec: gem_spec,
+                                      quality_checker_class:
+                                        quality_checker_class,
+                                      count_io: count_io,
+                                      count_file: count_file,
+                                      configuration_writer:
+                                        configuration_writer)
         define
       end
 
-      private
-
-      def define # :nodoc:
-        desc 'Verify quality has increased or stayed ' \
-          'the same' unless ::Rake.application.last_comment
-        @dsl.define_task(quality_name) { run_quality }
-        @dsl.define_task(ratchet_name) { run_ratchet }
-        tools.each do |tool|
-          @dsl.define_task(tool) { run_quality_with_tool(tool) }
-        end
-      end
-
-      def tools
-        self.class.ancestors.map do |ancestor|
-          ancestor_name = ancestor.to_s
-          next unless ancestor_name.start_with?('Quality::Tools::')
-          ancestor_name.split('::').last.downcase
-        end.compact
-      end
-
-      def run_quality
-        tools.each do |tool|
-          run_quality_with_tool(tool)
-        end
-      end
-
-      def run_quality_with_tool(tool)
-        installed = @gem_spec.find_all_by_name(tool).any?
-        suppressed = @skip_tools.include? tool
-
-        if installed && !suppressed
-          method("quality_#{tool}".to_sym).call
-        elsif !installed
-          puts "#{tool} not installed"
-        end
-      end
-
-      def run_ratchet
-        @globber.glob("#{@output_dir}/*_high_water_mark").each do |filename|
-          run_ratchet_on_file(filename)
-        end
-      end
-
-      def run_ratchet_on_file(filename)
-        puts "Processing #{filename}"
-        existing_violations = count_existing_violations(filename)
-        new_violations = [0, existing_violations - 1].max
-        write_violations(filename, new_violations)
-      end
-
-      def write_violations(filename, new_violations)
-        @count_file.open(filename, 'w') do |file|
-          file.write(new_violations.to_s + "\n")
-        end
-      end
-
-      def count_existing_violations(filename)
-        existing_violations = @count_io.read(filename).to_i
-        fail("Problem with file #{filename}") if existing_violations < 0
-        existing_violations
-      end
-
-      def ratchet_quality_cmd(cmd,
-                              command_options,
-                              &count_violations_on_line)
-        quality_checker = @quality_checker_class.new(cmd,
-                                                     command_options,
-                                                     @output_dir,
-                                                     verbose)
-        quality_checker.execute(&count_violations_on_line)
-      end
+      attr_reader :globber
 
       def ruby_dirs
         @ruby_dirs ||= %w(app lib test spec feature)
@@ -194,6 +118,18 @@ module Quality
       def ruby_files
         @globber.glob('{*.rb,Rakefile}')
           .concat(@globber.glob(ruby_files_glob)).join(' ')
+      end
+
+      private
+
+      def define # :nodoc:
+        desc 'Verify quality has increased or stayed ' \
+             'the same' unless ::Rake.application.last_comment
+        @dsl.define_task(quality_name) { @runner.run_quality }
+        @dsl.define_task(ratchet_name) { @runner.run_ratchet }
+        @runner.tools.each do |tool|
+          @dsl.define_task(tool) { @runner.run_quality_with_tool(tool) }
+        end
       end
     end
   end
