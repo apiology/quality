@@ -97,5 +97,9 @@ module Quality
     def ruby_files_glob
       @config.ruby_files_glob
     end
+
+    def source_files_glob
+      @config.source_files_glob
+    end
   end
 end
