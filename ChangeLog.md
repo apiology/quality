@@ -18,3 +18,7 @@
 ## Changes since Quality 2.1.0
 
 ### Cane is now limited to the files specified by 'ruby_dirs'
+
+## Changes since Quality 2.1.1
+
+### Added 'BigFiles' to limit the size of the largest files in your project.

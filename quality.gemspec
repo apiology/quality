@@ -36,6 +36,7 @@ your numbers don't get any worse over time.
   # flay 2.6.0 contained a command-line-parsing issue
   s.add_runtime_dependency(%q(flay), ['>= 2.4', '!= 2.6.0'])
   s.add_runtime_dependency(%q(rubocop))
+  s.add_runtime_dependency(%q(bigfiles))
 
   # need above this version to support Ruby 2.0 syntax
   s.add_runtime_dependency(%q(ruby_parser), ['>= 3.2.2'])

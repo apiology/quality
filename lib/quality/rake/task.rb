@@ -9,6 +9,7 @@ require_relative '../tools/flay'
 require_relative '../tools/flog'
 require_relative '../tools/reek'
 require_relative '../tools/rubocop'
+require_relative '../tools/bigfiles'
 
 module Quality
   #
@@ -34,6 +35,7 @@ module Quality
       include Tools::Flog
       include Tools::Reek
       include Tools::Rubocop
+      include Tools::BigFiles
 
       # Name of quality task.
       # Defaults to :quality.
