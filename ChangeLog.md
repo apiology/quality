@@ -27,3 +27,7 @@
 ## Changes since Quality 3.0.0
 
 ### Fix to bigfiles support to honor glob
+
+## Changes since Quality 3.1.0
+
+### Add Rakefile to default Ruby glob

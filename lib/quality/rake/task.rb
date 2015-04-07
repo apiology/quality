@@ -182,7 +182,7 @@ module Quality
       end
 
       def ruby_files
-        @globber.glob('*.rb')
+        @globber.glob('{*.rb,Rakefile}')
           .concat(@globber.glob(ruby_files_glob)).join(' ')
       end
     end
