@@ -6,7 +6,7 @@ module Quality
 
       def quality_bigfiles
         ratchet_quality_cmd('bigfiles',
-                            {}) do |line|
+                            args: "--glob '#{source_files_glob}'") do |line|
           line.split(':')[0].to_i
         end
       end

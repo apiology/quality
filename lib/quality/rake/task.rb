@@ -68,8 +68,22 @@ module Quality
       attr_writer :output_dir
 
       # Defines a new task, using the name +name+.
-      def initialize(args = {})
-        parse_args(args)
+      def initialize(dsl: ::Rake::Task,
+                     cmd_runner: Kernel,
+                     count_file: File,
+                     count_io: IO,
+                     globber: Dir,
+                     gem_spec: Gem::Specification,
+                     configuration_writer: File,
+                     quality_checker_class:
+                       Quality::QualityChecker,
+                     quality_name: 'quality',
+                     ratchet_name: 'ratchet')
+        @dsl, @cmd_runner, @count_file = dsl, cmd_runner, count_file
+        @count_io, @globber, @gem_spec = count_io, globber, gem_spec
+        @configuration_writer = configuration_writer
+        @quality_checker_class = quality_checker_class
+        @quality_name, @ratchet_name = quality_name, ratchet_name
 
         @skip_tools = []
 
@@ -80,46 +94,6 @@ module Quality
         yield self if block_given?
 
         define
-      end
-
-      def parse_task_name_args(args)
-        @quality_name = args[:quality_name] || 'quality'
-
-        @ratchet_name = args[:ratchet_name] || 'ratchet'
-      end
-
-      def parse_args(args)
-        parse_task_name_args(args)
-        parse_unit_test_overrides(args)
-      end
-
-      def parse_unit_test_overrides(args)
-        # allow unit tests to override the class that Rake DSL
-        # messages are sent to.
-        @dsl = args[:dsl] || ::Rake::Task
-
-        # likewise, but for system()
-        @cmd_runner = args[:cmd_runner] || Kernel
-
-        # likewise, but for File.open() on the count files
-        @count_file = args[:count_file] || File
-
-        # likewise, but for IO.read()/IO.exist? on the count files
-        @count_io = args[:count_io] || IO
-
-        # likewise, but for Dir.glob() on target Ruby files
-        @globber = args[:globber] || Dir
-
-        # likewise, but for checking whether a gem is installed
-        @gem_spec = args[:gem_spec] || Gem::Specification
-
-        # uses exist?() and open() to write out configuration files
-        # for tools if needed (e.g., .cane file)
-        @configuration_writer = args[:configuration_writer] || File
-
-        # Class which actually runs the quality check commands
-        @quality_checker_class =
-          args[:quality_checker_class] || Quality::QualityChecker
       end
 
       private
@@ -198,9 +172,13 @@ module Quality
         @ruby_dirs ||= %w(app lib test spec feature)
       end
 
-      def ruby_files_glob
+      def source_files_glob(extensions = 'rb,swift,cpp,c,java,py')
         File.join("{#{ruby_dirs.join(',')}}",
-                  '**', '*.rb')
+                  '**', "*.{#{extensions}}")
+      end
+
+      def ruby_files_glob
+        source_files_glob('rb')
       end
 
       def ruby_files
