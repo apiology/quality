@@ -61,6 +61,12 @@ module Quality
       # the base directory, as well as those directories.
       attr_writer :ruby_dirs
 
+      # Array of directory names which contain any type of source
+      # files to analyze.
+      #
+      # Defaults to the same as ruby_dirs
+      attr_writer :source_dirs
+
       # Relative path to output directory where *_high_water_mark
       # files will be read/written
       #
@@ -172,8 +178,12 @@ module Quality
         @ruby_dirs ||= %w(app lib test spec feature)
       end
 
+      def source_dirs
+        @source_dirs ||= ruby_dirs.clone
+      end
+
       def source_files_glob(extensions = 'rb,swift,cpp,c,java,py')
-        File.join("{#{ruby_dirs.join(',')}}",
+        File.join("{#{source_dirs.join(',')}}",
                   '**', "*.{#{extensions}}")
       end
 

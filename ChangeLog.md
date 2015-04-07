@@ -31,3 +31,4 @@
 ## Changes since Quality 3.1.0
 
 ### Add Rakefile to default Ruby glob
+### Add configurable source_dirs for non-Ruby quality inspection

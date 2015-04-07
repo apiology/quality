@@ -75,6 +75,11 @@ Quality::Rake::Task.new { |t|
   # Defaults to %w{app lib test spec feature}, which translates to *.rb in the base directory, as well as those directories.
   t.ruby_dirs = %w{app lib test spec feature}
 
+  # Array of directory names which contain any type of source files to analyze.
+  #
+  # Defaults to t.ruby_dirs
+  t.source_dirs.concat(%w{MyProject MyProjectTests})
+
   # Relative path to output directory where *_high_water_mark
   # files will be read/written
   #
