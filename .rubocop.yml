@@ -19,3 +19,15 @@ Encoding:
 # alias_method :something, :something_else
 TrivialAccessors:
    ExactNameMatch: true
+
+#
+# Add 'XXX' to the standard list
+#
+Style/CommentAnnotation:
+   Keywords:
+    - TODO
+    - FIXME
+    - OPTIMIZE
+    - HACK
+    - REVIEW
+    - XXX
