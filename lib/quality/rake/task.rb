@@ -53,13 +53,19 @@ module Quality
 
       private
 
+      def quality_name
+        config.quality_name
+      end
+
+      def ratchet_name
+        config.ratchet_name
+      end
+
       def define
         desc 'Verify quality has increased or stayed ' \
              'the same' unless ::Rake.application.last_comment
-        puts "adding task #{config.quality_name}"
-        puts "adding task #{config.ratchet_name}"
-        @dsl.define_task(config.quality_name) { @runner.run_quality }
-        @dsl.define_task(config.ratchet_name) { @runner.run_ratchet }
+        @dsl.define_task(quality_name) { @runner.run_quality }
+        @dsl.define_task(ratchet_name) { @runner.run_ratchet }
         @runner.tools.each do |tool|
           @dsl.define_task(tool) { @runner.run_quality_with_tool(tool) }
         end
