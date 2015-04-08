@@ -68,7 +68,6 @@ module Quality
                      count_io: IO,
                      globber: Dir,
                      gem_spec: Gem::Specification,
-                     configuration_writer: File,
                      quality_checker_class:
                        Quality::QualityChecker,
                      quality_name: 'quality',
