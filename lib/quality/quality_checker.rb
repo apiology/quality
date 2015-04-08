@@ -1,6 +1,7 @@
 require_relative 'command_output_processor'
 require_relative 'process_runner'
 
+# XXX: Should add *.gemspec to glob
 module Quality
   # Runs a quality-checking, command, checks it agaist the existing
   # number of violations for that command, and decreases that number
