@@ -35,9 +35,8 @@ class TestTask < MiniTest::Unit::TestCase
     end
   end
 
-  def setup_quality_task_mocks(options = {})
-    suppressed_tools = options[:suppressed_tools] || []
-    uninstalled_tools = options[:uninstalled_tools] || []
+  def setup_quality_task_mocks(suppressed_tools: [],
+                               uninstalled_tools: [])
     expect_tools_tasks_defined(all_tools)
     expect_define_task.with('quality').yields
     expect_define_task.with('ratchet')
@@ -47,9 +46,7 @@ class TestTask < MiniTest::Unit::TestCase
   end
 
   def expect_tools_tasks_defined(tools)
-    tools.each do |tool|
-      expect_define_task.with(tool)
-    end
+    tools.each { |tool| expect_define_task.with(tool) }
   end
 
   def all_tools
@@ -121,14 +118,17 @@ class TestTask < MiniTest::Unit::TestCase
     file.expects(:write).with(new_high_water_mark.to_s + "\n")
   end
 
-  def expect_installed(tool_name)
+  def expect_gemspec_tool_found(tool_name, was_found)
     @mocks[:gem_spec].expects(:find_all_by_name)
-      .with(tool_name).returns([true])
+      .with(tool_name).returns([was_found])
+  end
+
+  def expect_installed(tool_name)
+    expect_gemspec_tool_found(tool_name, true)
   end
 
   def expect_not_installed(tool_name)
-    @mocks[:gem_spec].expects(:find_all_by_name)
-      .with(tool_name).returns([false])
+    expect_gemspec_tool_found(tool_name, false)
   end
 
   def self.sample_output(tool_name)
@@ -147,20 +147,8 @@ class TestTask < MiniTest::Unit::TestCase
     @mocks[:globber].expects(:glob)
   end
 
-  def mocks_for_test
-    {
-      dsl: mock('dsl'),
-      cmd_runner: mock('cmd_runner'),
-      globber: mock('globber'),
-      count_io: mock('count_io'),
-      count_file: mock('count_file'),
-      gem_spec: mock('gem_spec'),
-      quality_checker_class: mock('quality_checker_class')
-    }
-  end
-
   def get_test_object(&twiddle_mocks)
-    @mocks = mocks_for_test
+    @mocks = get_initializer_mocks(Quality::Rake::Task)
     Quality::Rake::Task.new(@mocks) do |task|
       yield task unless twiddle_mocks.nil?
     end
