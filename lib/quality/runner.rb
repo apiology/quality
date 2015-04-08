@@ -4,6 +4,9 @@ require_relative 'tools/flog'
 require_relative 'tools/reek'
 require_relative 'tools/rubocop'
 require_relative 'tools/bigfiles'
+require_relative 'tools/punchlist'
+
+# XXX: This name is too similar to process_runner
 
 module Quality
   # Knows how to run different quality tools based on a configuration
@@ -15,6 +18,7 @@ module Quality
     include Tools::Reek
     include Tools::Rubocop
     include Tools::BigFiles
+    include Tools::Punchlist
 
     def initialize(config,
                    gem_spec: Gem::Specification,

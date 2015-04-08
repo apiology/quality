@@ -37,6 +37,8 @@ your numbers don't get any worse over time.
   s.add_runtime_dependency(%q(flay), ['>= 2.4', '!= 2.6.0'])
   s.add_runtime_dependency(%q(rubocop))
   s.add_runtime_dependency(%q(bigfiles))
+  s.add_runtime_dependency(%q(punchlist))
+  s.add_runtime_dependency(%q(quality))
 
   # need above this version to support Ruby 2.0 syntax
   s.add_runtime_dependency(%q(ruby_parser), ['>= 3.2.2'])
