@@ -24,12 +24,14 @@ module Quality
                    gem_spec: Gem::Specification,
                    quality_checker_class: Quality::QualityChecker,
                    count_io: IO,
-                   count_file: File)
+                   count_file: File,
+                   globber: Dir)
       @config = config
       @gem_spec = gem_spec
       @quality_checker_class = quality_checker_class
       @count_io = count_io
       @count_file = count_file
+      @globber = globber
     end
 
     def run_quality
@@ -47,12 +49,9 @@ module Quality
       end
     end
 
-    def globber
-      @config.globber
-    end
-
     def run_ratchet
-      globber.glob("#{@config.output_dir}/*_high_water_mark").each do |filename|
+      # XXX: a lot of things know about globbing--isn't this config's job?
+      @globber.glob("#{@config.output_dir}/*_high_water_mark").each do |filename|
         run_ratchet_on_file(filename)
       end
     end
