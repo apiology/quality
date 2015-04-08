@@ -64,8 +64,11 @@ class TestQualityChecker < MiniTest::Unit::TestCase
     @process_runner ||= mock('process_runner')
   end
 
+  def command_output
+    @command_output |= mock('command_output')
+  end
+
   def expect_run_command(command_output_processor)
-    command_output = mock('command_output')
     @mocks[:process_runner_class].expects(:new).with('foo')
       .returns(process_runner)
     process_runner.expects(:run).yields(command_output).returns(0)

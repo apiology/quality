@@ -1,5 +1,6 @@
 # XXX: This should be moved out of rake directory
 module Quality
+  # Configuration for running quality tool
   class Config
     # Name of quality task.
     # Defaults to :quality.

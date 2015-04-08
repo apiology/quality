@@ -6,7 +6,7 @@ module Quality
 
       def quality_punchlist
         ratchet_quality_cmd('punchlist',
-                            args: "--glob '#{source_files_glob}'") do |line|
+                            args: "--glob '#{source_files_glob}'") do |_line|
           1
         end
       end

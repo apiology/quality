@@ -51,7 +51,8 @@ module Quality
 
     def run_ratchet
       # XXX: a lot of things know about globbing--isn't this config's job?
-      @globber.glob("#{@config.output_dir}/*_high_water_mark").each do |filename|
+      @globber.glob("#{@config.output_dir}/*_high_water_mark")
+        .each do |filename|
         run_ratchet_on_file(filename)
       end
     end
