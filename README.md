@@ -94,7 +94,7 @@ See [this post for more information](http://blog.apiology.cc/2014/06/scalable-qu
 
 ## Maturity
 
-Quality is rapidly evolving, but uses [semantic versioning](http://semver.org/)--any incompatible changes will come out as major number updates.
+Quality uses [semantic versioning](http://semver.org/)--any incompatible changes will come out as major number updates.
 
 ## Supported Ruby Versions
 
@@ -117,6 +117,8 @@ Quality makes use of the following other gems, which do the actual checking:
 * [flog](https://github.com/seattlerb/flog)
 * [flay](https://github.com/seattlerb/flay)
 * [rubocop](https://github.com/bbatsov/rubocop)
+* [bigfiles](https://github.com/apiology/bigfiles)
+* [punchlist](https://github.com/apiology/punchlist)
 
 ### Learn More
 

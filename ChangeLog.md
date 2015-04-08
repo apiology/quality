@@ -39,3 +39,6 @@
 
 ## Changes since Quality 4.0.1
 ### Fix bug in source_dirs configuration
+
+## Changes since Quality 4.0.2
+### Added 'punchlist' 
