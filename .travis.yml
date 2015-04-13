@@ -1,4 +1,7 @@
 language: ruby
+# without --debug, JRuby doesn't support coverage reporting
+env:
+  - JRUBY_OPTS="--debug"
 rvm:
   - 2.0
   - 2.1
