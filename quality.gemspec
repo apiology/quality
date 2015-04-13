@@ -46,7 +46,9 @@ your numbers don't get any worse over time.
   s.add_runtime_dependency(%q(json))
 
   s.add_development_dependency(%q(bundler), ['>= 1.1'])
-  s.add_development_dependency(%q(rake))
+  # Workaround for
+  # https://github.com/bundler/bundler/issues/3401
+  s.add_development_dependency(%q(rake), ['!= 10.4.2'])
   s.add_development_dependency(%q(simplecov))
   s.add_development_dependency(%q(mocha))
 end
