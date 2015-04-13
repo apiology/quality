@@ -69,8 +69,13 @@ class TestQualityChecker < MiniTest::Unit::TestCase
   end
 
   def expect_run_command(command_output_processor)
-    @mocks[:process_runner_class].expects(:new).with('foo')
-      .returns(process_runner)
+    if defined?(RUBY_ENGINE) && (RUBY_ENGINE == 'jruby')
+      @mocks[:process_runner_class].expects(:new).with('jruby -S foo')
+        .returns(process_runner)
+    else
+      @mocks[:process_runner_class].expects(:new).with('foo')
+        .returns(process_runner)
+    end
     process_runner.expects(:run).yields(command_output).returns(0)
     command_output_processor.expects(:file=).with(command_output)
     process_expectation = command_output_processor.expects(:process)
