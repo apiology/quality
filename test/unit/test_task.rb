@@ -23,8 +23,7 @@ class TestTask < MiniTest::Unit::TestCase
   end
 
   def test_quality_task_some_suppressed
-    get_test_object do |task|
-      task.skip_tools = ['flog']
+    get_test_object(->(task) { task.skip_tools = ['flog'] }) do |task|
       setup_quality_task_mocks(suppressed_tools: ['flog'])
     end
   end
@@ -147,10 +146,11 @@ class TestTask < MiniTest::Unit::TestCase
     @mocks[:globber].expects(:glob)
   end
 
-  def get_test_object(&twiddle_mocks)
+  def get_test_object(fiddle_with_task = ->(_task) {}, &twiddle_mocks)
     @mocks = get_initializer_mocks(Quality::Rake::Task)
+    yield @mocks unless twiddle_mocks.nil?
     Quality::Rake::Task.new(@mocks) do |task|
-      yield task unless twiddle_mocks.nil?
+      fiddle_with_task.call(task)
     end
   end
 end
