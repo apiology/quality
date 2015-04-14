@@ -41,4 +41,7 @@
 ### Fix bug in source_dirs configuration
 
 ## Changes since Quality 4.0.2
-### Added 'punchlist' 
+### Added 'punchlist'
+
+## Changes since Quality 5.0.0
+### Avoid buggy ruby_parser release
