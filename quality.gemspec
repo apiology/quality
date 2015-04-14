@@ -39,8 +39,10 @@ your numbers don't get any worse over time.
   s.add_runtime_dependency(%q(bigfiles))
   s.add_runtime_dependency(%q(punchlist))
 
-  # need above this version to support Ruby 2.0 syntax
-  s.add_runtime_dependency(%q(ruby_parser), ['>= 3.2.2'])
+  # need above 3.2.2 to support Ruby 2.0 syntax
+  #
+  # 3.6.6 was a buggy release, see seattlerb/ruby_parser#183
+  s.add_runtime_dependency(%q(ruby_parser), ['>= 3.2.2', '!= 3.6.6'])
 
   # cane has an unadvertised dependency on json
   s.add_runtime_dependency(%q(json))
