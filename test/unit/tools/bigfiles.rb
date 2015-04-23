@@ -4,7 +4,9 @@ module Test
       # Test for the 'bigfiles' tool within the quality gem
       module BigFiles
         def bigfiles_expected_args
-          "--glob '{app,lib,test,spec,feature}/**/*.{rb,swift,cpp,c,java,py}'"
+          '--glob ' \
+          "'{src,app,lib,test,spec,feature}/**/*." \
+          "{rb,swift,cpp,c,java,py,clj,cljs}'"
         end
 
         def expect_bigfiles_run(quality_checker)

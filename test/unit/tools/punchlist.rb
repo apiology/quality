@@ -5,8 +5,8 @@ module Test
       module Punchlist
         # XXX: Really ought to expand this list to include scala and js
         def punchlist_expected_args
-          "--glob '{app,lib,test,spec,feature}/**/*." \
-          "{rb,swift,cpp,c,java,py}'"
+          "--glob '{src,app,lib,test,spec,feature}/**/*." \
+          "{rb,swift,cpp,c,java,py,clj,cljs}'"
         end
 
         def expect_punchlist_run(quality_checker)

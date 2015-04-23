@@ -39,7 +39,7 @@ module Quality
     attr_accessor :output_dir
 
     def ruby_dirs
-      @ruby_dirs ||= %w(app lib test spec feature)
+      @ruby_dirs ||= %w(src app lib test spec feature)
     end
 
     def source_dirs
@@ -47,7 +47,7 @@ module Quality
     end
 
     def source_files_glob(dirs = source_dirs,
-                          extensions = 'rb,swift,cpp,c,java,py')
+                          extensions = 'rb,swift,cpp,c,java,py,clj,cljs')
       File.join("{#{dirs.join(',')}}", '**', "*.{#{extensions}}")
     end
 
