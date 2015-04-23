@@ -45,3 +45,6 @@
 
 ## Changes since Quality 5.0.0
 ### Avoid buggy ruby_parser release
+
+## Changes since Quality 5.0.1
+### Add support for Clojure/ClojureScript files in bigfiles/punchlist
