@@ -1,3 +1,7 @@
+# XXX: I should figure out how to use tagged releases in github.  Example:
+# https://github.com/xsc/lein-ancient/issues/29
+# https://github.com/xsc/lein-ancient/releases
+
 # XXX: This should be moved out of rake directory
 module Quality
   # Configuration for running quality tool
