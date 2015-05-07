@@ -32,6 +32,10 @@ module Quality
     # Defaults to the same as ruby_dirs
     attr_writer :source_dirs
 
+    # Pick any extra files that are source files, but may not have
+    # extensions--defaults to ['Rakefile']
+    attr_accessor :extra_files
+
     # Relative path to output directory where *_high_water_mark
     # files will be read/written
     #
@@ -46,9 +50,14 @@ module Quality
       @source_dirs ||= ruby_dirs.clone
     end
 
+    def extra_files
+      @extra_files ||= ['Rakefile']
+    end
+
     def source_files_glob(dirs = source_dirs,
                           extensions = 'rb,swift,cpp,c,java,py,clj,cljs')
-      File.join("{#{dirs.join(',')}}", '**', "*.{#{extensions}}")
+      File.join("{#{dirs.join(',')}}", '**',
+                "{#{extra_files.join(',')},*.{#{extensions}}}")
     end
 
     def ruby_files_glob

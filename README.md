@@ -80,6 +80,10 @@ Quality::Rake::Task.new { |t|
   # Defaults to t.ruby_dirs
   t.source_dirs.concat(%w(MyProject MyProjectTests))
 
+  # Pick any extra files that are source files, but may not have
+  # extensions--defaults to ['Rakefile']
+  t.extra_files = ['Foo', 'Rakefile']
+
   # Relative path to output directory where *_high_water_mark
   # files will be read/written
   #

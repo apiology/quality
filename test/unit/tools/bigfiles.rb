@@ -5,8 +5,8 @@ module Test
       module BigFiles
         def bigfiles_expected_args
           '--glob ' \
-          "'{src,app,lib,test,spec,feature}/**/*." \
-          "{rb,swift,cpp,c,java,py,clj,cljs}'"
+          "'{src,app,lib,test,spec,feature}/**/{Rakefile,*." \
+          "{rb,swift,cpp,c,java,py,clj,cljs}}'"
         end
 
         def expect_bigfiles_run(quality_checker)
