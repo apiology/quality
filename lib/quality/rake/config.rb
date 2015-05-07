@@ -77,7 +77,8 @@ module Quality
     def initialize(quality_name: 'quality',
                    ratchet_name: 'ratchet',
                    globber: fail)
-      @quality_name, @ratchet_name = quality_name, ratchet_name
+      @quality_name = quality_name
+      @ratchet_name = ratchet_name
       @skip_tools = []
       @output_dir = 'metrics'
       @verbose = false

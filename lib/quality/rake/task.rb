@@ -35,7 +35,8 @@ module Quality
                      gem_spec: Gem::Specification,
                      quality_checker_class:
                        Quality::QualityChecker)
-        @dsl, @cmd_runner = dsl, cmd_runner
+        @dsl = dsl
+        @cmd_runner = cmd_runner
         @globber = globber
         @config = Quality::Config.new(globber: globber)
         yield @config if block_given?

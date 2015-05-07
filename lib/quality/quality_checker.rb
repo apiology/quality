@@ -14,9 +14,13 @@ module Quality
                      Quality::CommandOutputProcessor,
                    count_dir: Dir,
                    process_runner_class: ProcessRunner)
-      @count_file, @count_io, @command_output_processor_class, @count_dir =
-        count_file, count_io, command_output_processor_class, count_dir
-      @cmd, @command_options, @verbose = cmd, command_options, verbose
+      @count_file = count_file
+      @count_io = count_io
+      @command_output_processor_class = command_output_processor_class
+      @count_dir = count_dir
+      @cmd = cmd
+      @command_options = command_options
+      @verbose = verbose
       @count_dir.mkdir(output_dir) unless @count_file.exists?(output_dir)
       @filename = File.join(output_dir, "#{cmd}_high_water_mark")
       @process_runner_class = process_runner_class
