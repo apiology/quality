@@ -1,7 +1,7 @@
 require_relative 'test_helper'
 
 # Unit test the QualityChecker class
-class TestQualityChecker < MiniTest::Unit::TestCase
+class TestQualityChecker < MiniTest::Test
   def quality_checker_ratchet
     command_options = {}
     num_violations = 523
