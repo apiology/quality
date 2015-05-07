@@ -48,3 +48,6 @@
 
 ## Changes since Quality 5.0.1
 ### Add support for Clojure/ClojureScript files in bigfiles/punchlist
+
+## Changes since Quality 6.0.0
+### Add Rakefile to default source files (configurable via extra_files parameter)
