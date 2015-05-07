@@ -1,5 +1,6 @@
 require_relative 'command_output_processor'
 require_relative 'process_runner'
+require_relative 'ruby_spawn'
 
 # XXX: Should add *.gemspec to glob
 module Quality
@@ -93,21 +94,7 @@ module Quality
       args ||= ''
 
       @found_output = false
-      if args.size > 0
-        "#{cmd_with_ruby_hack_prefix} #{args}"
-      else
-        "#{cmd_with_ruby_hack_prefix}"
-      end
-    end
-
-    def cmd_with_ruby_hack_prefix
-      if defined?(RUBY_ENGINE) && (RUBY_ENGINE == 'jruby')
-        "jruby -S #{@cmd}"
-      elsif RbConfig::CONFIG['host_os'] =~ /mswin|mingw/
-        "#{@cmd}.bat"
-      else
-        @cmd
-      end
+      RubySpawn.new(@cmd, args).invocation
     end
 
     def write_violations(new_violations)
