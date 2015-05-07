@@ -59,7 +59,8 @@ module Quality
     end
 
     def source_files_glob(dirs = source_dirs,
-                          extensions = 'rb,swift,cpp,c,java,py,clj,cljs')
+                          extensions =
+                          'rb,swift,cpp,c,java,py,clj,cljs,scala,js')
       File.join("{#{dirs.join(',')}}", '**',
                 "{#{extra_files.join(',')},*.{#{extensions}}}")
     end

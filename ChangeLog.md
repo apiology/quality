@@ -51,3 +51,4 @@
 
 ## Changes since Quality 6.0.0
 ### Add Rakefile to default source files (configurable via extra_files parameter)
+### Add basic support for Scala and JavaScript via language-independent tools like bigfiles and punchlist

@@ -3,10 +3,9 @@ module Test
     module Tools
       # Test for the 'bigfiles' tool within the quality gem
       module Punchlist
-        # XXX: Really ought to expand this list to include scala and js
         def punchlist_expected_args
           "--glob '{src,app,lib,test,spec,feature}/**/{Rakefile,*." \
-          "{rb,swift,cpp,c,java,py,clj,cljs}}'"
+          "{rb,swift,cpp,c,java,py,clj,cljs,scala,js}}'"
         end
 
         def expect_punchlist_run(quality_checker)
