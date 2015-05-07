@@ -68,13 +68,16 @@ class TestQualityChecker < MiniTest::Test
     @command_output |= mock('command_output')
   end
 
+  def expect_process_runner_created(command)
+    @mocks[:process_runner_class].expects(:new).with(command)
+      .returns(process_runner)
+  end
+
   def expect_process_runner_class_initialized
     if defined?(RUBY_ENGINE) && (RUBY_ENGINE == 'jruby')
-      @mocks[:process_runner_class].expects(:new).with('jruby -S foo')
-        .returns(process_runner)
+      expect_process_runner_created('jruby -S foo')
     else
-      @mocks[:process_runner_class].expects(:new).with('foo')
-        .returns(process_runner)
+      expect_process_runner_created('foo')
     end
   end
 
