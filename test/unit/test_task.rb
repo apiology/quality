@@ -36,11 +36,11 @@ class TestTask < MiniTest::Test
 
   def setup_quality_task_mocks(suppressed_tools: [],
                                uninstalled_tools: [])
-    expect_tools_tasks_defined(all_tools)
+    expect_tools_tasks_defined(ALL_TOOLS)
     expect_define_task.with('quality').yields
     expect_define_task.with('ratchet')
-    expect_tools_installed(all_tools - uninstalled_tools)
-    tools_that_actually_run = (all_tools - suppressed_tools) - uninstalled_tools
+    expect_tools_installed(ALL_TOOLS - uninstalled_tools)
+    tools_that_actually_run = (ALL_TOOLS - suppressed_tools) - uninstalled_tools
     expect_tools_run(tools_that_actually_run)
   end
 
@@ -48,9 +48,7 @@ class TestTask < MiniTest::Test
     tools.each { |tool| expect_define_task.with(tool) }
   end
 
-  def all_tools
-    %w(cane flog flay reek rubocop bigfiles punchlist)
-  end
+  ALL_TOOLS = %w(cane flog flay reek rubocop bigfiles punchlist)
 
   def expect_tools_run(tools)
     tools.each do |tool_name|
@@ -62,7 +60,7 @@ class TestTask < MiniTest::Test
     tools.each do |tool_name|
       expect_installed(tool_name)
     end
-    (all_tools - tools).each do |tool_name|
+    (ALL_TOOLS - tools).each do |tool_name|
       expect_not_installed(tool_name)
     end
   end
@@ -89,7 +87,7 @@ class TestTask < MiniTest::Test
   end
 
   def setup_ratchet_task_mocks
-    expect_tools_tasks_defined(all_tools)
+    expect_tools_tasks_defined(ALL_TOOLS)
     expect_define_task.with('quality')
     expect_define_task.with('ratchet').yields
     expect_glob
