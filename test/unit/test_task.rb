@@ -133,8 +133,9 @@ class TestTask < MiniTest::Test
   end
 
   def expect_find_ruby_files
-    expect_glob.with('{*.rb,Rakefile}').returns(['fake1.rb', 'fake2.rb'])
-    expect_glob.with('{src,app,lib,test,spec,feature}/**/{Rakefile,*.{rb}}')
+    expect_glob.with('{*.{rb,rake},Rakefile}').returns(['fake1.rb', 'fake2.rb'])
+    source_glob = '{src,app,lib,test,spec,feature}/**/{Rakefile,*.{rb,rake}}'
+    expect_glob.with(source_glob)
       .returns(['lib/libfake1.rb',
                 'test/testfake1.rb',
                 'features/featuresfake1.rb'])

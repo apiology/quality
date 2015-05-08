@@ -58,19 +58,26 @@ module Quality
       @extra_files ||= ['Rakefile']
     end
 
+    def source_file_extensions
+      "#{ruby_file_extensions},swift,cpp,c,java,py,clj,cljs,scala,js"
+    end
+
     def source_files_glob(dirs = source_dirs,
-                          extensions =
-                          'rb,swift,cpp,c,java,py,clj,cljs,scala,js')
+                          extensions = source_file_extensions)
       File.join("{#{dirs.join(',')}}", '**',
                 "{#{extra_files.join(',')},*.{#{extensions}}}")
     end
 
+    def ruby_file_extensions
+      'rb,rake'
+    end
+
     def ruby_files_glob
-      source_files_glob(ruby_dirs, 'rb')
+      source_files_glob(ruby_dirs, ruby_file_extensions)
     end
 
     def ruby_files
-      @globber.glob('{*.rb,Rakefile}')
+      @globber.glob("{*.{#{ruby_file_extensions}},Rakefile}")
         .concat(@globber.glob(ruby_files_glob)).join(' ')
     end
 

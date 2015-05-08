@@ -5,7 +5,7 @@ module Test
       module Punchlist
         def punchlist_expected_args
           "--glob '{src,app,lib,test,spec,feature}/**/{Rakefile,*." \
-          "{rb,swift,cpp,c,java,py,clj,cljs,scala,js}}'"
+          "{rb,rake,swift,cpp,c,java,py,clj,cljs,scala,js}}'"
         end
 
         def expect_punchlist_run(quality_checker)
