@@ -58,10 +58,10 @@ class TestTask < MiniTest::Test
 
   def expect_tools_installed(tools)
     tools.each do |tool_name|
-      expect_installed(tool_name)
+      expect_gemspec_tool_found(tool_name, true)
     end
     (ALL_TOOLS - tools).each do |tool_name|
-      expect_not_installed(tool_name)
+      expect_gemspec_tool_found(tool_name, false)
     end
   end
 
@@ -118,14 +118,6 @@ class TestTask < MiniTest::Test
   def expect_gemspec_tool_found(tool_name, was_found)
     @mocks[:gem_spec].expects(:find_all_by_name)
       .with(tool_name).returns([was_found])
-  end
-
-  def expect_installed(tool_name)
-    expect_gemspec_tool_found(tool_name, true)
-  end
-
-  def expect_not_installed(tool_name)
-    expect_gemspec_tool_found(tool_name, false)
   end
 
   def self.sample_output(tool_name)
