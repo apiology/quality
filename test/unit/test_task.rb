@@ -7,7 +7,7 @@ require_relative 'tools/bigfiles'
 require_relative 'tools/punchlist'
 
 # Unit test the Task class
-class TestTask < MiniTest::Unit::Test
+class TestTask < MiniTest::Test
   include ::Test::Quality::Tools::Cane
   include ::Test::Quality::Tools::Flay
   include ::Test::Quality::Tools::Flog

@@ -1,5 +1,5 @@
 # Test the ProcessRunner class
-class TestProcessRunner < MiniTest::Unit::TestCase
+class TestProcessRunner < MiniTest::Test
   def test_run
     cmd = mock('cmd')
     file = mock('file')
