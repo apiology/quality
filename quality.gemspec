@@ -53,5 +53,5 @@ your numbers don't get any worse over time.
   s.add_development_dependency(%q(rake), ['!= 10.4.2'])
   s.add_development_dependency(%q(simplecov))
   s.add_development_dependency(%q(mocha))
-  s.add_development_dependency(%q(minitest))
+  s.add_development_dependency(%q(minitest), ['~> 5'])
 end
