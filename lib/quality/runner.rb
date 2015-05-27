@@ -20,6 +20,8 @@ module Quality
     include Tools::BigFiles
     include Tools::Punchlist
 
+    extend Forwardable
+
     def initialize(config,
                    gem_spec: Gem::Specification,
                    quality_checker_class: Quality::QualityChecker,
@@ -94,16 +96,7 @@ module Quality
       quality_checker.execute(&count_violations_on_line)
     end
 
-    def ruby_files
-      @config.ruby_files
-    end
-
-    def ruby_files_glob
-      @config.ruby_files_glob
-    end
-
-    def source_files_glob
-      @config.source_files_glob
-    end
+    def_delegators :@config, :ruby_files, :ruby_files_glob, :source_files_glob,
+                   :punchlist_regexp
   end
 end

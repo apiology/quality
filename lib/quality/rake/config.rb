@@ -40,6 +40,12 @@ module Quality
     # extensions--defaults to ['Rakefile']
     attr_accessor :extra_files
 
+    # Pipe-separated regexp string describing what to look for in
+    # files as 'todo'-like 'punchlist' comments.
+    #
+    # Defaults to 'XXX|TODO'
+    attr_accessor :punchlist_regexp
+
     # Relative path to output directory where *_high_water_mark
     # files will be read/written
     #

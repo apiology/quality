@@ -4,9 +4,18 @@ module Quality
     module Punchlist
       private
 
+      def punchlist_args
+        glob = "--glob '#{source_files_glob}'"
+        regexp = "--regexp '#{punchlist_regexp}'" if punchlist_regexp
+
+        args = glob
+        args += regexp if regexp
+        args
+      end
+
       def quality_punchlist
         ratchet_quality_cmd('punchlist',
-                            args: "--glob '#{source_files_glob}'") do |_line|
+                            args: punchlist_args) do |_line|
           1
         end
       end

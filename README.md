@@ -89,6 +89,12 @@ Quality::Rake::Task.new { |t|
   #
   # Defaults to 'metrics'
   t.output_dir = 'metrics'
+
+  # Pipe-separated regexp string describing what to look for in
+  # files as 'todo'-like 'punchlist' comments.
+  #
+  # Defaults to 'XXX|TODO'
+  t.punchlist_regexp = 'XXX|TODO'
 }
 ```
 

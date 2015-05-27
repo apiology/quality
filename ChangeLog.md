@@ -55,3 +55,6 @@
 
 ## Changes since Quality 7.0.0
 ### Add support for .rake files as Ruby language
+
+## Changes since Quality 8.0.0
+### Allow configuration of punchlist regexp
