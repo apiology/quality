@@ -6,7 +6,7 @@ module Quality
 
       def punchlist_args
         glob = "--glob '#{source_files_glob}'"
-        regexp = "--regexp '#{punchlist_regexp}'" if punchlist_regexp
+        regexp = " --regexp '#{punchlist_regexp}'" if punchlist_regexp
 
         args = glob
         args += regexp if regexp
