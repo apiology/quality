@@ -102,6 +102,18 @@ Quality::Rake::Task.new { |t|
 
 See [this post for more information](http://blog.apiology.cc/2014/06/scalable-quality-part-1.html) on the problem the quality gem solves.
 
+## Code coverage
+
+You can pull a similar trick with code coverage using SimpleCov in Ruby--put 'simplecov' in your Gemfile, and add the code below into your test_helper.rb or spec_helper.rb.
+
+```
+require 'simplecov'
+SimpleCov.start
+SimpleCov.refuse_coverage_drop
+```
+
+After your first run, check in your coverage/.last_run.json.
+
 ## Maturity
 
 Quality uses [semantic versioning](http://semver.org/)--any incompatible changes will come out as major number updates.
