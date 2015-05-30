@@ -90,8 +90,7 @@ class TestTask < MiniTest::Test
     expect_tools_tasks_defined(ALL_TOOLS)
     expect_define_task.with('quality')
     expect_define_task.with('ratchet').yields
-    expect_glob
-      .with('metrics/*_high_water_mark')
+    expect_glob.with('metrics/*_high_water_mark')
       .returns(%w(metrics/foo_high_water_mark
                   metrics/bar_high_water_mark))
     expect_ratchet('foo', 12)
@@ -126,7 +125,8 @@ class TestTask < MiniTest::Test
 
   def expect_find_ruby_files
     expect_glob.with('{*.{rb,rake},Rakefile}').returns(['fake1.rb', 'fake2.rb'])
-    source_glob = '{src,app,lib,test,spec,feature}/**/{Rakefile,*.{rb,rake}}'
+    source_glob = '{Rakefile,{src,app,lib,test,spec,feature}/' \
+                  '**/*.{rb,rake}}'
     expect_glob.with(source_glob)
       .returns(['lib/libfake1.rb',
                 'test/testfake1.rb',

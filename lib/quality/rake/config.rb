@@ -70,8 +70,11 @@ module Quality
 
     def source_files_glob(dirs = source_dirs,
                           extensions = source_file_extensions)
-      File.join("{#{dirs.join(',')}}", '**',
-                "{#{extra_files.join(',')},*.{#{extensions}}}")
+      "{#{extra_files.join(',')}," +
+        File.join("{#{dirs.join(',')}}",
+                  '**',
+                  "*.{#{extensions}}") +
+        '}'
     end
 
     def ruby_file_extensions

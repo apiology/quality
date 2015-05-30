@@ -58,3 +58,6 @@
 
 ## Changes since Quality 8.0.0
 ### Allow configuration of punchlist regexp
+
+## Changes since Quality 8.1.0
+### Fix 'extra_files' configuration not being globbed correctly resulting in Rakefile not being searched for issues

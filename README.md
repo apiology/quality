@@ -82,7 +82,7 @@ Quality::Rake::Task.new { |t|
 
   # Pick any extra files that are source files, but may not have
   # extensions--defaults to ['Rakefile']
-  t.extra_files = ['Foo', 'Rakefile']
+  t.extra_files = ['tools/check-script', 'Rakefile']
 
   # Relative path to output directory where *_high_water_mark
   # files will be read/written
