@@ -122,7 +122,7 @@ Quality uses [semantic versioning](http://semver.org/)--any incompatible changes
 
 ## Supported Ruby Versions
 
-Tested against Ruby 1.9.3 and 2.1.2.  Feel free to submit issues if problems are found elsewhere.
+Tested against Ruby >=2.0--does not support Ruby 1.9.x.
 
 ## Contributing
 
