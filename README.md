@@ -10,6 +10,12 @@ Quality is a tool that runs quality checks on Ruby code using cane,
 reek, flog, flay and rubocop and makes sure your numbers don't get any
 worse over time.
 
+## Why
+
+See [this post](http://blog.apiology.cc/2014/06/scalable-quality-part-1.html) or [these slides](https://docs.google.com/presentation/d/1Op4FH34-enm8luEIuAAVLkuAJ-sB4LKaMm57RJzvfeI/edit#slide) for more information on the problem the quality gem solves.
+
+##How to use
+
 ```bash
 $ gem install quality
 ```
@@ -97,10 +103,6 @@ Quality::Rake::Task.new { |t|
   t.punchlist_regexp = 'XXX|TODO'
 }
 ```
-
-## Why
-
-See [this post for more information](http://blog.apiology.cc/2014/06/scalable-quality-part-1.html) on the problem the quality gem solves.
 
 ## Code coverage
 
