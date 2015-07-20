@@ -40,6 +40,13 @@ module Quality
     # extensions--defaults to %w(Rakefile Dockerfile)
     attr_accessor :extra_files
 
+    # Extensions for Ruby language files--defaults to 'rb,rake'
+    attr_accessor :ruby_file_extensions
+
+    # Extensions for all source files--defaults to
+    # 'rb,rake,swift,cpp,c,java,py,clj,cljs,scala,js,yml,sh,json'
+    attr_accessor :source_file_extensions
+
     # Pipe-separated regexp string describing what to look for in
     # files as 'todo'-like 'punchlist' comments.
     #
@@ -65,7 +72,9 @@ module Quality
     end
 
     def source_file_extensions
-      "#{ruby_file_extensions},swift,cpp,c,java,py,clj,cljs,scala,js"
+      @source_file_extensions ||=
+        "#{ruby_file_extensions},swift,cpp,c,java,py,clj,cljs,scala,js," \
+        'yml,sh,json'
     end
 
     def source_files_glob(dirs = source_dirs,
@@ -78,7 +87,7 @@ module Quality
     end
 
     def ruby_file_extensions
-      'rb,rake'
+      @ruby_file_extensions ||= 'rb,rake'
     end
 
     def ruby_files_glob
