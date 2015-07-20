@@ -37,7 +37,7 @@ module Quality
     attr_writer :source_dirs
 
     # Pick any extra files that are source files, but may not have
-    # extensions--defaults to ['Rakefile']
+    # extensions--defaults to %w(Rakefile Dockerfile)
     attr_accessor :extra_files
 
     # Pipe-separated regexp string describing what to look for in
@@ -61,7 +61,7 @@ module Quality
     end
 
     def extra_files
-      @extra_files ||= ['Rakefile']
+      @extra_files ||= %w(Rakefile Dockerfile)
     end
 
     def source_file_extensions

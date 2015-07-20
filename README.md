@@ -87,7 +87,7 @@ Quality::Rake::Task.new { |t|
   t.source_dirs.concat(%w(MyProject MyProjectTests))
 
   # Pick any extra files that are source files, but may not have
-  # extensions--defaults to ['Rakefile']
+  # extensions--defaults to %w(Rakefile Dockerfile)
   t.extra_files = ['tools/check-script', 'Rakefile']
 
   # Relative path to output directory where *_high_water_mark
