@@ -1,3 +1,4 @@
+require 'forwardable'
 require_relative 'tools/cane'
 require_relative 'tools/flay'
 require_relative 'tools/flog'
@@ -20,7 +21,7 @@ module Quality
     include Tools::BigFiles
     include Tools::Punchlist
 
-    extend Forwardable
+    extend ::Forwardable
 
     def initialize(config,
                    gem_spec: Gem::Specification,
