@@ -40,6 +40,10 @@ module Quality
     # extensions--defaults to %w(Rakefile Dockerfile)
     attr_accessor :extra_files
 
+    # Pick any extra files that are Ruby source files, but may not have
+    # extensions--defaults to %w(Rakefile)
+    attr_accessor :extra_ruby_files
+
     # Extensions for Ruby language files--defaults to 'rb,rake'
     attr_accessor :ruby_file_extensions
 
@@ -68,7 +72,11 @@ module Quality
     end
 
     def extra_files
-      @extra_files ||= %w(Rakefile Dockerfile)
+      @extra_files ||= extra_ruby_files.clone.concat(%w(Dockerfile))
+    end
+
+    def extra_ruby_files
+      @extra_ruby_files ||= %w(Rakefile)
     end
 
     def source_file_extensions
@@ -77,9 +85,10 @@ module Quality
         'yml,sh,json'
     end
 
-    def source_files_glob(dirs = source_dirs,
+    def source_files_glob(extra_source_files = extra_files,
+                          dirs = source_dirs,
                           extensions = source_file_extensions)
-      "{#{extra_files.join(',')}," +
+      "{#{extra_source_files.join(',')}," +
         File.join("{#{dirs.join(',')}}",
                   '**',
                   "*.{#{extensions}}") +
@@ -91,9 +100,10 @@ module Quality
     end
 
     def ruby_files_glob
-      source_files_glob(ruby_dirs, ruby_file_extensions)
+      source_files_glob(extra_ruby_files, ruby_dirs, ruby_file_extensions)
     end
 
+    # XXX: Rakefile is hard-coded here--should use config instead
     def ruby_files
       @globber.glob("{*.{#{ruby_file_extensions}},Rakefile}")
         .concat(@globber.glob(ruby_files_glob)).join(' ')

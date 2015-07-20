@@ -90,6 +90,10 @@ Quality::Rake::Task.new { |t|
   # extensions--defaults to %w(Rakefile Dockerfile)
   t.extra_files = ['tools/check-script', 'Rakefile']
 
+  # Pick any extra files that are source files, but may not have
+  # extensions--defaults to %w(Rakefile)
+  t.extra_ruby_files = ['Rakefile']
+
   # Extensions for Ruby language files--defaults to 'rb,rake'
   t.ruby_file_extensions = 'rb,rake'
 
