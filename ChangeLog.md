@@ -68,3 +68,6 @@
 
 ## Changes since Quality 9.0.0
 ### Fix #27: Add separate extra_ruby_files option
+
+## Changes since Quality 10.0.0
+### Include files in root directory by default.
