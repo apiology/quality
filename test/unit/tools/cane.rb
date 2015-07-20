@@ -4,7 +4,8 @@ module Test
       # Test for the 'cane' tool within the quality gem
       module Cane
         def cane_expected_args
-          "-f '{Rakefile,{src,app,lib,test,spec,feature}/**/*.{rb,rake}}'"
+          "-f '{Rakefile,*.{rb,rake},{src,app,lib,test,spec,feature}/**/" \
+          "*.{rb,rake}}'"
         end
 
         def expect_cane_run(quality_checker)
