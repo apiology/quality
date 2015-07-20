@@ -4,9 +4,11 @@ module Test
       # Test for the 'bigfiles' tool within the quality gem
       module BigFiles
         def bigfiles_expected_args
-          "--glob '{Rakefile,Dockerfile,*.{rb,rake,swift,cpp,c,java,py," \
+          "--glob '{Rakefile,Dockerfile,*.{rb,rake,gemspec," \
+          'swift,cpp,c,java,py,' \
           'clj,cljs,scala,js,yml,sh,json},{src,app,lib,test,spec,feature}' \
-          "/**/*.{rb,rake,swift,cpp,c,java,py,clj,cljs,scala,js,yml,sh,json}}'"
+          '/**/*.{rb,rake,gemspec,swift,cpp,c,java,py,clj,cljs,scala,js,' \
+          "yml,sh,json}}'"
         end
 
         def expect_bigfiles_run(quality_checker)

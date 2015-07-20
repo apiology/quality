@@ -71,3 +71,6 @@
 
 ## Changes since Quality 10.0.0
 ### Include files in root directory by default.
+
+## Changes since Quality 11.0.0
+### Include .gemspec files

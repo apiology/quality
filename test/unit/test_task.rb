@@ -126,9 +126,11 @@ class TestTask < MiniTest::Test
   def expect_find_ruby_files
     # XXX: Should we still be expecting this, given the latter glob
     # seems to cover it?
-    expect_glob.with('{*.{rb,rake},Rakefile}').returns(['fake1.rb', 'fake2.rb'])
+    expect_glob.with('{*.{rb,rake,gemspec},Rakefile}')
+      .returns(['fake1.rb', 'fake2.rb'])
     source_glob =
-      '{Rakefile,*.{rb,rake},{src,app,lib,test,spec,feature}/**/*.{rb,rake}}'
+      '{Rakefile,*.{rb,rake,gemspec},' \
+      '{src,app,lib,test,spec,feature}/**/*.{rb,rake,gemspec}}'
     expect_glob.with(source_glob)
       .returns(['lib/libfake1.rb',
                 'test/testfake1.rb',
