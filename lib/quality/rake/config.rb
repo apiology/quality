@@ -110,6 +110,10 @@ module Quality
         .concat(@globber.glob(ruby_files_glob)).join(' ')
     end
 
+    def all_output_files
+      @globber.glob("#{output_dir}/*_high_water_mark")
+    end
+
     def initialize(quality_name: 'quality',
                    ratchet_name: 'ratchet',
                    globber: fail)
