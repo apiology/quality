@@ -95,6 +95,7 @@ module Quality
         '}'
     end
 
+    # XXX: Should add .gemspec
     def ruby_file_extensions
       @ruby_file_extensions ||= 'rb,rake'
     end
