@@ -104,10 +104,8 @@ module Quality
       source_files_glob(extra_ruby_files, ruby_dirs, ruby_file_extensions)
     end
 
-    # XXX: Rakefile is hard-coded here--should use config instead
     def ruby_files
-      @globber.glob("{*.{#{ruby_file_extensions}},Rakefile}")
-        .concat(@globber.glob(ruby_files_glob)).join(' ')
+      @globber.glob(ruby_files_glob).join(' ')
     end
 
     def all_output_files
