@@ -65,3 +65,6 @@
 ## Changes since Quality 8.1.1
 ### Add Dockerfile as a t.extra_files entry.
 ### Add entries and make ruby_file_extensions and source_file_extensions configurable.
+
+## Changes since Quality 9.0.0
+### Fix #27: Add separate extra_ruby_files option
