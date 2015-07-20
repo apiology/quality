@@ -89,6 +89,7 @@ module Quality
                           dirs = source_dirs,
                           extensions = source_file_extensions)
       "{#{extra_source_files.join(',')}," +
+        "*.{#{extensions}}," +
         File.join("{#{dirs.join(',')}}",
                   '**',
                   "*.{#{extensions}}") +
