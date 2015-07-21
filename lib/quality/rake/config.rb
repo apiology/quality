@@ -38,7 +38,7 @@ module Quality
     def source_files_glob(extra_source_files = extra_files,
                           dirs = source_dirs,
                           extensions = source_file_extensions)
-      "{#{extra_source_files.join(',')}," +
+      "{#{extra_source_files.join(',')}," \
         "*.{#{extensions}}," +
         File.join("{#{dirs.join(',')}}",
                   '**',
