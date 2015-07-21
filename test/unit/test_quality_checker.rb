@@ -15,9 +15,7 @@ class TestQualityChecker < MiniTest::Test
   end
 
   def test_execute
-    quality_checker_ratchet.execute do |line|
-      assert_equal(line, 'line')
-    end
+    quality_checker_ratchet.execute { |line| assert_equal(line, 'line') }
   end
 
   def quality_checker_no_existing_violations
@@ -60,13 +58,7 @@ class TestQualityChecker < MiniTest::Test
     @mocks[:count_file].expects(:exists?).with('my_output_dir').returns(true)
   end
 
-  def process_runner
-    @process_runner ||= mock('process_runner')
-  end
-
-  def command_output
-    @command_output |= mock('command_output')
-  end
+  let_mock :process_runner, :command_output
 
   def expect_process_runner_created(command)
     @mocks[:process_runner_class].expects(:new).with(command)

@@ -24,3 +24,21 @@ def get_initializer_mocks(clazz, skip_these_keys: [])
   # create a hash of argument name to a new mock
   Hash[*mock_syms.map { |sym| [sym, mock(sym.to_s)] }.flatten]
 end
+
+def let_single_mock(mock_sym)
+  define_method(mock_sym.to_s) do
+    var = "@#{mock_sym}"
+    mock = instance_variable_get(var)
+    unless mock
+      mock = mock(mock_sym.to_s)
+      instance_variable_set var, mock
+    end
+    mock
+  end
+end
+
+def let_mock(*mocks)
+  mocks.each do |mock_sym|
+    let_single_mock(mock_sym)
+  end
+end
