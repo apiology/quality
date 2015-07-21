@@ -1,3 +1,6 @@
+#!/usr/bin/env ruby
+
+require_relative 'test_helper.rb'
 require_relative 'tools/cane'
 require_relative 'tools/flay'
 require_relative 'tools/flog'

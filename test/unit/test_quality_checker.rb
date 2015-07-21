@@ -1,3 +1,5 @@
+#!/usr/bin/env ruby
+
 require_relative 'test_helper'
 
 # Unit test the QualityChecker class
