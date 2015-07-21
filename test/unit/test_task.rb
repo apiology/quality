@@ -68,11 +68,8 @@ class TestTask < MiniTest::Test
     end
   end
 
-  def quality_checker
-    @quality_checker ||= mock('quality_checker')
-  end
-
   def expect_single_tool_run(tool_name)
+    quality_checker = mock('quality_checker')
     method("expect_#{tool_name}_run").call(quality_checker)
     file = self.class.sample_output(tool_name)
     lines = file.lines.map(&:strip)
