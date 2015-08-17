@@ -60,24 +60,24 @@ class TestQualityChecker < MiniTest::Test
     @mocks[:count_file].expects(:exists?).with('my_output_dir').returns(true)
   end
 
-  let_mock :process_runner, :command_output
+  let_mock :process, :command_output
 
-  def expect_process_runner_created(command)
-    @mocks[:process_runner_class].expects(:new).with(command)
-      .returns(process_runner)
+  def expect_process_created(command)
+    @mocks[:process_class].expects(:new).with(command)
+      .returns(process)
   end
 
-  def expect_process_runner_class_initialized
+  def expect_process_class_initialized
     if defined?(RUBY_ENGINE) && (RUBY_ENGINE == 'jruby')
-      expect_process_runner_created('jruby -S foo')
+      expect_process_created('jruby -S foo')
     else
-      expect_process_runner_created('foo')
+      expect_process_created('foo')
     end
   end
 
   def expect_run_command(command_output_processor)
-    expect_process_runner_class_initialized
-    process_runner.expects(:run).yields(command_output).returns(0)
+    expect_process_class_initialized
+    process.expects(:run).yields(command_output).returns(0)
     command_output_processor.expects(:file=).with(command_output)
     process_expectation = command_output_processor.expects(:process)
     %w(line line).each { |line| process_expectation.yields(line) }
@@ -116,7 +116,7 @@ class TestQualityChecker < MiniTest::Test
       count_file: mock('count_file'),
       count_io: mock('count_io'),
       command_output_processor_class: mock('command_output_processor_class'),
-      process_runner_class: mock('process_runner_class'),
+      process_class: mock('process_class'),
       count_dir: mock('dir'),
     }
   end

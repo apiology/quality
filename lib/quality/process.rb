@@ -2,7 +2,7 @@ require 'English'
 
 module Quality
   # Wrapper around IO.popen that allows exit status to be mocked in tests.
-  class ProcessRunner
+  class Process
     def initialize(full_cmd,
                    dependencies = {})
       @full_cmd = full_cmd

@@ -7,8 +7,6 @@ require_relative 'tools/rubocop'
 require_relative 'tools/bigfiles'
 require_relative 'tools/punchlist'
 
-# XXX: This name is too similar to process_runner
-
 module Quality
   # Knows how to run different quality tools based on a configuration
   # already determined.

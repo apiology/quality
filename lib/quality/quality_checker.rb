@@ -1,8 +1,7 @@
 require_relative 'command_output_processor'
-require_relative 'process_runner'
+require_relative 'process'
 require_relative 'ruby_spawn'
 
-# XXX: Should add *.gemspec to glob
 module Quality
   # Runs a quality-checking, command, checks it agaist the existing
   # number of violations for that command, and decreases that number
@@ -14,7 +13,7 @@ module Quality
                    command_output_processor_class:
                      Quality::CommandOutputProcessor,
                    count_dir: Dir,
-                   process_runner_class: ProcessRunner)
+                   process_class: Process)
       @count_file = count_file
       @count_io = count_io
       @command_output_processor_class = command_output_processor_class
@@ -24,7 +23,7 @@ module Quality
       @verbose = verbose
       @count_dir.mkdir(output_dir) unless @count_file.exists?(output_dir)
       @filename = File.join(output_dir, "#{cmd}_high_water_mark")
-      @process_runner_class = process_runner_class
+      @process_class = process_class
     end
 
     def execute(&count_violations_on_line)
@@ -44,7 +43,7 @@ module Quality
     end
 
     def run_command(processor, &count_violations_on_line)
-      runner = @process_runner_class.new(full_cmd)
+      runner = @process_class.new(full_cmd)
 
       puts full_cmd if @verbose
       runner.run do |file|
