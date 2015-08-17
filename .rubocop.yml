@@ -21,7 +21,7 @@ TrivialAccessors:
    ExactNameMatch: true
 
 #
-# Add 'XXX' to the standard list
+# Add 'X XX' to the standard list
 #
 Style/CommentAnnotation:
    Keywords:
