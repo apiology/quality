@@ -74,3 +74,7 @@
 
 ## Changes since Quality 11.0.0
 ### Include .gemspec files
+
+## Changes since Quality 12.0.0
+### Include .* as well as * in glob, so files like '.rubocop.yml' can be searched.
+
