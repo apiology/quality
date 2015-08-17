@@ -4,9 +4,10 @@ module Test
       # Test for the 'bigfiles' tool within the quality gem
       module Punchlist
         def punchlist_expected_args
-          "--glob '{Rakefile,Dockerfile,*.{rb,rake,gemspec,swift,cpp,c," \
+          "--glob '{Rakefile,Dockerfile,{*,.*}.{rb,rake,gemspec,swift,cpp,c," \
           'java,py,clj,cljs,scala,js,yml,sh,json},{src,app,lib,test,' \
-          'spec,feature}/**/*.{rb,rake,gemspec,swift,cpp,c,java,py,clj,cljs,' \
+          'spec,feature}/**/{*,.*}.' \
+          '{rb,rake,gemspec,swift,cpp,c,java,py,clj,cljs,' \
           "scala,js,yml,sh,json}}'"
         end
 
