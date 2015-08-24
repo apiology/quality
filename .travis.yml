@@ -1,3 +1,4 @@
+sudo: false
 language: ruby
 # without --debug, JRuby doesn't support coverage reporting
 env:
