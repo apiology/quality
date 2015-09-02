@@ -1,5 +1,18 @@
 #!/usr/bin/env ruby
 
+# XXX: There's an underlying issue with bundler, and knowing my luck,
+# probably RVM that is causing confusion on which version of rake is
+# being pulled in in this situation.  Similar issues from the past:
+#
+# http://stackoverflow.com/questions/6085610/
+#     ruby-on-rails-and-rake-problems-uninitialized-constant-rakedsl
+module Rake
+  # Define this in advance so that confused requires succeed
+  module DSL
+  end
+  class Task
+  end
+end
 require 'rake'
 require 'rake/tasklib'
 require 'rbconfig'
