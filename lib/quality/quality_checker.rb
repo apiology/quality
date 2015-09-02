@@ -53,7 +53,8 @@ module Quality
     end
 
     def check_exit_status(exit_status)
-      return if @command_options[:gives_error_code_on_violations]
+      return if @command_options[:gives_error_code_on_violations] ||
+                @command_options[:gives_error_code_on_no_relevant_code]
 
       fail("Error detected running #{full_cmd}.  " \
            "Exit status is #{exit_status}") if exit_status != 0
