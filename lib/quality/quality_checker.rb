@@ -56,8 +56,7 @@ module Quality
       return if @command_options[:gives_error_code_on_violations]
 
       fail("Error detected running #{full_cmd}.  " \
-           "Exit status is #{exit_status}, " \
-           "output is [#{out}]") if exit_status != 0
+           "Exit status is #{exit_status}") if exit_status != 0
     end
 
     def existing_violations
