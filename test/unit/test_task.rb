@@ -8,6 +8,7 @@ require_relative 'tools/reek'
 require_relative 'tools/rubocop'
 require_relative 'tools/bigfiles'
 require_relative 'tools/punchlist'
+require_relative 'tools/brakeman'
 
 # Unit test the Task class
 class TestTask < MiniTest::Test
@@ -18,6 +19,7 @@ class TestTask < MiniTest::Test
   include ::Test::Quality::Tools::Rubocop
   include ::Test::Quality::Tools::BigFiles
   include ::Test::Quality::Tools::Punchlist
+  include ::Test::Quality::Tools::Brakeman
 
   def test_quality_task_all_tools
     get_test_object do |_task|
@@ -51,7 +53,7 @@ class TestTask < MiniTest::Test
     tools.each { |tool| expect_define_task.with(tool) }
   end
 
-  ALL_TOOLS = %w(cane flog flay reek rubocop bigfiles punchlist)
+  ALL_TOOLS = %w(cane flog flay reek rubocop bigfiles punchlist brakeman)
 
   def expect_tools_run(tools)
     tools.each do |tool_name|

@@ -6,6 +6,7 @@ require_relative 'tools/reek'
 require_relative 'tools/rubocop'
 require_relative 'tools/bigfiles'
 require_relative 'tools/punchlist'
+require_relative 'tools/brakeman'
 
 module Quality
   # Knows how to run different quality tools based on a configuration
@@ -18,6 +19,7 @@ module Quality
     include Tools::Rubocop
     include Tools::BigFiles
     include Tools::Punchlist
+    include Tools::Brakeman
 
     extend ::Forwardable
 

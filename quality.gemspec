@@ -36,6 +36,7 @@ your numbers don't get any worse over time."
   s.add_runtime_dependency('rubocop')
   s.add_runtime_dependency('bigfiles')
   s.add_runtime_dependency('punchlist')
+  s.add_runtime_dependency('brakeman')
 
   # need above 3.2.2 to support Ruby 2.0 syntax
   #

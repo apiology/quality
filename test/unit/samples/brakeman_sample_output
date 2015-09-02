@@ -1,0 +1,22 @@
+oBRAKEMAN REPORT
+
+Application Path,Report Generation Time,Checks Performed,Rails Version
+/Users/broz/src/rails-project,2015-09-02 11:35:40 -0400,"BasicAuth, ContentTag, CreateWith, CrossSiteScripting, DefaultRoutes, Deserialize, DetailedExceptions, DigestDoS, EscapeFunction, Evaluation, Execute, FileAccess, FileDisclosure, FilterSkipping, ForgerySetting, HeaderDoS, I18nXSS, JRubyXML, JSONEncoding, JSONParsing, LinkTo, LinkToHref, MailTo, MassAssignment, ModelAttrAccessible, ModelAttributes, ModelSerialize, NestedAttributes, NumberToCurrency, QuoteTableName, Redirect, RegexDoS, Render, RenderDoS, RenderInline, ResponseSplitting, SQL, SQLCVEs, SSLVerify, SafeBufferManipulation, SanitizeMethods, SelectTag, SelectVulnerability, Send, SendFile, SessionSettings, SimpleFormat, SingleQuotes, SkipBeforeFilter, StripTags, SymbolDoSCVE, TranslateBug, UnsafeReflection, ValidationRegex, WithoutProtection, XMLDoS, YAMLParsing",3.1.0
+
+SUMMARY
+Scanned/Reported,Total
+Controllers,5
+Models,2
+Templates,10
+Errors,0
+Security Warnings,26 (17)
+
+Warning Type,Total
+Attribute Restriction,1
+Cross Site Scripting,5
+Default Routes,1
+Denial of Service,5
+Mass Assignment,2
+Remote Code Execution,2
+SQL Injection,9
+Session Setting,1
