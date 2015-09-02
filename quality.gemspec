@@ -9,9 +9,11 @@ Gem::Specification.new do |s|
 
   s.authors = ['Vince Broz']
   # s.default_executable = %q{quality}
-  s.description = "Quality is a tool that runs quality checks on Ruby
-code using rubocop, cane, reek, flog and flay, and makes sure
-your numbers don't get any worse over time."
+  s.description =
+    'Quality is a tool that runs quality checks on your code using ' \
+    "community tools, and makes sure your numbers don't get any " \
+    "worse over time. Just add 'rake quality' as part of your " \
+    'Continuous Integration'
   s.email = ['vince@broz.cc']
   # s.executables = ["quality"]
   # s.extra_rdoc_files = ["CHANGELOG", "License.txt"]

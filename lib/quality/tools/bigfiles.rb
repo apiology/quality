@@ -1,6 +1,6 @@
 module Quality
   module Tools
-    # Adds 'rubocop' tool support to quality gem
+    # Adds 'bigfiles' tool support to quality gem
     module BigFiles
       private
 

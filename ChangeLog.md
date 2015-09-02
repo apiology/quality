@@ -78,3 +78,8 @@
 ## Changes since Quality 12.0.0
 ### Include .* as well as * in glob, so files like '.rubocop.yml' can be searched.
 
+## Changes since Quality 13.0.0
+### Allow for quality tools that bomb out when there's no code that it cares about to check
+### Add Brakeman support (github issue #30)
+### Add workarounds for some rvm/bundler/rake integration issues
+### Fix bug in error output on exit
