@@ -86,3 +86,4 @@
 
 ## Changes since Quality 14.0.0
 ### Add exclude_files configuration
+### Fix undercounting of flay issues
