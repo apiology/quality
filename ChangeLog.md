@@ -87,3 +87,6 @@
 ## Changes since Quality 14.0.0
 ### Add exclude_files configuration
 ### Fix undercounting of flay issues
+
+## Changes since Quality 14.1.0
+### Add rails_best_practices gem
