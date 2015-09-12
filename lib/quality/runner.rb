@@ -56,9 +56,7 @@ module Quality
     end
 
     def run_ratchet
-      @config.all_output_files.each do |filename|
-        run_ratchet_on_file(filename)
-      end
+      @config.all_output_files.each { |filename| run_ratchet_on_file(filename) }
     end
 
     def run_ratchet_on_file(filename)

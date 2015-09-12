@@ -55,7 +55,6 @@ module Quality
     def check_exit_status(exit_status)
       return if @command_options[:gives_error_code_on_violations] ||
                 @command_options[:gives_error_code_on_no_relevant_code]
-
       fail("Error detected running #{full_cmd}.  " \
            "Exit status is #{exit_status}") if exit_status != 0
     end
@@ -89,9 +88,7 @@ module Quality
     private
 
     def full_cmd
-      args = @command_options[:args]
-      args ||= ''
-
+      args = @command_options[:args] || ''
       @found_output = false
       RubySpawn.new(@cmd, args).invocation
     end
