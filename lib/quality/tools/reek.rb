@@ -5,7 +5,7 @@ module Quality
       private
 
       def quality_reek
-        args = "--single-line #{ruby_files}"
+        args = "--single-line #{ruby_files.join(' ')}"
         ratchet_quality_cmd('reek',
                             args: args,
                             emacs_format: true,

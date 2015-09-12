@@ -16,10 +16,12 @@ module Quality
                    :ruby_dirs=, :ruby_dirs,
                    :source_dirs=, :source_dirs,
                    :extra_files=, :extra_files,
+                   :exclude_files=, :exclude_files,
                    :extra_ruby_files=, :extra_ruby_files,
                    :ruby_file_extensions=, :ruby_file_extensions,
                    :source_file_extensions=, :source_file_extensions,
                    :source_files_glob,
+                   :source_files_exclude_glob,
                    :ruby_files_glob,
                    :ruby_files)
 

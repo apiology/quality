@@ -4,9 +4,17 @@ module Quality
     module BigFiles
       private
 
+      def bigfiles_args
+        args = ['--glob', "'#{source_files_glob}'"]
+        if exclude_files.size > 0
+          args << ['--exclude-glob', "'#{source_files_exclude_glob}'"]
+        end
+        args.join(' ')
+      end
+
       def quality_bigfiles
         ratchet_quality_cmd('bigfiles',
-                            args: "--glob '#{source_files_glob}'") do |line|
+                            args: bigfiles_args) do |line|
           line.split(':')[0].to_i
         end
       end

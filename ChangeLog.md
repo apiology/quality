@@ -83,3 +83,6 @@
 ### Add Brakeman support (github issue #30)
 ### Add workarounds for some rvm/bundler/rake integration issues
 ### Fix bug in error output on exit
+
+## Changes since Quality 14.0.0
+### Add exclude_files configuration

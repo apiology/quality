@@ -4,10 +4,14 @@ module Quality
     module Rubocop
       private
 
+      def rubocop_args
+        "--format emacs #{ruby_files.join(' ')}"
+      end
+
       def quality_rubocop
         ratchet_quality_cmd('rubocop',
                             gives_error_code_on_violations: true,
-                            args: "--format emacs #{ruby_files}") do |line|
+                            args: rubocop_args) do |line|
           self.class.count_rubocop_violations(line)
         end
       end

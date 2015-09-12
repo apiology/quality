@@ -37,8 +37,8 @@ Gem::Specification.new do |s|
   # flay 2.6.0 contained a command-line-parsing issue
   s.add_runtime_dependency('flay', ['>= 2.4', '!= 2.6.0'])
   s.add_runtime_dependency('rubocop')
-  s.add_runtime_dependency('bigfiles')
-  s.add_runtime_dependency('punchlist')
+  s.add_runtime_dependency('bigfiles', ['>= 0.1'])
+  s.add_runtime_dependency('punchlist', ['>= 1.1'])
   s.add_runtime_dependency('brakeman')
 
   # need above 3.2.2 to support Ruby 2.0 syntax

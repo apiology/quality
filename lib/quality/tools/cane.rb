@@ -4,8 +4,20 @@ module Quality
     module Cane
       private
 
+      def cane_exclude_args
+        [
+          "--abc-exclude '#{source_files_exclude_glob}'",
+          "--style-exclude '#{source_files_exclude_glob}'",
+          "--doc-exclude '#{source_files_exclude_glob}'",
+        ]
+      end
+
       def cane_args
-        "-f '#{ruby_files_glob}'"
+        args = [
+          "-f '#{ruby_files_glob}'",
+        ]
+        args += cane_exclude_args if exclude_files.size > 0
+        args.join(' ')
       end
 
       def quality_cane
