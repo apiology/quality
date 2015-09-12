@@ -25,9 +25,11 @@ TrivialAccessors:
 #
 Style/CommentAnnotation:
    Keywords:
-    - TODO
+    - "TOD\
+       O"
     - FIXME
     - OPTIMIZE
     - HACK
     - REVIEW
-    - XXX
+    - "XX\
+       X"
