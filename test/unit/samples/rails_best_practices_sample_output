@@ -1,0 +1,30 @@
+Source Codes: |================================================================|
+/Users/broz/src/simpletime/db/schema.rb:16 - always add db index (tasks => [user_id])
+/Users/broz/src/simpletime/app/controllers/ex_controller.rb:29 - law of demeter
+/Users/broz/src/simpletime/app/controllers/ex_controller.rb:43 - law of demeter
+/Users/broz/src/simpletime/app/controllers/application_controller.rb:9 - move finder to named_scope
+/Users/broz/src/simpletime/app/controllers/ex_controller.rb:21 - move model logic into model (task use_count > 4)
+/Users/broz/src/simpletime/app/controllers/simpletime_controller.rb:41 - move model logic into model (task use_count > 4)
+/Users/broz/src/simpletime/app/controllers/tasks_controller.rb:62 - move model logic into model (@task use_count > 4)
+/Users/broz/src/simpletime/config/routes.rb:61 - not use default route
+/Users/broz/src/simpletime/app/models/task.rb:17 - protect mass assignment
+/Users/broz/src/simpletime/app/helpers/tasks_helper.rb:1 - remove empty helpers
+/Users/broz/src/simpletime/app/controllers/ex_controller.rb:21 - remove unused methods (ExController#port)
+/Users/broz/src/simpletime/app/controllers/simpletime_controller.rb:32 - remove unused methods (SimpletimeController#stop)
+/Users/broz/src/simpletime/app/controllers/simpletime_controller.rb:41 - remove unused methods (SimpletimeController#timeline)
+/Users/broz/src/simpletime/app/views/tasks/_form.html.haml:18 - replace instance variable with local variable
+/Users/broz/src/simpletime/app/views/tasks/_form.html.haml:19 - replace instance variable with local variable
+/Users/broz/src/simpletime/app/views/tasks/_form.html.haml:22 - replace instance variable with local variable
+/Users/broz/src/simpletime/app/views/tasks/_form.html.haml:25 - replace instance variable with local variable
+/Users/broz/src/simpletime/app/controllers/tasks_controller.rb:74 - simplify render in controllers
+/Users/broz/src/simpletime/app/controllers/tasks_controller.rb:92 - simplify render in controllers
+/Users/broz/src/simpletime/app/models/task.rb:24 - remove trailing whitespace
+/Users/broz/src/simpletime/app/controllers/ex_controller.rb:24 - remove trailing whitespace
+/Users/broz/src/simpletime/app/controllers/simpletime_controller.rb:44 - remove trailing whitespace
+/Users/broz/src/simpletime/app/views/layouts/application.html.haml:85 - remove trailing whitespace
+/Users/broz/src/simpletime/app/views/simpletime/timeline.html.haml:6 - remove trailing whitespace
+/Users/broz/src/simpletime/app/views/tasks/index.html.haml:25 - remove trailing whitespace
+
+Please go to http://rails-bestpractices.com to see more useful Rails Best Practices.
+
+Found 25 warnings.

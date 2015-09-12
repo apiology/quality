@@ -41,6 +41,7 @@ Gem::Specification.new do |s|
   s.add_runtime_dependency('bigfiles', ['>= 0.1'])
   s.add_runtime_dependency('punchlist', ['>= 1.1'])
   s.add_runtime_dependency('brakeman')
+  s.add_runtime_dependency('rails_best_practices')
 
   # need above 3.2.2 to support Ruby 2.0 syntax
   #

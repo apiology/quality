@@ -8,6 +8,7 @@ require_relative 'tools/rubocop'
 require_relative 'tools/bigfiles'
 require_relative 'tools/punchlist'
 require_relative 'tools/brakeman'
+require_relative 'tools/rails_best_practices'
 
 module Quality
   # Knows how to run different quality tools based on a configuration
@@ -21,6 +22,7 @@ module Quality
     include Tools::Bigfiles
     include Tools::Punchlist
     include Tools::Brakeman
+    include Tools::RailsBestPractices
 
     extend ::Forwardable
 
