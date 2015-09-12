@@ -2,7 +2,7 @@
 # https://github.com/xsc/lein-ancient/issues/29
 # https://github.com/xsc/lein-ancient/releases
 
-require_relative 'source_file_globber'
+require 'source_finder/source_file_globber'
 
 module Quality
   # Configuration for running quality tool
@@ -24,7 +24,8 @@ module Quality
                    :ruby_files)
 
     def source_file_globber
-      @source_file_globber ||= SourceFileGlobber.new(globber: @globber)
+      @source_file_globber ||=
+        SourceFinder::SourceFileGlobber.new(globber: @globber)
     end
 
     def all_output_files

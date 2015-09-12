@@ -30,6 +30,7 @@ Gem::Specification.new do |s|
   s.rubygems_version = '1.3.6'
   s.summary = 'Code quality tools for Ruby'
 
+  s.add_runtime_dependency('source_finder')
   s.add_runtime_dependency('cane', ['>= 2.6'])
   s.add_runtime_dependency('reek', ['>= 1.3.4'])
   s.add_runtime_dependency('flog', ['>= 4.1.1'])
