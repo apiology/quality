@@ -130,8 +130,7 @@ class TestTask < MiniTest::Test
       '{Rakefile,{*,.*}.{rb,rake,gemspec},' \
       '{src,app,lib,test,spec,feature}/**/{*,.*}.{rb,rake,gemspec}}'
     expect_glob.with(source_glob)
-      .returns(['fake1.rb', 'fake2.rb',
-                'lib/libfake1.rb',
+      .returns(['fake1.rb', 'fake2.rb', 'lib/libfake1.rb',
                 'test/testfake1.rb',
                 'features/featuresfake1.rb'])
   end
