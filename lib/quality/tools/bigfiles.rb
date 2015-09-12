@@ -1,7 +1,7 @@
 module Quality
   module Tools
     # Adds 'bigfiles' tool support to quality gem
-    module BigFiles
+    module Bigfiles
       private
 
       def bigfiles_args

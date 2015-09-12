@@ -1,3 +1,4 @@
+require 'active_support/inflector'
 require 'forwardable'
 require_relative 'tools/cane'
 require_relative 'tools/flay'
@@ -17,7 +18,7 @@ module Quality
     include Tools::Flog
     include Tools::Reek
     include Tools::Rubocop
-    include Tools::BigFiles
+    include Tools::Bigfiles
     include Tools::Punchlist
     include Tools::Brakeman
 
@@ -81,7 +82,7 @@ module Quality
       self.class.ancestors.map do |ancestor|
         ancestor_name = ancestor.to_s
         next unless ancestor_name.start_with?('Quality::Tools::')
-        ancestor_name.split('::').last.downcase
+        ancestor_name.split('::').last.underscore
       end.compact
     end
 
