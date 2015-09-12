@@ -18,7 +18,7 @@ require 'rake/tasklib'
 require 'rbconfig'
 require_relative '../runner'
 require_relative '../quality_checker'
-require_relative 'config'
+require_relative '../config'
 
 module Quality
   #

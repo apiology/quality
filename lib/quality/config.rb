@@ -2,7 +2,6 @@
 # https://github.com/xsc/lein-ancient/issues/29
 # https://github.com/xsc/lein-ancient/releases
 
-# XXX: This should be moved out of rake directory
 module Quality
   # Configuration for running quality tool
   class Config
