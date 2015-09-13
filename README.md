@@ -88,7 +88,7 @@ Quality::Rake::Task.new { |t|
 
   # Pick any extra files that are source files, but may not have
   # extensions--defaults to %w(Rakefile Dockerfile)
-  t.extra_files = ['tools/check-script', 'Rakefile']
+  t.extra_source_files = ['tools/check-script', 'Rakefile']
 
   # Pick any extra files that are source files, but may not have
   # extensions--defaults to %w(Rakefile)
@@ -98,11 +98,11 @@ Quality::Rake::Task.new { |t|
   t.exclude_files = ['lib/whatever/imported_file.rb', 'lib/vendor/someone_else_fault.rb']
 
   # Extensions for Ruby language files--defaults to 'rb,rake'
-  t.ruby_file_extensions = 'rb,rake'
+  t.ruby_file_extensions_glob = 'rb,rake'
 
   # Extensions for all source files--defaults to
   # 'rb,rake,swift,cpp,c,java,py,clj,cljs,scala,js,yml,sh,json'
-  t.source_file_extensions =
+  t.source_file_extensions_glob =
     'rb,rake,swift,cpp,c,java,py,clj,cljs,scala,js,yml,sh,json'
 
   # Relative path to output directory where *_high_water_mark

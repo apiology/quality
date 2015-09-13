@@ -96,7 +96,8 @@ module Quality
       quality_checker.execute(&count_violations_on_line)
     end
 
-    def_delegators :@config, :ruby_files, :ruby_files_glob, :source_files_glob,
-                   :punchlist_regexp, :source_files_exclude_glob, :exclude_files
+    def_delegators :@config, :ruby_files, :ruby_files_glob,
+                   :source_files_glob, :punchlist_regexp,
+                   :source_files_exclude_glob, :exclude_files
   end
 end
