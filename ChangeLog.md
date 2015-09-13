@@ -94,3 +94,6 @@
 ## Changes since Quality 15.0.0
 ### Update source_finder dependency and start to make config variable names a little more sane
 
+## Changes since Quality 15.0.1
+### Recognize .md files for punchlist
+
