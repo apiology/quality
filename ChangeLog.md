@@ -97,3 +97,5 @@
 ## Changes since Quality 15.0.1
 ### Recognize .md files for punchlist
 
+## Changes since Quality 16.0.0
+### Fix broken source_file_extensions configuration
