@@ -5,8 +5,8 @@ module Test
       module Punchlist
         def punchlist_expected_args
           "--glob '{Rakefile,Dockerfile,{*,.*}.{md,rb,rake,gemspec,swift,cpp," \
-          'c,java,py,clj,cljs,scala,js,yml,sh,json},{src,app,lib,test,' \
-          'spec,feature}/**/{*,.*}.' \
+          'c,java,py,clj,cljs,scala,js,yml,sh,json},{src,app,config,db,lib,' \
+          'test,spec,feature}/**/{*,.*}.' \
           '{md,rb,rake,gemspec,swift,cpp,c,java,py,clj,cljs,' \
           "scala,js,yml,sh,json}}'"
         end

@@ -6,7 +6,8 @@ module Test
         def bigfiles_expected_args
           "--glob '{Rakefile,Dockerfile,{*,.*}.{rb,rake,gemspec," \
           'swift,cpp,c,java,py,' \
-          'clj,cljs,scala,js,yml,sh,json},{src,app,lib,test,spec,feature}' \
+          'clj,cljs,scala,js,yml,sh,json},{src,app,config,db,lib,test,' \
+          'spec,feature}' \
           '/**/{*,.*}.{rb,rake,gemspec,swift,cpp,c,java,py,clj,cljs,scala,js,' \
           "yml,sh,json}}'"
         end

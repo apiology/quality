@@ -5,7 +5,7 @@ module Test
       module Cane
         def cane_expected_args
           "-f '{Rakefile,{*,.*}.{rb,rake,gemspec}," \
-          '{src,app,lib,test,spec,feature}/**/' \
+          '{src,app,config,db,lib,test,spec,feature}/**/' \
           "{*,.*}.{rb,rake,gemspec}}'"
         end
 
