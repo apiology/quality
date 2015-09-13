@@ -22,6 +22,7 @@ module Quality
                    :ruby_file_extensions_glob=, :ruby_file_extensions_glob,
                    :source_file_extensions_arr=, :source_file_extensions_arr,
                    :source_file_extensions_glob=, :source_file_extensions_glob,
+                   :source_and_doc_files_glob,
                    :source_files_glob,
                    :source_files_exclude_glob,
                    :ruby_files_glob,

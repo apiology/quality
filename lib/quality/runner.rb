@@ -98,6 +98,7 @@ module Quality
 
     def_delegators :@config, :ruby_files, :ruby_files_glob,
                    :source_files_glob, :punchlist_regexp,
-                   :source_files_exclude_glob, :exclude_files
+                   :source_files_exclude_glob, :exclude_files,
+                   :source_and_doc_files_glob
   end
 end

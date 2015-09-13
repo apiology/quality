@@ -5,7 +5,7 @@ module Quality
       private
 
       def punchlist_args
-        glob = "--glob '#{source_files_glob}'"
+        glob = "--glob '#{source_and_doc_files_glob}'"
         regexp = " --regexp '#{punchlist_regexp}'" if punchlist_regexp
         if exclude_files.size > 0
           exclude = " --exclude-glob '#{source_files_exclude_glob}'"

@@ -58,9 +58,7 @@ class TestTask < MiniTest::Test
                  rails_best_practices)
 
   def expect_tools_run(tools)
-    tools.each do |tool_name|
-      expect_single_tool_run(tool_name)
-    end
+    tools.each { |tool_name| expect_single_tool_run(tool_name) }
   end
 
   def expect_tools_installed(tools)
