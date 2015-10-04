@@ -99,3 +99,6 @@
 
 ## Changes since Quality 16.0.0
 ### Fix broken source_file_extensions configuration
+
+## Changes since Quality 16.0.1
+### Add rubocop-rspec
