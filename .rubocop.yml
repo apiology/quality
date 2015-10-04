@@ -27,9 +27,13 @@ Style/CommentAnnotation:
    Keywords:
     - "TOD\
        O"
-    - FIXME
-    - OPTIMIZE
-    - HACK
-    - REVIEW
+    - "FIXM\
+       E"
+    - "OPTIMIZ\
+      E"
+    - "HAC\
+      K"
+    - "REVIE\
+       W"
     - "XX\
        X"

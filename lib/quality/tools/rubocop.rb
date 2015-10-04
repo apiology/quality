@@ -5,7 +5,7 @@ module Quality
       private
 
       def rubocop_args
-        "--format emacs #{ruby_files.join(' ')}"
+        "--require rubocop-rspec --format emacs #{ruby_files.join(' ')}"
       end
 
       def quality_rubocop
