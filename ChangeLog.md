@@ -102,3 +102,6 @@
 
 ## Changes since Quality 16.0.1
 ### Add rubocop-rspec
+
+## Changes since Quality 17.0.0
+### Exclude db/schema.db, a generated file.
