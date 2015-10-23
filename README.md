@@ -94,7 +94,7 @@ Quality::Rake::Task.new { |t|
   # extensions--defaults to %w(Rakefile)
   t.extra_ruby_files = ['Rakefile']
 
-  # Exclude the specified list of files--defaults to []
+  # Exclude the specified list of files--defaults to ['db/schema.rb']
   t.exclude_files = ['lib/whatever/imported_file.rb', 'lib/vendor/someone_else_fault.rb']
 
   # Extensions for Ruby language files--defaults to 'rb,rake'

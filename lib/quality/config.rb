@@ -64,6 +64,7 @@ module Quality
       @output_dir = 'metrics'
       @verbose = false
       @globber = globber
+      source_file_globber.exclude_files_arr = ['db/schema.rb']
     end
   end
 end
