@@ -13,7 +13,7 @@ module Quality
       @popener.popen(@full_cmd) do |file|
         yield file
       end
-      $CHILD_STATUS.exitstatus
+      $CHILD_STATUS.exitstatus if $CHILD_STATUS
     end
   end
 end
