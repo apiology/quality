@@ -18,11 +18,10 @@ Gem::Specification.new do |s|
   # s.executables = ["quality"]
   # s.extra_rdoc_files = ["CHANGELOG", "License.txt"]
   s.license = 'MIT'
-  s.files = Dir['License.txt', 'README.md',
-                'Rakefile',
-                # "bin/quality",
-                '{lib}/**/*',
-                'quality.gemspec'] & `git ls-files -z`.split("\0")
+  s.files = Dir['CODE_OF_CONDUCT.md', 'LICENSE.txt', 'README.md',
+                '{lib}/quality.rb',
+                '{lib}/quality/**/*.rb',
+                'quality.gemspec']
   # s.rdoc_options = ["--main", "README.md"]
   s.require_paths = ['lib']
   s.homepage = 'http://github.com/apiology/quality'
