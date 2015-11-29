@@ -105,3 +105,6 @@
 
 ## Changes since Quality 17.0.0
 ### Exclude db/schema.db, a generated file.
+
+## Changes since Quality 17.1.1
+Add working source_files_exclude_glob support
