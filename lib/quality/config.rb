@@ -25,6 +25,7 @@ module Quality
                    :source_and_doc_files_glob,
                    :source_files_glob,
                    :source_files_exclude_glob,
+                   :source_files_exclude_glob=,
                    :ruby_files_glob,
                    :ruby_files_arr)
 

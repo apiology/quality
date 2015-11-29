@@ -97,6 +97,11 @@ Quality::Rake::Task.new { |t|
   # Exclude the specified list of files--defaults to ['db/schema.rb']
   t.exclude_files = ['lib/whatever/imported_file.rb', 'lib/vendor/someone_else_fault.rb']
 
+  # Alternately, express it as a glob:
+
+  # Exclude the specified list of files
+  t.source_files_exclude_glob = "{lib/whatever/imported_file.rb,lib/vendor/**/*.rb}"
+
   # Extensions for Ruby language files--defaults to 'rb,rake'
   t.ruby_file_extensions_glob = 'rb,rake'
 
