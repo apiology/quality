@@ -16,6 +16,7 @@ end
 require 'rake'
 require 'rake/tasklib'
 require 'rbconfig'
+require_relative '../which'
 require_relative '../runner'
 require_relative '../quality_checker'
 require_relative '../config'
@@ -47,7 +48,8 @@ module Quality
                      globber: Dir,
                      gem_spec: Gem::Specification,
                      quality_checker_class:
-                       Quality::QualityChecker)
+                       Quality::QualityChecker,
+                     which: Which.new)
         @dsl = dsl
         @cmd_runner = cmd_runner
         @globber = globber
@@ -59,7 +61,8 @@ module Quality
                                         quality_checker_class,
                                       count_io: count_io,
                                       count_file: count_file,
-                                      globber: globber)
+                                      globber: globber,
+                                      which: which)
         define
       end
 

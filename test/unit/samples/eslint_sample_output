@@ -1,0 +1,27 @@
+/my/sample/project/Gruntfile.js
+   6:11  error  Strings must use singlequote  quotes
+   6:33  error  Strings must use singlequote  quotes
+  53:72  error  Strings must use singlequote  quotes
+  58:22  error  Strings must use singlequote  quotes
+  59:26  error  Strings must use singlequote  quotes
+  60:17  error  Strings must use singlequote  quotes
+  61:27  error  Strings must use singlequote  quotes
+  64:14  error  Strings must use singlequote  quotes
+  65:14  error  Strings must use singlequote  quotes
+  72:22  error  Strings must use singlequote  quotes
+  72:32  error  Strings must use singlequote  quotes
+  72:41  error  Strings must use singlequote  quotes
+  72:49  error  Strings must use singlequote  quotes
+
+/my/sample/project/server.js
+   29:3   warning  Unexpected console statement  no-console
+   36:45  error    Strings must use singlequote  quotes
+   37:60  error    Strings must use singlequote  quotes
+   46:21  error    Strings must use singlequote  quotes
+   56:19  error    Strings must use singlequote  quotes
+   56:62  error    Strings must use singlequote  quotes
+  112:3   warning  Unexpected console statement  no-console
+  113:3   warning  Unexpected console statement  no-console
+
+✖ 233 problems (49 errors, 184 warnings)
+
