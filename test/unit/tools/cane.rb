@@ -6,7 +6,10 @@ module Test
         def cane_expected_args
           "-f '{Rakefile,{*,.*}.{rb,rake,gemspec}," \
           '{src,app,config,db,lib,test,spec,feature}/**/' \
-          "{*,.*}.{rb,rake,gemspec}}'"
+          "{*,.*}.{rb,rake,gemspec}}' " \
+          "--abc-exclude '{db/schema.rb}' " \
+          "--style-exclude '{db/schema.rb}' " \
+          "--doc-exclude '{db/schema.rb}'"
         end
 
         def expect_cane_run(quality_checker)

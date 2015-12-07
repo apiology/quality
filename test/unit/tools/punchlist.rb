@@ -8,7 +8,8 @@ module Test
           'c,java,py,clj,cljs,scala,js,yml,sh,json},{src,app,config,db,lib,' \
           'test,spec,feature}/**/{*,.*}.' \
           '{md,rb,rake,gemspec,swift,cpp,c,java,py,clj,cljs,' \
-          "scala,js,yml,sh,json}}'"
+          "scala,js,yml,sh,json}}' " \
+          "--exclude-glob '{db/schema.rb}'"
         end
 
         def expect_punchlist_run(quality_checker)

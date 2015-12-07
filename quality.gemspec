@@ -18,11 +18,10 @@ Gem::Specification.new do |s|
   # s.executables = ["quality"]
   # s.extra_rdoc_files = ["CHANGELOG", "License.txt"]
   s.license = 'MIT'
-  s.files = Dir['License.txt', 'README.md',
-                'Rakefile',
-                # "bin/quality",
-                '{lib}/**/*',
-                'quality.gemspec'] & `git ls-files -z`.split("\0")
+  s.files = Dir['CODE_OF_CONDUCT.md', 'LICENSE.txt', 'README.md',
+                '{lib}/quality.rb',
+                '{lib}/quality/**/*.rb',
+                'quality.gemspec']
   # s.rdoc_options = ["--main", "README.md"]
   s.require_paths = ['lib']
   s.homepage = 'http://github.com/apiology/quality'
@@ -31,7 +30,7 @@ Gem::Specification.new do |s|
   s.summary = 'Code quality tools for Ruby'
 
   s.add_runtime_dependency('activesupport')
-  s.add_runtime_dependency('source_finder', ['>=2.1.1'])
+  s.add_runtime_dependency('source_finder', ['>=2.2.1'])
   s.add_runtime_dependency('cane', ['>= 2.6'])
   s.add_runtime_dependency('reek', ['>= 1.3.4'])
   s.add_runtime_dependency('flog', ['>= 4.1.1'])

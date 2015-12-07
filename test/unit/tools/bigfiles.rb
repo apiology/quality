@@ -9,7 +9,8 @@ module Test
           'clj,cljs,scala,js,yml,sh,json},{src,app,config,db,lib,test,' \
           'spec,feature}' \
           '/**/{*,.*}.{rb,rake,gemspec,swift,cpp,c,java,py,clj,cljs,scala,js,' \
-          "yml,sh,json}}'"
+          "yml,sh,json}}' " \
+          "--exclude-glob '{db/schema.rb}'"
         end
 
         def expect_bigfiles_run(quality_checker)

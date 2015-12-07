@@ -25,6 +25,7 @@ module Quality
                    :source_and_doc_files_glob,
                    :source_files_glob,
                    :source_files_exclude_glob,
+                   :source_files_exclude_glob=,
                    :ruby_files_glob,
                    :ruby_files_arr)
 
@@ -64,6 +65,7 @@ module Quality
       @output_dir = 'metrics'
       @verbose = false
       @globber = globber
+      source_file_globber.exclude_files_arr = ['db/schema.rb']
     end
   end
 end
