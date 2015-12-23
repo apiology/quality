@@ -1,0 +1,279 @@
+bluehq-cli.py:14:1: E302 expected 2 blank lines, found 1
+bluehq-cli.py:15:3: E111 indentation is not a multiple of four
+bluehq-cli.py:16:3: E111 indentation is not a multiple of four
+bluehq-cli.py:21:3: E111 indentation is not a multiple of four
+bluehq-cli.py:22:3: E111 indentation is not a multiple of four
+bluehq-cli.py:23:3: E111 indentation is not a multiple of four
+bluehq-cli.py:24:3: E111 indentation is not a multiple of four
+bluehq-cli.py:26:1: E302 expected 2 blank lines, found 1
+bluehq-cli.py:27:3: E111 indentation is not a multiple of four
+bluehq-cli.py:28:3: E111 indentation is not a multiple of four
+bluehq-cli.py:33:3: E111 indentation is not a multiple of four
+bluehq-cli.py:34:3: E111 indentation is not a multiple of four
+bluehq-cli.py:35:3: E111 indentation is not a multiple of four
+bluehq-cli.py:36:3: E111 indentation is not a multiple of four
+bluehq-cli.py:38:1: E302 expected 2 blank lines, found 1
+bluehq-cli.py:39:3: E111 indentation is not a multiple of four
+bluehq-cli.py:40:3: E111 indentation is not a multiple of four
+bluehq-cli.py:42:3: E111 indentation is not a multiple of four
+bluehq-cli.py:44:3: E111 indentation is not a multiple of four
+bluehq-cli.py:45:3: E111 indentation is not a multiple of four
+bluehq-cli.py:47:7: E111 indentation is not a multiple of four
+bluehq-cli.py:48:3: E111 indentation is not a multiple of four
+bluehq-cli.py:50:1: E302 expected 2 blank lines, found 1
+bluehq-cli.py:51:3: E111 indentation is not a multiple of four
+bluehq-cli.py:52:3: E111 indentation is not a multiple of four
+bluehq-cli.py:54:3: E111 indentation is not a multiple of four
+bluehq-cli.py:55:3: E111 indentation is not a multiple of four
+bluehq-cli.py:57:1: E302 expected 2 blank lines, found 1
+bluehq-cli.py:58:3: E111 indentation is not a multiple of four
+bluehq-cli.py:59:3: E114 indentation is not a multiple of four (comment)
+bluehq-cli.py:60:3: E111 indentation is not a multiple of four
+bluehq-cli.py:62:3: E111 indentation is not a multiple of four
+bluehq-cli.py:63:3: E111 indentation is not a multiple of four
+bluehq-cli.py:65:1: E302 expected 2 blank lines, found 1
+bluehq-cli.py:66:3: E111 indentation is not a multiple of four
+bluehq-cli.py:67:3: E111 indentation is not a multiple of four
+bluehq-cli.py:69:3: E111 indentation is not a multiple of four
+bluehq-cli.py:75:3: E111 indentation is not a multiple of four
+bluehq-cli.py:77:1: E302 expected 2 blank lines, found 1
+bluehq-cli.py:78:3: E111 indentation is not a multiple of four
+bluehq-cli.py:79:3: E111 indentation is not a multiple of four
+bluehq-cli.py:81:3: E111 indentation is not a multiple of four
+bluehq-cli.py:82:3: E111 indentation is not a multiple of four
+bluehq-cli.py:82:80: E501 line too long (82 > 79 characters)
+bluehq-cli.py:83:1: W293 blank line contains whitespace
+bluehq-cli.py:84:1: W293 blank line contains whitespace
+bluehq-cli.py:85:3: E111 indentation is not a multiple of four
+bluehq-cli.py:85:3: E303 too many blank lines (2)
+bluehq-cli.py:86:3: E111 indentation is not a multiple of four
+bluehq-cli.py:88:1: E302 expected 2 blank lines, found 1
+bluehq-cli.py:89:3: E111 indentation is not a multiple of four
+bluehq-cli.py:91:3: E111 indentation is not a multiple of four
+bluehq-cli.py:96:3: E111 indentation is not a multiple of four
+bluehq-cli.py:97:3: E111 indentation is not a multiple of four
+bluehq-cli.py:97:45: E203 whitespace before ':'
+bluehq-cli.py:98:3: E111 indentation is not a multiple of four
+bluehq-cli.py:100:1: E302 expected 2 blank lines, found 1
+bluehq-cli.py:101:3: E111 indentation is not a multiple of four
+bluehq-cli.py:103:3: E111 indentation is not a multiple of four
+bluehq-cli.py:107:3: E111 indentation is not a multiple of four
+bluehq-cli.py:108:3: E111 indentation is not a multiple of four
+bluehq-cli.py:108:47: E203 whitespace before ':'
+bluehq-cli.py:109:3: E111 indentation is not a multiple of four
+bluehq-cli.py:111:1: E302 expected 2 blank lines, found 1
+bluehq-cli.py:112:3: E111 indentation is not a multiple of four
+bluehq-cli.py:114:3: E111 indentation is not a multiple of four
+bluehq-cli.py:123:3: E111 indentation is not a multiple of four
+bluehq-cli.py:124:3: E111 indentation is not a multiple of four
+bluehq-cli.py:125:1: W293 blank line contains whitespace
+bluehq-cli.py:126:3: E111 indentation is not a multiple of four
+bluehq-cli.py:127:18: E203 whitespace before ':'
+bluehq-cli.py:128:16: E203 whitespace before ':'
+bluehq-cli.py:129:13: E203 whitespace before ':'
+bluehq-cli.py:130:14: E203 whitespace before ':'
+bluehq-cli.py:133:3: E111 indentation is not a multiple of four
+bluehq-cli.py:134:3: E111 indentation is not a multiple of four
+bluehq-cli.py:134:49: E203 whitespace before ':'
+bluehq-cli.py:135:3: E111 indentation is not a multiple of four
+bluehq-cli.py:139:3: E111 indentation is not a multiple of four
+bluehq-cli.py:141:3: E111 indentation is not a multiple of four
+bluehq-cli.py:142:3: E111 indentation is not a multiple of four
+bluehq-cli.py:143:3: E111 indentation is not a multiple of four
+bluehq-cli.py:143:45: E203 whitespace before ':'
+bluehq-cli.py:144:3: E111 indentation is not a multiple of four
+bluehq-cli.py:146:3: E111 indentation is not a multiple of four
+bluehq-cli.py:155:3: E111 indentation is not a multiple of four
+bluehq-cli.py:156:3: E111 indentation is not a multiple of four
+bluehq-cli.py:157:1: W293 blank line contains whitespace
+bluehq-cli.py:158:3: E111 indentation is not a multiple of four
+bluehq-cli.py:159:18: E203 whitespace before ':'
+bluehq-cli.py:160:16: E203 whitespace before ':'
+bluehq-cli.py:161:13: E203 whitespace before ':'
+bluehq-cli.py:162:14: E203 whitespace before ':'
+bluehq-cli.py:164:3: E111 indentation is not a multiple of four
+bluehq-cli.py:165:3: E111 indentation is not a multiple of four
+bluehq-cli.py:165:49: E203 whitespace before ':'
+bluehq-cli.py:167:1: E302 expected 2 blank lines, found 1
+bluehq-cli.py:168:3: E111 indentation is not a multiple of four
+bluehq-cli.py:169:3: E111 indentation is not a multiple of four
+bluehq-cli.py:172:3: E111 indentation is not a multiple of four
+bluehq-cli.py:177:3: E111 indentation is not a multiple of four
+bluehq-cli.py:177:80: E501 line too long (88 > 79 characters)
+bluehq-cli.py:178:3: E111 indentation is not a multiple of four
+bluehq-cli.py:179:3: E111 indentation is not a multiple of four
+bluehq-cli.py:179:10: E225 missing whitespace around operator
+bluehq-cli.py:181:3: E111 indentation is not a multiple of four
+bluehq-cli.py:183:1: E302 expected 2 blank lines, found 1
+bluehq-cli.py:184:3: E111 indentation is not a multiple of four
+bluehq-cli.py:185:3: E111 indentation is not a multiple of four
+bluehq-cli.py:187:1: E302 expected 2 blank lines, found 1
+bluehq-cli.py:188:3: E111 indentation is not a multiple of four
+bluehq-cli.py:193:3: E111 indentation is not a multiple of four
+bluehq-cli.py:194:3: E111 indentation is not a multiple of four
+bluehq-cli.py:196:3: E111 indentation is not a multiple of four
+bluehq-cli.py:197:3: E111 indentation is not a multiple of four
+bluehq-cli.py:198:3: E111 indentation is not a multiple of four
+bluehq-cli.py:200:1: E302 expected 2 blank lines, found 1
+bluehq-cli.py:201:3: E111 indentation is not a multiple of four
+bluehq-cli.py:206:3: E111 indentation is not a multiple of four
+bluehq-cli.py:207:3: E111 indentation is not a multiple of four
+bluehq-cli.py:209:3: E111 indentation is not a multiple of four
+bluehq-cli.py:210:3: E111 indentation is not a multiple of four
+bluehq-cli.py:212:1: E302 expected 2 blank lines, found 1
+bluehq-cli.py:213:3: E111 indentation is not a multiple of four
+bluehq-cli.py:214:3: E111 indentation is not a multiple of four
+bluehq-cli.py:214:31: W291 trailing whitespace
+bluehq-cli.py:216:3: E111 indentation is not a multiple of four
+bluehq-cli.py:217:3: E111 indentation is not a multiple of four
+bluehq-cli.py:218:3: E111 indentation is not a multiple of four
+bluehq-cli.py:219:3: E111 indentation is not a multiple of four
+bluehq-cli.py:220:3: E111 indentation is not a multiple of four
+bluehq-cli.py:221:3: E111 indentation is not a multiple of four
+bluehq-cli.py:223:1: E302 expected 2 blank lines, found 1
+bluehq-cli.py:224:3: E111 indentation is not a multiple of four
+bluehq-cli.py:225:3: E111 indentation is not a multiple of four
+bluehq-cli.py:225:31: W291 trailing whitespace
+bluehq-cli.py:227:3: E111 indentation is not a multiple of four
+bluehq-cli.py:228:3: E111 indentation is not a multiple of four
+bluehq-cli.py:229:3: E111 indentation is not a multiple of four
+bluehq-cli.py:230:3: E111 indentation is not a multiple of four
+bluehq-cli.py:231:3: E111 indentation is not a multiple of four
+bluehq-cli.py:233:1: E302 expected 2 blank lines, found 1
+bluehq-cli.py:234:3: E111 indentation is not a multiple of four
+bluehq-cli.py:235:3: E111 indentation is not a multiple of four
+bluehq-cli.py:236:3: E111 indentation is not a multiple of four
+bluehq-cli.py:237:3: E111 indentation is not a multiple of four
+bluehq-cli.py:241:3: E111 indentation is not a multiple of four
+bluehq-cli.py:247:3: E111 indentation is not a multiple of four
+bluehq-cli.py:254:3: E111 indentation is not a multiple of four
+bluehq-cli.py:255:3: E111 indentation is not a multiple of four
+bluehq-cli.py:255:11: E201 whitespace after '{'
+bluehq-cli.py:255:24: E231 missing whitespace after ':'
+bluehq-cli.py:255:49: E231 missing whitespace after ':'
+bluehq-cli.py:255:58: E202 whitespace before '}'
+bluehq-cli.py:259:3: E111 indentation is not a multiple of four
+bluehq-cli.py:260:3: E111 indentation is not a multiple of four
+bluehq-cli.py:261:3: E111 indentation is not a multiple of four
+bluehq-cli.py:261:31: W291 trailing whitespace
+bluehq-cli.py:262:3: E111 indentation is not a multiple of four
+bluehq-cli.py:269:80: E501 line too long (83 > 79 characters)
+bluehq-cli.py:273:80: E501 line too long (80 > 79 characters)
+bluehq-cli.py:287:3: E111 indentation is not a multiple of four
+bluehq-cli.py:294:3: E111 indentation is not a multiple of four
+bluehq-cli.py:296:3: E111 indentation is not a multiple of four
+bluehq-cli.py:297:3: E111 indentation is not a multiple of four
+bluehq-cli.py:301:7: E111 indentation is not a multiple of four
+bluehq-cli.py:304:7: E111 indentation is not a multiple of four
+bluehq-cli.py:306:80: E501 line too long (93 > 79 characters)
+bluehq-cli.py:308:1: W293 blank line contains whitespace
+bluehq-cli.py:310:1: W293 blank line contains whitespace
+bluehq-cli.py:313:3: E111 indentation is not a multiple of four
+bluehq-cli.py:314:3: E111 indentation is not a multiple of four
+bluehq-cli.py:315:3: E111 indentation is not a multiple of four
+bluehq-cli.py:315:80: E501 line too long (94 > 79 characters)
+bluehq-cli.py:316:3: E111 indentation is not a multiple of four
+bluehq-cli.py:317:3: E111 indentation is not a multiple of four
+bluehq-cli.py:319:3: E111 indentation is not a multiple of four
+bluehq-cli.py:321:3: E111 indentation is not a multiple of four
+bluehq-cli.py:323:3: E111 indentation is not a multiple of four
+bluehq-cli.py:325:3: E111 indentation is not a multiple of four
+bluehq-cli.py:327:3: E111 indentation is not a multiple of four
+bluehq-cli.py:329:3: E111 indentation is not a multiple of four
+bluehq-cli.py:330:3: E111 indentation is not a multiple of four
+bluehq-cli.py:330:80: E501 line too long (90 > 79 characters)
+bluehq-cli.py:331:3: E111 indentation is not a multiple of four
+bluehq-cli.py:332:3: E111 indentation is not a multiple of four
+bluehq-cli.py:333:3: E111 indentation is not a multiple of four
+bluehq-cli.py:333:80: E501 line too long (83 > 79 characters)
+bluehq-cli.py:334:3: E111 indentation is not a multiple of four
+bluehq-cli.py:334:80: E501 line too long (86 > 79 characters)
+bluehq-cli.py:335:3: E111 indentation is not a multiple of four
+bluehq-cli.py:335:80: E501 line too long (80 > 79 characters)
+bluehq-cli.py:337:3: E111 indentation is not a multiple of four
+bluehq-cli.py:337:80: E501 line too long (94 > 79 characters)
+bluehq-cli.py:338:3: E111 indentation is not a multiple of four
+bluehq-cli.py:339:3: E111 indentation is not a multiple of four
+bluehq-cli.py:340:3: E111 indentation is not a multiple of four
+bluehq-cli.py:340:80: E501 line too long (82 > 79 characters)
+bluehq-cli.py:341:3: E111 indentation is not a multiple of four
+bluehq-cli.py:342:3: E111 indentation is not a multiple of four
+bluehq-cli.py:344:3: E111 indentation is not a multiple of four
+bluehq-cli.py:344:80: E501 line too long (80 > 79 characters)
+bluehq-cli.py:345:3: E111 indentation is not a multiple of four
+bluehq-cli.py:346:3: E111 indentation is not a multiple of four
+bluehq-cli.py:348:3: E111 indentation is not a multiple of four
+bluehq-cli.py:349:80: E501 line too long (95 > 79 characters)
+bluehq-cli.py:356:3: E111 indentation is not a multiple of four
+bluehq-cli.py:356:80: E501 line too long (114 > 79 characters)
+bluehq-cli.py:357:3: E111 indentation is not a multiple of four
+bluehq-cli.py:358:3: E111 indentation is not a multiple of four
+bluehq-cli.py:359:3: E111 indentation is not a multiple of four
+bluehq-cli.py:359:80: E501 line too long (81 > 79 characters)
+bluehq-cli.py:360:3: E111 indentation is not a multiple of four
+bluehq-cli.py:360:80: E501 line too long (98 > 79 characters)
+bluehq-cli.py:362:3: E111 indentation is not a multiple of four
+bluehq-cli.py:362:80: E501 line too long (111 > 79 characters)
+bluehq-cli.py:363:3: E111 indentation is not a multiple of four
+bluehq-cli.py:364:3: E111 indentation is not a multiple of four
+bluehq-cli.py:365:3: E111 indentation is not a multiple of four
+bluehq-cli.py:366:3: E111 indentation is not a multiple of four
+bluehq-cli.py:367:3: E111 indentation is not a multiple of four
+bluehq-cli.py:368:3: E111 indentation is not a multiple of four
+bluehq-cli.py:368:80: E501 line too long (93 > 79 characters)
+bluehq-cli.py:370:3: E111 indentation is not a multiple of four
+bluehq-cli.py:371:80: E501 line too long (116 > 79 characters)
+bluehq-cli.py:373:80: E501 line too long (91 > 79 characters)
+bluehq-cli.py:376:3: E111 indentation is not a multiple of four
+bluehq-cli.py:376:80: E501 line too long (147 > 79 characters)
+bluehq-cli.py:377:3: E111 indentation is not a multiple of four
+bluehq-cli.py:377:80: E501 line too long (80 > 79 characters)
+bluehq-cli.py:378:3: E111 indentation is not a multiple of four
+bluehq-cli.py:378:80: E501 line too long (84 > 79 characters)
+bluehq-cli.py:379:3: E111 indentation is not a multiple of four
+bluehq-cli.py:379:80: E501 line too long (80 > 79 characters)
+bluehq-cli.py:380:3: E111 indentation is not a multiple of four
+bluehq-cli.py:380:80: E501 line too long (90 > 79 characters)
+bluehq-cli.py:381:3: E111 indentation is not a multiple of four
+bluehq-cli.py:381:80: E501 line too long (84 > 79 characters)
+bluehq-cli.py:383:3: E111 indentation is not a multiple of four
+bluehq-cli.py:383:80: E501 line too long (141 > 79 characters)
+bluehq-cli.py:384:3: E111 indentation is not a multiple of four
+bluehq-cli.py:385:3: E111 indentation is not a multiple of four
+bluehq-cli.py:385:80: E501 line too long (82 > 79 characters)
+bluehq-cli.py:386:3: E111 indentation is not a multiple of four
+bluehq-cli.py:387:3: E111 indentation is not a multiple of four
+bluehq-cli.py:387:80: E501 line too long (88 > 79 characters)
+bluehq-cli.py:388:3: E111 indentation is not a multiple of four
+bluehq-cli.py:388:80: E501 line too long (82 > 79 characters)
+bluehq-cli.py:390:3: E111 indentation is not a multiple of four
+bluehq-cli.py:391:80: E501 line too long (120 > 79 characters)
+bluehq-cli.py:395:80: E501 line too long (88 > 79 characters)
+bluehq-cli.py:397:80: E501 line too long (122 > 79 characters)
+bluehq-cli.py:399:80: E501 line too long (97 > 79 characters)
+bluehq-cli.py:400:80: E501 line too long (95 > 79 characters)
+bluehq-cli.py:405:3: E111 indentation is not a multiple of four
+bluehq-cli.py:407:3: E111 indentation is not a multiple of four
+bluehq-cli.py:410:3: E111 indentation is not a multiple of four
+bluehq-cli.py:413:3: E111 indentation is not a multiple of four
+bluehq-cli.py:416:3: E111 indentation is not a multiple of four
+bluehq-cli.py:419:3: E111 indentation is not a multiple of four
+bluehq-cli.py:422:3: E111 indentation is not a multiple of four
+bluehq-cli.py:424:80: E501 line too long (82 > 79 characters)
+bluehq-cli.py:426:3: E111 indentation is not a multiple of four
+bluehq-cli.py:427:80: E501 line too long (84 > 79 characters)
+bluehq-cli.py:429:3: E111 indentation is not a multiple of four
+bluehq-cli.py:432:3: E111 indentation is not a multiple of four
+bluehq-cli.py:433:80: E501 line too long (87 > 79 characters)
+bluehq-cli.py:435:3: E111 indentation is not a multiple of four
+bluehq-cli.py:436:80: E501 line too long (85 > 79 characters)
+bluehq-cli.py:438:3: E111 indentation is not a multiple of four
+bluehq-cli.py:440:7: E111 indentation is not a multiple of four
+bluehq-cli.py:441:7: E111 indentation is not a multiple of four
+bluehq-cli.py:441:18: E711 comparison to None should be 'if cond is not None:'
+bluehq-cli.py:454:80: E501 line too long (92 > 79 characters)
+bluehq-cli.py:459:7: E111 indentation is not a multiple of four
+bluehq-cli.py:462:7: E111 indentation is not a multiple of four
+bluehq-cli.py:464:3: E111 indentation is not a multiple of four
+bluehq-cli.py:466:3: E111 indentation is not a multiple of four
+bluehq-cli.py:472:3: E111 indentation is not a multiple of four

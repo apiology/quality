@@ -27,13 +27,16 @@ module Quality
                    :source_files_exclude_glob,
                    :source_files_exclude_glob=,
                    :ruby_files_glob,
-                   :ruby_files_arr)
+                   :ruby_files_arr,
+                   :python_files_glob,
+                   :python_files_arr)
 
     alias_method(:extra_files, :extra_source_files_arr)
     alias_method(:extra_files=, :extra_source_files_arr=)
     alias_method(:extra_ruby_files, :extra_ruby_files_arr)
     alias_method(:extra_ruby_files=, :extra_ruby_files_arr=)
     alias_method(:ruby_files, :ruby_files_arr)
+    alias_method(:python_files, :python_files_arr)
     alias_method(:ruby_dirs, :ruby_dirs_arr)
     alias_method(:ruby_dirs=, :ruby_dirs_arr=)
     alias_method(:source_dirs, :source_dirs_arr)
