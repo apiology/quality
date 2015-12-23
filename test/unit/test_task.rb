@@ -125,11 +125,13 @@ class TestTask < MiniTest::Test
     IO.read("#{File.dirname(__FILE__)}/samples/#{tool_name}_sample_output")
   end
 
+  def expected_ruby_source_glob
+    '{Rakefile,{*,.*}.{gemspec,rake,rb},' \
+    '{app,config,db,feature,lib,spec,src,test}/**/{*,.*}.{gemspec,rake,rb}}'
+  end
+
   def expect_find_ruby_files
-    source_glob =
-      '{Rakefile,{*,.*}.{rb,rake,gemspec},' \
-      '{src,app,config,db,lib,test,spec,feature}/**/{*,.*}.{rb,rake,gemspec}}'
-    expect_glob.with(source_glob)
+    expect_glob.with(expected_ruby_source_glob)
       .returns(['fake1.rb', 'fake2.rb', 'lib/libfake1.rb',
                 'test/testfake1.rb',
                 'features/featuresfake1.rb'])
