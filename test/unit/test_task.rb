@@ -10,10 +10,12 @@ require_relative 'tools/bigfiles'
 require_relative 'tools/punchlist'
 require_relative 'tools/brakeman'
 require_relative 'tools/rails_best_practices'
+require_relative 'tools/eslint'
 
 # Unit test the Task class
 class TestTask < MiniTest::Test
   include ::Test::Quality::Tools::Cane
+  include ::Test::Quality::Tools::Eslint
   include ::Test::Quality::Tools::Flay
   include ::Test::Quality::Tools::Flog
   include ::Test::Quality::Tools::Reek
@@ -38,6 +40,7 @@ class TestTask < MiniTest::Test
   def test_quality_task_some_not_installed
     get_test_object do |_task|
       setup_quality_task_mocks(uninstalled_tools: ['cane'])
+      @mocks[:which].expects(:which).with('cane').returns(nil)
     end
   end
 
@@ -55,7 +58,7 @@ class TestTask < MiniTest::Test
   end
 
   ALL_TOOLS = %w(cane flog flay reek rubocop bigfiles punchlist brakeman
-                 rails_best_practices)
+                 rails_best_practices eslint)
 
   def expect_tools_run(tools)
     tools.each { |tool_name| expect_single_tool_run(tool_name) }
@@ -132,6 +135,18 @@ class TestTask < MiniTest::Test
     expect_glob.with(source_glob)
       .returns(['fake1.rb', 'fake2.rb', 'lib/libfake1.rb',
                 'test/testfake1.rb',
+                'features/featuresfake1.rb'])
+  end
+
+  def expect_find_js_files
+    source_glob =
+      '{,{*,.*}.{js},' \
+      '{src,www,lib}/**/{*,.*}.{js}}'
+    expect_glob.with(source_glob)
+      .returns(['fake1.js',
+                # XXX: Try adding this and make sure it doesn't hit
+                # 'src/js/vendor/vendor_file.js',
+                'src/foo/testfake1.js',
                 'features/featuresfake1.rb'])
   end
 
