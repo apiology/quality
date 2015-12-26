@@ -27,6 +27,9 @@ module Quality
                    :js_files_glob, :js_files_arr)
 
     def_delegators(:source_file_globber,
+                   :python_files_glob, :python_files_arr)
+
+    def_delegators(:source_file_globber,
                    :source_dirs_arr=, :source_dirs_arr,
                    :extra_source_files_arr=, :extra_source_files_arr,
                    :exclude_files_arr=, :exclude_files_arr,
@@ -40,6 +43,7 @@ module Quality
     alias_method(:extra_ruby_files, :extra_ruby_files_arr)
     alias_method(:extra_ruby_files=, :extra_ruby_files_arr=)
     alias_method(:ruby_files, :ruby_files_arr)
+    alias_method(:python_files, :python_files_arr)
     alias_method(:ruby_dirs, :ruby_dirs_arr)
     alias_method(:ruby_dirs=, :ruby_dirs_arr=)
     alias_method(:ruby_file_extensions, :ruby_file_extensions_glob)

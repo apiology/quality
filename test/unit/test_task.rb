@@ -11,6 +11,7 @@ require_relative 'tools/punchlist'
 require_relative 'tools/brakeman'
 require_relative 'tools/rails_best_practices'
 require_relative 'tools/eslint'
+require_relative 'tools/pep8'
 
 # Unit test the Task class
 class TestTask < MiniTest::Test
@@ -24,6 +25,7 @@ class TestTask < MiniTest::Test
   include ::Test::Quality::Tools::Punchlist
   include ::Test::Quality::Tools::Brakeman
   include ::Test::Quality::Tools::RailsBestPractices
+  include ::Test::Quality::Tools::Pep8
 
   def test_quality_task_all_tools
     get_test_object do |_task|
@@ -58,7 +60,7 @@ class TestTask < MiniTest::Test
   end
 
   ALL_TOOLS = %w(cane flog flay reek rubocop bigfiles punchlist brakeman
-                 rails_best_practices eslint)
+                 rails_best_practices eslint pep8)
 
   def expect_tools_run(tools)
     tools.each { |tool_name| expect_single_tool_run(tool_name) }
@@ -128,15 +130,18 @@ class TestTask < MiniTest::Test
     IO.read("#{File.dirname(__FILE__)}/samples/#{tool_name}_sample_output")
   end
 
+  def expected_ruby_source_glob
+    '{Rakefile,{*,.*}.{gemspec,rake,rb},' \
+    '{app,config,db,feature,lib,spec,src,test}/**/{*,.*}.{gemspec,rake,rb}}'
+  end
+
   def expect_find_ruby_files
-    source_glob =
-      '{Rakefile,{*,.*}.{rb,rake,gemspec},' \
-      '{src,app,config,db,lib,test,spec,feature}/**/{*,.*}.{rb,rake,gemspec}}'
-    expect_glob.with(source_glob)
+    expect_glob.with(expected_ruby_source_glob)
       .returns(['fake1.rb', 'fake2.rb', 'lib/libfake1.rb',
                 'test/testfake1.rb',
                 'features/featuresfake1.rb'])
   end
+
 
   def expect_find_js_files
     source_glob =
@@ -148,6 +153,14 @@ class TestTask < MiniTest::Test
                 # 'src/js/vendor/vendor_file.js',
                 'src/foo/testfake1.js',
                 'features/featuresfake1.rb'])
+  end
+
+  def expect_find_python_files
+    source_glob =
+      '{{*,.*}.{py},' \
+      '{src}/**/{*,.*}.{py}}'
+    expect_glob.with(source_glob)
+      .returns(['fake1.py'])
   end
 
   def expect_glob

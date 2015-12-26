@@ -4,7 +4,13 @@ module Test
       # Test for the 'bigfiles' tool within the quality gem
       module BigFiles
         def bigfiles_expected_args
-          "--glob '{Dockerfile,Rakefile,{*,.*}.{rb,rake,gemspec,js,swift,cpp,c,java,py,clj,cljs,scala,yml,sh,json},{app,config,db,feature,lib,spec,src,test,www}/**/{*,.*}.{rb,rake,gemspec,js,swift,cpp,c,java,py,clj,cljs,scala,yml,sh,json}}' " \
+          "--glob '{Dockerfile,Rakefile,{*,.*}.{c,clj,cljs,cpp,gemspec,java,js,json,py,rake,rb," \
+          'scala,sh,swift,' \
+          'yml},{app,config,db,feature,lib,spec,src,test,www' \
+          '}' \
+          '/**/{*,.*}.{c,clj,cljs,cpp,gemspec,java,js,json,py,rake,rb,' \
+          'scala,sh,swift,' \
+          "yml}}' " \
           "--exclude-glob '{db/schema.rb}'"
         end
 
