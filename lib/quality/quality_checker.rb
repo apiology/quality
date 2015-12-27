@@ -43,7 +43,7 @@ module Quality
     end
 
     def run_command(processor, &count_violations_on_line)
-      runner = @process_class.new(full_cmd)
+      runner = @process_class.new(full_cmd + ' 2>&1')
 
       puts full_cmd if @verbose
       runner.run do |file|
