@@ -115,3 +115,5 @@ Extra source files config matches docs
 Add PEP8 support for Python
 Fix gemspec file inclusion bugs
 
+## Changes since Quality 18.0.0
+Fix pep8 bug when no python files found
