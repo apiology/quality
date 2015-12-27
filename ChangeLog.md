@@ -121,3 +121,6 @@ Fix pep8 bug when no python files found
 ## Changes since Quality 18.0.0
 Add JSCS support for JS
 
+
+## Changes since Quality 19.0.0
+Give a diagnostic when JSCS not configured
