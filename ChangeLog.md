@@ -126,3 +126,7 @@ Give a diagnostic when JSCS not configured
 
 ## Changes since Quality 19.1.0
 Fix flag name in diagnostic
+
+## Changes since Quality 19.1.1
+Fix bug keeping jscs from running
+
