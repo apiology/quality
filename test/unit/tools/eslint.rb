@@ -4,7 +4,7 @@ module Test
       # Test for the 'bigfiles' tool within the quality gem
       module Eslint
         def eslint_expected_args
-          'fake1.js features/featuresfake1.rb src/foo/testfake1.js'
+          '-f unix fake1.js features/featuresfake1.rb src/foo/testfake1.js'
         end
 
         def expect_eslint_run(quality_checker)

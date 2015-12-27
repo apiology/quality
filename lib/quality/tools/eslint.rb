@@ -5,14 +5,14 @@ module Quality
       private
 
       def eslint_args
-        js_files_arr.join(' ')
+        '-f unix ' + js_files_arr.join(' ')
       end
 
       def quality_eslint
         ratchet_quality_cmd('eslint',
                             args: eslint_args,
                             gives_error_code_on_violations: true) do |line|
-          if line =~ /^  \d\d:\d* /
+          if line =~ /^.*:\d+:\d+: /
             1
           else
             0
