@@ -51,6 +51,8 @@ module Quality
 
     alias_method(:extra_files, :extra_source_files_arr)
     alias_method(:extra_files=, :extra_source_files_arr=)
+    alias_method(:extra_source_files, :extra_source_files_arr)
+    alias_method(:extra_source_files=, :extra_source_files_arr=)
     alias_method(:source_dirs, :source_dirs_arr)
     alias_method(:source_dirs=, :source_dirs_arr=)
     alias_method(:exclude_files, :exclude_files_arr)
