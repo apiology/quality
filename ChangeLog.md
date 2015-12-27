@@ -108,3 +108,10 @@
 
 ## Changes since Quality 17.1.1
 Add working source_files_exclude_glob support
+
+## Changes since Quality 17.2.0
+Add ESLint support for JS
+Extra source files config matches docs
+Add PEP8 support for Python
+Fix gemspec file inclusion bugs
+
