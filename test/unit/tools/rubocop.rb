@@ -18,7 +18,7 @@ module Test
 
         def rubocop_args
           '--require rubocop-rspec --format emacs fake1.rb fake2.rb ' \
-          'lib/libfake1.rb test/testfake1.rb features/featuresfake1.rb'
+          'features/featuresfake1.rb lib/libfake1.rb test/testfake1.rb'
         end
       end
     end

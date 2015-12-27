@@ -18,8 +18,8 @@ module Test
 
         def flog_args
           '--all --continue --methods-only ' \
-            'fake1.rb fake2.rb lib/libfake1.rb ' \
-            'test/testfake1.rb features/featuresfake1.rb'
+            'fake1.rb fake2.rb features/featuresfake1.rb lib/libfake1.rb ' \
+            'test/testfake1.rb'
         end
       end
     end

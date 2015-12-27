@@ -142,11 +142,19 @@ class TestTask < MiniTest::Test
                 'features/featuresfake1.rb'])
   end
 
+  def expected_source_and_doc_files_glob
+    '{Dockerfile,Rakefile,{*,.*}.{c,clj,cljs,cpp,gemspec,' \
+    'html,java,js,json,md,py,rake,rb,scala,sh,swift,' \
+    'yml},{app,config,db,feature,lib,' \
+    'spec,src,test,www}/**/{*,.*}.' \
+    '{c,clj,cljs,cpp,gemspec,' \
+    'html,java,js,json,md,py,rake,rb,scala,sh,swift,yml}}'
+  end
 
   def expect_find_js_files
     source_glob =
-      '{,{*,.*}.{js},' \
-      '{src,www,lib}/**/{*,.*}.{js}}'
+      '{{*,.*}.{js},' \
+      '{app,src,www}/**/{*,.*}.{js}}'
     expect_glob.with(source_glob)
       .returns(['fake1.js',
                 # XXX: Try adding this and make sure it doesn't hit
