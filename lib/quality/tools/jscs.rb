@@ -16,16 +16,21 @@ module Quality
         0
       end
 
+      def jscs_count_violations_on_line(line)
+        if line =~ /^.*:\d+:\d+: /
+          1
+        elsif line =~ /^No configuration found/
+          jscs_check_configured
+        else
+          0
+        end
+      end
+
       def quality_jscs
         ratchet_quality_cmd('jscs',
                             args: jscs_args,
                             gives_error_code_on_violations: true) do |line|
-          return 1 if line =~ /^.*:\d+:\d+: /
-          if line =~ /^No configuration found/
-            jscs_check_configured
-          else
-            0
-          end
+          jscs_count_violations_on_line(line)
         end
       end
     end
