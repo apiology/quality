@@ -117,3 +117,7 @@ Fix gemspec file inclusion bugs
 
 ## Changes since Quality 18.0.0
 Fix pep8 bug when no python files found
+
+## Changes since Quality 18.0.0
+Add JSCS support for JS
+

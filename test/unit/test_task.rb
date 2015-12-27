@@ -11,12 +11,14 @@ require_relative 'tools/punchlist'
 require_relative 'tools/brakeman'
 require_relative 'tools/rails_best_practices'
 require_relative 'tools/eslint'
+require_relative 'tools/jscs'
 require_relative 'tools/pep8'
 
 # Unit test the Task class
 class TestTask < MiniTest::Test
   include ::Test::Quality::Tools::Cane
   include ::Test::Quality::Tools::Eslint
+  include ::Test::Quality::Tools::Jscs
   include ::Test::Quality::Tools::Flay
   include ::Test::Quality::Tools::Flog
   include ::Test::Quality::Tools::Reek
@@ -60,7 +62,7 @@ class TestTask < MiniTest::Test
   end
 
   ALL_TOOLS = %w(cane flog flay reek rubocop bigfiles punchlist brakeman
-                 rails_best_practices eslint pep8)
+                 rails_best_practices eslint jscs pep8)
 
   def expect_tools_run(tools)
     tools.each { |tool_name| expect_single_tool_run(tool_name) }

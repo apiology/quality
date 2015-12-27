@@ -12,6 +12,7 @@ require_relative 'tools/punchlist'
 require_relative 'tools/brakeman'
 require_relative 'tools/rails_best_practices'
 require_relative 'tools/eslint'
+require_relative 'tools/jscs'
 
 module Quality
   # Knows how to run different quality tools based on a configuration
@@ -28,6 +29,7 @@ module Quality
     include Tools::Brakeman
     include Tools::RailsBestPractices
     include Tools::Eslint
+    include Tools::Jscs
 
     extend ::Forwardable
 
