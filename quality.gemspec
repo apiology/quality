@@ -30,7 +30,7 @@ Gem::Specification.new do |s|
   s.summary = 'Code quality tools for Ruby'
 
   s.add_runtime_dependency('activesupport')
-  s.add_runtime_dependency('source_finder', ['>=2.2.1'])
+  s.add_runtime_dependency('source_finder', ['>=2.3.0'])
   s.add_runtime_dependency('cane', ['>= 2.6'])
   s.add_runtime_dependency('reek', ['>= 1.3.4'])
   s.add_runtime_dependency('flog', ['>= 4.1.1'])
