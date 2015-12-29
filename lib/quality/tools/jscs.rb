@@ -12,7 +12,7 @@ module Quality
         return if js_files_arr.empty?
 
         puts 'No JSCS config found!  To generate one, run ' \
-             'jscs --auto-configure ' + js_files_arr.join(' ')
+             'jscs --auto-configure representative_file.js'
         0
       end
 
