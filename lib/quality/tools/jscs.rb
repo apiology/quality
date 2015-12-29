@@ -9,7 +9,7 @@ module Quality
       end
 
       def jscs_check_configured
-        return if js_files_arr.empty?
+        return 0 if js_files_arr.empty?
 
         puts 'No JSCS config found!  To generate one, run ' \
              'jscs --auto-configure representative_file.js'
