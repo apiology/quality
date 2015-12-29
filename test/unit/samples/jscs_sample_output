@@ -1,0 +1,49 @@
+./app/scripts/controllers/main.js:165:50: All identifiers must be camelCase or UPPER_CASE
+./app/scripts/controllers/main.js:173:52: All identifiers must be camelCase or UPPER_CASE
+./app/scripts/controllers/main.js:174:65: All identifiers must be camelCase or UPPER_CASE
+./app/scripts/controllers/main.js:192:31: All identifiers must be camelCase or UPPER_CASE
+./app/scripts/newrelic.js:11:2: All identifiers must be camelCase or UPPER_CASE
+./app/scripts/newrelic.js:15:2: All identifiers must be camelCase or UPPER_CASE
+./app/scripts/services/vld.js:43:44: All identifiers must be camelCase or UPPER_CASE
+./app/scripts/services/vld.js:43:69: All identifiers must be camelCase or UPPER_CASE
+./app/scripts/services/vld.js:43:92: All identifiers must be camelCase or UPPER_CASE
+./test/karma.conf.js:19:6: Invalid quote mark found
+./test/karma.conf.js:19:15: Missing comma before closing bracket
+./test/karma.conf.js:23:12: Line comments must be preceded with a blank line
+./test/karma.conf.js:36:56: Line comments must be preceded with a blank line
+./test/karma.conf.js:38:6: Invalid quote mark found
+./test/karma.conf.js:39:6: Invalid quote mark found
+./test/karma.conf.js:40:6: Invalid quote mark found
+./test/karma.conf.js:40:25: Missing comma before closing bracket
+./test/karma.conf.js:59:6: Invalid quote mark found
+./test/karma.conf.js:59:17: Missing comma before closing bracket
+./test/karma.conf.js:64:6: Invalid quote mark found
+./test/karma.conf.js:65:6: Invalid quote mark found
+./test/karma.conf.js:65:21: Missing comma before closing bracket
+./test/spec/controllers/about.js:3:42: Illegal space before opening round brace
+./test/spec/controllers/about.js:3:42: Illegal space before opening round brace
+./test/spec/controllers/about.js:11:28: Illegal space before opening round brace
+./test/spec/controllers/about.js:11:28: Illegal space before opening round brace
+./test/spec/controllers/about.js:17:67: Illegal space before opening round brace
+./test/spec/controllers/about.js:17:67: Illegal space before opening round brace
+./test/spec/controllers/login.js:3:42: Illegal space before opening round brace
+./test/spec/controllers/login.js:3:42: Illegal space before opening round brace
+./test/spec/controllers/login.js:11:28: Illegal space before opening round brace
+./test/spec/controllers/login.js:11:28: Illegal space before opening round brace
+./test/spec/controllers/main.js:3:41: Illegal space before opening round brace
+./test/spec/controllers/main.js:3:41: Illegal space before opening round brace
+./test/spec/controllers/main.js:11:28: Illegal space before opening round brace
+./test/spec/controllers/main.js:11:28: Illegal space before opening round brace
+./test/spec/controllers/main.js:17:2: Expected indentation of 2 characters
+./test/spec/controllers/main.js:18:2: Expected indentation of 2 characters
+./test/spec/controllers/main.js:19:2: Expected indentation of 2 characters
+./test/spec/directives/slidinglogin.js:3:44: Illegal space before opening round brace
+./test/spec/directives/slidinglogin.js:3:44: Illegal space before opening round brace
+./test/spec/directives/slidinglogin.js:10:28: Illegal space before opening round brace
+./test/spec/directives/slidinglogin.js:10:28: Illegal space before opening round brace
+./test/spec/services/vld.js:3:33: Illegal space before opening round brace
+./test/spec/services/vld.js:3:33: Illegal space before opening round brace
+./test/spec/services/vld.js:10:28: Illegal space before opening round brace
+./test/spec/services/vld.js:10:28: Illegal space before opening round brace
+./test/spec/services/vld.js:14:36: Illegal space before opening round brace
+./test/spec/services/vld.js:14:36: Illegal space before opening round brace
