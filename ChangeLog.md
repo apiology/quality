@@ -133,3 +133,5 @@ Fix bug keeping jscs from running
 ## Changes since Quality 19.1.2
 Bump source_finder requirement
 
+## Changes since Quality 19.1.3
+Exclude vendor files
