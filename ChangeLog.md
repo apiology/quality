@@ -130,3 +130,6 @@ Fix flag name in diagnostic
 ## Changes since Quality 19.1.1
 Fix bug keeping jscs from running
 
+## Changes since Quality 19.1.2
+Bump source_finder requirement
+
