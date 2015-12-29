@@ -25,6 +25,9 @@ module Quality
         def count_rubocop_violations(line)
           if line =~ /^.* file[s|] inspected, (.*) offence[s|] detected$/
             0
+          elsif line =~ /^warning: .*/
+            # don't count internal rubocop errors/warnings
+            0
           else
             1
           end
