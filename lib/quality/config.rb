@@ -80,7 +80,10 @@ module Quality
       @output_dir = 'metrics'
       @verbose = false
       @globber = globber
-      source_file_globber.exclude_files_arr = ['db/schema.rb']
+      source_file_globber.source_files_exclude_glob =
+        '{' + source_file_globber.source_files_exclude_glob +
+        ',db/schema.rb' \
+        '}'
     end
   end
 end
