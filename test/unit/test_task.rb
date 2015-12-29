@@ -55,6 +55,7 @@ class TestTask < MiniTest::Test
     expect_tools_installed(ALL_TOOLS - uninstalled_tools)
     tools_that_actually_run = (ALL_TOOLS - suppressed_tools) - uninstalled_tools
     expect_tools_run(tools_that_actually_run)
+    expect_find_exclude_files
   end
 
   def expect_tools_tasks_defined(tools)
@@ -141,7 +142,15 @@ class TestTask < MiniTest::Test
     expect_glob.with(expected_ruby_source_glob)
       .returns(['fake1.rb', 'fake2.rb', 'lib/libfake1.rb',
                 'test/testfake1.rb',
-                'features/featuresfake1.rb'])
+                'features/featuresfake1.rb',
+                'db/schema.rb'])
+  end
+
+  def expect_find_exclude_files
+    expect_glob.with('{**/vendor/**,db/schema.rb}')
+      .returns(['vendor/fake1.rb', 'vendor/fake1.js', 'db/schema.rb',
+                'src/js/vendor/vendor_file.js'])
+      .at_least(1)
   end
 
   def expected_source_and_doc_files_glob
@@ -159,10 +168,10 @@ class TestTask < MiniTest::Test
       '{app,src,www}/**/{*,.*}.{js}}'
     expect_glob.with(source_glob)
       .returns(['fake1.js',
-                # XXX: Try adding this and make sure it doesn't hit
-                # 'src/js/vendor/vendor_file.js',
+                'src/js/vendor/vendor_file.js',
                 'src/foo/testfake1.js',
-                'features/featuresfake1.rb'])
+                'features/featuresfake1.js',
+                'vendor/fake1.js'])
   end
 
   def expect_find_python_files

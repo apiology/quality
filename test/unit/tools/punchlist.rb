@@ -5,7 +5,7 @@ module Test
       module Punchlist
         def punchlist_expected_args
           "--glob '" + expected_source_and_doc_files_glob +
-            "' --exclude-glob '{db/schema.rb}'"
+            "' --exclude-glob '{**/vendor/**,db/schema.rb}'"
         end
 
         def expect_punchlist_run(quality_checker)

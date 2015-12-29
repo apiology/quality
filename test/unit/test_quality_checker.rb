@@ -63,7 +63,7 @@ class TestQualityChecker < MiniTest::Test
   let_mock :process, :command_output
 
   def expect_process_created(command)
-    @mocks[:process_class].expects(:new).with(command)
+    @mocks[:process_class].expects(:new).with(command + ' 2>&1')
       .returns(process)
   end
 

@@ -3,7 +3,6 @@ module Test
     module Tools
       # Test for the 'bigfiles' tool within the quality gem
       module BigFiles
-
         def expected_source_files_glob
           "{Dockerfile,Rakefile,{*,.*}.{c,clj,cljs,cpp,gemspec,html,java,js,json,py,rake,rb," \
           'scala,sh,swift,' \
@@ -16,7 +15,7 @@ module Test
 
         def bigfiles_expected_args
           "--glob '" + expected_source_files_glob + "' " \
-          "--exclude-glob '{db/schema.rb}'"
+          "--exclude-glob '{**/vendor/**,db/schema.rb}'"
         end
 
         def expect_bigfiles_run(quality_checker)

@@ -5,9 +5,9 @@ module Test
       module Cane
         def cane_expected_args
           "-f '#{expected_ruby_source_glob}' " \
-          "--abc-exclude '{db/schema.rb}' " \
-          "--style-exclude '{db/schema.rb}' " \
-          "--doc-exclude '{db/schema.rb}'"
+          "--abc-exclude '{**/vendor/**,db/schema.rb}' " \
+          "--style-exclude '{**/vendor/**,db/schema.rb}' " \
+          "--doc-exclude '{**/vendor/**,db/schema.rb}'"
         end
 
         def expect_cane_run(quality_checker)

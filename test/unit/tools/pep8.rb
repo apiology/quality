@@ -10,7 +10,8 @@ module Test
         def expect_pep8_run(quality_checker)
           @mocks[:quality_checker_class]
             .expects(:new).with('pep8',
-                                { args: pep8_expected_args },
+                                { args: pep8_expected_args,
+                                  gives_error_code_on_no_relevant_code: true },
                                 'metrics',
                                 false)
             .returns(quality_checker)
