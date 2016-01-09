@@ -60,7 +60,7 @@ class TestQualityChecker < MiniTest::Test
     @mocks[:count_file].expects(:exists?).with('my_output_dir').returns(true)
   end
 
-  let_mock :process, :command_output
+  let_mock :process, :command_output, :file, :command_output_processor
 
   def expect_process_created(command)
     @mocks[:process_class].expects(:new).with(command + ' 2>&1')
@@ -84,7 +84,6 @@ class TestQualityChecker < MiniTest::Test
   end
 
   def expect_create_new_processor
-    command_output_processor = mock('command_output_processor')
     expect_metrics_dir_already_there
     @mocks[:command_output_processor_class]
       .expects(:new).returns(command_output_processor)
@@ -92,7 +91,6 @@ class TestQualityChecker < MiniTest::Test
   end
 
   def expect_write_new_violations(num_violations, hwm_filename)
-    file = mock('file')
     @mocks[:count_file].expects(:open).with(hwm_filename, 'w').yields(file)
     file.expects(:write).with(num_violations.to_s + "\n")
   end
@@ -112,13 +110,9 @@ class TestQualityChecker < MiniTest::Test
   end
 
   def test_mocks
-    {
-      count_file: mock('count_file'),
-      count_io: mock('count_io'),
+    { count_file: mock('count_file'), count_io: mock('count_io'),
       command_output_processor_class: mock('command_output_processor_class'),
-      process_class: mock('process_class'),
-      count_dir: mock('dir'),
-    }
+      process_class: mock('process_class'), count_dir: mock('dir'), }
   end
 
   def get_test_object(cmd, command_options, output_dir, verbose, &twiddle_mocks)

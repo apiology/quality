@@ -11,7 +11,8 @@ module Quality
       def quality_pep8
         ratchet_quality_cmd('pep8',
                             args: pep8_args,
-                            gives_error_code_on_no_relevant_code: true) do |line|
+                            gives_error_code_on_no_relevant_code:
+                              true) do |line|
           line.split(':')[0].to_i
         end
       end

@@ -1,5 +1,6 @@
 require_relative 'directory_of_classes.rb'
 
+# Tests that run individual tools as part of the test
 class BaseTestTask < MiniTest::Test
   current_dir = File.dirname(File.expand_path(__FILE__))
   tool_classes = DirectoryOfClasses.new(dir: "#{current_dir}/tools",

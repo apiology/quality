@@ -1,5 +1,7 @@
 require_relative 'base_test_task.rb'
 
+# Test the process of finding fewer problems and tweaking down the
+# numbers
 class TestTaskRatchet < BaseTestTask
   def test_ratchet_task
     get_test_object { setup_ratchet_task_mocks }
