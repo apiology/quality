@@ -31,13 +31,6 @@ class DirectoryOfClasses
     end
   end
 
-  def include_classes
-  end
-
-  def class_by_name
-    @class_by_name ||= Hash[symbols_and_classes]
-  end
-
   def symbols_and_classes
     @symbols_and_classes ||= filenames.map do |filename|
       basename = File.basename(filename, '.rb')
