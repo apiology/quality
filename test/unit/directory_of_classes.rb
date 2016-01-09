@@ -27,7 +27,6 @@ class DirectoryOfClasses
   def require_classes
     basenames.each do |basename|
       path = "#{dir}/#{basename}"
-      puts "Requiring #{path}"
       require_relative path
     end
   end
@@ -44,7 +43,6 @@ class DirectoryOfClasses
       basename = File.basename(filename, '.rb')
 
       class_name = "#{module_name}::#{basename.camelize}#{@class_suffix}"
-      puts "Constantizing #{class_name}"
       clazz = class_name.constantize
       symbol = basename.to_sym
       [symbol, clazz]
