@@ -1,5 +1,9 @@
 test:
   override:
     - bundle exec rake localtest
+general:
+  artifacts:
+    - "coverage"
+                  
           
           
