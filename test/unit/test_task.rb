@@ -1,33 +1,16 @@
 #!/usr/bin/env ruby
 
 require_relative 'test_helper.rb'
-require_relative 'tools/cane'
-require_relative 'tools/flay'
-require_relative 'tools/flog'
-require_relative 'tools/reek'
-require_relative 'tools/rubocop'
-require_relative 'tools/bigfiles'
-require_relative 'tools/punchlist'
-require_relative 'tools/brakeman'
-require_relative 'tools/rails_best_practices'
-require_relative 'tools/eslint'
-require_relative 'tools/jscs'
-require_relative 'tools/pep8'
+require_relative 'directory_of_classes.rb'
 
 # Unit test the Task class
 class TestTask < MiniTest::Test
-  include ::Test::Quality::Tools::Cane
-  include ::Test::Quality::Tools::Eslint
-  include ::Test::Quality::Tools::Jscs
-  include ::Test::Quality::Tools::Flay
-  include ::Test::Quality::Tools::Flog
-  include ::Test::Quality::Tools::Reek
-  include ::Test::Quality::Tools::Rubocop
-  include ::Test::Quality::Tools::BigFiles
-  include ::Test::Quality::Tools::Punchlist
-  include ::Test::Quality::Tools::Brakeman
-  include ::Test::Quality::Tools::RailsBestPractices
-  include ::Test::Quality::Tools::Pep8
+  current_dir = File.dirname(File.expand_path(__FILE__))
+  tool_classes = DirectoryOfClasses.new(dir: "#{current_dir}/tools",
+                                        module_name: 'Test::Quality::Tools')
+  ALL_TOOLS = tool_classes.basenames_without_extension
+  tool_classes.require_classes
+  tool_classes.symbols_and_classes.each { |_symbol, clazz| include clazz }
 
   def test_quality_task_all_tools
     get_test_object do |_task|
@@ -62,8 +45,6 @@ class TestTask < MiniTest::Test
     tools.each { |tool| expect_define_task.with(tool) }
   end
 
-  ALL_TOOLS = %w(cane flog flay reek rubocop bigfiles punchlist brakeman
-                 rails_best_practices eslint jscs pep8)
 
   def expect_tools_run(tools)
     tools.each { |tool_name| expect_single_tool_run(tool_name) }
