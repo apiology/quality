@@ -107,7 +107,7 @@ Quality::Rake::Task.new do |t|
     '{lib/whatever/imported_file.rb,lib/vendor/**/*.rb}'
 
   # Extensions for Ruby language files--defaults to 'rb,rake'
-  t.ruby_file_extensions_glob = 'rb,rake'
+  t.ruby_file_extensions_arr = %w(rb rake)
 
   # Extensions for all source files--defaults to
   # 'rb,rake,swift,cpp,c,java,py,clj,cljs,scala,js,yml,sh,json'
