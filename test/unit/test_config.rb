@@ -6,11 +6,13 @@ require_relative 'test_helper.rb'
 class TestConfig < MiniTest::Test
   # Just copy and paste this in from the README
   def readme_instructions(t)
-    t.quality_name = "quality"
+    # Name of quality task.
+    # Defaults to :quality.
+    t.quality_name = 'quality'
 
     # Name of ratchet task.
     # Defaults to :ratchet.
-    t.ratchet_name = "ratchet"
+    t.ratchet_name = 'ratchet'
 
     # Array of strings describing tools to be skipped--e.g., ["cane"]
     #
@@ -24,10 +26,12 @@ class TestConfig < MiniTest::Test
 
     # Array of directory names which contain ruby files to analyze.
     #
-    # Defaults to %w(app lib test spec feature), which translates to *.rb in the base directory, as well as those directories.
+    # Defaults to %w(app lib test spec feature), which translates to
+    # *.rb in the base directory, as well as those directories.
     t.ruby_dirs = %w(app lib test spec feature)
 
-    # Array of directory names which contain any type of source files to analyze.
+    # Array of directory names which contain any type of source files to
+    # analyze.
     #
     # Defaults to t.ruby_dirs
     t.source_dirs.concat(%w(MyProject MyProjectTests))
@@ -41,12 +45,14 @@ class TestConfig < MiniTest::Test
     t.extra_ruby_files = ['Rakefile']
 
     # Exclude the specified list of files--defaults to ['db/schema.rb']
-    t.exclude_files = ['lib/whatever/imported_file.rb', 'lib/vendor/someone_else_fault.rb']
+    t.exclude_files = ['lib/whatever/imported_file.rb',
+                       'lib/vendor/someone_else_fault.rb']
 
     # Alternately, express it as a glob:
 
     # Exclude the specified list of files
-    t.source_files_exclude_glob = "{lib/whatever/imported_file.rb,lib/vendor/**/*.rb}"
+    t.source_files_exclude_glob =
+      '{lib/whatever/imported_file.rb,lib/vendor/**/*.rb}'
 
     # Extensions for Ruby language files--defaults to 'rb,rake'
     t.ruby_file_extensions_glob = 'rb,rake'
