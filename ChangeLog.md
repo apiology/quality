@@ -135,3 +135,7 @@ Bump source_finder requirement
 
 ## Changes since Quality 19.1.3
 Exclude vendor files
+
+## Changes since Quality 19.2.0
+Fix JSCS-related bug
+Fix configuration bug
