@@ -1,21 +1,12 @@
 #!/usr/bin/env ruby
 
 require_relative 'test_helper.rb'
-require_relative 'directory_of_classes.rb'
+require_relative 'base_test_task.rb'
 
 # Unit test the Task class
-class TestTask < MiniTest::Test
-  current_dir = File.dirname(File.expand_path(__FILE__))
-  tool_classes = DirectoryOfClasses.new(dir: "#{current_dir}/tools",
-                                        module_name: 'Test::Quality::Tools')
-  ALL_TOOLS = tool_classes.basenames_without_extension
-  tool_classes.require_classes
-  tool_classes.symbols_and_classes.each { |_symbol, clazz| include clazz }
-
+class TestTask < BaseTestTask
   def test_quality_task_all_tools
-    get_test_object do |_task|
-      setup_quality_task_mocks
-    end
+    get_test_object { |_task| setup_quality_task_mocks }
   end
 
   def test_quality_task_some_suppressed
@@ -41,19 +32,12 @@ class TestTask < MiniTest::Test
     expect_find_exclude_files
   end
 
-  def expect_tools_tasks_defined(tools)
-    tools.each { |tool| expect_define_task.with(tool) }
-  end
-
-
   def expect_tools_run(tools)
     tools.each { |tool_name| expect_single_tool_run(tool_name) }
   end
 
   def expect_tools_installed(tools)
-    tools.each do |tool_name|
-      expect_gemspec_tool_found(tool_name, true)
-    end
+    tools.each { |tool_name| expect_gemspec_tool_found(tool_name, true) }
     (ALL_TOOLS - tools).each do |tool_name|
       expect_gemspec_tool_found(tool_name, false)
     end
@@ -65,44 +49,6 @@ class TestTask < MiniTest::Test
     file = self.class.sample_output(tool_name)
     lines = file.lines.map(&:strip)
     quality_checker.expects(:execute).multiple_yields(*lines)
-  end
-
-  def test_ratchet_task
-    get_test_object do
-      setup_ratchet_task_mocks
-    end
-  end
-
-  def expect_define_task
-    @mocks[:dsl].expects(:define_task)
-  end
-
-  def setup_ratchet_task_mocks
-    expect_tools_tasks_defined(ALL_TOOLS)
-    expect_define_task.with('quality')
-    expect_define_task.with('ratchet').yields
-    expect_glob.with('metrics/*_high_water_mark')
-      .returns(%w(metrics/foo_high_water_mark
-                  metrics/bar_high_water_mark))
-    expect_ratchet('foo', 12)
-    expect_ratchet('bar', 96)
-  end
-
-  def expect_ratchet(tool_name, old_high_water_mark)
-    filename = "metrics/#{tool_name}_high_water_mark"
-    expect_read_from_high_water_mark(filename, old_high_water_mark)
-    expect_write_to_high_water_mark(filename, old_high_water_mark - 1)
-  end
-
-  def expect_read_from_high_water_mark(filename, old_high_water_mark)
-    @mocks[:count_io].expects(:read).with(filename)
-      .returns(old_high_water_mark.to_s)
-  end
-
-  def expect_write_to_high_water_mark(filename, new_high_water_mark)
-    file = mock('file')
-    @mocks[:count_file].expects(:open).with(filename, 'w').yields(file)
-    file.expects(:write).with(new_high_water_mark.to_s + "\n")
   end
 
   def expect_gemspec_tool_found(tool_name, was_found)
@@ -161,15 +107,5 @@ class TestTask < MiniTest::Test
       '{src}/**/{*,.*}.{py}}'
     expect_glob.with(source_glob)
       .returns(['fake1.py'])
-  end
-
-  def expect_glob
-    @mocks[:globber].expects(:glob)
-  end
-
-  def get_test_object(fiddle_with_task = ->(_task) {}, &twiddle_mocks)
-    @mocks = get_initializer_mocks(Quality::Rake::Task)
-    yield @mocks unless twiddle_mocks.nil?
-    Quality::Rake::Task.new(@mocks) { |task| fiddle_with_task.call(task) }
   end
 end
