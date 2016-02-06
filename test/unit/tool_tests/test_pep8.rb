@@ -1,11 +1,10 @@
 #!/usr/bin/env ruby
 
 require_relative '../test_helper.rb'
-require_relative 'mock_class'
+require_relative 'mock_runner'
 
 
 require 'quality/tools/pep8'
-# XXX: Upgrade Rubocop
 
 # Unit test the Task class
 class TestPep8 < MiniTest::Test
@@ -15,7 +14,7 @@ class TestPep8 < MiniTest::Test
       'pep8: something something something',
       'real line',
     ]
-    m = MockClass.new(lines)
+    m = MockRunner.new(lines)
     assert_equal(1, m.run('pep8'))
   end
 end
