@@ -1,7 +1,5 @@
-# I like trailing commas in maps.  They let me insert new elements and
-# see them as one line in a diff, not two.
-TrailingComma:
-  Enabled: false
+Style/TrailingCommaInLiteral:
+  EnforcedStyleForMultiline: comma
 
 # I use keyword arguments for a poor man's dependency injection to cut
 # down on the magic in my tests.
