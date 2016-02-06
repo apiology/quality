@@ -139,3 +139,6 @@ Exclude vendor files
 ## Changes since Quality 19.2.0
 Fix JSCS-related bug
 Fix configuration bug
+
+## Changes since Quality 20.0.1
+Fix bug in pep8 parsing for Python

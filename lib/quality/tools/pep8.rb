@@ -13,7 +13,18 @@ module Quality
                             args: pep8_args,
                             gives_error_code_on_no_relevant_code:
                               true) do |line|
-          line.split(':')[0].to_i
+          if line =~ /^Usage:/
+            # no files specified
+            0
+          elsif line =~ /^pep8: /
+            # no files specified
+            0
+          elsif line =~ /^$/
+            # no files specified
+            0
+          else
+            1
+          end
         end
       end
     end
