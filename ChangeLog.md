@@ -142,3 +142,7 @@ Fix configuration bug
 
 ## Changes since Quality 20.0.1
 Fix bug in pep8 parsing for Python
+
+## Changes since Quality 20.0.2
+Remove use of deprecated method - thanks, gerrywastaken!
+
