@@ -84,7 +84,7 @@ class TestTask < BaseTestTask
     '{Dockerfile,Rakefile,{*,.*}.{c,clj,cljs,cpp,gemspec,' \
     'html,java,js,json,md,py,rake,rb,scala,sh,swift,' \
     'yml},{app,config,db,feature,lib,' \
-    'spec,src,test,www}/**/{*,.*}.' \
+    'spec,src,test,tests,www}/**/{*,.*}.' \
     '{c,clj,cljs,cpp,gemspec,' \
     'html,java,js,json,md,py,rake,rb,scala,sh,swift,yml}}'
   end
@@ -104,7 +104,7 @@ class TestTask < BaseTestTask
   def expect_find_python_files
     source_glob =
       '{{*,.*}.{py},' \
-      '{src}/**/{*,.*}.{py}}'
+      '{src,tests}/**/{*,.*}.{py}}'
     expect_glob.with(source_glob)
       .returns(['fake1.py'])
   end

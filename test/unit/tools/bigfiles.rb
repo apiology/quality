@@ -6,7 +6,7 @@ module Test
         def expected_source_files_glob
           '{Dockerfile,Rakefile,{*,.*}.{c,clj,cljs,cpp,gemspec,html,' \
           'java,js,json,py,rake,rb,scala,sh,swift,yml},' \
-          '{app,config,db,feature,lib,spec,src,test,www}' \
+          '{app,config,db,feature,lib,spec,src,test,tests,www}' \
           '/**/{*,.*}.{c,clj,cljs,cpp,gemspec,html,java,js,json,py,rake,rb,' \
           'scala,sh,swift,yml}}'
         end
