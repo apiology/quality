@@ -26,13 +26,14 @@ end
 
 def let_single_mock(mock_sym)
   define_method(mock_sym.to_s) do
-    var = "@#{mock_sym}"
-    mock = instance_variable_get(var)
-    unless mock
+    var = "@#{mock_sym}".to_sym
+    if instance_variable_defined?(var)
+      instance_variable_get var
+    else
       mock = mock(mock_sym.to_s)
       instance_variable_set var, mock
+      mock
     end
-    mock
   end
 end
 
