@@ -1,6 +1,8 @@
 sudo: false
 language: ruby
 # without --debug, JRuby doesn't support coverage reporting
+before_install:
+  - gem install bundler
 env:
   - JRUBY_OPTS="--debug"
 rvm:
