@@ -27,6 +27,10 @@ module Quality
                    :js_files_glob, :js_files_arr)
 
     def_delegators(:source_file_globber,
+                   :python_dirs_arr=, :python_dirs_arr,
+                   :extra_python_files_arr=, :extra_python_files_arr,
+                   :python_file_extensions_arr=, :python_file_extensions_arr,
+                   :python_file_extensions_glob=, :python_file_extensions_glob,
                    :python_files_glob, :python_files_arr)
 
     def_delegators(:source_file_globber,
