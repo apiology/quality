@@ -14,7 +14,15 @@ worse over time.
 
 See [this post](http://blog.apiology.cc/2014/06/scalable-quality-part-1.html) or [these slides](https://docs.google.com/presentation/d/1Op4FH34-enm8luEIuAAVLkuAJ-sB4LKaMm57RJzvfeI/edit#slide) for more information on the problem the quality gem solves.
 
-##How to use
+## How to use - using Docker
+
+These basic steps assume you have a working Docker installation.
+
+```
+docker run -v `pwd`:/usr/app apiology/quality
+```
+
+## How to use - as part of a Ruby-based Rakefile
 
 ```bash
 $ gem install quality

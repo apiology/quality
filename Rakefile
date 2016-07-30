@@ -33,3 +33,8 @@ end
 task localtest: [:clear_metrics, :test, :quality]
 
 task default: [:localtest]
+
+#
+# To publish docker image after gem is published:
+#   ./publish-docker-image.sh
+#
