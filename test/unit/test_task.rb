@@ -82,10 +82,10 @@ class TestTask < BaseTestTask
 
   def expected_source_and_doc_files_glob
     '{Dockerfile,Rakefile,{*,.*}.{c,clj,cljs,cpp,gemspec,' \
-    'html,java,js,json,md,py,rake,rb,scala,sh,swift,' \
+    'groovy,html,java,js,json,md,py,rake,rb,scala,sh,swift,' \
     'yml},{app,config,db,feature,lib,' \
-    'spec,src,test,tests,www}/**/{*,.*}.' \
-    '{c,clj,cljs,cpp,gemspec,' \
+    'spec,src,test,tests,var,www}/**/{*,.*}.' \
+    '{c,clj,cljs,cpp,gemspec,groovy,' \
     'html,java,js,json,md,py,rake,rb,scala,sh,swift,yml}}'
   end
 
