@@ -12,7 +12,7 @@ module Test
             .expects(:new).with('eslint',
                                 {
                                   args: eslint_expected_args,
-                                  gives_error_code_on_violations: true
+                                  gives_error_code_on_violations: true,
                                 },
                                 'metrics',
                                 false)

@@ -2,6 +2,10 @@ module Quality
   module Tools
     # Adds 'flog' tool support to quality gem
     module Flog
+      def self.included(base)
+        base.extend ClassMethods
+      end
+
       private
 
       def quality_flog
@@ -9,10 +13,6 @@ module Quality
         ratchet_quality_cmd('flog', args: args, emacs_format: true) do |line|
           self.class.count_violations_in_flog_output(line)
         end
-      end
-
-      def self.included(base)
-        base.extend ClassMethods
       end
 
       # See Flog.included

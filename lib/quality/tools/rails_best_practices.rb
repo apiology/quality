@@ -2,6 +2,10 @@ module Quality
   module Tools
     # Adds 'rubocop' tool support to quality gem
     module RailsBestPractices
+      def self.included(base)
+        base.extend ClassMethods
+      end
+
       private
 
       def quality_rails_best_practices
@@ -9,10 +13,6 @@ module Quality
                             gives_error_code_on_violations: true) do |line|
           self.class.count_rails_best_practices_violations(line)
         end
-      end
-
-      def self.included(base)
-        base.extend ClassMethods
       end
 
       # See Rubocop.included

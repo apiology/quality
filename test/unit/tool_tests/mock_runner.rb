@@ -16,12 +16,12 @@ class MockRunner
     []
   end
 
-  def ratchet_quality_cmd(name,
-                          options,
+  def ratchet_quality_cmd(_name,
+                          _options,
                           &block)
     @sum = 0
     lines.each do |line|
-      @sum += block.call(line)
+      @sum += yield line
     end
   end
 

@@ -3,7 +3,6 @@
 require_relative '../test_helper.rb'
 require_relative 'mock_runner'
 
-
 require 'quality/tools/pep8'
 
 # Unit test the Task class

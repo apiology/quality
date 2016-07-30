@@ -2,6 +2,10 @@ module Quality
   module Tools
     # Adds 'rubocop' tool support to quality gem
     module Rubocop
+      def self.included(base)
+        base.extend ClassMethods
+      end
+
       private
 
       def rubocop_args
@@ -14,10 +18,6 @@ module Quality
                             args: rubocop_args) do |line|
           self.class.count_rubocop_violations(line)
         end
-      end
-
-      def self.included(base)
-        base.extend ClassMethods
       end
 
       # See Rubocop.included

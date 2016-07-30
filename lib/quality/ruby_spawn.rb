@@ -7,10 +7,10 @@ module Quality
     end
 
     def invocation
-      if @args.size > 0
+      if !@args.empty?
         "#{cmd_with_ruby_hack_prefix} #{@args}"
       else
-        "#{cmd_with_ruby_hack_prefix}"
+        cmd_with_ruby_hack_prefix.to_s
       end
     end
 

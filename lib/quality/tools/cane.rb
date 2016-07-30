@@ -16,7 +16,7 @@ module Quality
         args = [
           "-f '#{ruby_files_glob}'",
         ]
-        args += cane_exclude_args if exclude_files.size > 0
+        args += cane_exclude_args if !exclude_files.empty?
         args.join(' ')
       end
 

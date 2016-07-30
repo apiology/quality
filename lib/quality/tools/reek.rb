@@ -2,6 +2,10 @@ module Quality
   module Tools
     # Adds 'reek' tool support to quality gem
     module Reek
+      def self.included(base)
+        base.extend ClassMethods
+      end
+
       private
 
       def quality_reek
@@ -12,10 +16,6 @@ module Quality
                             gives_error_code_on_violations: true) do |line|
           self.class.count_reek_violations(line)
         end
-      end
-
-      def self.included(base)
-        base.extend ClassMethods
       end
 
       # See Reek.included

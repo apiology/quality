@@ -6,7 +6,7 @@ require 'active_support/core_ext'
 class DirectoryOfClasses
   attr_reader :dir, :module_name
 
-  def initialize(dir: fail, class_suffix: '', module_name: '')
+  def initialize(dir: raise, class_suffix: '', module_name: '')
     @dir = dir
     @class_suffix = class_suffix
     @module_name = module_name

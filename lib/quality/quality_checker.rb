@@ -55,8 +55,8 @@ module Quality
     def check_exit_status(exit_status)
       return if @command_options[:gives_error_code_on_violations] ||
                 @command_options[:gives_error_code_on_no_relevant_code]
-      fail("Error detected running #{full_cmd}.  " \
-           "Exit status is #{exit_status}") if exit_status != 0
+      raise("Error detected running #{full_cmd}.  " \
+            "Exit status is #{exit_status}") if exit_status.nonzero?
     end
 
     def existing_violations
@@ -71,9 +71,9 @@ module Quality
       existing = existing_violations
       report_violations(existing)
       if @violations > existing
-        fail("Output from #{@cmd}\n\n#{@command_output}\n\n" \
-             "Reduce total number of #{@cmd} violations " \
-             "to #{existing} or below!")
+        raise("Output from #{@cmd}\n\n#{@command_output}\n\n" \
+              "Reduce total number of #{@cmd} violations " \
+              "to #{existing} or below!")
       elsif @violations < existing
         puts 'Ratcheting quality up...'
         write_violations(@violations)
@@ -84,8 +84,6 @@ module Quality
       puts "Existing violations: #{existing}"
       puts "Found #{@violations} #{@cmd} violations"
     end
-
-    private
 
     def full_cmd
       args = @command_options[:args] || ''

@@ -12,8 +12,8 @@ class TestTaskRatchet < BaseTestTask
     expect_define_task.with('quality')
     expect_define_task.with('ratchet').yields
     expect_glob.with('metrics/*_high_water_mark')
-      .returns(%w(metrics/foo_high_water_mark
-                  metrics/bar_high_water_mark))
+               .returns(%w(metrics/foo_high_water_mark
+                           metrics/bar_high_water_mark))
     expect_ratchet('foo', 12)
     expect_ratchet('bar', 96)
   end
@@ -26,7 +26,7 @@ class TestTaskRatchet < BaseTestTask
 
   def expect_read_from_high_water_mark(filename, old_high_water_mark)
     @mocks[:count_io].expects(:read).with(filename)
-      .returns(old_high_water_mark.to_s)
+                     .returns(old_high_water_mark.to_s)
   end
 
   def expect_write_to_high_water_mark(filename, new_high_water_mark)

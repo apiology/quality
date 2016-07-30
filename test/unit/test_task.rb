@@ -53,7 +53,7 @@ class TestTask < BaseTestTask
 
   def expect_gemspec_tool_found(tool_name, was_found)
     @mocks[:gem_spec].expects(:find_all_by_name)
-      .with(tool_name).returns([was_found])
+                     .with(tool_name).returns([was_found])
   end
 
   def self.sample_output(tool_name)
@@ -67,17 +67,17 @@ class TestTask < BaseTestTask
 
   def expect_find_ruby_files
     expect_glob.with(expected_ruby_source_glob)
-      .returns(['fake1.rb', 'fake2.rb', 'lib/libfake1.rb',
-                'test/testfake1.rb',
-                'features/featuresfake1.rb',
-                'db/schema.rb'])
+               .returns(['fake1.rb', 'fake2.rb', 'lib/libfake1.rb',
+                         'test/testfake1.rb',
+                         'features/featuresfake1.rb',
+                         'db/schema.rb'])
   end
 
   def expect_find_exclude_files
     expect_glob.with('{**/vendor/**,db/schema.rb}')
-      .returns(['vendor/fake1.rb', 'vendor/fake1.js', 'db/schema.rb',
-                'src/js/vendor/vendor_file.js'])
-      .at_least(1)
+               .returns(['vendor/fake1.rb', 'vendor/fake1.js', 'db/schema.rb',
+                         'src/js/vendor/vendor_file.js'])
+               .at_least(1)
   end
 
   def expected_source_and_doc_files_glob
@@ -94,11 +94,11 @@ class TestTask < BaseTestTask
       '{{*,.*}.{js},' \
       '{app,src,www}/**/{*,.*}.{js}}'
     expect_glob.with(source_glob)
-      .returns(['fake1.js',
-                'src/js/vendor/vendor_file.js',
-                'src/foo/testfake1.js',
-                'features/featuresfake1.js',
-                'vendor/fake1.js'])
+               .returns(['fake1.js',
+                         'src/js/vendor/vendor_file.js',
+                         'src/foo/testfake1.js',
+                         'features/featuresfake1.js',
+                         'vendor/fake1.js'])
   end
 
   def expect_find_python_files
@@ -106,6 +106,6 @@ class TestTask < BaseTestTask
       '{{*,.*}.{py},' \
       '{src,tests}/**/{*,.*}.{py}}'
     expect_glob.with(source_glob)
-      .returns(['fake1.py'])
+               .returns(['fake1.py'])
   end
 end
