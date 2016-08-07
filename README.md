@@ -22,6 +22,13 @@ These basic steps assume you have a working Docker installation.
 docker run -v `pwd`:/usr/app apiology/quality
 ```
 
+If you'd like to customize, you can link in your own Rakefile like this:
+
+```
+docker run -v `pwd`:/usr/app -v `pwd`/Rakefile.quality:/usr/quality/Rakefile apiology/quality
+```
+
+
 ## How to use - as part of a Ruby-based Rakefile
 
 ```bash
