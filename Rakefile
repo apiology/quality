@@ -38,3 +38,5 @@ task default: [:localtest]
 # To publish docker image after gem is published:
 #   ./publish-docker-image.sh
 #
+# ...after source_finder is published:
+#   QUALITY_BUILD_ARGS='--no-cache' ./publish-docker-image.sh
