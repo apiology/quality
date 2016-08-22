@@ -4,6 +4,10 @@ module Quality
     module BundleAudit
       private
 
+      def self.command_name
+        'bundle-audit'
+      end
+
       def quality_bundle_audit
         ratchet_quality_cmd('bundle-audit', args: '') do |line|
           if line =~ /^Name: /
