@@ -1,37 +1,19 @@
 require 'active_support/inflector'
 require 'forwardable'
 require_relative 'which'
-require_relative 'tools/cane'
-require_relative 'tools/flay'
-require_relative 'tools/flog'
-require_relative 'tools/reek'
-require_relative 'tools/rubocop'
-require_relative 'tools/bigfiles'
-require_relative 'tools/pep8'
-require_relative 'tools/punchlist'
-require_relative 'tools/brakeman'
-require_relative 'tools/rails_best_practices'
-require_relative 'tools/eslint'
-require_relative 'tools/jscs'
-require_relative 'tools/bundler_audit'
+require_relative 'directory_of_classes'
 
 module Quality
+  current_dir = File.dirname(File.expand_path(__FILE__))
+  TOOL_CLASSES = DirectoryOfClasses.new(dir: "#{current_dir}/tools",
+                                        module_name: 'Quality::Tools')
+  ALL_TOOLS = TOOL_CLASSES.basenames_without_extension
+  TOOL_CLASSES.require_classes
+
   # Knows how to run different quality tools based on a configuration
   # already determined.
   class Runner
-    include Tools::Cane
-    include Tools::Flay
-    include Tools::Flog
-    include Tools::Reek
-    include Tools::Rubocop
-    include Tools::Bigfiles
-    include Tools::Pep8
-    include Tools::Punchlist
-    include Tools::Brakeman
-    include Tools::RailsBestPractices
-    include Tools::Eslint
-    include Tools::Jscs
-    include Tools::BundlerAudit
+    TOOL_CLASSES.symbols_and_classes.each { |_symbol, clazz| include clazz }
 
     extend ::Forwardable
 
