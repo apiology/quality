@@ -13,6 +13,7 @@ require_relative 'tools/brakeman'
 require_relative 'tools/rails_best_practices'
 require_relative 'tools/eslint'
 require_relative 'tools/jscs'
+require_relative 'tools/bundler_audit'
 
 module Quality
   # Knows how to run different quality tools based on a configuration
@@ -30,6 +31,7 @@ module Quality
     include Tools::RailsBestPractices
     include Tools::Eslint
     include Tools::Jscs
+    include Tools::BundlerAudit
 
     extend ::Forwardable
 

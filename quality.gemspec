@@ -34,6 +34,7 @@ Gem::Specification.new do |s|
   s.add_runtime_dependency('cane', ['>= 2.6'])
   s.add_runtime_dependency('reek', ['>= 1.3.4'])
   s.add_runtime_dependency('flog', ['>= 4.1.1'])
+  s.add_runtime_dependency('bundler-audit')
   # flay 2.6.0 contained a command-line-parsing issue
   s.add_runtime_dependency('flay', ['>= 2.4', '!= 2.6.0'])
   s.add_runtime_dependency('rubocop')

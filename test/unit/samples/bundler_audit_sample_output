@@ -1,0 +1,11 @@
+Insecure Source URI found: git://github.com/apiology/rmeetup
+Insecure Source URI found: git://github.com/sferik/twitter
+Name: activemodel
+Version: 4.2.5
+Advisory: CVE-2016-0753
+Criticality: Unknown
+URL: https://groups.google.com/forum/#!topic/rubyonrails-security/6jQVC1geukQ
+Title: Possible Input Validation Circumvention in Active Model
+Solution: upgrade to ~> 5.0.0.beta1.1, ~> 4.2.5.1, ~> 4.1.14.1
+
+Vulnerabilities found!
