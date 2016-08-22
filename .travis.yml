@@ -6,8 +6,7 @@ before_install:
 env:
   - JRUBY_OPTS="--debug"
 rvm:
-  - 2.1
-  - 2.2
+  - 2.2.2
   - 2.3.1
   - jruby-head
 #  - ruby-head  # Failure unrelated to quality gem - see https://travis-ci.org/apiology/quality/jobs/131303133

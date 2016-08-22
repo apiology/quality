@@ -18,7 +18,7 @@ class MockRunner
 
   def ratchet_quality_cmd(_name,
                           _options,
-                          &block)
+                          &_block)
     @sum = 0
     lines.each do |line|
       @sum += yield line

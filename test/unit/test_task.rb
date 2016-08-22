@@ -84,7 +84,7 @@ class TestTask < BaseTestTask
     '{Dockerfile,Rakefile,{*,.*}.{c,clj,cljs,cpp,gemspec,' \
     'groovy,html,java,js,json,md,py,rake,rb,scala,sh,swift,' \
     'yml},{app,config,db,feature,lib,' \
-    'spec,src,test,tests,var,www}/**/{*,.*}.' \
+    'spec,src,test,tests,vars,www}/**/{*,.*}.' \
     '{c,clj,cljs,cpp,gemspec,groovy,' \
     'html,java,js,json,md,py,rake,rb,scala,sh,swift,yml}}'
   end
