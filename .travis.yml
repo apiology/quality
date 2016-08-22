@@ -6,7 +6,6 @@ before_install:
 env:
   - JRUBY_OPTS="--debug"
 rvm:
-  - 2.1
   - 2.2
   - 2.3.1
   - jruby-head
