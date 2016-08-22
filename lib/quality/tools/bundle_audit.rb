@@ -1,10 +1,10 @@
 module Quality
   module Tools
     # Adds 'bundler_audit' tool support to quality gem
-    module BundlerAudit
+    module BundleAudit
       private
 
-      def quality_bundler_audit
+      def quality_bundle_audit
         ratchet_quality_cmd('bundle-audit', args: '') do |line|
           if line =~ /^Name: /
             1
