@@ -76,11 +76,11 @@ module Quality
       self.class.ancestors.map do |ancestor|
         ancestor_name = ancestor.to_s
         next unless ancestor_name.start_with?('Quality::Tools::')
-        if ancestor.respond_to? :command_name
-          ancestor.command_name
-        else
+        # if ancestor.respond_to? :command_name
+        #  ancestor.command_name
+        # else
           ancestor_name.split('::').last.underscore
-        end
+        # end
       end.compact
     end
 
