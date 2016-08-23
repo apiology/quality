@@ -4,4 +4,5 @@ VOLUME /usr/app
 RUN mkdir /usr/quality
 ADD sample-project/Rakefile /usr/quality
 WORKDIR /usr/app
-CMD rake -f /usr/quality/Rakefile quality
+COPY entrypoint.sh .
+ENTRYPOINT entrypoint.sh
