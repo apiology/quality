@@ -9,7 +9,9 @@ module Quality
       private
 
       def quality_bundle_audit
-        ratchet_quality_cmd('bundle-audit', args: '') do |line|
+        ratchet_quality_cmd('bundle-audit',
+                            args: '',
+                            gives_error_code_on_violations: true) do |line|
           if line =~ /^Name: /
             1
           else
