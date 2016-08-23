@@ -83,8 +83,10 @@ module Quality
              'the same' unless ::Rake.application.last_description
         @dsl.define_task(quality_name) { @runner.run_quality }
         @dsl.define_task(ratchet_name) { @runner.run_ratchet }
-        @runner.tools.each do |tool|
-          @dsl.define_task(tool) { @runner.run_quality_with_tool(tool) }
+        @runner.tools.each do |tool_name, tool_exe|
+          @dsl.define_task(tool_name) do
+            @runner.run_quality_with_tool(tool_exe)
+          end
         end
       end
     end
