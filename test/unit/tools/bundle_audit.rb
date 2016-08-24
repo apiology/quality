@@ -6,7 +6,10 @@ module Test
         def expect_bundle_audit_run(quality_checker)
           @mocks[:quality_checker_class]
             .expects(:new).with('bundle-audit',
-                                { args: '' },
+                                {
+                                  args: '',
+                                  gives_error_code_on_violations: true,
+                                },
                                 'metrics',
                                 false)
             .returns(quality_checker)
