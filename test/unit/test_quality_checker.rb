@@ -25,8 +25,7 @@ class TestQualityChecker < MiniTest::Test
     num_violations = 523
     existing_violations = nil
 
-    get_test_object('foo', command_options,
-                    'my_output_dir', false) do
+    get_test_object('foo', command_options, 'my_output_dir', false) do
       setup_execute_mocks(command_options,
                           num_violations,
                           existing_violations)
@@ -39,9 +38,7 @@ class TestQualityChecker < MiniTest::Test
     end
   end
 
-  def setup_execute_mocks(command_options,
-                          num_violations,
-                          existing_violations)
+  def setup_execute_mocks(command_options, num_violations, existing_violations)
     command_output_processor = expect_create_new_processor
     command_output_processor.expects(:emacs_format=)
                             .with(command_options[:emacs_format])
@@ -115,10 +112,9 @@ class TestQualityChecker < MiniTest::Test
       process_class: mock('process_class'), count_dir: mock('dir') }
   end
 
-  def get_test_object(cmd, command_options, output_dir, verbose, &twiddle_mocks)
+  def get_test_object(cmd, options, output_dir, verbose, &twiddle_mocks)
     @mocks = test_mocks
     yield unless twiddle_mocks.nil?
-    Quality::QualityChecker.new(cmd, command_options, output_dir, verbose,
-                                @mocks)
+    Quality::QualityChecker.new(cmd, options, output_dir, verbose, @mocks)
   end
 end

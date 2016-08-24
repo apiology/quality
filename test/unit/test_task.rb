@@ -76,8 +76,7 @@ class TestTask < BaseTestTask
   def expect_find_exclude_files
     expect_glob.with('{**/vendor/**,db/schema.rb}')
                .returns(['vendor/fake1.rb', 'vendor/fake1.js', 'db/schema.rb',
-                         'src/js/vendor/vendor_file.js'])
-               .at_least(1)
+                         'src/js/vendor/vendor_file.js']).at_least(1)
   end
 
   def expected_source_and_doc_files_glob
@@ -102,10 +101,7 @@ class TestTask < BaseTestTask
   end
 
   def expect_find_python_files
-    source_glob =
-      '{{*,.*}.{py},' \
-      '{src,tests}/**/{*,.*}.{py}}'
-    expect_glob.with(source_glob)
-               .returns(['fake1.py'])
+    source_glob = '{{*,.*}.{py},{src,tests}/**/{*,.*}.{py}}'
+    expect_glob.with(source_glob).returns(['fake1.py'])
   end
 end
