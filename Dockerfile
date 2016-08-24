@@ -1,5 +1,5 @@
 FROM alpine:latest
-RUN apk add --no-cache ruby ruby-irb ruby-dev make gcc libc-dev && gem install --no-ri --no-rdoc quality io-console bigdecimal rake
+RUN apk add --no-cache ruby ruby-irb ruby-dev make gcc libc-dev git && gem install --no-ri --no-rdoc quality io-console bigdecimal rake
 VOLUME /usr/app
 RUN mkdir /usr/quality
 ADD sample-project/Rakefile /usr/quality
