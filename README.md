@@ -157,7 +157,7 @@ After your first run, check in your coverage/.last_run.json.
 
 ## Maturity
 
-Quality uses [semantic versioning](http://semver.org/)--any incompatible changes will come out as major number updates.
+Quality uses [semantic versioning](http://semver.org/)--any incompatible changes (including new tools being added) will come out as major number updates.
 
 ## Supported Ruby Versions
 
