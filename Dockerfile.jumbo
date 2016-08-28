@@ -1,0 +1,6 @@
+FROM apiology/quality:latest
+RUN apk add --no-cache python py-pip && \
+    pip install flake8 pep8
+VOLUME /usr/app
+WORKDIR /usr/app
+ENTRYPOINT /entrypoint.sh

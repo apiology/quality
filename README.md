@@ -19,14 +19,16 @@ See [this post](http://blog.apiology.cc/2014/06/scalable-quality-part-1.html) or
 These basic steps assume you have a working Docker installation.
 
 ```
-docker run -v `pwd`:/usr/app apiology/quality
+docker run -v `pwd`:/usr/app apiology/quality:latest
 ```
 
 If you'd like to customize, you can link in your own Rakefile like this:
 
 ```
-docker run -v `pwd`:/usr/app -v `pwd`/Rakefile.quality:/usr/quality/Rakefile apiology/quality
+docker run -v `pwd`:/usr/app -v `pwd`/Rakefile.quality:/usr/quality/Rakefile apiology/quality:latest
 ```
+
+The default 'latest' tag contains the Ruby tools in a relatively small image.  You can also get additional tools (see `Dockerfile.jumbo` in this directory) by using the tag `jumbo-`(version) (e.g., jumbo-latest, jumbo-x.y.z, etc)
 
 
 ## How to use - as part of a Ruby-based Rakefile
