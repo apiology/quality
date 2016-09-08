@@ -11,9 +11,6 @@ class TestTaskRatchet < BaseTestTask
     expect_tools_tasks_defined(ALL_TOOLS)
     expect_define_task.with('quality')
     expect_define_task.with('ratchet').yields
-    expect_glob.with('metrics/*_high_water_mark')
-               .returns(%w(metrics/foo_high_water_mark
-                           metrics/bar_high_water_mark))
     expect_ratchet('foo', 12)
     expect_ratchet('bar', 96)
   end

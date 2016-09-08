@@ -22,8 +22,4 @@ class BaseTestTask < MiniTest::Test
   def expect_define_task
     @mocks[:dsl].expects(:define_task)
   end
-
-  def expect_glob
-    @mocks[:globber].expects(:glob)
-  end
 end
