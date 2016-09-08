@@ -34,6 +34,7 @@ The default 'latest' tag contains the Ruby tools in a relatively small image.  Y
 ## How to use - as part of a Ruby-based Rakefile
 
 ```bash
+$ brew install cmake # OS X
 $ gem install quality
 ```
 
@@ -93,44 +94,6 @@ Quality::Rake::Task.new do |t|
   # Defaults to false
   t.verbose = false
 
-  # Array of directory names which contain ruby files to analyze.
-  #
-  # Defaults to %w(app lib test spec feature), which translates to
-  # *.rb in the base directory, as well as those directories.
-  t.ruby_dirs = %w(app lib test spec feature)
-
-  # Array of directory names which contain any type of source files to
-  # analyze.
-  #
-  # Defaults to t.ruby_dirs
-  t.source_dirs.concat(%w(MyProject MyProjectTests))
-
-  # Pick any extra files that are source files, but may not have
-  # extensions--defaults to %w(Rakefile Dockerfile)
-  t.extra_source_files = ['tools/check-script', 'Rakefile']
-
-  # Pick any extra files that are source files, but may not have
-  # extensions--defaults to %w(Rakefile)
-  t.extra_ruby_files = ['Rakefile']
-
-  # Exclude the specified list of files--defaults to ['db/schema.rb']
-  t.exclude_files = ['lib/whatever/imported_file.rb',
-                     'lib/vendor/someone_else_fault.rb']
-
-  # Alternately, express it as a glob:
-
-  # Exclude the specified list of files
-  t.source_files_exclude_glob =
-    '{lib/whatever/imported_file.rb,lib/vendor/**/*.rb}'
-
-  # Extensions for Ruby language files--defaults to rb,rake
-  t.ruby_file_extensions_arr = %w(rb rake)
-
-  # Extensions for all source files--defaults to
-  # rb,rake,swift,cpp,c,java,py,clj,cljs,scala,js,yml,sh,json
-  t.source_file_extensions_arr =
-    %w(rb rake swift cpp c java py clj cljs scala js yml sh json)
-
   # Relative path to output directory where *_high_water_mark
   # files will be read/written
   #
@@ -142,8 +105,14 @@ Quality::Rake::Task.new do |t|
   #
   # Defaults to 'XXX|TODO'
   t.punchlist_regexp = 'XXX|TODO'
+
+  #
+  # For configuration on classifying files as the correct language,
+  # see https://github.com/github/linguist
+  #
 end
 ```
+  
 
 ## Code coverage
 

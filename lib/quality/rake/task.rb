@@ -45,15 +45,14 @@ module Quality
                      cmd_runner: Kernel,
                      count_file: File,
                      count_io: IO,
-                     globber: Dir,
                      gem_spec: Gem::Specification,
                      quality_checker_class:
                        Quality::QualityChecker,
-                     which: Which.new)
+                     which: Which.new,
+                     config: Quality::Config.new)
         @dsl = dsl
         @cmd_runner = cmd_runner
-        @globber = globber
-        @config = Quality::Config.new(globber: globber)
+        @config = config
         yield @config if block_given?
         @runner = Quality::Runner.new(@config,
                                       gem_spec: gem_spec,
