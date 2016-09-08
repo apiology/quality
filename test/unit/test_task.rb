@@ -23,8 +23,9 @@ class TestTask < BaseTestTask
   end
 
   def setup_quality_task_mocks(suppressed_tools: [], uninstalled_tools: [])
+    expect_task_names_pulled
     expect_tools_tasks_defined(ALL_TOOLS)
-    expect_define_task.with('quality').yields
+    expect_define_task.with(quality_name).yields
     expect_define_task.with('ratchet')
     expect_tools_installed(ALL_TOOLS - uninstalled_tools)
     tools_that_actually_run = (ALL_TOOLS - suppressed_tools) - uninstalled_tools

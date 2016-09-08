@@ -8,9 +8,11 @@ class TestTaskRatchet < BaseTestTask
   end
 
   def setup_ratchet_task_mocks
+    expect_task_names_pulled
     expect_tools_tasks_defined(ALL_TOOLS)
-    expect_define_task.with('quality')
-    expect_define_task.with('ratchet').yields
+    expect_define_task.with(quality_name)
+    expect_define_task.with(ratchet_name)
+    expect_define_task.with(ratchet_name).yields
     expect_ratchet('foo', 12)
     expect_ratchet('bar', 96)
   end
