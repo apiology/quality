@@ -6,11 +6,17 @@ module Quality
   #
   # Note: Requires files to be commited within a git repo.
   class LinguistSourceFileGlobber
-    def initialize
-      @repo = Rugged::Repository.new('.')
-      @commit = @repo.head
-      @project = Linguist::Repository.new(@repo, @commit.target_id)
+    def initialize(repo: Rugged::Repository.new('.'),
+                   commit: repo.head,
+                   project: Linguist::Repository.new(repo, commit.target_id),
+                   file_blob: Linguist::FileBlob,
+                   pwd: Dir.pwd)
+      @repo = repo
+      @commit = commit
+      @project = project
       @breakdown_by_file = @project.breakdown_by_file
+      @file_blob = file_blob
+      @pwd = pwd
     end
 
     def all_files
@@ -40,7 +46,7 @@ module Quality
 
     def real_files_matching
       all_files.select do |filename|
-        blob = Linguist::FileBlob.new(filename, Dir.pwd)
+        blob = @file_blob.new(filename, @pwd)
         if blob.generated? || blob.vendored?
           false
         else
