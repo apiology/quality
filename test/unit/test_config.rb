@@ -58,6 +58,26 @@ class TestConfig < MiniTest::Test
     readme_instructions(config)
   end
 
+  def test_all_output_files
+    config = get_test_object do
+      @mocks[:dir].expects(:glob).with('metrics/*_high_water_mark')
+        .returns(['metrics/a_high_water_mark'])
+    end
+    assert_equal(['metrics/a_high_water_mark'], config.all_output_files)
+  end
+
+  def test_source_files_exclude_glob_from_array
+    config = get_test_object
+    config.exclude_files = %w(a b c)
+    assert_equal('{a,b,c}', config.source_files_exclude_glob)
+  end
+
+  def test_source_files_exclude_glob_from_glob
+    config = get_test_object
+    config.source_files_exclude_glob = '{d,e,f}'
+    assert_equal('{d,e,f}', config.source_files_exclude_glob)
+  end
+
   def get_test_object(&twiddle_mocks)
     @mocks = get_initializer_mocks(Quality::Config)
     yield @mocks unless twiddle_mocks.nil?
