@@ -38,18 +38,20 @@ module Quality
     end
 
     def all_output_files
-      @globber.glob("#{output_dir}/*_high_water_mark")
+      @dir.glob("#{output_dir}/*_high_water_mark")
     end
 
     def initialize(quality_name: 'quality',
                    ratchet_name: 'ratchet',
-                   source_file_globber: Quality::LinguistSourceFileGlobber.new)
+                   source_file_globber: Quality::LinguistSourceFileGlobber.new,
+                   dir: Dir)
       @quality_name = quality_name
       @ratchet_name = ratchet_name
       @skip_tools = []
       @output_dir = 'metrics'
       @verbose = false
       @source_file_globber = source_file_globber
+      @dir = dir
     end
   end
 end
