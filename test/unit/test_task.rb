@@ -85,7 +85,7 @@ class TestTask < BaseTestTask
   end
 
   def expected_source_and_doc_files_glob
-    "{'fake1.py', 'README.md'}"
+    '{fake1.py,README.md}'
   end
 
   def expect_find_js_files

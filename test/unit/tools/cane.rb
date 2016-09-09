@@ -20,6 +20,7 @@ module Test
                                 false)
             .returns(quality_checker)
           expect_find_ruby_files
+          expect_find_exclude_files
         end
       end
     end

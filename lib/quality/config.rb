@@ -8,8 +8,9 @@ module Quality
   # Configuration for running quality tool
   class Config
     attr_accessor :skip_tools, :verbose, :quality_name, :ratchet_name,
-                  :output_dir, :punchlist_regexp, :exclude_files,
-                  :source_files_exclude_glob
+                  :output_dir, :punchlist_regexp, :exclude_files
+
+    attr_writer :source_files_exclude_glob
 
     extend Forwardable
 
@@ -20,7 +21,7 @@ module Quality
     end
 
     def source_files_exclude_glob
-      to_glob(exclude_files)
+      @source_files_exclude_glob || to_glob(exclude_files)
     end
 
     def all_output_files

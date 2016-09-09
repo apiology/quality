@@ -108,6 +108,7 @@ module Quality
                    :source_files,
                    :source_files_glob,
                    :source_and_doc_files,
+                   :source_and_doc_files_glob,
                    :exclude_files,
                    :source_files_exclude_glob,
                    :punchlist_regexp,
