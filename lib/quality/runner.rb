@@ -98,10 +98,19 @@ module Quality
       quality_checker.execute(&count_violations_on_line)
     end
 
-    def_delegators :@config, :ruby_files, :ruby_files_glob,
-                   :python_files, :python_files_glob,
-                   :source_files_glob, :punchlist_regexp,
-                   :source_files_exclude_glob, :exclude_files,
-                   :source_and_doc_files_glob, :js_files_arr
+    def to_glob(files)
+      "{#{files.join(',')}}"
+    end
+
+    def_delegators :@config,
+                   :ruby_files,
+                   :python_files,
+                   :source_files,
+                   :source_files_glob,
+                   :source_and_doc_files,
+                   :exclude_files,
+                   :source_files_exclude_glob,
+                   :punchlist_regexp,
+                   :js_files
   end
 end

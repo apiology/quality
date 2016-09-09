@@ -25,6 +25,13 @@ class BaseTestTask < MiniTest::Test
 
   let_mock :quality_name, :ratchet_name
 
+  def expect_config_pulled
+    expect_task_names_pulled
+    @mocks[:config]
+      .expects(:skip_tools).returns([])
+      .at_least(0)
+  end
+
   def expect_task_names_pulled
     @mocks[:config].expects(:quality_name).returns(quality_name)
     @mocks[:config].expects(:ratchet_name).returns(ratchet_name)

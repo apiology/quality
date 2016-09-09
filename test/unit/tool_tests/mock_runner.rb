@@ -13,7 +13,7 @@ class MockRunner
     []
   end
 
-  def js_files_arr
+  def js_files
     []
   end
 

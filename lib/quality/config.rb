@@ -8,11 +8,20 @@ module Quality
   # Configuration for running quality tool
   class Config
     attr_accessor :skip_tools, :verbose, :quality_name, :ratchet_name,
-                  :output_dir, :punchlist_regexp
+                  :output_dir, :punchlist_regexp, :exclude_files,
+                  :source_files_exclude_glob
 
     extend Forwardable
 
-    def_delegators(:source_file_globber, :ruby_files)
+    def_delegators(:source_file_globber, :ruby_files, :js_files)
+
+    def source_files_glob
+      to_glob(source_files)
+    end
+
+    def source_files_exclude_glob
+      to_glob(exclude_files)
+    end
 
     def all_output_files
       @globber.glob("#{output_dir}/*_high_water_mark")

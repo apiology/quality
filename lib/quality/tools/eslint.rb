@@ -5,7 +5,7 @@ module Quality
       private
 
       def eslint_args
-        '-f unix ' + js_files_arr.join(' ')
+        '-f unix ' + js_files.join(' ')
       end
 
       def quality_eslint

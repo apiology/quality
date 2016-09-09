@@ -12,6 +12,10 @@ module Quality
         ]
       end
 
+      def ruby_files_glob
+        "{#{ruby_files.join(',')}}"
+      end
+
       def cane_args
         args = [
           "-f '#{ruby_files_glob}'",

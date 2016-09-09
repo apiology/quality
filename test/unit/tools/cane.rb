@@ -19,6 +19,7 @@ module Test
                                 'metrics',
                                 false)
             .returns(quality_checker)
+          expect_find_ruby_files
         end
       end
     end

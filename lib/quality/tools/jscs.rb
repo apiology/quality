@@ -5,11 +5,11 @@ module Quality
       private
 
       def jscs_args
-        '-r unix ' + js_files_arr.join(' ')
+        '-r unix ' + js_files.join(' ')
       end
 
       def jscs_check_configured
-        return 0 if js_files_arr.empty?
+        return 0 if js_files.empty?
 
         puts 'No JSCS config found!  To generate one, run ' \
              'jscs --auto-configure representative_file.js'
