@@ -36,6 +36,16 @@ class TestConfig < MiniTest::Test
     # Defaults to 'XXX|TODO'
     t.punchlist_regexp = 'XXX|TODO'
 
+    # Exclude the specified list of files--defaults to ['db/schema.rb']
+    t.exclude_files = ['lib/whatever/imported_file.rb',
+                       'lib/vendor/someone_else_fault.rb']
+
+    # Alternately, express it as a glob:
+
+    # Exclude the specified list of files
+    t.source_files_exclude_glob =
+      '{lib/whatever/imported_file.rb,lib/vendor/**/*.rb}'
+
     #
     # For configuration on classifying files as the correct language,
     # see https://github.com/github/linguist
