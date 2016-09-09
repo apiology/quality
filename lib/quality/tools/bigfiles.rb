@@ -5,7 +5,7 @@ module Quality
       private
 
       def bigfiles_args
-        args = ['--glob', "'#{source_files_glob}'"]
+        args = ['--glob', "'#{source_and_doc_files_glob}'"]
         unless source_files_exclude_glob == '{}'
           args << ['--exclude-glob', "'#{source_files_exclude_glob}'"]
         end

@@ -15,11 +15,33 @@ class TestTask < BaseTestTask
     end
   end
 
+  def expect_cane_not_found
+    @mocks[:which].expects(:which).with('cane').returns(nil)
+  end
+
   def test_quality_task_some_not_installed
     get_test_object do |_task|
       setup_quality_task_mocks(uninstalled_tools: ['cane'])
-      @mocks[:which].expects(:which).with('cane').returns(nil)
+      expect_cane_not_found
     end
+  end
+
+  def expect_skip_tools_pulled(suppressed_tools)
+    @mocks[:config]
+      .expects(:skip_tools).returns(suppressed_tools)
+      .at_least(1)
+  end
+
+  def expect_output_dir_pulled
+    @mocks[:config]
+      .expects(:output_dir).returns('metrics')
+      .at_least(1)
+  end
+
+  def expect_verbose_false
+    @mocks[:config]
+      .expects(:verbose).returns(false)
+      .at_least(1)
   end
 
   def setup_quality_task_mocks(suppressed_tools: [], uninstalled_tools: [])
@@ -32,15 +54,9 @@ class TestTask < BaseTestTask
     unless suppressed_tools.empty?
       @mocks[:config].expects(:skip_tools=).with(suppressed_tools)
     end
-    @mocks[:config]
-      .expects(:skip_tools).returns(suppressed_tools)
-      .at_least(1)
-    @mocks[:config]
-      .expects(:output_dir).returns('metrics')
-      .at_least(1)
-    @mocks[:config]
-      .expects(:verbose).returns(false)
-      .at_least(1)
+    expect_skip_tools_pulled(suppressed_tools)
+    expect_output_dir_pulled
+    expect_verbose_false
     expect_tools_run(tools_that_actually_run)
   end
 
@@ -105,12 +121,14 @@ class TestTask < BaseTestTask
     @mocks[:config]
       .expects(:source_files_glob)
       .returns('{fake1.py,README.md}')
+      .at_least(0)
   end
 
   def expect_find_exclude_files
     @mocks[:config]
       .expects(:exclude_files)
       .returns(['fake1.py'])
+      .at_least(0)
   end
 
   def expect_find_exclude_glob

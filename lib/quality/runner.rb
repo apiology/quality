@@ -98,10 +98,6 @@ module Quality
       quality_checker.execute(&count_violations_on_line)
     end
 
-    def to_glob(files)
-      "{#{files.join(',')}}"
-    end
-
     def_delegators :@config,
                    :ruby_files,
                    :python_files,
