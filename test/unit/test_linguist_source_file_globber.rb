@@ -24,7 +24,7 @@ class TestLinguistSourceFileGlobber < MiniTest::Test
   def mock_markdown_file_found(mocks)
     mocks[:file_blob]
       .expects(:new)
-      .with('b.md', mocks[:pwd])
+      .with('foo/b.md', mocks[:pwd])
       .returns(blob_b_md)
     blob_b_md.expects(:generated?).returns(false)
     blob_b_md.expects(:vendored?).returns(false)
@@ -32,11 +32,17 @@ class TestLinguistSourceFileGlobber < MiniTest::Test
     blob_b_md.expects(:language).returns(nil).at_least(0)
   end
 
+  let_mock :tree
+
   def mock_files_found(mocks)
     expect_breakdown_pulled(mocks)
     mocks[:commit].expects(:target).returns(target).at_least(0)
-    target.expects(:tree).returns([{ type: :blob, name: 'a.rb' },
-                                   { type: :blob, name: 'b.md' }])
+    target.expects(:tree).returns(tree)
+    tree
+      .expects(:walk).with(:preorder)
+      .multiple_yields(['', type: :blob, name: 'a.rb'],
+                       ['', type: :tree, name: 'foo'],
+                       ['foo/', type: :blob, name: 'b.md'])
 
     mock_ruby_file_found(mocks)
 
@@ -47,7 +53,7 @@ class TestLinguistSourceFileGlobber < MiniTest::Test
     globber = get_test_object do |mocks|
       mock_files_found(mocks)
     end
-    assert_equal(['a.rb', 'b.md'], globber.source_and_doc_files)
+    assert_equal(['a.rb', 'foo/b.md'], globber.source_and_doc_files)
   end
 
   def test_source_files

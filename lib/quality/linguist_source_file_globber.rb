@@ -21,14 +21,12 @@ module Quality
 
     def all_files
       @source_files ||= begin
+        files = []
         tree = @commit.target.tree
-        tree.flat_map do |file|
-          if file[:type] == :blob
-            [file[:name]]
-          else
-            []
-          end
+        tree.walk(:preorder) do |root, file|
+          files << "#{root}#{file[:name]}" if file[:type] == :blob
         end
+        files
       end
     end
 
@@ -50,7 +48,7 @@ module Quality
         if blob.generated? || blob.vendored?
           false
         else
-          yield blob
+          yield blob, filename
         end
       end
     end
