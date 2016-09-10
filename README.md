@@ -6,13 +6,32 @@
 
 ##Overview
 
-Quality is a tool that runs quality checks on Ruby code using cane,
-reek, flog, flay and rubocop and makes sure your numbers don't get any
+Quality is a tool that runs quality checks on code in git repos using
+different analysis tools and makes sure your numbers don't get any
 worse over time.
 
 ## Why
 
 See [this post](http://blog.apiology.cc/2014/06/scalable-quality-part-1.html) or [these slides](https://docs.google.com/presentation/d/1Op4FH34-enm8luEIuAAVLkuAJ-sB4LKaMm57RJzvfeI/edit#slide) for more information on the problem the quality gem solves.
+
+### Tools
+
+Quality makes use of the following other tools, which do the actual checking:
+
+* [bigfiles](https://github.com/apiology/bigfiles)
+* [brakeman](http://brakemanscanner.org/)
+* [bundler_audit](https://github.com/rubysec/bundler-audit)
+* [cane](https://github.com/square/cane)
+* [eslint](http://eslint.org/)
+* [flake8](https://pypi.python.org/pypi/flake8)
+* [flay](https://github.com/seattlerb/flay)
+* [flog](https://github.com/seattlerb/flog)
+* [jscs](http://jscs.info/)
+* [pep8](https://pypi.python.org/pypi/pep8)
+* [punchlist](https://github.com/apiology/punchlist)
+* [rails_best_practices](https://github.com/railsbp/rails_best_practices)
+* [reek](https://github.com/troessner/reek)
+* [rubocop](https://github.com/bbatsov/rubocop)
 
 ## How to use - using Docker
 
@@ -122,6 +141,10 @@ Quality::Rake::Task.new do |t|
   #
 end
 ```
+
+## Vendored files
+
+Quality uses GitHub's [linguist](https://github.com/github/linguist) gem to find and classify source files to analyze.  In addition to the `exclude_files` and `source_files_exclude_glob` options in Quality, you can refer to Linguists's documentation on [overrides](https://github.com/github/linguist#overrides) to use the `gitattributes` file to mark files as vendored, at which point Quality will not try to analyze them.
   
 
 ## Code coverage
@@ -151,18 +174,6 @@ Tested against Ruby >=2.0--does not support Ruby 1.9.x.
 * Submit a github pull request
 
 Many thanks to all contributors, especially [@andyw8](https://github.com/andyw8), who has contributed some great improvements.
-
-### Dependencies
-
-Quality makes use of the following other gems, which do the actual checking:
-
-* [reek](https://github.com/troessner/reek)
-* [cane](https://github.com/square/cane)
-* [flog](https://github.com/seattlerb/flog)
-* [flay](https://github.com/seattlerb/flay)
-* [rubocop](https://github.com/bbatsov/rubocop)
-* [bigfiles](https://github.com/apiology/bigfiles)
-* [punchlist](https://github.com/apiology/punchlist)
 
 ### Learn More
 
