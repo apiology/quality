@@ -11,12 +11,14 @@ module Quality
                    commit: repo.head,
                    project: Linguist::Repository.new(repo, commit.target_id),
                    file_blob: Linguist::FileBlob,
+                   file_class: File,
                    pwd: Dir.pwd)
       @repo = repo
       @commit = commit
       @project = project
       @breakdown_by_file = @project.breakdown_by_file
       @file_blob = file_blob
+      @file_class = file_class
       @exclude_files = nil
       @pwd = pwd
     end
@@ -32,14 +34,21 @@ module Quality
         mode_format == 0o0160000
     end
 
+    def ok_to_process?(filename, file)
+      file[:type] == :blob &&
+        !submodule_or_symlink?(file) &&
+        @file_class.exist?(filename) &&
+        !@file_class.symlink?(filename) &&
+        @file_class.readable?(filename)
+    end
+
     def all_files
       @source_files ||= begin
         files = []
         tree = @commit.target.tree
         tree.walk(:preorder) do |root, file|
-          unless file[:type] != :blob || submodule_or_symlink?(file)
-            files << "#{root}#{file[:name]}"
-          end
+          filename = "#{root}#{file[:name]}"
+          files << filename if ok_to_process?(filename, file)
         end
         files
       end
