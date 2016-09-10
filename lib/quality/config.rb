@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 # XXX: I should figure out how to use tagged releases in github.  Example:
 # https://github.com/xsc/lein-ancient/issues/29
 # https://github.com/xsc/lein-ancient/releases

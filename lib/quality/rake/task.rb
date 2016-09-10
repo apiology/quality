@@ -1,4 +1,5 @@
 #!/usr/bin/env ruby
+# frozen_string_literal: true
 
 # XXX: There's an underlying issue with bundler, and knowing my luck,
 # probably RVM that is causing confusion on which version of rake is

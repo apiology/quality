@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Quality
   module Tools
     # Adds 'flog' tool support to quality gem

@@ -1,4 +1,5 @@
 #!/usr/bin/env ruby
+# frozen_string_literal: true
 
 require_relative 'test_helper.rb'
 require_relative 'base_test_task.rb'

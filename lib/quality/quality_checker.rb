@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 require_relative 'command_output_processor'
 require_relative 'process'
 require_relative 'ruby_spawn'

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'quality/directory_of_classes.rb'
 
 # Tests that run individual tools as part of the test
