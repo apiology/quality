@@ -32,7 +32,10 @@ module Quality
     end
 
     def ruby_files
-      @breakdown_by_file['Ruby'] || []
+      # Linguist treats Gemfile.lock as Ruby code.
+      #
+      # https://github.com/github/linguist/issues/1740
+      @breakdown_by_file['Ruby'] - ['Gemfile.lock'] || []
     end
 
     def python_files
