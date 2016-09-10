@@ -20,12 +20,23 @@ module Quality
       @pwd = pwd
     end
 
+    def submodule_or_symlink?(file)
+      # Skip submodules and symlinks
+      mode = file[:mode]
+      mode_format = (mode & 0o0170000)
+      mode_format == 0o0120000 ||
+        mode_format == 0o040000 ||
+        mode_format == 0o0160000
+    end
+
     def all_files
       @source_files ||= begin
         files = []
         tree = @commit.target.tree
         tree.walk(:preorder) do |root, file|
-          files << "#{root}#{file[:name]}" if file[:type] == :blob
+          unless submodule_or_symlink?(file)
+            files << "#{root}#{file[:name]}" if file[:type] == :blob
+          end
         end
         files
       end
@@ -49,6 +60,7 @@ module Quality
     def real_files_matching
       all_files.select do |filename|
         blob = @file_blob.new(filename, @pwd)
+
         if blob.generated? || blob.vendored?
           false
         else
