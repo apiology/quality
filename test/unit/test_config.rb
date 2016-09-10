@@ -60,7 +60,9 @@ class TestConfig < MiniTest::Test
 
   def test_all_output_files
     config = get_test_object do
-      @mocks[:dir].expects(:glob).with('metrics/*_high_water_mark')
+      @mocks[:dir]
+        .expects(:glob)
+        .with('metrics/*_high_water_mark')
         .returns(['metrics/a_high_water_mark'])
     end
     assert_equal(['metrics/a_high_water_mark'], config.all_output_files)

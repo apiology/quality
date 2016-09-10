@@ -4,7 +4,7 @@ module Test
       # Test for the 'bigfiles' tool within the quality gem
       module Bigfiles
         def expected_source_files_glob
-          "{fake1.py,README.md}"
+          '{fake1.py,README.md}'
         end
 
         def bigfiles_expected_args
