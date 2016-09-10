@@ -53,7 +53,7 @@ The default 'latest' tag contains the Ruby tools in a relatively small image.  Y
 ## How to use - as part of a Ruby-based Rakefile
 
 ```bash
-$ brew install cmake # OS X
+$ brew install cmake icu4c # OS X
 $ gem install quality
 ```
 
