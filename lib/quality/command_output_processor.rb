@@ -23,8 +23,7 @@ module Quality
     def process_file(file, &count_violations_on_line)
       out = ''
       while (@current_line = file.gets)
-        out <<
-          process_line(&count_violations_on_line)
+        out += process_line(&count_violations_on_line)
       end
       out
     end
