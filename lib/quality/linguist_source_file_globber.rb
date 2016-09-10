@@ -22,7 +22,7 @@ module Quality
 
     def submodule_or_symlink?(file)
       # Skip submodules and symlinks
-      mode = file[:mode]
+      mode = file[:filemode]
       mode_format = (mode & 0170000)
       mode_format == 0120000 ||
         mode_format == 040000 ||
