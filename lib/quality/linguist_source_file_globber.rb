@@ -23,10 +23,10 @@ module Quality
     def submodule_or_symlink?(file)
       # Skip submodules and symlinks
       mode = file[:mode]
-      mode_format = (mode & 0o0170000)
-      mode_format == 0o0120000 ||
-        mode_format == 0o040000 ||
-        mode_format == 0o0160000
+      mode_format = (mode & 0170000)
+      mode_format == 0120000 ||
+        mode_format == 040000 ||
+        mode_format == 0160000
     end
 
     def all_files
@@ -34,8 +34,8 @@ module Quality
         files = []
         tree = @commit.target.tree
         tree.walk(:preorder) do |root, file|
-          unless submodule_or_symlink?(file)
-            files << "#{root}#{file[:name]}" if file[:type] == :blob
+          unless file[:type] != :blob || submodule_or_symlink?(file)
+            files << "#{root}#{file[:name]}"
           end
         end
         files
@@ -60,7 +60,6 @@ module Quality
     def real_files_matching
       all_files.select do |filename|
         blob = @file_blob.new(filename, @pwd)
-
         if blob.generated? || blob.vendored?
           false
         else
