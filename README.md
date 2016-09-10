@@ -159,13 +159,13 @@ SimpleCov.refuse_coverage_drop
 
 After your first run, check in your coverage/.last_run.json.
 
-## Maturity
+## Caveats
 
 Quality uses [semantic versioning](http://semver.org/)--any incompatible changes (including new tools being added) will come out as major number updates.
 
 ## Supported Ruby Versions
 
-Tested against Ruby >=2.0--does not support Ruby 1.9.x.
+Tested against Ruby >=2.2--does not support Ruby 1.9.x or JRuby.
 
 ## Contributing
 
