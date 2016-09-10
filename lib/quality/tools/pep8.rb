@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Quality
   module Tools
     # Adds 'pep8' tool support to quality gem

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Quality
   module Tools
     # Adds 'bigfiles' tool support to quality gem
@@ -5,8 +7,8 @@ module Quality
       private
 
       def bigfiles_args
-        args = ['--glob', "'#{source_files_glob}'"]
-        if !exclude_files.empty?
+        args = ['--glob', "'#{source_and_doc_files_glob}'"]
+        unless source_files_exclude_glob == '{}'
           args << ['--exclude-glob', "'#{source_files_exclude_glob}'"]
         end
         args.join(' ')

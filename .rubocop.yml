@@ -1,3 +1,10 @@
+Style/StringLiterals:
+    EnforcedStyle: single_quotes
+    SupportedStyles:
+      - single_quotes
+      - double_quotes
+    ConsistentQuotesInMultiline: true
+
 Style/TrailingCommaInLiteral:
   EnforcedStyleForMultiline: comma
 

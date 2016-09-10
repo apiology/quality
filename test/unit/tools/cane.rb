@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 module Test
   module Quality
     module Tools
@@ -19,6 +20,8 @@ module Test
                                 'metrics',
                                 false)
             .returns(quality_checker)
+          expect_find_ruby_files
+          expect_find_exclude_files
         end
       end
     end

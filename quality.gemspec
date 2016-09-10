@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 # ; -*-Ruby-*-
 # -*- encoding: utf-8 -*-
 $LOAD_PATH.push File.join(File.dirname(__FILE__), 'lib')
@@ -10,10 +11,10 @@ Gem::Specification.new do |s|
   s.authors = ['Vince Broz']
   # s.default_executable = %q{quality}
   s.description =
-    'Quality is a tool that runs quality checks on your code using ' \
+    "Quality is a tool that runs quality checks on your code using " \
     "community tools, and makes sure your numbers don't get any " \
     "worse over time. Just add 'rake quality' as part of your " \
-    'Continuous Integration'
+    "Continuous Integration"
   s.email = ['vince@broz.cc']
   # s.executables = ["quality"]
   # s.extra_rdoc_files = ["CHANGELOG", "License.txt"]
@@ -30,7 +31,7 @@ Gem::Specification.new do |s|
   s.summary = 'Code quality tools for Ruby'
 
   s.add_runtime_dependency('activesupport')
-  s.add_runtime_dependency('source_finder', ['>=3.0.0'])
+  s.add_runtime_dependency('github-linguist')
   s.add_runtime_dependency('cane', ['>= 2.6'])
   s.add_runtime_dependency('reek', ['>= 1.3.4'])
   s.add_runtime_dependency('flog', ['>= 4.1.1'])

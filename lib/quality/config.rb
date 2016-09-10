@@ -1,8 +1,9 @@
+# frozen_string_literal: true
 # XXX: I should figure out how to use tagged releases in github.  Example:
 # https://github.com/xsc/lein-ancient/issues/29
 # https://github.com/xsc/lein-ancient/releases
 
-require 'source_finder/source_file_globber'
+require_relative 'linguist_source_file_globber'
 
 module Quality
   # Configuration for running quality tool
@@ -10,84 +11,49 @@ module Quality
     attr_accessor :skip_tools, :verbose, :quality_name, :ratchet_name,
                   :output_dir, :punchlist_regexp
 
+    attr_writer :source_files_exclude_glob, :exclude_files
+
     extend Forwardable
 
-    def_delegators(:source_file_globber,
-                   :ruby_dirs_arr=, :ruby_dirs_arr,
-                   :extra_ruby_files_arr=, :extra_ruby_files_arr,
-                   :ruby_file_extensions_arr=, :ruby_file_extensions_arr,
-                   :ruby_file_extensions_glob=, :ruby_file_extensions_glob,
-                   :ruby_files_glob, :ruby_files_arr)
+    def_delegators(:@source_file_globber, :ruby_files, :python_files,
+                   :js_files, :source_and_doc_files, :source_files)
 
-    def_delegators(:source_file_globber,
-                   :js_dirs_arr=, :js_dirs_arr,
-                   :extra_js_files_arr=, :extra_js_files_arr,
-                   :js_file_extensions_arr=, :js_file_extensions_arr,
-                   :js_file_extensions_glob=, :js_file_extensions_glob,
-                   :js_files_glob, :js_files_arr)
+    def to_glob(files)
+      "{#{files.join(',')}}"
+    end
 
-    def_delegators(:source_file_globber,
-                   :python_dirs_arr=, :python_dirs_arr,
-                   :extra_python_files_arr=, :extra_python_files_arr,
-                   :python_file_extensions_arr=, :python_file_extensions_arr,
-                   :python_file_extensions_glob=, :python_file_extensions_glob,
-                   :python_files_glob, :python_files_arr)
+    def source_files_glob
+      to_glob(source_files)
+    end
 
-    def_delegators(:source_file_globber,
-                   :source_dirs_arr=, :source_dirs_arr,
-                   :extra_source_files_arr=, :extra_source_files_arr,
-                   :exclude_files_arr=, :exclude_files_arr,
-                   :source_file_extensions_arr=, :source_file_extensions_arr,
-                   :source_file_extensions_glob=, :source_file_extensions_glob,
-                   :source_and_doc_files_glob,
-                   :source_files_glob,
-                   :source_files_exclude_glob,
-                   :source_files_exclude_glob=)
+    def source_and_doc_files_glob
+      to_glob(source_and_doc_files)
+    end
 
-    alias_method(:extra_ruby_files, :extra_ruby_files_arr)
-    alias_method(:extra_ruby_files=, :extra_ruby_files_arr=)
-    alias_method(:ruby_files, :ruby_files_arr)
-    alias_method(:python_files, :python_files_arr)
-    alias_method(:ruby_dirs, :ruby_dirs_arr)
-    alias_method(:ruby_dirs=, :ruby_dirs_arr=)
-    alias_method(:ruby_file_extensions, :ruby_file_extensions_glob)
-    alias_method(:ruby_file_extensions=, :ruby_file_extensions_glob=)
+    def exclude_files
+      @exclude_files || []
+    end
 
-    alias_method(:extra_files, :extra_source_files_arr)
-    alias_method(:extra_files=, :extra_source_files_arr=)
-    alias_method(:extra_source_files, :extra_source_files_arr)
-    alias_method(:extra_source_files=, :extra_source_files_arr=)
-    alias_method(:source_dirs, :source_dirs_arr)
-    alias_method(:source_dirs=, :source_dirs_arr=)
-    alias_method(:exclude_files, :exclude_files_arr)
-    alias_method(:exclude_files=, :exclude_files_arr=)
-
-    # This was named and documented poorly early on
-    alias_method(:source_file_extensions, :source_file_extensions_glob)
-    alias_method(:source_file_extensions=, :source_file_extensions_glob=)
-
-    def source_file_globber
-      @source_file_globber ||=
-        SourceFinder::SourceFileGlobber.new(globber: @globber)
+    def source_files_exclude_glob
+      @source_files_exclude_glob || to_glob(exclude_files)
     end
 
     def all_output_files
-      @globber.glob("#{output_dir}/*_high_water_mark")
+      @dir.glob("#{output_dir}/*_high_water_mark")
     end
 
     def initialize(quality_name: 'quality',
                    ratchet_name: 'ratchet',
-                   globber: raise)
+                   source_file_globber: Quality::LinguistSourceFileGlobber.new,
+                   dir: Dir)
       @quality_name = quality_name
       @ratchet_name = ratchet_name
       @skip_tools = []
       @output_dir = 'metrics'
       @verbose = false
-      @globber = globber
-      source_file_globber.source_files_exclude_glob =
-        '{' + source_file_globber.source_files_exclude_glob +
-        ',db/schema.rb' \
-        '}'
+      @source_file_globber = source_file_globber
+      @dir = dir
+      @source_files_exclude_glob = nil
     end
   end
 end

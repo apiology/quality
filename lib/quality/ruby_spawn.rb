@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Quality
   # Spawn a ruby process
   class RubySpawn

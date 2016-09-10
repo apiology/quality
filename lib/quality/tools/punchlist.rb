@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Quality
   module Tools
     # Adds 'punchlist' tool support to quality gem
@@ -7,7 +9,7 @@ module Quality
       def punchlist_args
         glob = "--glob '#{source_and_doc_files_glob}'"
         regexp = " --regexp '#{punchlist_regexp}'" if punchlist_regexp
-        unless exclude_files.empty?
+        unless exclude_files.nil? || exclude_files.empty?
           exclude = " --exclude-glob '#{source_files_exclude_glob}'"
         end
 
