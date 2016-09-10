@@ -5,6 +5,9 @@ require 'forwardable'
 require_relative 'which'
 require_relative 'directory_of_classes'
 
+# Quality is a tool that runs quality checks on Ruby code using cane,
+# reek, flog, flay and rubocop and makes sure your numbers don't get
+# any worse over time.
 module Quality
   current_dir = File.dirname(File.expand_path(__FILE__))
   TOOL_CLASSES = DirectoryOfClasses.new(dir: "#{current_dir}/tools",

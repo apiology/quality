@@ -11,12 +11,13 @@ module Quality
     attr_accessor :skip_tools, :verbose, :quality_name, :ratchet_name,
                   :output_dir, :punchlist_regexp
 
-    attr_writer :source_files_exclude_glob, :exclude_files
+    attr_writer :source_files_exclude_glob
 
     extend Forwardable
 
     def_delegators(:@source_file_globber, :ruby_files, :python_files,
-                   :js_files, :source_and_doc_files, :source_files)
+                   :js_files, :source_and_doc_files, :source_files,
+                   :exclude_files=, :exclude_files)
 
     def to_glob(files)
       "{#{files.join(',')}}"
@@ -28,10 +29,6 @@ module Quality
 
     def source_and_doc_files_glob
       to_glob(source_and_doc_files)
-    end
-
-    def exclude_files
-      @exclude_files || []
     end
 
     def source_files_exclude_glob

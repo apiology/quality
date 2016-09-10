@@ -17,16 +17,17 @@ module Quality
       @project = project
       @breakdown_by_file = @project.breakdown_by_file
       @file_blob = file_blob
+      @exclude_files = nil
       @pwd = pwd
     end
 
     def submodule_or_symlink?(file)
       # Skip submodules and symlinks
       mode = file[:filemode]
-      mode_format = (mode & 0170000)
-      mode_format == 0120000 ||
-        mode_format == 040000 ||
-        mode_format == 0160000
+      mode_format = (mode & 0o0170000)
+      mode_format == 0o0120000 ||
+        mode_format == 0o040000 ||
+        mode_format == 0o0160000
     end
 
     def all_files
@@ -42,19 +43,27 @@ module Quality
       end
     end
 
+    def language_files(language)
+      (@breakdown_by_file[language] || []) - exclude_files
+    end
+
     def ruby_files
       # Linguist treats Gemfile.lock as Ruby code.
       #
       # https://github.com/github/linguist/issues/1740
-      @breakdown_by_file['Ruby'] - ['Gemfile.lock'] || []
+      language_files('Ruby') - ['Gemfile.lock']
     end
 
     def python_files
-      @breakdown_by_file['Python'] || []
+      language_files('Python')
     end
 
     def js_files
-      @breakdown_by_file['JavaScript'] || []
+      language_files('JavaScript')
+    end
+
+    def exclude_files
+      @exclude_files || []
     end
 
     def real_files_matching

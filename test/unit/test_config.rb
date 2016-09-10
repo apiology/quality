@@ -55,6 +55,10 @@ class TestConfig < MiniTest::Test
 
   def test_quality_task_readme_instructions_still_work
     config = get_test_object do |_task|
+      @mocks[:source_file_globber]
+        .expects(:exclude_files=)
+        .with(['lib/whatever/imported_file.rb',
+               'lib/vendor/someone_else_fault.rb'])
     end
     readme_instructions(config)
   end
@@ -70,7 +74,14 @@ class TestConfig < MiniTest::Test
   end
 
   def test_source_files_exclude_glob_from_array
-    config = get_test_object
+    config = get_test_object do
+      @mocks[:source_file_globber]
+        .expects(:exclude_files=)
+        .with(%w(a b c))
+      @mocks[:source_file_globber]
+        .expects(:exclude_files)
+        .returns(%w(a b c))
+    end
     config.exclude_files = %w(a b c)
     assert_equal('{a,b,c}', config.source_files_exclude_glob)
   end
