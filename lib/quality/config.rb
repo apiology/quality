@@ -52,6 +52,7 @@ module Quality
       @verbose = false
       @source_file_globber = source_file_globber
       @dir = dir
+      @source_files_exclude_glob = nil
     end
   end
 end
