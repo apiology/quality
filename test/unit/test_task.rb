@@ -45,19 +45,27 @@ class TestTask < BaseTestTask
       .at_least(1)
   end
 
+  def expect_skip_tools_assigned(suppressed_tools)
+    unless suppressed_tools.empty?
+      @mocks[:config].expects(:skip_tools=).with(suppressed_tools)
+    end
+  end
+
+  def expect_tools_configured(suppressed_tools, uninstalled_tools)
+    expect_tools_installed(ALL_TOOLS - uninstalled_tools)
+    expect_skip_tools_assigned(suppressed_tools)
+    expect_skip_tools_pulled(suppressed_tools)
+  end
+
   def setup_quality_task_mocks(suppressed_tools: [], uninstalled_tools: [])
     expect_task_names_pulled
     expect_tools_tasks_defined(ALL_TOOLS)
     expect_define_task.with(quality_name).yields
     expect_define_task.with(ratchet_name)
-    expect_tools_installed(ALL_TOOLS - uninstalled_tools)
-    tools_that_actually_run = (ALL_TOOLS - suppressed_tools) - uninstalled_tools
-    unless suppressed_tools.empty?
-      @mocks[:config].expects(:skip_tools=).with(suppressed_tools)
-    end
-    expect_skip_tools_pulled(suppressed_tools)
+    expect_tools_configured(suppressed_tools, uninstalled_tools)
     expect_output_dir_pulled
     expect_verbose_false
+    tools_that_actually_run = (ALL_TOOLS - suppressed_tools) - uninstalled_tools
     expect_tools_run(tools_that_actually_run)
   end
 
