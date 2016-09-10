@@ -21,6 +21,8 @@ module Quality
       @pwd = pwd
     end
 
+    attr_writer :exclude_files
+
     def submodule_or_symlink?(file)
       # Skip submodules and symlinks
       mode = file[:filemode]
