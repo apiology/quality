@@ -1,15 +1,11 @@
+# frozen_string_literal: true
 module Test
   module Quality
     module Tools
       # Test for the 'bigfiles' tool within the quality gem
       module Bigfiles
         def expected_source_files_glob
-          '{Dockerfile,Rakefile,{*,.*}.{c,clj,cljs,cpp,gemspec,groovy,html,' \
-          'java,js,json,py,rake,rb,scala,sh,swift,yml},' \
-          '{app,config,db,feature,lib,spec,src,test,tests,vars,www}' \
-          '/**/{*,.*}.' \
-          '{c,clj,cljs,cpp,gemspec,groovy,html,java,js,json,py,rake,rb,' \
-          'scala,sh,swift,yml}}'
+          '{fake1.py,README.md}'
         end
 
         def bigfiles_expected_args
@@ -24,6 +20,8 @@ module Test
                                 'metrics',
                                 false)
             .returns(quality_checker)
+          expect_find_source_files
+          expect_find_exclude_glob
         end
       end
     end

@@ -1,4 +1,5 @@
 #!/usr/bin/env ruby
+# frozen_string_literal: true
 
 require_relative 'test_helper.rb'
 
@@ -24,44 +25,6 @@ class TestConfig < MiniTest::Test
     # Defaults to false
     t.verbose = false
 
-    # Array of directory names which contain ruby files to analyze.
-    #
-    # Defaults to %w(app lib test spec feature), which translates to
-    # *.rb in the base directory, as well as those directories.
-    t.ruby_dirs = %w(app lib test spec feature)
-
-    # Array of directory names which contain any type of source files to
-    # analyze.
-    #
-    # Defaults to t.ruby_dirs
-    t.source_dirs.concat(%w(MyProject MyProjectTests))
-
-    # Pick any extra files that are source files, but may not have
-    # extensions--defaults to %w(Rakefile Dockerfile)
-    t.extra_source_files = ['tools/check-script', 'Rakefile']
-
-    # Pick any extra files that are source files, but may not have
-    # extensions--defaults to %w(Rakefile)
-    t.extra_ruby_files = ['Rakefile']
-
-    # Exclude the specified list of files--defaults to ['db/schema.rb']
-    t.exclude_files = ['lib/whatever/imported_file.rb',
-                       'lib/vendor/someone_else_fault.rb']
-
-    # Alternately, express it as a glob:
-
-    # Exclude the specified list of files
-    t.source_files_exclude_glob =
-      '{lib/whatever/imported_file.rb,lib/vendor/**/*.rb}'
-
-    # Extensions for Ruby language files--defaults to rb,rake
-    t.ruby_file_extensions_arr = %w(rb rake)
-
-    # Extensions for all source files--defaults to
-    # rb,rake,swift,cpp,c,java,py,clj,cljs,scala,js,yml,sh,json
-    t.source_file_extensions_arr =
-      %w(rb rake swift cpp c java py clj cljs scala js yml sh json)
-
     # Relative path to output directory where *_high_water_mark
     # files will be read/written
     #
@@ -73,20 +36,49 @@ class TestConfig < MiniTest::Test
     #
     # Defaults to 'XXX|TODO'
     t.punchlist_regexp = 'XXX|TODO'
-  end
 
-  def check_interpreted_right(config)
-    assert_equal('rb,rake', config.ruby_file_extensions_glob)
-    assert_equal('{Rakefile,{*,.*}.{rb,rake},{app,lib,test,spec,feature}/**' \
-                 '/{*,.*}.{rb,rake}}',
-                 config.ruby_files_glob)
+    # Exclude the specified list of files--defaults to ['db/schema.rb']
+    t.exclude_files = ['lib/whatever/imported_file.rb',
+                       'lib/vendor/someone_else_fault.rb']
+
+    # Alternately, express it as a glob:
+
+    # Exclude the specified list of files
+    t.source_files_exclude_glob =
+      '{lib/whatever/imported_file.rb,lib/vendor/**/*.rb}'
+
+    #
+    # For configuration on classifying files as the correct language,
+    # see https://github.com/github/linguist
+    #
   end
 
   def test_quality_task_readme_instructions_still_work
     config = get_test_object do |_task|
     end
     readme_instructions(config)
-    check_interpreted_right(config)
+  end
+
+  def test_all_output_files
+    config = get_test_object do
+      @mocks[:dir]
+        .expects(:glob)
+        .with('metrics/*_high_water_mark')
+        .returns(['metrics/a_high_water_mark'])
+    end
+    assert_equal(['metrics/a_high_water_mark'], config.all_output_files)
+  end
+
+  def test_source_files_exclude_glob_from_array
+    config = get_test_object
+    config.exclude_files = %w(a b c)
+    assert_equal('{a,b,c}', config.source_files_exclude_glob)
+  end
+
+  def test_source_files_exclude_glob_from_glob
+    config = get_test_object
+    config.source_files_exclude_glob = '{d,e,f}'
+    assert_equal('{d,e,f}', config.source_files_exclude_glob)
   end
 
   def get_test_object(&twiddle_mocks)

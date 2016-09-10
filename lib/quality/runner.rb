@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'active_support/inflector'
 require 'forwardable'
 require_relative 'which'
@@ -70,7 +72,7 @@ module Quality
 
     def count_existing_violations(filename)
       existing_violations = @count_io.read(filename).to_i
-      raise("Problem with file #{filename}") if existing_violations < 0
+      raise("Problem with file #{filename}") if existing_violations.negative?
       existing_violations
     end
 
@@ -98,10 +100,16 @@ module Quality
       quality_checker.execute(&count_violations_on_line)
     end
 
-    def_delegators :@config, :ruby_files, :ruby_files_glob,
-                   :python_files, :python_files_glob,
-                   :source_files_glob, :punchlist_regexp,
-                   :source_files_exclude_glob, :exclude_files,
-                   :source_and_doc_files_glob, :js_files_arr
+    def_delegators :@config,
+                   :ruby_files,
+                   :python_files,
+                   :source_files,
+                   :source_files_glob,
+                   :source_and_doc_files,
+                   :source_and_doc_files_glob,
+                   :exclude_files,
+                   :source_files_exclude_glob,
+                   :punchlist_regexp,
+                   :js_files
   end
 end

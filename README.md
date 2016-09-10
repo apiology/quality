@@ -6,13 +6,32 @@
 
 ##Overview
 
-Quality is a tool that runs quality checks on Ruby code using cane,
-reek, flog, flay and rubocop and makes sure your numbers don't get any
+Quality is a tool that runs quality checks on code in git repos using
+different analysis tools and makes sure your numbers don't get any
 worse over time.
 
 ## Why
 
 See [this post](http://blog.apiology.cc/2014/06/scalable-quality-part-1.html) or [these slides](https://docs.google.com/presentation/d/1Op4FH34-enm8luEIuAAVLkuAJ-sB4LKaMm57RJzvfeI/edit#slide) for more information on the problem the quality gem solves.
+
+### Tools
+
+Quality makes use of the following other tools, which do the actual checking:
+
+* [bigfiles](https://github.com/apiology/bigfiles)
+* [brakeman](http://brakemanscanner.org/)
+* [bundler_audit](https://github.com/rubysec/bundler-audit)
+* [cane](https://github.com/square/cane)
+* [eslint](http://eslint.org/)
+* [flake8](https://pypi.python.org/pypi/flake8)
+* [flay](https://github.com/seattlerb/flay)
+* [flog](https://github.com/seattlerb/flog)
+* [jscs](http://jscs.info/)
+* [pep8](https://pypi.python.org/pypi/pep8)
+* [punchlist](https://github.com/apiology/punchlist)
+* [rails_best_practices](https://github.com/railsbp/rails_best_practices)
+* [reek](https://github.com/troessner/reek)
+* [rubocop](https://github.com/bbatsov/rubocop)
 
 ## How to use - using Docker
 
@@ -34,6 +53,7 @@ The default 'latest' tag contains the Ruby tools in a relatively small image.  Y
 ## How to use - as part of a Ruby-based Rakefile
 
 ```bash
+$ brew install cmake # OS X
 $ gem install quality
 ```
 
@@ -93,44 +113,6 @@ Quality::Rake::Task.new do |t|
   # Defaults to false
   t.verbose = false
 
-  # Array of directory names which contain ruby files to analyze.
-  #
-  # Defaults to %w(app lib test spec feature), which translates to
-  # *.rb in the base directory, as well as those directories.
-  t.ruby_dirs = %w(app lib test spec feature)
-
-  # Array of directory names which contain any type of source files to
-  # analyze.
-  #
-  # Defaults to t.ruby_dirs
-  t.source_dirs.concat(%w(MyProject MyProjectTests))
-
-  # Pick any extra files that are source files, but may not have
-  # extensions--defaults to %w(Rakefile Dockerfile)
-  t.extra_source_files = ['tools/check-script', 'Rakefile']
-
-  # Pick any extra files that are source files, but may not have
-  # extensions--defaults to %w(Rakefile)
-  t.extra_ruby_files = ['Rakefile']
-
-  # Exclude the specified list of files--defaults to ['db/schema.rb']
-  t.exclude_files = ['lib/whatever/imported_file.rb',
-                     'lib/vendor/someone_else_fault.rb']
-
-  # Alternately, express it as a glob:
-
-  # Exclude the specified list of files
-  t.source_files_exclude_glob =
-    '{lib/whatever/imported_file.rb,lib/vendor/**/*.rb}'
-
-  # Extensions for Ruby language files--defaults to rb,rake
-  t.ruby_file_extensions_arr = %w(rb rake)
-
-  # Extensions for all source files--defaults to
-  # rb,rake,swift,cpp,c,java,py,clj,cljs,scala,js,yml,sh,json
-  t.source_file_extensions_arr =
-    %w(rb rake swift cpp c java py clj cljs scala js yml sh json)
-
   # Relative path to output directory where *_high_water_mark
   # files will be read/written
   #
@@ -142,8 +124,28 @@ Quality::Rake::Task.new do |t|
   #
   # Defaults to 'XXX|TODO'
   t.punchlist_regexp = 'XXX|TODO'
+
+  # Exclude the specified list of files--defaults to ['db/schema.rb']
+  t.exclude_files = ['lib/whatever/imported_file.rb',
+                     'lib/vendor/someone_else_fault.rb']
+
+  # Alternately, express it as a glob:
+
+  # Exclude the specified list of files
+  t.source_files_exclude_glob =
+    '{lib/whatever/imported_file.rb,lib/vendor/**/*.rb}'
+
+  #
+  # For configuration on classifying files as the correct language,
+  # see https://github.com/github/linguist
+  #
 end
 ```
+
+## Vendored files
+
+Quality uses GitHub's [linguist](https://github.com/github/linguist) gem to find and classify source files to analyze.  In addition to the `exclude_files` and `source_files_exclude_glob` options in Quality, you can refer to Linguists's documentation on [overrides](https://github.com/github/linguist#overrides) to use the `gitattributes` file to mark files as vendored, at which point Quality will not try to analyze them.
+  
 
 ## Code coverage
 
@@ -157,13 +159,13 @@ SimpleCov.refuse_coverage_drop
 
 After your first run, check in your coverage/.last_run.json.
 
-## Maturity
+## Caveats
 
 Quality uses [semantic versioning](http://semver.org/)--any incompatible changes (including new tools being added) will come out as major number updates.
 
 ## Supported Ruby Versions
 
-Tested against Ruby >=2.0--does not support Ruby 1.9.x.
+Tested against Ruby >=2.2--does not support Ruby 1.9.x or JRuby.
 
 ## Contributing
 
@@ -172,18 +174,6 @@ Tested against Ruby >=2.0--does not support Ruby 1.9.x.
 * Submit a github pull request
 
 Many thanks to all contributors, especially [@andyw8](https://github.com/andyw8), who has contributed some great improvements.
-
-### Dependencies
-
-Quality makes use of the following other gems, which do the actual checking:
-
-* [reek](https://github.com/troessner/reek)
-* [cane](https://github.com/square/cane)
-* [flog](https://github.com/seattlerb/flog)
-* [flay](https://github.com/seattlerb/flay)
-* [rubocop](https://github.com/bbatsov/rubocop)
-* [bigfiles](https://github.com/apiology/bigfiles)
-* [punchlist](https://github.com/apiology/punchlist)
 
 ### Learn More
 

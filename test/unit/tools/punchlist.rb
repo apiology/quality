@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 module Test
   module Quality
     module Tools
@@ -5,7 +6,8 @@ module Test
       module Punchlist
         def punchlist_expected_args
           "--glob '" + expected_source_and_doc_files_glob +
-            "' --exclude-glob '{**/vendor/**,db/schema.rb}'"
+            "' --regexp 'a|b'" \
+            " --exclude-glob '{**/vendor/**,db/schema.rb}'"
         end
 
         def expect_punchlist_run(quality_checker)
@@ -15,6 +17,14 @@ module Test
                                 'metrics',
                                 false)
             .returns(quality_checker)
+          @mocks[:config]
+            .expects(:punchlist_regexp).returns('a|b')
+            .at_least(1)
+          @mocks[:config]
+            .expects(:source_and_doc_files_glob)
+            .returns(expected_source_and_doc_files_glob)
+            .at_least(1)
+          expect_find_exclude_files
         end
       end
     end

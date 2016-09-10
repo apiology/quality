@@ -1,4 +1,5 @@
 #!/usr/bin/env ruby
+# frozen_string_literal: true
 
 require_relative 'test_helper.rb'
 require_relative 'base_test_task.rb'
@@ -15,21 +16,49 @@ class TestTask < BaseTestTask
     end
   end
 
+  def expect_cane_not_found
+    @mocks[:which].expects(:which).with('cane').returns(nil)
+  end
+
   def test_quality_task_some_not_installed
     get_test_object do |_task|
       setup_quality_task_mocks(uninstalled_tools: ['cane'])
-      @mocks[:which].expects(:which).with('cane').returns(nil)
+      expect_cane_not_found
     end
   end
 
+  def expect_skip_tools_pulled(suppressed_tools)
+    @mocks[:config]
+      .expects(:skip_tools).returns(suppressed_tools)
+      .at_least(1)
+  end
+
+  def expect_output_dir_pulled
+    @mocks[:config]
+      .expects(:output_dir).returns('metrics')
+      .at_least(1)
+  end
+
+  def expect_verbose_false
+    @mocks[:config]
+      .expects(:verbose).returns(false)
+      .at_least(1)
+  end
+
   def setup_quality_task_mocks(suppressed_tools: [], uninstalled_tools: [])
+    expect_task_names_pulled
     expect_tools_tasks_defined(ALL_TOOLS)
-    expect_define_task.with('quality').yields
-    expect_define_task.with('ratchet')
+    expect_define_task.with(quality_name).yields
+    expect_define_task.with(ratchet_name)
     expect_tools_installed(ALL_TOOLS - uninstalled_tools)
     tools_that_actually_run = (ALL_TOOLS - suppressed_tools) - uninstalled_tools
+    unless suppressed_tools.empty?
+      @mocks[:config].expects(:skip_tools=).with(suppressed_tools)
+    end
+    expect_skip_tools_pulled(suppressed_tools)
+    expect_output_dir_pulled
+    expect_verbose_false
     expect_tools_run(tools_that_actually_run)
-    expect_find_exclude_files
   end
 
   def expect_tools_run(tools)
@@ -61,47 +90,52 @@ class TestTask < BaseTestTask
   end
 
   def expected_ruby_source_glob
-    '{Rakefile,{*,.*}.{gemspec,rake,rb},' \
-    '{app,config,db,feature,lib,spec,src,test}/**/{*,.*}.{gemspec,rake,rb}}'
+    '{fake1.rb,fake2.rb,features/featuresfake1.rb,' \
+    'lib/libfake1.rb,test/testfake1.rb}'
   end
 
   def expect_find_ruby_files
-    expect_glob.with(expected_ruby_source_glob)
-               .returns(['fake1.rb', 'fake2.rb', 'lib/libfake1.rb',
-                         'test/testfake1.rb',
-                         'features/featuresfake1.rb',
-                         'db/schema.rb'])
-  end
-
-  def expect_find_exclude_files
-    expect_glob.with('{**/vendor/**,db/schema.rb}')
-               .returns(['vendor/fake1.rb', 'vendor/fake1.js', 'db/schema.rb',
-                         'src/js/vendor/vendor_file.js']).at_least(1)
+    ruby_files =
+      %w(fake1.rb fake2.rb features/featuresfake1.rb lib/libfake1.rb
+         test/testfake1.rb)
+    @mocks[:config].expects(:ruby_files).returns(ruby_files)
   end
 
   def expected_source_and_doc_files_glob
-    '{Dockerfile,Rakefile,{*,.*}.{c,clj,cljs,cpp,gemspec,' \
-    'groovy,html,java,js,json,md,py,rake,rb,scala,sh,swift,' \
-    'yml},{app,config,db,feature,lib,' \
-    'spec,src,test,tests,vars,www}/**/{*,.*}.' \
-    '{c,clj,cljs,cpp,gemspec,groovy,' \
-    'html,java,js,json,md,py,rake,rb,scala,sh,swift,yml}}'
+    '{fake1.py,README.md}'
   end
 
   def expect_find_js_files
-    source_glob =
-      '{{*,.*}.{js},' \
-      '{app,src,www}/**/{*,.*}.{js}}'
-    expect_glob.with(source_glob)
-               .returns(['fake1.js',
-                         'src/js/vendor/vendor_file.js',
-                         'src/foo/testfake1.js',
-                         'features/featuresfake1.js',
-                         'vendor/fake1.js'])
+    @mocks[:config]
+      .expects(:js_files)
+      .returns(%w(fake1.js features/featuresfake1.js src/foo/testfake1.js))
   end
 
   def expect_find_python_files
-    source_glob = '{{*,.*}.{py},{src,tests}/**/{*,.*}.{py}}'
-    expect_glob.with(source_glob).returns(['fake1.py'])
+    @mocks[:config].expects(:python_files).returns(['fake1.py'])
+  end
+
+  def expect_find_source_files
+    @mocks[:config]
+      .expects(:source_files).returns(['fake1.py', 'README.md'])
+      .at_least(0)
+    @mocks[:config]
+      .expects(:source_files_glob)
+      .returns('{fake1.py,README.md}')
+      .at_least(0)
+  end
+
+  def expect_find_exclude_files
+    @mocks[:config]
+      .expects(:exclude_files)
+      .returns(['fake1.py'])
+      .at_least(0)
+  end
+
+  def expect_find_exclude_glob
+    @mocks[:config]
+      .expects(:source_files_exclude_glob)
+      .returns('{**/vendor/**,db/schema.rb}')
+      .at_least(1)
   end
 end

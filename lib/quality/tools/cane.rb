@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Quality
   module Tools
     # Adds 'cane' tool support to quality gem
@@ -12,11 +14,17 @@ module Quality
         ]
       end
 
+      def ruby_files_glob
+        "{#{ruby_files.join(',')}}"
+      end
+
       def cane_args
         args = [
           "-f '#{ruby_files_glob}'",
         ]
-        args += cane_exclude_args unless exclude_files.empty?
+        unless exclude_files.nil? || exclude_files.empty?
+          args += cane_exclude_args
+        end
         args.join(' ')
       end
 

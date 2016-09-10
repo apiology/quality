@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'quality/directory_of_classes.rb'
 
 # Tests that run individual tools as part of the test
@@ -23,7 +25,17 @@ class BaseTestTask < MiniTest::Test
     @mocks[:dsl].expects(:define_task)
   end
 
-  def expect_glob
-    @mocks[:globber].expects(:glob)
+  let_mock :quality_name, :ratchet_name
+
+  def expect_config_pulled
+    expect_task_names_pulled
+    @mocks[:config]
+      .expects(:skip_tools).returns([])
+      .at_least(0)
+  end
+
+  def expect_task_names_pulled
+    @mocks[:config].expects(:quality_name).returns(quality_name)
+    @mocks[:config].expects(:ratchet_name).returns(ratchet_name)
   end
 end

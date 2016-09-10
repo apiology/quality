@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 module Quality
   # Class processes output from a code quality command, tweaking it
   # for editor output and counting the number of violations found
@@ -22,8 +23,7 @@ module Quality
     def process_file(file, &count_violations_on_line)
       out = ''
       while (@current_line = file.gets)
-        out <<
-          process_line(&count_violations_on_line)
+        out += process_line(&count_violations_on_line)
       end
       out
     end

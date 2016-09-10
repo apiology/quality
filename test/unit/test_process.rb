@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Test the ProcessRunner class
 class TestProcess < MiniTest::Test
   def test_run
