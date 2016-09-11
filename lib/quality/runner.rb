@@ -79,17 +79,20 @@ module Quality
       existing_violations
     end
 
+    def command_name(ancestor, name)
+      if ancestor.respond_to? :command_name
+        ancestor.command_name
+      else
+        name
+      end
+    end
+
     def tools
       self.class.ancestors.map do |ancestor|
         ancestor_name = ancestor.to_s
         next unless ancestor_name.start_with?('Quality::Tools::')
         name = ancestor.to_s.split('::').last.underscore
-        command_name = if ancestor.respond_to? :command_name
-                         ancestor.command_name
-                       else
-                         name
-                       end
-        [name, command_name]
+        [name, command_name(ancestor, name)]
       end.compact
     end
 
