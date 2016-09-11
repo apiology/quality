@@ -4,12 +4,13 @@ require_relative 'test_helper'
 
 # Test the LinguistSourceFileGlobber class
 class TestLinguistSourceFileGlobber < MiniTest::Test
-  let_mock :target, :blob_a_rb, :blob_b_md
+  let_mock :target, :blob_a_rb, :blob_b_md, :blob_c
 
   def expect_breakdown_pulled
     @mocks[:project]
       .expects(:breakdown_by_file)
-      .returns('Ruby' => ['a.rb'])
+      .returns('Ruby' => ['a.rb'],
+               'Shell' => ['c'])
   end
 
   def expect_file_blob_created(path, my_mock)
@@ -25,22 +26,33 @@ class TestLinguistSourceFileGlobber < MiniTest::Test
     @mocks[:file_class].expects(:readable?).with(path).returns(true)
   end
 
+  def mock_file_found(filename,
+                      file_mock,
+                      generated: false,
+                      vendored: false,
+                      documentation: false,
+                      language: raise)
+    expect_real_file(filename)
+    expect_file_blob_created(filename, file_mock)
+    file_mock.expects(:generated?).returns(generated)
+    file_mock.expects(:vendored?).returns(vendored)
+    file_mock.expects(:documentation?).returns(documentation).at_least(0)
+    file_mock.expects(:language).returns(language).at_least(0)
+  end
+
   def mock_ruby_file_found
-    expect_file_blob_created('a.rb', blob_a_rb)
-    expect_real_file('a.rb')
-    blob_a_rb.expects(:generated?).returns(false)
-    blob_a_rb.expects(:vendored?).returns(false)
-    blob_a_rb.expects(:documentation?).returns(false).at_least(0)
-    blob_a_rb.expects(:language).returns('Ruby').at_least(0)
+    mock_file_found('a.rb', blob_a_rb,
+                    language: 'Ruby')
   end
 
   def mock_markdown_file_found
-    expect_file_blob_created('foo/b.md', blob_b_md)
-    expect_real_file('foo/b.md')
-    blob_b_md.expects(:generated?).returns(false)
-    blob_b_md.expects(:vendored?).returns(false)
-    blob_b_md.expects(:documentation?).returns(true).at_least(0)
-    blob_b_md.expects(:language).returns(nil).at_least(0)
+    mock_file_found('foo/b.md', blob_b_md,
+                    documentation: true,
+                    language: nil)
+  end
+
+  def mock_shell_file_found
+    mock_file_found('c', blob_c, language: 'Shell')
   end
 
   let_mock :tree
@@ -51,27 +63,32 @@ class TestLinguistSourceFileGlobber < MiniTest::Test
     target.expects(:tree).returns(tree)
     tree
       .expects(:walk).with(:preorder)
-      .multiple_yields(['', type: :blob, name: 'a.rb'],
-                       ['', type: :tree, name: 'foo'],
-                       ['foo/', type: :blob, name: 'b.md'])
+      .multiple_yields(
+        ['', type: :blob, name: 'a.rb'],
+        ['', type: :tree, name: 'foo'],
+        ['foo/', type: :blob, name: 'b.md'],
+        ['', type: :blob, name: 'c'],
+      )
 
     mock_ruby_file_found
 
     mock_markdown_file_found
+
+    mock_shell_file_found
   end
 
   def test_source_and_doc_files
     globber = get_test_object do
       mock_files_found
     end
-    assert_equal(['a.rb', 'foo/b.md'], globber.source_and_doc_files)
+    assert_equal(['a.rb', 'foo/b.md', 'c'], globber.source_and_doc_files)
   end
 
   def test_source_files
     globber = get_test_object do
       mock_files_found
     end
-    assert_equal(['a.rb'], globber.source_files)
+    assert_equal(['a.rb', 'c'], globber.source_files)
   end
 
   def test_ruby_files
@@ -79,6 +96,13 @@ class TestLinguistSourceFileGlobber < MiniTest::Test
       expect_breakdown_pulled
     end
     assert_equal(['a.rb'], globber.ruby_files)
+  end
+
+  def test_shell_files
+    globber = get_test_object do
+      expect_breakdown_pulled
+    end
+    assert_equal(['c'], globber.shell_files)
   end
 
   def get_test_object(&twiddle_mocks)

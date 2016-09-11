@@ -69,8 +69,8 @@ module Quality
       language_files('Python')
     end
 
-    def js_files
-      language_files('JavaScript')
+    def shell_files
+      language_files('Shell')
     end
 
     def exclude_files

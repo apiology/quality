@@ -15,9 +15,15 @@ module Quality
 
     extend Forwardable
 
-    def_delegators(:@source_file_globber, :ruby_files, :python_files,
-                   :js_files, :source_and_doc_files, :source_files,
-                   :exclude_files=, :exclude_files)
+    def_delegators(:@source_file_globber,
+                   :ruby_files,
+                   :python_files,
+                   :js_files,
+                   :shell_files,
+                   :source_and_doc_files,
+                   :source_files,
+                   :exclude_files=,
+                   :exclude_files)
 
     def to_glob(files)
       "{#{files.join(',')}}"

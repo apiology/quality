@@ -109,6 +109,11 @@ class TestTask < BaseTestTask
     @mocks[:config].expects(:ruby_files).returns(ruby_files)
   end
 
+  def expect_find_shell_files
+    shell_files = %w(fake1.sh)
+    @mocks[:config].expects(:shell_files).returns(shell_files)
+  end
+
   def expected_source_and_doc_files_glob
     '{fake1.py,README.md}'
   end

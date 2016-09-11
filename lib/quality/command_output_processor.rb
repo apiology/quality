@@ -28,7 +28,7 @@ module Quality
       out
     end
 
-    def process_line
+    def process_line(&block)
       output =
         if emacs_format
           preprocess_line_for_emacs
@@ -36,7 +36,11 @@ module Quality
           @current_line
         end
       @found_output = true
-      @violations += yield @current_line
+      @violations += if block
+                       yield @current_line
+                     else
+                       1
+                     end
       output
     end
 
