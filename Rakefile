@@ -35,6 +35,15 @@ task localtest: [:clear_metrics, :test, :quality]
 
 task default: [:localtest]
 
+task :wait_for_release do
+  sleep 80
+end
+
+task :publish_docker do
+  sh './publish-docker-image.sh'
+end
+
+task publish_all: [:release, :wait_for_release, :publish_docker]
 #
 # To publish docker image after gem is published:
 #   ./publish-docker-image.sh
