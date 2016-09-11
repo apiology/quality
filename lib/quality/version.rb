@@ -4,5 +4,5 @@
 # reek, flog, flay and rubocop and makes sure your numbers don't get
 # any worse over time.
 module Quality
-  VERSION = '23.0.7'
+  VERSION = '24.0.0'
 end
