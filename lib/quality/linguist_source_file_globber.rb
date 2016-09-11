@@ -73,6 +73,10 @@ module Quality
       language_files('Shell')
     end
 
+    def js_files
+      language_files('JavaScript')
+    end
+
     def exclude_files
       @exclude_files || []
     end
