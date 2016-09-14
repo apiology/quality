@@ -1,6 +1,34 @@
 FROM apiology/quality:latest
+
+#
+# Install flake8 and pep8
+#
 RUN apk add --no-cache python py-pip && \
     pip install flake8 pep8
+
+
+#
+# Install shellcheck
+#
+
+# https://github.com/mitchty/alpine-ghc
+COPY mitch.tishmack@gmail.com-55881c97.rsa.pub /etc/apk/keys/mitch.tishmack@gmail.com-55881c97.rsa.pub
+
+RUN echo "https://s3-us-west-2.amazonaws.com/alpine-ghc/8.0" >> /etc/apk/repositories && \
+    apk add --no-cache ghc cabal stack
+
+# https://github.com/NLKNguyen/alpine-shellcheck/blob/master/builder/Dockerfile
+RUN apk add --no-cache build-base git
+
+RUN mkdir -p /usr/src/shellcheck
+WORKDIR /usr/src/shellcheck
+
+RUN git clone https://github.com/koalaman/shellcheck .
+RUN cabal update && cabal install
+
+ENV PATH="/root/.cabal/bin:$PATH"
+
 VOLUME /usr/app
 WORKDIR /usr/app
 ENTRYPOINT /entrypoint.sh
+
