@@ -21,6 +21,7 @@ module Quality
                    :js_files,
                    :markdown_files,
                    :shell_files,
+                   :scala_files,
                    :source_and_doc_files,
                    :source_files,
                    :exclude_files=,

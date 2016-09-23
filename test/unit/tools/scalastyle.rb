@@ -1,0 +1,23 @@
+# frozen_string_literal: true
+module Test
+  module Quality
+    module Tools
+      # Test for the 'scalastyle' tool within the quality gem
+      module Scalastyle
+        def scalastyle_expected_args
+          's1.scala s2.scala'
+        end
+
+        def expect_scalastyle_run(quality_checker)
+          @mocks[:quality_checker_class]
+            .expects(:new).with('scalastyle',
+                                { args: scalastyle_expected_args },
+                                'metrics',
+                                false)
+            .returns(quality_checker)
+          expect_find_scala_files
+        end
+      end
+    end
+  end
+end

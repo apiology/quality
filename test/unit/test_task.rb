@@ -135,6 +135,13 @@ class TestTask < BaseTestTask
       .at_least(1)
   end
 
+  def expect_find_scala_files
+    @mocks[:config]
+      .expects(:scala_files)
+      .returns(['s1.scala', 's2.scala'])
+      .at_least(1)
+  end
+
   def expect_find_source_files
     @mocks[:config]
       .expects(:source_files).returns(['fake1.py', 'README.md'])

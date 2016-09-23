@@ -1,0 +1,16 @@
+warning file=/Users/broz/src/homedir/src/library-scala/./ReadingListScavenger.scala message=Header does not match expected text line=1
+warning file=/Users/broz/src/homedir/src/library-scala/./ReadingListScavenger.scala message=Whitespace at end of line line=3 column=0
+warning file=/Users/broz/src/homedir/src/library-scala/./LibraryManager.scala message=Header does not match expected text line=1
+warning file=/Users/broz/src/homedir/src/library-scala/./LibraryManager.scala message=File line length exceeds 160 characters line=9
+warning file=/Users/broz/src/homedir/src/library-scala/./LibraryManager.scala message=File line length exceeds 160 characters line=10
+warning file=/Users/broz/src/homedir/src/library-scala/./LibraryManager.scala message=File line length exceeds 160 characters line=11
+warning file=/Users/broz/src/homedir/src/library-scala/./LibraryManager.scala message=File line length exceeds 160 characters line=12
+warning file=/Users/broz/src/homedir/src/library-scala/./LibraryManager.scala message=File line length exceeds 160 characters line=13
+warning file=/Users/broz/src/homedir/src/library-scala/./LibraryManager.scala message=File line length exceeds 160 characters line=14
+warning file=/Users/broz/src/homedir/src/library-scala/./LibraryManager.scala message=Regular expression matched 'println' line=26 column=12
+warning file=/Users/broz/src/homedir/src/library-scala/./LibraryManager.scala message=Public method must have explicit type line=24 column=6
+warning file=/Users/broz/src/homedir/src/library-scala/./LibraryManager.scala message=Avoid wildcard imports line=1 column=0
+Processed 2 file(s)
+Found 0 errors
+Found 12 warnings
+Finished in 968 ms

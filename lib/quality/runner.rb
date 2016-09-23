@@ -108,6 +108,7 @@ module Quality
 
     def_delegators :@config,
                    :ruby_files,
+                   :scala_files,
                    :python_files,
                    :markdown_files,
                    :shell_files,

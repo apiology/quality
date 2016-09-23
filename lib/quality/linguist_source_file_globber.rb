@@ -69,6 +69,10 @@ module Quality
       language_files('Python')
     end
 
+    def scala_files
+      language_files('Scala')
+    end
+
     def shell_files
       language_files('Shell')
     end
