@@ -46,9 +46,9 @@ class TestTask < BaseTestTask
   end
 
   def expect_skip_tools_assigned(suppressed_tools)
-    unless suppressed_tools.empty?
-      @mocks[:config].expects(:skip_tools=).with(suppressed_tools)
-    end
+    return if suppressed_tools.empty?
+
+    @mocks[:config].expects(:skip_tools=).with(suppressed_tools)
   end
 
   def expect_tools_configured(suppressed_tools, uninstalled_tools)
