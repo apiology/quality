@@ -43,7 +43,7 @@ module Quality
     end
 
     def all_files
-      @source_files ||= begin
+      @all_files ||= begin
         files = []
         tree = @commit.target.tree
         tree.walk(:preorder) do |root, file|
@@ -95,7 +95,7 @@ module Quality
     def source_files
       @source_files ||= begin
         real_files_matching do |blob|
-          !blob.language.nil?
+          !blob.language.nil? && !blob.documentation?
         end
       end
     end
