@@ -128,6 +128,13 @@ class TestTask < BaseTestTask
     @mocks[:config].expects(:python_files).returns(['fake1.py'])
   end
 
+  def expect_find_markdown_files
+    @mocks[:config]
+      .expects(:markdown_files)
+      .returns(['file1.md', 'file2.md'])
+      .at_least(1)
+  end
+
   def expect_find_source_files
     @mocks[:config]
       .expects(:source_files).returns(['fake1.py', 'README.md'])

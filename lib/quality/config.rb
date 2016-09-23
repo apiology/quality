@@ -19,6 +19,7 @@ module Quality
                    :ruby_files,
                    :python_files,
                    :js_files,
+                   :markdown_files,
                    :shell_files,
                    :source_and_doc_files,
                    :source_files,

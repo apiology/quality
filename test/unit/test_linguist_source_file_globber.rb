@@ -56,7 +56,7 @@ class TestLinguistSourceFileGlobber < MiniTest::Test
   def mock_markdown_file_found
     mock_file_found('foo/b.md', blob_b_md,
                     documentation: true,
-                    language: nil)
+                    language: 'Markdown')
   end
 
   def mock_shell_file_found
@@ -131,6 +131,13 @@ class TestLinguistSourceFileGlobber < MiniTest::Test
       expect_breakdown_pulled
     end
     assert_equal(['d.jsx'], globber.js_files)
+  end
+
+  def test_markdown_files
+    globber = get_test_object do
+      mock_files_found
+    end
+    assert_equal(['foo/b.md'], globber.markdown_files)
   end
 
   def get_test_object(&twiddle_mocks)

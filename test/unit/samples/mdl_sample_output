@@ -1,0 +1,73 @@
+./ChangeLog.md:1: MD002 First header should be a top level header
+./ChangeLog.md:9: MD012 Multiple consecutive blank lines
+./ChangeLog.md:36: MD012 Multiple consecutive blank lines
+./ChangeLog.md:54: MD013 Line length
+./ChangeLog.md:63: MD013 Line length
+./ChangeLog.md:82: MD013 Line length
+./ChangeLog.md:95: MD013 Line length
+./ChangeLog.md:3: MD022 Headers should be surrounded by blank lines
+./ChangeLog.md:5: MD022 Headers should be surrounded by blank lines
+./ChangeLog.md:6: MD022 Headers should be surrounded by blank lines
+./ChangeLog.md:7: MD022 Headers should be surrounded by blank lines
+./ChangeLog.md:24: MD022 Headers should be surrounded by blank lines
+./ChangeLog.md:33: MD022 Headers should be surrounded by blank lines
+./ChangeLog.md:37: MD022 Headers should be surrounded by blank lines
+./ChangeLog.md:40: MD022 Headers should be surrounded by blank lines
+./ChangeLog.md:43: MD022 Headers should be surrounded by blank lines
+./ChangeLog.md:46: MD022 Headers should be surrounded by blank lines
+./ChangeLog.md:49: MD022 Headers should be surrounded by blank lines
+./ChangeLog.md:52: MD022 Headers should be surrounded by blank lines
+./ChangeLog.md:54: MD022 Headers should be surrounded by blank lines
+./ChangeLog.md:56: MD022 Headers should be surrounded by blank lines
+./ChangeLog.md:59: MD022 Headers should be surrounded by blank lines
+./ChangeLog.md:62: MD022 Headers should be surrounded by blank lines
+./ChangeLog.md:65: MD022 Headers should be surrounded by blank lines
+./ChangeLog.md:67: MD022 Headers should be surrounded by blank lines
+./ChangeLog.md:69: MD022 Headers should be surrounded by blank lines
+./ChangeLog.md:72: MD022 Headers should be surrounded by blank lines
+./ChangeLog.md:75: MD022 Headers should be surrounded by blank lines
+./ChangeLog.md:78: MD022 Headers should be surrounded by blank lines
+./ChangeLog.md:81: MD022 Headers should be surrounded by blank lines
+./ChangeLog.md:83: MD022 Headers should be surrounded by blank lines
+./ChangeLog.md:84: MD022 Headers should be surrounded by blank lines
+./ChangeLog.md:85: MD022 Headers should be surrounded by blank lines
+./ChangeLog.md:87: MD022 Headers should be surrounded by blank lines
+./ChangeLog.md:89: MD022 Headers should be surrounded by blank lines
+./ChangeLog.md:91: MD022 Headers should be surrounded by blank lines
+./ChangeLog.md:94: MD022 Headers should be surrounded by blank lines
+./ChangeLog.md:97: MD022 Headers should be surrounded by blank lines
+./ChangeLog.md:100: MD022 Headers should be surrounded by blank lines
+./ChangeLog.md:103: MD022 Headers should be surrounded by blank lines
+./ChangeLog.md:106: MD022 Headers should be surrounded by blank lines
+./ChangeLog.md:109: MD022 Headers should be surrounded by blank lines
+./ChangeLog.md:112: MD022 Headers should be surrounded by blank lines
+./ChangeLog.md:118: MD022 Headers should be surrounded by blank lines
+./ChangeLog.md:121: MD022 Headers should be surrounded by blank lines
+./ChangeLog.md:124: MD022 Headers should be surrounded by blank lines
+./ChangeLog.md:127: MD022 Headers should be surrounded by blank lines
+./ChangeLog.md:130: MD022 Headers should be surrounded by blank lines
+./ChangeLog.md:133: MD022 Headers should be surrounded by blank lines
+./ChangeLog.md:136: MD022 Headers should be surrounded by blank lines
+./ChangeLog.md:139: MD022 Headers should be surrounded by blank lines
+./ChangeLog.md:143: MD022 Headers should be surrounded by blank lines
+./ChangeLog.md:146: MD022 Headers should be surrounded by blank lines
+./ChangeLog.md:149: MD022 Headers should be surrounded by blank lines
+./ChangeLog.md:121: MD024 Multiple headers with the same content
+./ChangeLog.md:24: MD026 Trailing punctuation in header
+./ChangeLog.md:79: MD037 Spaces inside emphasis markers
+./README.md:148: MD009 Trailing spaces
+./README.md:4: MD012 Multiple consecutive blank lines
+./README.md:52: MD012 Multiple consecutive blank lines
+./README.md:149: MD012 Multiple consecutive blank lines
+./README.md:15: MD013 Line length
+./README.md:50: MD013 Line length
+./README.md:147: MD013 Line length
+./README.md:152: MD013 Line length
+./README.md:164: MD013 Line length
+./README.md:176: MD013 Line length
+./README.md:55: MD014 Dollar signs used before commands without showing output
+./README.md:69: MD014 Dollar signs used before commands without showing output
+./README.md:83: MD014 Dollar signs used before commands without showing output
+./README.md:90: MD014 Dollar signs used before commands without showing output
+./README.md:7: MD018 No space after hash on atx style header
+./README.md:66: MD031 Fenced code blocks should be surrounded by blank lines
