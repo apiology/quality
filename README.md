@@ -123,8 +123,8 @@ Quality::Rake::Task.new do |t|
   # Pipe-separated regexp string describing what to look for in
   # files as 'todo'-like 'punchlist' comments.
   #
-  # Defaults to 'XXX|TODO'
-  t.punchlist_regexp = 'XXX|TODO'
+  # Defaults to 'XXX|TODO|FIXME|OPTIMIZE|HACK|REVIEW|LATER|FIXIT'
+  t.punchlist_regexp = 'XXX|TODO|FIXME|OPTIMIZE|HACK|REVIEW|LATER|FIXIT'
 
   # Exclude the specified list of files--defaults to ['db/schema.rb']
   t.exclude_files = ['lib/whatever/imported_file.rb',
