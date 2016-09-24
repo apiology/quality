@@ -1,0 +1,42 @@
+#!/bin/bash -e
+
+USERNAME="${1:?}"
+PASSWORD_OR_TOKEN="${2:?}"
+ORG_NAME="${3:?}"
+NEW_VERSION="${4:?}"
+TRACKING_FILENAME="${5:?}"
+DEFAULT_VERSION="${6:?}"
+EMAIL="${7:?}"
+NAME="${8:?}"
+
+REPOS=$(curl --user "${USERNAME:?}:${PASSWORD_OR_TOKEN:?}" "https://api.github.com/orgs/${ORG_NAME:?}/repos?per_page=999" | jq -r 'map(.name) | join("\n")')
+
+FAILED_REPOS=""
+
+for repo in $REPOS
+do
+  if [ ! -d "${repo:?}" ]
+  then
+    hub clone "${ORG_NAME:?}/${repo:?}"
+  fi
+
+  echo "Looking at ${repo:?}..."
+  set +e
+  if ! (cd "${repo:?}" && git config user.email "${EMAIL:?}" && git config user.name "${NAME:?}" && git stash && git checkout master >/dev/null 2>&1 && git pull >/dev/null && upgrade-quality-gem-in-repo "${NEW_VERSION:?}" "${TRACKING_FILENAME:?}" "${DEFAULT_VERSION:?}")
+  then
+    FAILED_REPOS="${FAILED_REPOS} ${repo:?}"
+  fi
+  set -e
+done
+
+if [ "" != "${FAILED_REPOS}" ]
+then
+  echo
+  echo
+  echo
+  echo "Failed repos: ${FAILED_REPOS:?}"
+  exit 1
+fi
+
+exit 0
+

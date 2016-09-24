@@ -1,0 +1,253 @@
+#!/usr/bin/env python
+
+import os
+import sys
+import subprocess
+import fileinput
+import glob
+
+
+def version_component_newer_than(a, b):
+    print("Comparing " + str(a) + " with " + str(b))
+    if a is None and b is None:
+        print(str(a) + " is not newer")
+        return False
+
+    if a is None:
+        # b != -1, so a will float upwards - prefer it
+        print(str(a) + " is newer")
+        return True
+
+    if b is None:
+        # a != -1, so b will float upwards - prefer it
+        print(str(a) + " is not newer")
+        return False
+
+    # neither a nor b are -1
+    return int(a) > int(b)
+
+
+def parse_version(version):
+    major, minor, patch = None, None, None
+    if "." in version:
+        major, minor, patch = version.split(".")
+    else:
+        major = version
+
+    return (major, minor, patch)
+
+
+def version_newer_than(version_a, version_b):
+    a_major, a_minor, a_patch = parse_version(version_a)
+    print("From " + version_a + ", parsed " + str(a_major))
+    b_major, b_minor, b_patch = parse_version(version_b)
+    print("From " + version_b + ", parsed " + str(b_major))
+
+    if version_component_newer_than(a_major, b_major):
+        return True
+
+    if version_component_newer_than(b_major, a_major):
+        return False
+
+    if version_component_newer_than(a_minor, b_minor):
+        return True
+
+    if version_component_newer_than(b_minor, a_minor):
+        return False
+
+    if version_component_newer_than(a_patch, b_patch):
+        return True
+
+    if version_component_newer_than(b_patch, a_patch):
+        return False
+
+    # Same, so not newer
+    return False
+
+
+def parse_tag(tag):
+    image_type = None
+    version = None
+    if "-" not in tag:
+        version = tag
+    else:
+        image_type, version = tag.split("-")
+    return image_type, version
+
+
+def tag_to_version(tag):
+    image_type, version = parse_tag(tag)
+    return version
+
+
+def ensure_master_branch_and_clean_checkout():
+    current_branch = subprocess.check_output(["git",
+                                              "rev-parse",
+                                              "--abbrev-ref",
+                                              "HEAD"]).rstrip("\r\n")
+
+    if (current_branch != "master"):
+        print("Please change to master branch from [" + current_branch + "]")
+        exit(1)
+
+    git_changes = subprocess.check_output(["git",
+                                           "diff",
+                                           "--shortstat"])
+
+    if git_changes != "":
+        print("Please clean git directory")
+        exit(1)
+    else:
+        print("git_changes is " + git_changes)
+
+
+def ensure_passes(tag):
+    cwd = os.getcwd()
+    args = ["docker",
+            "run",
+            "-v", cwd + ":/usr/app",
+            "-v", cwd + "/Rakefile.quality:/usr/quality/Rakefile",
+            "apiology/quality:" + tag]
+
+    print("About to call " + str(args))
+    output = subprocess.check_output(args)
+    print("output is " + output)
+
+
+def force_create_branch():
+    branch_name = "automated_upgrade_quality_gem"
+    args = ["git",
+            "branch",
+            "-D",
+            branch_name]
+    # OK if this doesn't exist
+    subprocess.call(args)
+
+    args = ["git",
+            "checkout",
+            "-b",
+            branch_name]
+    output = subprocess.check_output(args)
+    print("output is " + output)
+
+
+def upgrade_and_rebaseline(new_tag, tracking_filename):
+    with open(tracking_filename, 'w+') as tracking_file:
+        tracking_file.write(new_tag + "\n")
+    print("Overwrote " + tracking_filename + " with tag " + new_tag)
+
+
+def create_new_tag(old_tag, new_version):
+    image_type, version = parse_tag(old_tag)
+    #
+    # For now, just always use jumbo
+    #
+    return "jumbo-" + new_version
+    # if image_type is None:
+    #     return new_version
+    # else:
+    #     return image_type + "-" + new_version
+
+
+def line_matches_any(line, lines_matching):
+    for line_matching in lines_matching:
+        if line_matching in line:
+            return True
+    return False
+
+
+def remove_lines_in_file(quality_rakefile, lines_matching):
+    for line in fileinput.input(quality_rakefile,
+                                inplace=True,
+                                backup='.bak'):
+        if not line_matches_any(line, lines_matching):
+            print line, # this goes to the current file
+
+
+def reset_metrics():
+    files = glob.glob('metrics/*_high_water_mark')
+    for filename in files:
+        os.remove(filename)
+
+
+def add_commit_and_push(tracking_filename):
+    subprocess.check_output("git add " +
+                            "Rakefile.quality " +
+                            tracking_filename + " " +
+                            "metrics/*_high_water_mark",
+                            shell=True)
+
+    subprocess.check_output(["git",
+                             "commit",
+                             "-m",
+                             "Upgrade quality gem and rebaseline"])
+
+    # Overwrite any previous attempt on this branch
+    subprocess.check_output(["git", "push", "-f"])
+
+    subprocess.call(["hub",
+                     "pull-request",
+                     "-m",
+                     "Automated quality gem upgrade"])
+
+
+def pull_old_tag(tracking_filename, default_version):
+    if os.path.isfile(tracking_filename):
+        with open(tracking_filename) as tracking_file:
+            return tracking_file.read().rstrip("\r\n")
+    else:
+        return default_version
+
+
+def upgrade_quality_gem(new_version, tracking_filename):
+    old_tag = pull_old_tag(tracking_filename, None)
+
+    if old_tag is None:
+        # must not use quality gem docker image yet
+        print("No quality docker tag defined, so assuming " +
+              "this doesn't use quality gem docker iamge")
+        return 0
+
+    print("old_tag is " + old_tag)
+
+    old_version = tag_to_version(old_tag)
+
+    ensure_master_branch_and_clean_checkout()
+
+    print("old_version is " + old_version)
+
+    if (not version_newer_than(new_version, old_version)):
+        print("Already at " + new_version + " (" + old_version + ")")
+        return 0
+
+    print("")
+    print("Trying with old tag (" + old_tag + ")")
+    print("")
+
+    ensure_passes(old_tag)
+
+    force_create_branch()
+
+    new_tag = create_new_tag(old_tag, new_version)
+
+    upgrade_and_rebaseline(new_tag, tracking_filename)
+
+    reset_metrics()
+
+    print("")
+    print("Trying with new tag (" + new_tag + ")")
+    print("")
+
+    remove_lines_in_file('Rakefile.quality', ['source_dirs'])
+
+    ensure_passes(new_tag)
+
+    add_commit_and_push(tracking_filename)
+
+    # create_pull_request()
+
+
+if __name__ == "__main__":
+    new_version = sys.argv[1]
+    tracking_filename = sys.argv[2]
+    exit(upgrade_quality_gem(new_version, tracking_filename))
