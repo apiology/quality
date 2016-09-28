@@ -8,19 +8,15 @@ import glob
 
 
 def version_component_newer_than(a, b):
-    print("Comparing " + str(a) + " with " + str(b))
     if a is None and b is None:
-        print(str(a) + " is not newer")
         return False
 
     if a is None:
         # b != -1, so a will float upwards - prefer it
-        print(str(a) + " is newer")
         return True
 
     if b is None:
         # a != -1, so b will float upwards - prefer it
-        print(str(a) + " is not newer")
         return False
 
     # neither a nor b are -1
@@ -39,9 +35,7 @@ def parse_version(version):
 
 def version_newer_than(version_a, version_b):
     a_major, a_minor, a_patch = parse_version(version_a)
-    print("From " + version_a + ", parsed " + str(a_major))
     b_major, b_minor, b_patch = parse_version(version_b)
-    print("From " + version_b + ", parsed " + str(b_major))
 
     if version_component_newer_than(a_major, b_major):
         return True
