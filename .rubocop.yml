@@ -1,3 +1,6 @@
+AllCops:
+  TargetRubyVersion: 2.2.2
+
 Style/StringLiterals:
     EnforcedStyle: single_quotes
     SupportedStyles:
