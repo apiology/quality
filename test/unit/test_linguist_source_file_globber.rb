@@ -4,7 +4,7 @@ require_relative 'test_helper'
 
 # Test the LinguistSourceFileGlobber class
 class TestLinguistSourceFileGlobber < MiniTest::Test
-  let_mock :target, :blob_a_rb, :blob_b_md, :blob_c, :blob_d_jsx
+  let_mock :target, :blob_a_rb, :blob_b_md, :blob_c, :blob_d_jsx, :blob_e_cfg
 
   def expect_breakdown_pulled
     @mocks[:project]
@@ -13,6 +13,7 @@ class TestLinguistSourceFileGlobber < MiniTest::Test
         'Ruby' => ['a.rb'],
         'Shell' => ['c'],
         'JavaScript' => ['d.jsx'],
+        'Scala' => ['e'],
       )
   end
 
@@ -63,6 +64,10 @@ class TestLinguistSourceFileGlobber < MiniTest::Test
     mock_file_found('c', blob_c, language: 'Shell')
   end
 
+  def mock_config_file_found
+    mock_file_found('e.cfg', blob_e_cfg, language: nil)
+  end
+
   let_mock :tree
 
   def tree_results
@@ -72,6 +77,7 @@ class TestLinguistSourceFileGlobber < MiniTest::Test
       ['foo/', type: :blob, name: 'b.md'],
       ['', type: :blob, name: 'c'],
       ['', type: :blob, name: 'd.jsx'],
+      ['', type: :blob, name: 'e.cfg'],
     ]
   end
 
@@ -93,6 +99,8 @@ class TestLinguistSourceFileGlobber < MiniTest::Test
     mock_markdown_file_found
 
     mock_shell_file_found
+
+    mock_config_file_found
 
     mock_js_file_found
   end
@@ -131,6 +139,13 @@ class TestLinguistSourceFileGlobber < MiniTest::Test
       expect_breakdown_pulled
     end
     assert_equal(['d.jsx'], globber.js_files)
+  end
+
+  def test_scala_files
+    globber = get_test_object do
+      expect_breakdown_pulled
+    end
+    assert_equal(['e'], globber.scala_files)
   end
 
   def test_markdown_files
