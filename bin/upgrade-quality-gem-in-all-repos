@@ -9,7 +9,22 @@ DEFAULT_VERSION="${6:?}"
 EMAIL="${7:?}"
 NAME="${8:?}"
 
-REPOS=$(curl --user "${USERNAME:?}:${PASSWORD_OR_TOKEN:?}" "https://api.github.com/orgs/${ORG_NAME:?}/repos?per_page=999" | jq -r 'map(.name) | join("\n")')
+DONE=false
+PAGE=1
+REPOS=""
+
+while [ "${DONE:?}" != true ]
+do
+  NEW_REPOS=$(curl -s --user "${USERNAME:?}:${PASSWORD_OR_TOKEN:?}" "https://api.github.com/orgs/${ORG_NAME:?}/repos?page=${PAGE:?}&per_page=100" | jq -r 'map(.name) | join("\n")')
+  if [ "" == "${NEW_REPOS}" ]
+  then
+    DONE=true
+  else
+    REPOS="${REPOS} ${NEW_REPOS}"
+  fi
+  PAGE=$((PAGE+1))
+  sleep 1
+done
 
 FAILED_REPOS=""
 
