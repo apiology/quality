@@ -104,7 +104,7 @@ def ensure_passes(tag):
         args += ["-v", cwd + "/Rakefile.quality:/usr/quality/Rakefile"]
     args += ["apiology/quality:" + tag]
 
-    print("About to call " + str(args))
+    print("About to call " + str(" ".join(args)))
     output = subprocess.check_output(args)
     print("output is " + output)
 
