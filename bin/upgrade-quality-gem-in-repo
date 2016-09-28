@@ -99,9 +99,10 @@ def ensure_passes(tag):
     cwd = os.getcwd()
     args = ["docker",
             "run",
-            "-v", cwd + ":/usr/app",
-            "-v", cwd + "/Rakefile.quality:/usr/quality/Rakefile",
-            "apiology/quality:" + tag]
+            "-v", cwd + ":/usr/app"]
+    if os.path.isfile('Rakefile.quality'):
+        args += ["-v", cwd + "/Rakefile.quality:/usr/quality/Rakefile"]
+    args += ["apiology/quality:" + tag]
 
     print("About to call " + str(args))
     output = subprocess.check_output(args)
@@ -150,12 +151,13 @@ def line_matches_any(line, lines_matching):
     return False
 
 
-def remove_lines_in_file(quality_rakefile, lines_matching):
-    for line in fileinput.input(quality_rakefile,
-                                inplace=True,
-                                backup='.bak'):
-        if not line_matches_any(line, lines_matching):
-            print line, # this goes to the current file
+def remove_lines_in_file(filename, lines_matching):
+    if os.path.isfile(filename):
+        for line in fileinput.input(filename,
+                                    inplace=True,
+                                    backup='.bak'):
+            if not line_matches_any(line, lines_matching):
+                print line, # this goes to the current file
 
 
 def reset_metrics():
@@ -165,11 +167,14 @@ def reset_metrics():
 
 
 def add_commit_and_push(tracking_filename):
-    subprocess.check_output("git add " +
-                            "Rakefile.quality " +
-                            tracking_filename + " " +
-                            "metrics/*_high_water_mark",
-                            shell=True)
+    cmd = "git add " + \
+          tracking_filename + " " + \
+          "metrics/*_high_water_mark"
+
+    if os.path.isfile('Rakefile.quality'):
+        cmd += " Rakefile.quality"
+
+    subprocess.check_output(cmd, shell=True)
 
     subprocess.check_output(["git",
                              "commit",
