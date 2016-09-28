@@ -16,6 +16,12 @@ FAILED_REPOS=""
 # http://stackoverflow.com/questions/59895/can-a-bash-script-tell-which-directory-it-is-stored-in
 CURDIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
+if [ ! -d repos ]
+then
+  mkdir repos
+fi
+
+cd repos
 
 for repo in $REPOS
 do
