@@ -237,7 +237,8 @@ def upgrade_quality_gem(new_version, tracking_filename):
     print("Trying with new tag (" + new_tag + ")")
     print("")
 
-    remove_lines_in_file('Rakefile.quality', ['source_dirs'])
+    remove_lines_in_file('Rakefile.quality',
+                         ['source_dirs', 'source_file_globber'])
 
     ensure_passes(new_tag)
 
