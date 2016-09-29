@@ -9,7 +9,7 @@ module Quality
   # Configuration for running quality tool
   class Config
     attr_accessor :skip_tools, :verbose, :quality_name, :ratchet_name,
-                  :output_dir, :punchlist_regexp
+                  :output_dir, :punchlist_regexp, :scalastyle_config
 
     attr_writer :source_files_exclude_glob
 

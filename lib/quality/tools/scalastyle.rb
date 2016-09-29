@@ -7,7 +7,12 @@ module Quality
       private
 
       def scalastyle_args
-        scala_files.join(' ')
+        c = " -c '#{scalastyle_config}' " if scalastyle_config
+
+        args = ''
+        args += c if c
+        args += scala_files.join(' ')
+        args
       end
 
       def quality_scalastyle
