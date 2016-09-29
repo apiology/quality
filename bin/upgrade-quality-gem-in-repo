@@ -157,7 +157,7 @@ def remove_lines_in_file(filename, lines_matching):
                                     inplace=True,
                                     backup='.bak'):
             if not line_matches_any(line, lines_matching):
-                print line, # this goes to the current file
+                print line,  # this goes to the current file
 
 
 def reset_metrics():
