@@ -148,3 +148,6 @@ Remove use of deprecated method - thanks, gerrywastaken!
 
 ## Changes since Quality 20.0.3
 Add configurability of python paths
+
+## Changes since Quality 27.0.0
+Add configurability of scalacheck config
