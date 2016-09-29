@@ -45,6 +45,3 @@ task :publish_docker do
 end
 
 task publish_all: [:localtest, :release, :wait_for_release, :publish_docker]
-#
-# To publish docker image after gem is published:
-#   ./publish-docker-image.sh
