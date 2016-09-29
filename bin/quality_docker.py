@@ -29,3 +29,15 @@ def ensure_passes(tag):
     print("About to call " + str(" ".join(args)))
     output = subprocess.check_output(args)
     print("output is " + output)
+
+
+def create_new_tag(old_tag, new_version):
+    image_type, version = parse_tag(old_tag)
+    #
+    # For now, just always use jumbo
+    #
+    return "jumbo-" + new_version
+    # if image_type is None:
+    #     return new_version
+    # else:
+    #     return image_type + "-" + new_version

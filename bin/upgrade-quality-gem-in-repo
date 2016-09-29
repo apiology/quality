@@ -6,7 +6,7 @@ import subprocess
 import fileinput
 import glob
 from semver import version_newer_than
-from quality_docker import parse_tag, tag_to_version, ensure_passes
+from quality_docker import tag_to_version, ensure_passes, create_new_tag
 from github import ensure_master_branch_and_clean_checkout, force_create_branch
 
 
@@ -14,18 +14,6 @@ def upgrade_and_rebaseline(new_tag, tracking_filename):
     with open(tracking_filename, 'w+') as tracking_file:
         tracking_file.write(new_tag + "\n")
     print("Overwrote " + tracking_filename + " with tag " + new_tag)
-
-
-def create_new_tag(old_tag, new_version):
-    image_type, version = parse_tag(old_tag)
-    #
-    # For now, just always use jumbo
-    #
-    return "jumbo-" + new_version
-    # if image_type is None:
-    #     return new_version
-    # else:
-    #     return image_type + "-" + new_version
 
 
 def line_matches_any(line, lines_matching):
