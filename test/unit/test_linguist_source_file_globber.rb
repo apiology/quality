@@ -18,10 +18,7 @@ class TestLinguistSourceFileGlobber < MiniTest::Test
   end
 
   def expect_file_blob_created(path, my_mock)
-    @mocks[:file_blob]
-      .expects(:new)
-      .with(path, @mocks[:pwd])
-      .returns(my_mock)
+    @mocks[:file_blob].expects(:new).with(path, @mocks[:pwd]).returns(my_mock)
   end
 
   def expect_real_file(path)
@@ -45,18 +42,15 @@ class TestLinguistSourceFileGlobber < MiniTest::Test
   end
 
   def mock_ruby_file_found
-    mock_file_found('a.rb', blob_a_rb,
-                    language: 'Ruby')
+    mock_file_found('a.rb', blob_a_rb, language: 'Ruby')
   end
 
   def mock_js_file_found
-    mock_file_found('d.jsx', blob_d_jsx,
-                    language: 'JavaScript')
+    mock_file_found('d.jsx', blob_d_jsx, language: 'JavaScript')
   end
 
   def mock_markdown_file_found
-    mock_file_found('foo/b.md', blob_b_md,
-                    documentation: true,
+    mock_file_found('foo/b.md', blob_b_md, documentation: true,
                     language: 'Markdown')
   end
 
@@ -84,74 +78,52 @@ class TestLinguistSourceFileGlobber < MiniTest::Test
   def expect_tree_pulled
     @mocks[:commit].expects(:target).returns(target).at_least(0)
     target.expects(:tree).returns(tree)
-    tree
-      .expects(:walk).with(:preorder)
-      .multiple_yields(*tree_results)
+    tree.expects(:walk).with(:preorder).multiple_yields(*tree_results)
   end
 
   def mock_files_found
     expect_breakdown_pulled
-
     expect_tree_pulled
-
     mock_ruby_file_found
-
     mock_markdown_file_found
-
     mock_shell_file_found
-
     mock_config_file_found
-
     mock_js_file_found
   end
 
   def test_source_and_doc_files
-    globber = get_test_object do
-      mock_files_found
-    end
+    globber = get_test_object { mock_files_found }
     assert_equal(['a.rb', 'foo/b.md', 'c', 'd.jsx'],
                  globber.source_and_doc_files)
   end
 
   def test_source_files
-    globber = get_test_object do
-      mock_files_found
-    end
+    globber = get_test_object { mock_files_found }
     assert_equal(['a.rb', 'c', 'd.jsx'], globber.source_files)
   end
 
   def test_ruby_files
-    globber = get_test_object do
-      expect_breakdown_pulled
-    end
+    globber = get_test_object { expect_breakdown_pulled }
     assert_equal(['a.rb'], globber.ruby_files)
   end
 
   def test_shell_files
-    globber = get_test_object do
-      expect_breakdown_pulled
-    end
+    globber = get_test_object { expect_breakdown_pulled }
     assert_equal(['c'], globber.shell_files)
   end
 
   def test_js_files
-    globber = get_test_object do
-      expect_breakdown_pulled
-    end
+    globber = get_test_object { expect_breakdown_pulled }
     assert_equal(['d.jsx'], globber.js_files)
   end
 
   def test_scala_files
-    globber = get_test_object do
-      expect_breakdown_pulled
-    end
+    globber = get_test_object { expect_breakdown_pulled }
     assert_equal(['e'], globber.scala_files)
   end
 
   def test_markdown_files
-    globber = get_test_object do
-      mock_files_found
-    end
+    globber = get_test_object { mock_files_found }
     assert_equal(['foo/b.md'], globber.markdown_files)
   end
 
