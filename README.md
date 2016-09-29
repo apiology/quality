@@ -1,10 +1,9 @@
 [![Build Status](https://travis-ci.org/apiology/quality.png)](https://travis-ci.org/apiology/quality)
 [![Coverage Status](https://coveralls.io/repos/apiology/quality/badge.png?branch=master)](https://coveralls.io/r/apiology/quality?branch=master)
 
-
 # Quality -- code quality ratchet for Ruby
 
-##Overview
+## Overview
 
 Quality is a tool that runs quality checks on code in git repos using
 different analysis tools and makes sure your numbers don't get any
@@ -48,7 +47,6 @@ docker run -v `pwd`:/usr/app -v `pwd`/Rakefile.quality:/usr/quality/Rakefile api
 ```
 
 The default 'latest' tag contains the Ruby tools in a relatively small image.  You can also get additional tools (see `Dockerfile.jumbo` in this directory) by using the tag `jumbo-`(version) (e.g., jumbo-latest, jumbo-x.y.z, etc)
-
 
 ## How to use - as part of a Ruby-based Rakefile
 
@@ -147,7 +145,6 @@ end
 
 Quality uses GitHub's [linguist](https://github.com/github/linguist) gem to find and classify source files to analyze.  In addition to the `exclude_files` and `source_files_exclude_glob` options in Quality, you can refer to Linguists's documentation on [overrides](https://github.com/github/linguist#overrides) to use the `gitattributes` file to mark files as vendored, at which point Quality will not try to analyze them.
   
-
 ## Code coverage
 
 You can pull a similar trick with code coverage using SimpleCov in Ruby--put 'simplecov' in your Gemfile, and add the code below into your test_helper.rb or spec_helper.rb.
