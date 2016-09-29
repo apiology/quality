@@ -1,4 +1,21 @@
-FROM apiology/quality:latest
+FROM alpine:latest
+RUN apk update && apk add --no-cache ruby ruby-irb ruby-dev make gcc libc-dev git icu-dev zlib-dev g++ cmake && gem install --no-ri --no-rdoc io-console bigdecimal rake
+VOLUME /usr/app
+RUN mkdir /usr/quality
+ADD sample-project/Rakefile /usr/quality
+WORKDIR /usr/app
+COPY entrypoint.sh /
+ENTRYPOINT /entrypoint.sh
+PUSH apiology/quality:base-latest
+
+RUN gem install --no-ri --no-rdoc quality -v {{ .quality_gem_version }}
+
+PUSH apiology/quality:{{ .quality_gem_version }}
+PUSH apiology/quality:{{ .quality_gem_minor_version }}
+PUSH apiology/quality:{{ .quality_gem_major_version }}
+PUSH apiology/quality:latest
+
+FROM apiology/quality:base-latest
 
 #
 # Install flake8 and pep8
@@ -87,7 +104,15 @@ RUN wget "https://oss.sonatype.org/content/repositories/releases/org/scalastyle/
     echo "java -jar `pwd`/${SCALASTYLE_JAR}" --config "/usr/src/scalastyle_config.xml" '${@}' >> /bin/scalastyle && \
     chmod +x /bin/scalastyle
 
+RUN gem install --no-ri --no-rdoc quality -v {{ .quality_gem_version }}
+
 VOLUME /usr/app
 WORKDIR /usr/app
 ENTRYPOINT /entrypoint.sh
 
+TAG apiology/quality:jumbo-{{ .quality_gem_version }}
+
+PUSH apiology/quality:jumbo-{{ .quality_gem_version }}
+PUSH apiology/quality:jumbo-{{ .quality_gem_minor_version }}
+PUSH apiology/quality:jumbo-{{ .quality_gem_major_version }}
+PUSH apiology/quality:jumbo-latest
