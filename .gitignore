@@ -1,3 +1,4 @@
-Gemfile.lock
+/coverage/.resultset.json.lock
+/Gemfile.lock
 *~
-pkg/
+/pkg
