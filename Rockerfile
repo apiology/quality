@@ -2,10 +2,11 @@ FROM alpine:latest
 RUN apk update && apk add --no-cache ruby ruby-irb ruby-dev make gcc libc-dev git icu-dev zlib-dev g++ cmake && gem install --no-ri --no-rdoc io-console bigdecimal rake
 VOLUME /usr/app
 RUN mkdir /usr/quality
-ADD sample-project/Rakefile /usr/quality
+ADD sample-project/Rakefile /usr/quality/Rakefile
 WORKDIR /usr/app
 COPY entrypoint.sh /
 ENTRYPOINT /entrypoint.sh
+
 PUSH apiology/quality:base-latest
 
 RUN gem install --no-ri --no-rdoc quality -v {{ .quality_gem_version }}
