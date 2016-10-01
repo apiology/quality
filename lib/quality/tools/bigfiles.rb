@@ -17,9 +17,11 @@ module Quality
       def quality_bigfiles
         ratchet_quality_cmd('bigfiles',
                             args: bigfiles_args) do |line|
-          line.split(':')[0].to_i
+            line.split(':')[0].to_i
         end
       end
     end
   end
 end
+
+
