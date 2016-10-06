@@ -15,6 +15,13 @@ module Test
             .at_least(1)
         end
 
+        def expect_find_scalastyle_exclude
+          @mocks[:config]
+            .expects(:scalastyle_exclude)
+            .returns('src/test/scala')
+            .at_least(1)
+        end
+
         def expect_scalastyle_run_with_args(quality_checker)
           @mocks[:quality_checker_class]
             .expects(:new).with('scalastyle',
@@ -33,6 +40,7 @@ module Test
           expect_scalastyle_run_with_args(quality_checker)
           expect_find_scala_files
           expect_find_scalastyle_config
+          expect_find_scalastyle_exclude
         end
       end
     end

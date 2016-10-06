@@ -8,9 +8,10 @@ module Quality
 
       def scalastyle_args
         c = " -c '#{scalastyle_config}' " if scalastyle_config
-
+        x = " -x '#{scalastyle_exclude}' " if scalastyle_exclude
         args = ''
         args += c if c
+        args += x if x
         args += scala_files.join(' ')
         args
       end

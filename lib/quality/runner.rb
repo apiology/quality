@@ -120,6 +120,7 @@ module Quality
                    :source_files_exclude_glob,
                    :punchlist_regexp,
                    :scalastyle_config,
+                   :scalastyle_exclude,
                    :js_files
   end
 end
