@@ -5,7 +5,9 @@ module Test
       # Test for the 'scalastyle' tool within the quality gem
       module Scalastyle
         def scalastyle_expected_args
-          ' -c \'project/scalastyle_config.xml\'  -x \'src/test/scala\' s1.scala s2.scala'
+          " -c 'project/scalastyle_config.xml' "\
+          " -x 'src/test/scala'"\
+          " s1.scala s2.scala"
         end
 
         def expect_find_scalastyle_config
