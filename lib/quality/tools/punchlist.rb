@@ -9,7 +9,7 @@ module Quality
       def punchlist_args
         glob = "--glob '#{source_and_doc_files_glob}'"
         regexp = " --regexp '#{punchlist_regexp}'" if punchlist_regexp
-        unless exclude_files.nil? || exclude_files.empty?
+        unless source_files_exclude_glob == '{}'
           exclude = " --exclude-glob '#{source_files_exclude_glob}'"
         end
 
