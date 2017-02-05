@@ -165,3 +165,7 @@ Add configurability of python paths
 ## Changes since Quality 27.0.0
 
 Add configurability of scalacheck config
+
+## Changes since Quality 27.3.0
+
+Correctly detect exclude glob in punchlist
