@@ -51,7 +51,7 @@ class TestLinguistSourceFileGlobber < MiniTest::Test
 
   def mock_markdown_file_found
     mock_file_found('foo/b.md', blob_b_md, documentation: true,
-                    language: 'Markdown')
+                                           language: 'Markdown')
   end
 
   def mock_shell_file_found

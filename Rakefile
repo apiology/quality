@@ -5,16 +5,16 @@ require 'quality/rake/task'
 
 $LOAD_PATH.unshift File.dirname(__FILE__) + '/lib'
 
-PROJECT_NAME = 'quality'
+PROJECT_NAME = 'quality'.freeze
 
-BUILD_DIR = 'build'
+BUILD_DIR = 'build'.freeze
 directory BUILD_DIR
 
-PKG_DIR = "#{BUILD_DIR}/pkg"
+PKG_DIR = "#{BUILD_DIR}/pkg".freeze
 directory PKG_DIR
 
-GEM_MANIFEST = 'Manifest.txt'
-VERSION_FILE = 'lib/quality.rb'
+GEM_MANIFEST = 'Manifest.txt'.freeze
+VERSION_FILE = 'lib/quality.rb'.freeze
 
 CLOBBER.include("#{BUILD_DIR}/*")
 

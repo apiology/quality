@@ -37,7 +37,6 @@ module Test
             .returns(quality_checker)
         end
 
-
         def expect_scalastyle_run(quality_checker)
           expect_scalastyle_run_with_args(quality_checker)
           expect_find_scala_files
