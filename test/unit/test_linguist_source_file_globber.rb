@@ -13,7 +13,7 @@ class TestLinguistSourceFileGlobber < MiniTest::Test
         'Ruby' => ['a.rb'],
         'Shell' => ['c'],
         'JavaScript' => ['d.jsx'],
-        'Scala' => ['e'],
+        'Scala' => ['e']
       )
   end
 
