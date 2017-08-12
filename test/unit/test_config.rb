@@ -15,6 +15,13 @@ class TestConfig < MiniTest::Test
     # Defaults to :ratchet.
     t.ratchet_name = 'ratchet'
 
+    #
+    # Set minimum values to ratchet to.
+    #
+    # Defaults to { bigfiles: 300 }
+    #
+    t.minimum_threshold = { rubocop: 300 }
+
     # Array of strings describing tools to be skipped--e.g., ["cane"]
     #
     # Defaults to []
@@ -34,8 +41,8 @@ class TestConfig < MiniTest::Test
     # Pipe-separated regexp string describing what to look for in
     # files as 'todo'-like 'punchlist' comments.
     #
-    # Defaults to 'XXX|TODO'
-    t.punchlist_regexp = 'XXX|TODO'
+    # Defaults to 'XXX|TODO|FIXME|OPTIMIZE|HACK|REVIEW|LATER|FIXIT'
+    t.punchlist_regexp = 'XXX|TODO|FIXME|OPTIMIZE|HACK|REVIEW|LATER|FIXIT'
 
     # Exclude the specified list of files--defaults to ['db/schema.rb']
     t.exclude_files = ['lib/whatever/imported_file.rb',

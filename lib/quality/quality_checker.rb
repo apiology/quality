@@ -9,12 +9,14 @@ module Quality
   # if possible, or outputs data if the number of violations increased.
   class QualityChecker
     def initialize(cmd, command_options, output_dir, verbose,
+                   minimum_threshold,
                    count_file: File,
                    count_io: IO,
                    command_output_processor_class:
                      Quality::CommandOutputProcessor,
                    count_dir: Dir,
                    process_class: Process)
+      @minimum_threshold = minimum_threshold
       @count_file = count_file
       @count_io = count_io
       @command_output_processor_class = command_output_processor_class
@@ -71,11 +73,12 @@ module Quality
     def ratchet_violations
       existing = existing_violations
       report_violations(existing)
-      if @violations > existing
+      violations_to_write = [@violations, @minimum_threshold].max
+      if violations_to_write > existing
         raise("Output from #{@cmd}\n\n#{@command_output}\n\n" \
               "Reduce total number of #{@cmd} violations " \
               "to #{existing} or below!")
-      elsif @violations < existing
+      elsif violations_to_write < existing
         puts 'Ratcheting quality up...'
         write_violations(@violations)
       end

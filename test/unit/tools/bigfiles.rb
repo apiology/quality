@@ -18,7 +18,8 @@ module Test
             .expects(:new).with('bigfiles',
                                 { args: bigfiles_expected_args },
                                 'metrics',
-                                false)
+                                false,
+                                300)
             .returns(quality_checker)
           expect_find_source_files
           expect_find_exclude_glob

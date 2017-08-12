@@ -22,6 +22,7 @@ Dir['tasks/**/*.rake'].each { |t| load t }
 
 Quality::Rake::Task.new do |t|
   t.exclude_files = ['etc/scalastyle_config.xml', 'ChangeLog.md']
+  t.minimum_threshold = { rubocop: 500 }
   t.skip_tools = ['reek']
   t.verbose = true
 end

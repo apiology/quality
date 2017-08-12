@@ -10,27 +10,52 @@ class TestQualityChecker < MiniTest::Test
     command_options = {}
     num_violations = 523
     existing_violations = 524
+    minimum_threshold = 500
     get_test_object('foo', command_options,
-                    'my_output_dir', false) do
+                    'my_output_dir', false,
+                    minimum_threshold) do
       setup_execute_mocks(command_options,
                           num_violations,
-                          existing_violations)
+                          existing_violations,
+                          minimum_threshold)
     end
   end
 
-  def test_execute
+  def test_execute_ratchet
     quality_checker_ratchet.execute { |line| assert_equal(line, 'line') }
+  end
+
+  def quality_checker_dont_ratchet
+    command_options = {}
+    num_violations = 400
+    existing_violations = 500
+    minimum_threshold = 500
+    get_test_object('foo', command_options,
+                    'my_output_dir', false,
+                    minimum_threshold) do
+      setup_execute_mocks(command_options,
+                          num_violations,
+                          existing_violations,
+                          minimum_threshold)
+    end
+  end
+
+  def test_execute_dont_ratchet
+    quality_checker_dont_ratchet.execute { |line| assert_equal(line, 'line') }
   end
 
   def quality_checker_no_existing_violations
     command_options = {}
     num_violations = 523
     existing_violations = nil
+    minimum_threshold = 500
 
-    get_test_object('foo', command_options, 'my_output_dir', false) do
+    get_test_object('foo', command_options, 'my_output_dir', false,
+                    minimum_threshold) do
       setup_execute_mocks(command_options,
                           num_violations,
-                          existing_violations)
+                          existing_violations,
+                          minimum_threshold)
     end
   end
 
@@ -40,19 +65,24 @@ class TestQualityChecker < MiniTest::Test
     end
   end
 
-  def setup_execute_mocks(command_options, num_violations, existing_violations)
+  def setup_execute_mocks(command_options, num_violations, existing_violations,
+                          minimum_threshold)
     command_output_processor = expect_create_new_processor
     command_output_processor.expects(:emacs_format=)
                             .with(command_options[:emacs_format])
     expect_run_command(command_output_processor)
     command_output_processor.expects(:violations).returns(num_violations)
-    expect_twiddle_high_water_mark_files(num_violations, existing_violations)
+    expect_twiddle_high_water_mark_files(num_violations, existing_violations,
+                                         minimum_threshold)
   end
 
-  def expect_twiddle_high_water_mark_files(num_violations, existing_violations)
+  def expect_twiddle_high_water_mark_files(num_violations, existing_violations,
+                                           minimum_threshold)
     hwm_filename = 'my_output_dir/foo_high_water_mark'
     expect_existing_violations_read(existing_violations, hwm_filename)
-    expect_write_new_violations(num_violations, hwm_filename)
+    return if [minimum_threshold, num_violations].max == existing_violations
+    expect_write_new_violations([minimum_threshold, num_violations].max,
+                                hwm_filename)
   end
 
   def expect_metrics_dir_already_there
@@ -114,9 +144,11 @@ class TestQualityChecker < MiniTest::Test
       process_class: mock('process_class'), count_dir: mock('dir') }
   end
 
-  def get_test_object(cmd, options, output_dir, verbose, &twiddle_mocks)
+  def get_test_object(cmd, options, output_dir, verbose, minimum_threshold,
+                      &twiddle_mocks)
     @mocks = test_mocks
     yield unless twiddle_mocks.nil?
-    Quality::QualityChecker.new(cmd, options, output_dir, verbose, @mocks)
+    Quality::QualityChecker.new(cmd, options, output_dir, verbose,
+                                minimum_threshold, @mocks)
   end
 end

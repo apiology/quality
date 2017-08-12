@@ -18,7 +18,8 @@ module Test
                                   args: cane_expected_args,
                                   emacs_format: true },
                                 'metrics',
-                                false)
+                                false,
+                                0)
             .returns(quality_checker)
           expect_find_ruby_files
           expect_find_exclude_files

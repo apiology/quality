@@ -14,7 +14,8 @@ module Test
                                 { args: pep8_expected_args,
                                   gives_error_code_on_no_relevant_code: true },
                                 'metrics',
-                                false)
+                                false,
+                                0)
             .returns(quality_checker)
           expect_find_python_files
         end

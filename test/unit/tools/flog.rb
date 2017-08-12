@@ -10,7 +10,8 @@ module Test
                                 { args: flog_args,
                                   emacs_format: true },
                                 'metrics',
-                                false)
+                                false,
+                                0)
             .returns(quality_checker)
           expect_find_ruby_files
         end

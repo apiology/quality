@@ -96,13 +96,18 @@ module Quality
       end.compact
     end
 
+    def minimum_threshold_for(cmd)
+      @config.minimum_threshold[cmd.to_sym] || 0
+    end
+
     def ratchet_quality_cmd(cmd,
                             command_options,
                             &count_violations_on_line)
       quality_checker = @quality_checker_class.new(cmd,
                                                    command_options,
                                                    @config.output_dir,
-                                                   @config.verbose)
+                                                   @config.verbose,
+                                                   minimum_threshold_for(cmd))
       quality_checker.execute(&count_violations_on_line)
     end
 

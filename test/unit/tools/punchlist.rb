@@ -15,7 +15,8 @@ module Test
             .expects(:new).with('punchlist',
                                 { args: punchlist_expected_args },
                                 'metrics',
-                                false)
+                                false,
+                                0)
             .returns(quality_checker)
         end
 

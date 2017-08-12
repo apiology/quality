@@ -51,10 +51,16 @@ class TestTask < BaseTestTask
     @mocks[:config].expects(:skip_tools=).with(suppressed_tools)
   end
 
+  def expect_minimum_threshold_pulled
+    @mocks[:config].expects(:minimum_threshold)
+      .returns(bigfiles: 300).at_least(1)
+  end
+
   def expect_tools_configured(suppressed_tools, uninstalled_tools)
     expect_tools_installed(ALL_TOOLS - uninstalled_tools)
     expect_skip_tools_assigned(suppressed_tools)
     expect_skip_tools_pulled(suppressed_tools)
+    expect_minimum_threshold_pulled
   end
 
   def setup_quality_task_mocks(suppressed_tools: [], uninstalled_tools: [])

@@ -10,7 +10,8 @@ module Test
                                 { args: rubocop_args,
                                   gives_error_code_on_violations: true },
                                 'metrics',
-                                false)
+                                false,
+                                0)
             .returns(quality_checker)
           expect_find_ruby_files
         end

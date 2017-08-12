@@ -12,7 +12,8 @@ module Test
                                   gives_error_code_on_violations: true,
                                 },
                                 'metrics',
-                                false)
+                                false,
+                                0)
             .returns(quality_checker)
         end
       end

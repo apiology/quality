@@ -102,6 +102,13 @@ Quality::Rake::Task.new do |t|
   # Defaults to :ratchet.
   t.ratchet_name = 'ratchet'
 
+  #
+  # Set minimum values to ratchet to.
+  #
+  # Defaults to { bigfiles: 300 }
+  #
+  t.minimum_threshold = { bigfiles: 300 }
+
   # Array of strings describing tools to be skipped--e.g., ["cane"]
   #
   # Defaults to []

@@ -10,7 +10,7 @@ module Quality
   class Config
     attr_accessor :skip_tools, :verbose, :quality_name, :ratchet_name,
                   :output_dir, :punchlist_regexp,
-                  :scalastyle_config, :scalastyle_exclude
+                  :scalastyle_config, :scalastyle_exclude, :minimum_threshold
 
     attr_writer :source_files_exclude_glob
 
@@ -60,6 +60,7 @@ module Quality
       @source_file_globber = source_file_globber
       @dir = dir
       @source_files_exclude_glob = nil
+      @minimum_threshold = { bigfiles: 300 }
     end
   end
 end
