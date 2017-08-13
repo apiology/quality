@@ -35,10 +35,14 @@ class TestLinguistSourceFileGlobber < MiniTest::Test
                       language: raise)
     expect_real_file(filename)
     expect_file_blob_created(filename, file_mock)
-    file_mock.expects(:generated?).returns(generated)
-    file_mock.expects(:vendored?).returns(vendored)
-    file_mock.expects(:documentation?).returns(documentation).at_least(0)
-    file_mock.expects(:language).returns(language).at_least(0)
+    {
+      generated?: generated,
+      vendored?: vendored,
+      documentation?: documentation,
+      language: language,
+    }.each do |meth, result|
+      file_mock.expects(meth).returns(result).at_least(0)
+    end
   end
 
   def mock_ruby_file_found

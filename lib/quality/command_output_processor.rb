@@ -28,20 +28,22 @@ module Quality
       out
     end
 
+    def processed_output
+      if emacs_format
+        preprocess_line_for_emacs
+      else
+        @current_line
+      end
+    end
+
     def process_line(&block)
-      output =
-        if emacs_format
-          preprocess_line_for_emacs
-        else
-          @current_line
-        end
       @found_output = true
       @violations += if block
                        yield @current_line
                      else
                        1
                      end
-      output
+      processed_output
     end
 
     def preprocess_line_for_emacs

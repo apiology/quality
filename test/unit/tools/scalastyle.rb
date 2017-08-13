@@ -24,17 +24,21 @@ module Test
             .at_least(1)
         end
 
+        def scalastyle_quality_checker_args
+          ['scalastyle',
+           {
+             args: scalastyle_expected_args,
+             gives_error_code_on_no_relevant_code: true,
+             gives_error_code_on_violations: true,
+           },
+           'metrics',
+           false,
+           0]
+        end
+
         def expect_scalastyle_run_with_args(quality_checker)
           @mocks[:quality_checker_class]
-            .expects(:new).with('scalastyle',
-                                {
-                                  args: scalastyle_expected_args,
-                                  gives_error_code_on_no_relevant_code: true,
-                                  gives_error_code_on_violations: true,
-                                },
-                                'metrics',
-                                false,
-                                0)
+            .expects(:new).with(*scalastyle_quality_checker_args)
             .returns(quality_checker)
         end
 

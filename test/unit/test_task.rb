@@ -53,7 +53,7 @@ class TestTask < BaseTestTask
 
   def expect_minimum_threshold_pulled
     @mocks[:config].expects(:minimum_threshold)
-      .returns(bigfiles: 300).at_least(1)
+                   .returns(bigfiles: 300).at_least(1)
   end
 
   def expect_tools_configured(suppressed_tools, uninstalled_tools)

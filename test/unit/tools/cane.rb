@@ -11,15 +11,21 @@ module Test
           "--doc-exclude '{**/vendor/**,db/schema.rb}'"
         end
 
+        def cane_quality_checker_args
+          [
+            'cane',
+            { gives_error_code_on_violations: true,
+              args: cane_expected_args,
+              emacs_format: true },
+            'metrics',
+            false,
+            0,
+          ]
+        end
+
         def expect_cane_run(quality_checker)
           @mocks[:quality_checker_class]
-            .expects(:new).with('cane',
-                                { gives_error_code_on_violations: true,
-                                  args: cane_expected_args,
-                                  emacs_format: true },
-                                'metrics',
-                                false,
-                                0)
+            .expects(:new).with(*cane_quality_checker_args)
             .returns(quality_checker)
           expect_find_ruby_files
           expect_find_exclude_files
