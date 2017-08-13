@@ -10,9 +10,9 @@ module Quality
   class Config
     attr_accessor :skip_tools, :verbose, :quality_name, :ratchet_name,
                   :output_dir, :punchlist_regexp,
-                  :scalastyle_config, :scalastyle_exclude, :minimum_threshold
+                  :scalastyle_config, :scalastyle_exclude
 
-    attr_writer :source_files_exclude_glob
+    attr_writer :source_files_exclude_glob, :minimum_threshold
 
     extend Forwardable
 
@@ -48,6 +48,10 @@ module Quality
       @dir.glob("#{output_dir}/*_high_water_mark")
     end
 
+    def minimum_threshold
+      @minimum_threshold ||= { bigfiles: 300 }
+    end
+
     def initialize(quality_name: 'quality',
                    ratchet_name: 'ratchet',
                    source_file_globber: Quality::LinguistSourceFileGlobber.new,
@@ -60,7 +64,6 @@ module Quality
       @source_file_globber = source_file_globber
       @dir = dir
       @source_files_exclude_glob = nil
-      @minimum_threshold = { bigfiles: 300 }
     end
   end
 end

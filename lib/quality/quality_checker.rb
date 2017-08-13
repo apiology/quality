@@ -10,6 +10,7 @@ module Quality
   class QualityChecker
     def initialize(cmd, command_options, output_dir, verbose,
                    minimum_threshold,
+                   logger: STDOUT,
                    count_file: File,
                    count_io: IO,
                    command_output_processor_class:
@@ -20,6 +21,7 @@ module Quality
       @count_file = count_file
       @count_io = count_io
       @command_output_processor_class = command_output_processor_class
+      @logger = logger
       @count_dir = count_dir
       @cmd = cmd
       @command_options = command_options
@@ -62,11 +64,13 @@ module Quality
             "Exit status is #{exit_status}") if exit_status.nonzero?
     end
 
+    MAX_VIOLATIONS = 9_999_999_999
+
     def existing_violations
       if @count_file.exist?(@filename)
         @count_io.read(@filename).to_i
       else
-        9_999_999_999
+        MAX_VIOLATIONS
       end
     end
 
@@ -74,19 +78,23 @@ module Quality
       existing = existing_violations
       report_violations(existing)
       violations_to_write = [@violations, @minimum_threshold].max
-      if violations_to_write > existing
+      if @violations > [existing, @minimum_threshold].max
         raise("Output from #{@cmd}\n\n#{@command_output}\n\n" \
               "Reduce total number of #{@cmd} violations " \
               "to #{existing} or below!")
-      elsif violations_to_write < existing
-        puts 'Ratcheting quality up...'
-        write_violations(@violations)
+      elsif violations_to_write != existing
+        if @violations < existing && existing != MAX_VIOLATIONS
+          @logger.puts 'Ratcheting quality up...'
+        end
+        write_violations(violations_to_write)
       end
     end
 
     def report_violations(existing)
-      puts "Existing violations: #{existing}"
-      puts "Found #{@violations} #{@cmd} violations"
+      if existing != MAX_VIOLATIONS
+        @logger.puts "Existing violations: #{existing}"
+      end
+      @logger.puts "Found #{@violations} #{@cmd} violations"
     end
 
     def full_cmd
