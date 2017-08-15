@@ -28,21 +28,15 @@ class TestTask < BaseTestTask
   end
 
   def expect_skip_tools_pulled(suppressed_tools)
-    @mocks[:config]
-      .expects(:skip_tools).returns(suppressed_tools)
-      .at_least(1)
+    @mocks[:config].expects(:skip_tools).returns(suppressed_tools).at_least(1)
   end
 
   def expect_output_dir_pulled
-    @mocks[:config]
-      .expects(:output_dir).returns('metrics')
-      .at_least(1)
+    @mocks[:config].expects(:output_dir).returns('metrics').at_least(1)
   end
 
   def expect_verbose_false
-    @mocks[:config]
-      .expects(:verbose).returns(false)
-      .at_least(1)
+    @mocks[:config].expects(:verbose).returns(false).at_least(1)
   end
 
   def expect_skip_tools_assigned(suppressed_tools)
@@ -134,40 +128,28 @@ class TestTask < BaseTestTask
   end
 
   def expect_find_markdown_files
-    @mocks[:config]
-      .expects(:markdown_files)
-      .returns(['file1.md', 'file2.md'])
-      .at_least(1)
+    @mocks[:config].expects(:markdown_files).returns(['file1.md', 'file2.md'])
+                   .at_least(1)
   end
 
   def expect_find_scala_files
-    @mocks[:config]
-      .expects(:scala_files)
-      .returns(['s1.scala', 's2.scala'])
-      .at_least(1)
+    @mocks[:config].expects(:scala_files).returns(['s1.scala', 's2.scala'])
+                   .at_least(1)
   end
 
   def expect_find_source_files
-    @mocks[:config]
-      .expects(:source_files).returns(['fake1.py', 'README.md'])
-      .at_least(0)
-    @mocks[:config]
-      .expects(:source_files_glob)
-      .returns('{fake1.py,README.md}')
-      .at_least(0)
+    @mocks[:config].expects(:source_files).returns(['fake1.py', 'README.md'])
+                   .at_least(0)
+    @mocks[:config].expects(:source_files_glob).returns('{fake1.py,README.md}')
+                   .at_least(0)
   end
 
   def expect_find_exclude_files
-    @mocks[:config]
-      .expects(:exclude_files)
-      .returns(['fake1.py'])
-      .at_least(0)
+    @mocks[:config].expects(:exclude_files).returns(['fake1.py']).at_least(0)
   end
 
   def expect_find_exclude_glob
-    @mocks[:config]
-      .expects(:source_files_exclude_glob)
-      .returns('{**/vendor/**,db/schema.rb}')
-      .at_least(1)
+    @mocks[:config].expects(:source_files_exclude_glob)
+                   .returns('{**/vendor/**,db/schema.rb}').at_least(1)
   end
 end
