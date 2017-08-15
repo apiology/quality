@@ -22,7 +22,7 @@ Dir['tasks/**/*.rake'].each { |t| load t }
 
 Quality::Rake::Task.new do |t|
   t.exclude_files = ['etc/scalastyle_config.xml', 'ChangeLog.md']
-  t.minimum_threshold = { bigfiles: 550 }
+  t.minimum_threshold = { bigfiles: 300 }
   t.skip_tools = ['reek']
   t.verbose = true
 end
