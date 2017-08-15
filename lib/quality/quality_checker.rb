@@ -67,25 +67,39 @@ module Quality
     MAX_VIOLATIONS = 9_999_999_999
 
     def existing_violations
-      if @count_file.exist?(@filename)
-        @count_io.read(@filename).to_i
-      else
-        MAX_VIOLATIONS
+      @existing_violations ||=
+        begin
+          if @count_file.exist?(@filename)
+            @count_io.read(@filename).to_i
+          else
+            MAX_VIOLATIONS
+          end
+        end
+    end
+
+    def error_too_many_violations!
+      raise("Output from #{@cmd}\n\n#{@command_output}\n\n" \
+            "Reduce total number of #{@cmd} violations " \
+            "to #{existing_violations} or below!")
+    end
+
+    def violations_to_write
+      @violations_to_write ||= [@violations, @minimum_threshold].max
+    end
+
+    def report_ratchet
+      if @violations < existing_violations &&
+         existing_violations != MAX_VIOLATIONS
+        @logger.puts 'Ratcheting quality up...'
       end
     end
 
     def ratchet_violations
-      existing = existing_violations
-      report_violations(existing)
-      violations_to_write = [@violations, @minimum_threshold].max
-      if @violations > [existing, @minimum_threshold].max
-        raise("Output from #{@cmd}\n\n#{@command_output}\n\n" \
-              "Reduce total number of #{@cmd} violations " \
-              "to #{existing} or below!")
-      elsif violations_to_write != existing
-        if @violations < existing && existing != MAX_VIOLATIONS
-          @logger.puts 'Ratcheting quality up...'
-        end
+      report_violations(existing_violations)
+      if @violations > [existing_violations, @minimum_threshold].max
+        error_too_many_violations!
+      elsif violations_to_write != existing_violations
+        report_ratchet
         write_violations(violations_to_write)
       end
     end
