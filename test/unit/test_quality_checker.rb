@@ -11,13 +11,10 @@ class TestQualityChecker < MiniTest::Test
     num_violations = 523
     existing_violations = 524
     minimum_threshold = 500
-    get_test_object('foo', command_options,
-                    'my_output_dir', false,
+    get_test_object('foo', command_options, 'my_output_dir', false,
                     minimum_threshold) do
-      setup_execute_mocks(command_options,
-                          num_violations,
-                          existing_violations,
-                          minimum_threshold)
+      setup_execute_mocks(command_options, num_violations,
+                          existing_violations, minimum_threshold)
     end
   end
 
@@ -30,13 +27,10 @@ class TestQualityChecker < MiniTest::Test
     num_violations = 400
     existing_violations = 500
     minimum_threshold = 500
-    get_test_object('foo', command_options,
-                    'my_output_dir', false,
+    get_test_object('foo', command_options, 'my_output_dir', false,
                     minimum_threshold) do
-      setup_execute_mocks(command_options,
-                          num_violations,
-                          existing_violations,
-                          minimum_threshold)
+      setup_execute_mocks(command_options, num_violations,
+                          existing_violations, minimum_threshold)
     end
   end
 
@@ -49,13 +43,10 @@ class TestQualityChecker < MiniTest::Test
     num_violations = 517
     existing_violations = 485
     minimum_threshold = 550
-    get_test_object('foo', command_options,
-                    'my_output_dir', false,
+    get_test_object('foo', command_options, 'my_output_dir', false,
                     minimum_threshold) do
-      setup_execute_mocks(command_options,
-                          num_violations,
-                          existing_violations,
-                          minimum_threshold)
+      setup_execute_mocks(command_options, num_violations,
+                          existing_violations, minimum_threshold)
     end
   end
 
@@ -73,10 +64,8 @@ class TestQualityChecker < MiniTest::Test
 
     get_test_object('foo', command_options, 'my_output_dir', false,
                     minimum_threshold) do
-      setup_execute_mocks(command_options,
-                          num_violations,
-                          existing_violations,
-                          minimum_threshold)
+      setup_execute_mocks(command_options, num_violations,
+                          existing_violations, minimum_threshold)
     end
   end
 
@@ -109,9 +98,7 @@ class TestQualityChecker < MiniTest::Test
     expect_existing_violations_read(existing_violations, hwm_filename)
     return if [minimum_threshold, num_violations].max == existing_violations
     if !existing_violations.nil? && num_violations < existing_violations
-      @mocks[:logger]
-        .expects(:puts)
-        .with("Ratcheting quality up...")
+      @mocks[:logger].expects(:puts).with('Ratcheting quality up...')
     end
     expect_write_new_violations([minimum_threshold, num_violations].max,
                                 hwm_filename)

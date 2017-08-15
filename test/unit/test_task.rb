@@ -71,8 +71,7 @@ class TestTask < BaseTestTask
     expect_tools_configured(suppressed_tools, uninstalled_tools)
     expect_output_dir_pulled
     expect_verbose_false
-    tools_that_actually_run = (ALL_TOOLS - suppressed_tools) - uninstalled_tools
-    expect_tools_run(tools_that_actually_run)
+    expect_tools_run((ALL_TOOLS - suppressed_tools) - uninstalled_tools)
   end
 
   def expect_tools_run(tools)

@@ -22,13 +22,10 @@ module Quality
 
     extend ::Forwardable
 
-    def initialize(config,
-                   gem_spec: Gem::Specification,
+    def initialize(config, gem_spec: Gem::Specification,
                    quality_checker_class: Quality::QualityChecker,
-                   count_io: IO,
-                   count_file: File,
-                   globber: Dir,
-                   which: Which.new)
+                   count_io: IO, count_file: File,
+                   globber: Dir, which: Which.new)
       @config = config
       @gem_spec = gem_spec
       @quality_checker_class = quality_checker_class
