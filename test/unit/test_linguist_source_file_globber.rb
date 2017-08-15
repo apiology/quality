@@ -95,42 +95,6 @@ class TestLinguistSourceFileGlobber < MiniTest::Test
     mock_js_file_found
   end
 
-  def test_source_and_doc_files
-    globber = get_test_object { mock_files_found }
-    assert_equal(['a.rb', 'foo/b.md', 'c', 'd.jsx'],
-                 globber.source_and_doc_files)
-  end
-
-  def test_source_files
-    globber = get_test_object { mock_files_found }
-    assert_equal(['a.rb', 'c', 'd.jsx'], globber.source_files)
-  end
-
-  def test_ruby_files
-    globber = get_test_object { expect_breakdown_pulled }
-    assert_equal(['a.rb'], globber.ruby_files)
-  end
-
-  def test_shell_files
-    globber = get_test_object { expect_breakdown_pulled }
-    assert_equal(['c'], globber.shell_files)
-  end
-
-  def test_js_files
-    globber = get_test_object { expect_breakdown_pulled }
-    assert_equal(['d.jsx'], globber.js_files)
-  end
-
-  def test_scala_files
-    globber = get_test_object { expect_breakdown_pulled }
-    assert_equal(['e'], globber.scala_files)
-  end
-
-  def test_markdown_files
-    globber = get_test_object { mock_files_found }
-    assert_equal(['foo/b.md'], globber.markdown_files)
-  end
-
   def get_test_object(&twiddle_mocks)
     @mocks = get_initializer_mocks(Quality::LinguistSourceFileGlobber)
     yield @mocks unless twiddle_mocks.nil?
