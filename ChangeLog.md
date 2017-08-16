@@ -169,3 +169,7 @@ Add configurability of scalacheck config
 ## Changes since Quality 27.3.0
 
 Correctly detect exclude glob in punchlist
+
+## Changes since Quality 27.3.1
+
+Add ability to set minimum threshold for values to ratchet to, and default for bigfiles.
