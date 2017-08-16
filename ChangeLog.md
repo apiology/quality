@@ -172,4 +172,4 @@ Correctly detect exclude glob in punchlist
 
 ## Changes since Quality 27.3.1
 
-Add ability to set minimum threshold for values to ratchet to, and default for bigfiles.
+Add ability to set minimum threshold for values to ratchet to, and default minimum threshold of 300 for bigfiles.
