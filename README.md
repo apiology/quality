@@ -11,7 +11,9 @@ worse over time.
 
 ## Why
 
-See [this post](http://blog.apiology.cc/2014/06/scalable-quality-part-1.html) or [these slides](https://docs.google.com/presentation/d/1Op4FH34-enm8luEIuAAVLkuAJ-sB4LKaMm57RJzvfeI/edit#slide) for more information on the problem the quality gem solves.
+See [this post](http://blog.apiology.cc/2014/06/scalable-quality-part-1.html)
+or [these slides](https://docs.google.com/presentation/d/1Op4FH34-enm8luEIuAAVLkuAJ-sB4LKaMm57RJzvfeI/edit#slide)
+for more information on the problem the quality gem solves.
 
 ### Tools
 
@@ -46,14 +48,17 @@ If you'd like to customize, you can link in your own Rakefile like this:
 docker run -v `pwd`:/usr/app -v `pwd`/Rakefile.quality:/usr/quality/Rakefile apiology/quality:latest
 ```
 
-The default 'latest' tag contains the Ruby tools in a relatively small image.  You can also get additional tools (see `Dockerfile.jumbo` in this directory) by using the tag `jumbo-`(version) (e.g., jumbo-latest, jumbo-x.y.z, etc)
+The default 'latest' tag contains the Ruby tools in a relatively small
+image.  You can also get additional tools (see `Dockerfile.jumbo` in
+this directory) by using the tag `jumbo-`(version) (e.g.,
+jumbo-latest, jumbo-x.y.z, etc)
 
 ## How to use - as part of a Ruby-based Rakefile
 
 ```bash
-$ pip install pep8 flake8
-$ brew install cmake icu4c shellcheck scalastyle # OS X
-$ gem install quality
+pip install pep8 flake8
+brew install cmake icu4c shellcheck scalastyle # OS X
+gem install quality
 ```
 
 or in your Gemfile:
@@ -63,10 +68,11 @@ group :development do
   gem 'quality'
 end
 ```
+
 and then:
 
 ```bash
-$ bundle install
+bundle install
 ```
 
 Once you have the gem, configure your Rakefile like this:
@@ -80,14 +86,14 @@ Quality::Rake::Task.new
 Then run:
 
 ```bash
-$ rake quality
+rake quality
 ```
 
 If you want to ratchet up the quality and force yourself to improve
 code, run:
 
 ```bash
-$ rake ratchet
+rake ratchet
 ```
 
 ## Configuration options
@@ -150,11 +156,19 @@ end
 
 ## Vendored files
 
-Quality uses GitHub's [linguist](https://github.com/github/linguist) gem to find and classify source files to analyze.  In addition to the `exclude_files` and `source_files_exclude_glob` options in Quality, you can refer to Linguists's documentation on [overrides](https://github.com/github/linguist#overrides) to use the `gitattributes` file to mark files as vendored, at which point Quality will not try to analyze them.
-  
+Quality uses GitHub's [linguist](https://github.com/github/linguist)
+gem to find and classify source files to analyze.  In addition to
+the `exclude_files` and `source_files_exclude_glob`
+options in Quality, you can refer to
+Linguists's documentation on [overrides](https://github.com/github/linguist#overrides)
+to use the `gitattributes` file to mark files as vendored, at which point
+Quality will not try to analyze them.
+
 ## Code coverage
 
-You can pull a similar trick with code coverage using SimpleCov in Ruby--put 'simplecov' in your Gemfile, and add the code below into your test_helper.rb or spec_helper.rb.
+You can pull a similar trick with code coverage using SimpleCov in
+Ruby--put 'simplecov' in your Gemfile, and add the code below into
+your test_helper.rb or spec_helper.rb.
 
 ```
 require 'simplecov'
@@ -166,7 +180,9 @@ After your first run, check in your coverage/.last_run.json.
 
 ## Caveats
 
-Quality uses [semantic versioning](http://semver.org/)--any incompatible changes (including new tools being added) will come out as major number updates.
+Quality uses [semantic versioning](http://semver.org/)--any incompatible changes
+(including new tools being added) will come out as major number
+updates.
 
 ## Supported Ruby Versions
 
@@ -178,7 +194,8 @@ Tested against Ruby >=2.2--does not support Ruby 1.9.x or JRuby.
 * Create a feature branch
 * Submit a github pull request
 
-Many thanks to all contributors, especially [@andyw8](https://github.com/andyw8), who has contributed some great improvements.
+Many thanks to all contributors, especially [@andyw8](https://github.com/andyw8),
+who has contributed some great improvements.
 
 ### Learn More
 
