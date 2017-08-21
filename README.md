@@ -49,7 +49,7 @@ docker run -v `pwd`:/usr/app -v `pwd`/Rakefile.quality:/usr/quality/Rakefile api
 ```
 
 The default 'latest' tag contains the Ruby tools in a relatively small
-image.  You can also get additional tools (see `Dockerfile.jumbo` in
+image.  You can also get additional tools (see `Rockerfile` in
 this directory) by using the tag `jumbo-`(version) (e.g.,
 jumbo-latest, jumbo-x.y.z, etc)
 
