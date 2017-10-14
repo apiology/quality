@@ -36,8 +36,6 @@ Quality makes use of the following other tools, which do the actual checking:
 
 ## How to use - using Docker
 
-These basic steps assume you have a working Docker installation.
-
 ```
 docker run -v `pwd`:/usr/app apiology/quality:latest
 ```
@@ -219,10 +217,6 @@ Tested against Ruby >=2.2--does not support Ruby 1.9.x or JRuby.
 
 Many thanks to all contributors, especially [@andyw8](https://github.com/andyw8),
 who has contributed some great improvements.
-
-### Learn More
-
-* Browse the code or install the latest development version from [https://github.com/apiology/quality/tree](https://github.com/apiology/quality/tree)
 
 ## License
 
