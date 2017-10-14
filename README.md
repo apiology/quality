@@ -83,6 +83,17 @@ require 'quality/rake/task'
 Quality::Rake::Task.new
 ```
 
+If you're using Rails, you must check your environment in your
+Rakefile.
+
+```ruby
+if Rails.env.development?
+  require 'quality/rake/task'
+
+  Quality::Rake::Task.new
+end
+```
+
 Then run:
 
 ```bash
