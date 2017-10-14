@@ -189,6 +189,18 @@ SimpleCov.refuse_coverage_drop
 
 After your first run, check in your coverage/.last_run.json.
 
+## Build
+
+On OS X, you may
+see [build](https://github.com/brianmario/charlock_holmes/issues/117)
+failures in charlock_holmes.  To work around, if you are
+using
+[Homebrew](https://github.com/brianmario/charlock_holmes#homebrew):
+
+```sh
+bundle config build.charlock_holmes --with-cxxflags=-std=c++11 --with-icu-dir=/usr/local/opt/icu4c
+```
+
 ## Caveats
 
 Quality uses [semantic versioning](http://semver.org/)--any incompatible changes
