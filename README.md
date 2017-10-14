@@ -83,11 +83,16 @@ require 'quality/rake/task'
 Quality::Rake::Task.new
 ```
 
-Make sure you're including `Quality::Rake::Task` only in the
-same environment you've installed the `quality` gem. For example,
-if you're using Rails you may want to check `Rails.env.development?`
-before the require, since Rails uses it's current environment
-as a group for the `Bundler`.
+If you're using Rails, you must check your environment in your
+Rakefile.
+
+```ruby
+if Rails.env.development?
+  require 'quality/rake/task'
+
+  Quality::Rake::Task.new
+end
+```
 
 Then run:
 
