@@ -18,7 +18,7 @@ module Quality
   # Knows how to run different quality tools based on a configuration
   # already determined.
   class Runner
-    TOOL_CLASSES.symbols_and_classes.each_value { |clazz| include clazz }
+    TOOL_CLASSES.symbols_and_classes.each { |_symbol, clazz| include clazz }
 
     extend ::Forwardable
 

@@ -9,7 +9,7 @@ class BaseTestTask < MiniTest::Test
                                         module_name: 'Test::Quality::Tools')
   ALL_TOOLS = tool_classes.basenames_without_extension
   tool_classes.require_classes
-  tool_classes.symbols_and_classes.each_value { |clazz| include clazz }
+  tool_classes.symbols_and_classes.each { |_symbol, clazz| include clazz }
 
   def get_test_object(fiddle_with_task = ->(_task) {}, &twiddle_mocks)
     @mocks = get_initializer_mocks(Quality::Rake::Task)
