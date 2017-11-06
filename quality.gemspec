@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 # ; -*-Ruby-*-
 # -*- encoding: utf-8 -*-
+
 $LOAD_PATH.push File.join(File.dirname(__FILE__), 'lib')
 require 'quality/version'
 
@@ -31,11 +32,11 @@ Gem::Specification.new do |s|
   s.summary = 'Code quality tools for Ruby'
 
   s.add_runtime_dependency('activesupport')
-  s.add_runtime_dependency('github-linguist')
-  s.add_runtime_dependency('cane', ['>= 2.6'])
-  s.add_runtime_dependency('reek', ['>= 1.3.4'])
-  s.add_runtime_dependency('flog', ['>= 4.1.1'])
   s.add_runtime_dependency('bundler-audit')
+  s.add_runtime_dependency('cane', ['>= 2.6'])
+  s.add_runtime_dependency('flog', ['>= 4.1.1'])
+  s.add_runtime_dependency('github-linguist')
+  s.add_runtime_dependency('reek', ['>= 1.3.4'])
   # flay 2.6.0 contained a command-line-parsing issue
   s.add_runtime_dependency('flay', ['>= 2.4', '!= 2.6.0'])
   #
@@ -43,14 +44,14 @@ Gem::Specification.new do |s|
   # version to avoid unexplained metric-changing surprises:
   #
   # https://github.com/bbatsov/rubocop#installation
-  s.add_runtime_dependency('rubocop', '~> 0.51.0')
   s.add_runtime_dependency('mdl')
+  s.add_runtime_dependency('rubocop', '~> 0.51.0')
   # 1.19.0 was a RuboCop 0.51.0 compatibility release
-  s.add_runtime_dependency('rubocop-rspec', ['>=1.19.0'])
   s.add_runtime_dependency('bigfiles', ['>= 0.1'])
-  s.add_runtime_dependency('punchlist', ['>= 1.1'])
   s.add_runtime_dependency('brakeman')
+  s.add_runtime_dependency('punchlist', ['>= 1.1'])
   s.add_runtime_dependency('rails_best_practices')
+  s.add_runtime_dependency('rubocop-rspec', ['>=1.19.0'])
 
   # need above 3.2.2 to support Ruby 2.0 syntax
   #
@@ -63,8 +64,8 @@ Gem::Specification.new do |s|
   s.add_development_dependency('bundler', ['>= 1.1'])
   # Workaround for
   # https://github.com/bundler/bundler/issues/3401
+  s.add_development_dependency('minitest', ['~> 5'])
+  s.add_development_dependency('mocha')
   s.add_development_dependency('rake', ['!= 10.4.2'])
   s.add_development_dependency('simplecov')
-  s.add_development_dependency('mocha')
-  s.add_development_dependency('minitest', ['~> 5'])
 end
