@@ -1,4 +1,3 @@
-#!/usr/bin/env ruby
 # frozen_string_literal: true
 
 # XXX: There's an underlying issue with bundler, and knowing my luck,
