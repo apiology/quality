@@ -61,10 +61,10 @@ module Quality
     def check_exit_status(exit_status)
       return if @command_options[:gives_error_code_on_violations] ||
                 @command_options[:gives_error_code_on_no_relevant_code]
-      if exit_status.nonzero?
-        raise("Error detected running #{full_cmd}.  " \
-              "Exit status is #{exit_status}")
-      end
+      return unless exit_status.nonzero?
+
+      raise("Error detected running #{full_cmd}.  " \
+            "Exit status is #{exit_status}")
     end
 
     MAX_VIOLATIONS = 9_999_999_999

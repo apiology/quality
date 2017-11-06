@@ -78,8 +78,10 @@ module Quality
       end
 
       def define
-        desc 'Verify quality has increased or stayed ' \
-             'the same' unless ::Rake.application.last_description
+        unless ::Rake.application.last_description
+          desc 'Verify quality has increased or stayed ' \
+               'the same'
+        end
         @dsl.define_task(quality_name) { @runner.run_quality }
         @dsl.define_task(ratchet_name) { @runner.run_ratchet }
         @runner.tools.each do |tool_name, tool_exe|
