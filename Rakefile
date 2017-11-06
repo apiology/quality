@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 require 'rake/clean'
 require 'bundler/gem_tasks'
 require 'quality/rake/task'
@@ -33,7 +34,7 @@ task :clear_metrics do |_t|
   raise unless ret
 end
 
-task localtest: [:clear_metrics, :test, :quality]
+task localtest: %i[clear_metrics test quality]
 
 task default: [:localtest]
 

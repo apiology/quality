@@ -5,7 +5,7 @@ require_relative 'test_helper'
 # Test the CommandOutputProcessor class
 class TestRunner < MiniTest::Test
   def all_output_files
-    %w(file1 file2)
+    %w[file1 file2]
   end
 
   def expect_filename_ratcheted(mocks, filename)

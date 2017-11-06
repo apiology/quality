@@ -84,12 +84,12 @@ class TestConfig < MiniTest::Test
     config = get_test_object do
       @mocks[:source_file_globber]
         .expects(:exclude_files=)
-        .with(%w(a b c))
+        .with(%w[a b c])
       @mocks[:source_file_globber]
         .expects(:exclude_files)
-        .returns(%w(a b c))
+        .returns(%w[a b c])
     end
-    config.exclude_files = %w(a b c)
+    config.exclude_files = %w[a b c]
     assert_equal('{a,b,c}', config.source_files_exclude_glob)
   end
 

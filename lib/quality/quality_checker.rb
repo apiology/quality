@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 require_relative 'command_output_processor'
 require_relative 'process'
 require_relative 'ruby_spawn'
@@ -60,8 +61,10 @@ module Quality
     def check_exit_status(exit_status)
       return if @command_options[:gives_error_code_on_violations] ||
                 @command_options[:gives_error_code_on_no_relevant_code]
-      raise("Error detected running #{full_cmd}.  " \
-            "Exit status is #{exit_status}") if exit_status.nonzero?
+      if exit_status.nonzero?
+        raise("Error detected running #{full_cmd}.  " \
+              "Exit status is #{exit_status}")
+      end
     end
 
     MAX_VIOLATIONS = 9_999_999_999

@@ -103,13 +103,13 @@ class TestTask < BaseTestTask
 
   def expect_find_ruby_files
     ruby_files =
-      %w(fake1.rb fake2.rb features/featuresfake1.rb lib/libfake1.rb
-         test/testfake1.rb)
+      %w[fake1.rb fake2.rb features/featuresfake1.rb lib/libfake1.rb
+         test/testfake1.rb]
     @mocks[:config].expects(:ruby_files).returns(ruby_files)
   end
 
   def expect_find_shell_files
-    shell_files = %w(fake1.sh)
+    shell_files = %w[fake1.sh]
     @mocks[:config].expects(:shell_files).returns(shell_files)
   end
 
@@ -120,7 +120,7 @@ class TestTask < BaseTestTask
   def expect_find_js_files
     @mocks[:config]
       .expects(:js_files)
-      .returns(%w(fake1.js features/featuresfake1.js src/foo/testfake1.js))
+      .returns(%w[fake1.js features/featuresfake1.js src/foo/testfake1.js])
   end
 
   def expect_find_python_files

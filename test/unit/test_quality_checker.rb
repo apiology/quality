@@ -59,7 +59,7 @@ class TestQualityChecker < MiniTest::Test
     process.expects(:run).yields(command_output).returns(0)
     command_output_processor.expects(:file=).with(command_output)
     process_expectation = command_output_processor.expects(:process)
-    %w(line line).each { |line| process_expectation.yields(line) }
+    %w[line line].each { |line| process_expectation.yields(line) }
   end
 
   def expect_create_new_processor

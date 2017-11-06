@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 # Acts as the 'Runner' class for testing the tool plug-in modules
 class MockRunner
   include Quality::Tools::Pep8

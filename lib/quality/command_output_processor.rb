@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 module Quality
   # Class processes output from a code quality command, tweaking it
   # for editor output and counting the number of violations found
