@@ -119,9 +119,7 @@ module Quality
     end
 
     def real_files_of_type(file_type)
-      real_files_matching do |blob, _filename|
-        blob.language.to_s == file_type
-      end
+      real_files_matching { |blob, _filename| blob.language.to_s == file_type }
     end
 
     def markdown_files
