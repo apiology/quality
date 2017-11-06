@@ -46,4 +46,9 @@ task :publish_docker do
   sh './publish-docker-image.sh'
 end
 
-task publish_all: [:localtest, :release, :wait_for_release, :publish_docker]
+#
+# Before this:
+#  * Check if there's a newer RuboCop version.  If so, bump major
+#    version of quality and change quality.gemfile to point to it.
+#  * Check Changelog.md against actual checkins; add any missing content.
+task publish_all: %i[localtest release wait_for_release publish_docker]

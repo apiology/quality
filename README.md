@@ -151,6 +151,12 @@ Quality uses [semantic versioning](http://semver.org/)--any incompatible changes
 (including new tools being added) will come out as major number
 updates.
 
+This includes RuboCop upgrades - the quality gem locks in a specific
+minor version of RuboCop to avoid your metrics being bumped and
+breaking your build.
+
+Expect your build to break on major upgrades if you use RuboCop.
+
 ## Supported Ruby Versions
 
 Tested against Ruby >=2.2--does not support Ruby 1.9.x or JRuby.

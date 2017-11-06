@@ -38,9 +38,15 @@ Gem::Specification.new do |s|
   s.add_runtime_dependency('bundler-audit')
   # flay 2.6.0 contained a command-line-parsing issue
   s.add_runtime_dependency('flay', ['>= 2.4', '!= 2.6.0'])
-  s.add_runtime_dependency('rubocop')
+  #
+  # per version advice here - locks quality gem version with rubocop
+  # version to avoid unexplained metric-changing surprises:
+  #
+  # https://github.com/bbatsov/rubocop#installation
+  s.add_runtime_dependency('rubocop', '~> 0.51.0')
   s.add_runtime_dependency('mdl')
-  s.add_runtime_dependency('rubocop-rspec')
+  # 1.19.0 was a RuboCop 0.51.0 compatibility release
+  s.add_runtime_dependency('rubocop-rspec', ['>=1.19.0'])
   s.add_runtime_dependency('bigfiles', ['>= 0.1'])
   s.add_runtime_dependency('punchlist', ['>= 1.1'])
   s.add_runtime_dependency('brakeman')

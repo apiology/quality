@@ -206,4 +206,6 @@
 
 ## Changes since Quality 27.4.0
 
+* Bumped and locked in RuboCop version.  RuboCop version will not change between
+  quality gem major versions.
 * Remove support for Ruby 2.1
