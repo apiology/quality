@@ -203,3 +203,7 @@
 
 * Add ability to set minimum threshold for values to ratchet to, and
   default minimum threshold of 300 for bigfiles.
+
+## Changes since Quality 27.4.0
+
+* Remove support for Ruby 2.1
