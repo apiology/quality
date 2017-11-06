@@ -209,3 +209,4 @@
 * Bumped and locked in RuboCop version.  RuboCop version will not change between
   quality gem major versions.
 * Remove support for Ruby 2.1
+* Add note on Rails and Rakefile (thanks, @andresakata!)
