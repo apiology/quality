@@ -4,5 +4,5 @@
 # reek, flog, flay and rubocop and makes sure your numbers don't get
 # any worse over time.
 module Quality
-  VERSION = '28.0.0'.freeze
+  VERSION = '29.0.0'.freeze
 end

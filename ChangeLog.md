@@ -210,3 +210,8 @@
   quality gem major versions.
 * Remove support for Ruby 2.1
 * Add note on Rails and Rakefile (thanks, @andresakata!)
+
+## Changes since Quality 28.0.0
+
+* RuboCop 0.52.1
+* Tested against Ruby 2.5
