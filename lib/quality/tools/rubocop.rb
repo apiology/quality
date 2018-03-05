@@ -11,7 +11,12 @@ module Quality
       private
 
       def rubocop_args
-        "--require rubocop-rspec --format emacs #{ruby_files.join(' ')}"
+        [
+          '--force-exclusion',
+          '--require rubocop-rspec',
+          '--format emacs',
+          *ruby_files,
+        ].join(' ')
       end
 
       def quality_rubocop

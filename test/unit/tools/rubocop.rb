@@ -20,8 +20,19 @@ module Test
         private
 
         def rubocop_args
-          '--require rubocop-rspec --format emacs fake1.rb fake2.rb ' \
-          'features/featuresfake1.rb lib/libfake1.rb test/testfake1.rb'
+          [
+            '--force-exclusion',
+            '--require rubocop-rspec',
+            '--format emacs',
+            *ruby_files,
+          ].join(' ')
+        end
+
+        def ruby_files
+          %w[
+            fake1.rb fake2.rb
+            features/featuresfake1.rb lib/libfake1.rb test/testfake1.rb
+          ]
         end
       end
     end
