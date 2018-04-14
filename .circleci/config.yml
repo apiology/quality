@@ -7,7 +7,7 @@ jobs:
     steps:
       - checkout
       - type: cache-restore
-        key: quality-{{ checksum "Gemfile.lock" }}
+        key: quality-{{ checksum "quality.gemspec" }}-{{ checksum "Gemfile" }}
       - run: bundle install --path vendor/bundle --jobs=4
       - run: bundle exec rake clear_metrics
       - run: bundle exec rake --jobs=4 test quality
@@ -17,6 +17,6 @@ jobs:
             branches:
               only: master
       - type: cache-save
-        key: quality-{{ checksum "Gemfile.lock" }}
+        key: quality-{{ checksum "quality.gemspec" }}-{{ checksum "Gemfile" }}
         paths:
           - "vendor/bundle"
