@@ -8,7 +8,10 @@ Style/StringLiterals:
       - double_quotes
     ConsistentQuotesInMultiline: true
 
-Style/TrailingCommaInLiteral:
+Style/TrailingCommaInArrayLiteral:
+  EnforcedStyleForMultiline: comma
+
+Style/TrailingCommaInHashLiteral:
   EnforcedStyleForMultiline: comma
 
 # I use keyword arguments for a poor man's dependency injection to cut
