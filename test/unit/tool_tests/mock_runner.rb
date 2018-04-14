@@ -2,7 +2,7 @@
 
 # Acts as the 'Runner' class for testing the tool plug-in modules
 class MockRunner
-  include Quality::Tools::Pep8
+  include Quality::Tools::Pycodestyle
   include Quality::Tools::Flake8
   include Quality::Tools::Jscs
   def initialize(lines)

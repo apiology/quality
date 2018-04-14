@@ -19,10 +19,10 @@ PUSH apiology/quality:latest
 FROM apiology/quality:base-latest
 
 #
-# Install flake8 and pep8
+# Install flake8 and pycodestyle
 #
 RUN apk add --no-cache python py-pip && \
-    pip install flake8 pep8
+    pip3 install flake8 pycodestyle
 
 
 #

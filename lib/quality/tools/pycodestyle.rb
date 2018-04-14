@@ -2,19 +2,19 @@
 
 module Quality
   module Tools
-    # Adds 'pep8' tool support to quality gem
-    module Pep8
+    # Adds 'pycodestyle' tool support to quality gem
+    module Pycodestyle
       private
 
-      def pep8_args
+      def pycodestyle_args
         python_files.join(' ')
       end
 
-      def pep8_count_errors(line)
+      def pycodestyle_count_errors(line)
         if line =~ /^Usage:/
           # no files specified
           0
-        elsif line =~ /^pep8: /
+        elsif line =~ /^pycodestyle: /
           # no files specified
           0
         elsif line =~ /^$/
@@ -25,12 +25,12 @@ module Quality
         end
       end
 
-      def quality_pep8
-        ratchet_quality_cmd('pep8',
-                            args: pep8_args,
+      def quality_pycodestyle
+        ratchet_quality_cmd('pycodestyle',
+                            args: pycodestyle_args,
                             gives_error_code_on_no_relevant_code:
                               true) do |line|
-          pep8_count_errors(line)
+          pycodestyle_count_errors(line)
         end
       end
     end

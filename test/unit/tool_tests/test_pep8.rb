@@ -4,17 +4,17 @@
 require_relative '../test_helper.rb'
 require_relative 'mock_runner'
 
-require 'quality/tools/pep8'
+require 'quality/tools/pycodestyle'
 
-# Unit test the Task class
-class TestPep8 < MiniTest::Test
-  def test_pep8
+# Unit test the Pycodestyle class
+class TestPycodestyle < MiniTest::Test
+  def test_pycodestyle
     lines = [
       'Usage: something something something',
-      'pep8: something something something',
+      'pycodestyle: something something something',
       'real line',
     ]
     m = MockRunner.new(lines)
-    assert_equal(1, m.run('pep8'))
+    assert_equal(1, m.run('pycodestyle'))
   end
 end

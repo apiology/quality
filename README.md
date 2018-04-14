@@ -28,7 +28,7 @@ Quality makes use of the following other tools, which do the actual checking:
 * [flay](https://github.com/seattlerb/flay)
 * [flog](https://github.com/seattlerb/flog)
 * [jscs](http://jscs.info/)
-* [pep8](https://pypi.python.org/pypi/pep8)
+* [pycodestyle](https://github.com/PyCQA/pycodestyle)
 * [punchlist](https://github.com/apiology/punchlist)
 * [rails_best_practices](https://github.com/railsbp/rails_best_practices)
 * [reek](https://github.com/troessner/reek)
@@ -54,7 +54,7 @@ jumbo-latest, jumbo-x.y.z, etc)
 ## How to use - as part of a Ruby-based Rakefile
 
 ```bash
-pip install pep8 flake8
+pip install pycodestyle flake8
 brew install cmake icu4c shellcheck scalastyle # OS X
 gem install quality
 ```
