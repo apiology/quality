@@ -21,6 +21,27 @@ CLOBBER.include("#{BUILD_DIR}/*")
 
 Dir['tasks/**/*.rake'].each { |t| load t }
 
+task after_test_success: %i[tag trigger_next_builds]
+
+task :tag do
+  sh 'git tag -f tests_passed'
+  sh 'git push -f origin tests_passed'
+end
+
+task :pronto do
+  sh 'pronto run -c origin/master --no-exit-code --unstaged || true'
+  sh 'pronto run -c origin/master --no-exit-code --staged || true'
+  sh 'pronto run -c origin/master --no-exit-code || true'
+  sh 'git fetch --tags'
+  sh 'pronto run -c tests_passed --no-exit-code || true'
+end
+
+task :update_bundle_audit do
+  sh 'bundle-audit update'
+end
+
+task quality: %i[pronto update_bundle_audit]
+
 Quality::Rake::Task.new do |t|
   t.exclude_files = ['etc/scalastyle_config.xml', 'ChangeLog.md']
   t.minimum_threshold = { bigfiles: 300 }
