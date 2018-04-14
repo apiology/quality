@@ -226,3 +226,7 @@
 * pep8 -> pycodestyle tool rename
 * python 2.7 -> 3.6 in Docker image
 * Force-update rest-client to avoid CVEs
+
+## Changes since Quality 31.0.0
+
+* Work around pycodestyle/flake8 interaction issue

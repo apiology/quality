@@ -19,13 +19,6 @@ PUSH apiology/quality:latest
 FROM apiology/quality:base-latest
 
 #
-# Install flake8 and pycodestyle
-#
-RUN apk add --no-cache python3 py3-pip && \
-    pip3 install flake8 pycodestyle
-
-
-#
 # Install shellcheck
 #
 
@@ -128,6 +121,25 @@ RUN wget "https://oss.sonatype.org/content/repositories/releases/org/scalastyle/
     echo '#!/bin/bash' > /bin/scalastyle && \
     echo "java -jar `pwd`/${SCALASTYLE_JAR}" --config "/usr/src/scalastyle_config.xml" '${@}' >> /bin/scalastyle && \
     chmod +x /bin/scalastyle
+
+
+
+
+#
+# Install flake8 and pycodestyle
+#
+
+# Note: flake8 actually uses pycodestyle internally, and requires the
+# version installed be less than 2.4.0:
+#
+# https://gitlab.com/pycqa/flake8/issues/406
+# https://gitlab.com/pycqa/flake8/blob/master/setup.py
+#
+RUN apk add --no-cache python3 py3-pip && \
+    pip3 install flake8 'pycodestyle<2.4.0'
+
+
+
 
 RUN gem install --no-ri --no-rdoc quality -v {{ .quality_gem_version }}
 
