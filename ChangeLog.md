@@ -219,3 +219,4 @@
 ## Changes since Quality 29.0.0
 
 * added --force-exclusion command line for RuboCop
+* RuboCop 0.54.0
