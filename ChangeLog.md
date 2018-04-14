@@ -234,3 +234,6 @@
 ## Changes since Quality 31.0.1
 
 * Add initial pronto support to Rockerfile
+* Switch internal builds to CircleCI 2.0
+* Use Ruby 2.3 for internal builds
+* Work around flake8/pycodestyle interaction issue
