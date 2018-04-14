@@ -9,7 +9,7 @@ ENTRYPOINT /entrypoint.sh
 
 PUSH apiology/quality:base-latest
 
-RUN gem install --no-ri --no-rdoc quality -v {{ .quality_gem_version }}
+RUN gem install --no-ri --no-rdoc quality:{{ .quality_gem_version }}
 
 PUSH apiology/quality:{{ .quality_gem_version }}
 PUSH apiology/quality:{{ .quality_gem_minor_version }}
@@ -141,7 +141,7 @@ RUN apk add --no-cache python3 py3-pip && \
 
 
 
-RUN gem install --no-ri --no-rdoc quality -v {{ .quality_gem_version }}
+RUN gem install --no-ri --no-rdoc quality:{{ .quality_gem_version }} pronto
 
 VOLUME /usr/app
 WORKDIR /usr/app

@@ -230,3 +230,7 @@
 ## Changes since Quality 31.0.0
 
 * Work around pycodestyle/flake8 interaction issue
+
+## Changes since Quality 31.0.1
+
+* Add initial pronto support to Rockerfile
