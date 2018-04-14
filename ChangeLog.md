@@ -220,3 +220,8 @@
 
 * added --force-exclusion command line for RuboCop
 * RuboCop 0.54.0
+
+## Changes since Quality 30.0.0
+
+* pep8 -> pycodestyle tool rename
+* python 2.7 -> 3.6 in Docker image

@@ -21,7 +21,7 @@ FROM apiology/quality:base-latest
 #
 # Install flake8 and pycodestyle
 #
-RUN apk add --no-cache python py-pip && \
+RUN apk add --no-cache python3 py3-pip && \
     pip3 install flake8 pycodestyle
 
 
