@@ -21,7 +21,7 @@ CLOBBER.include("#{BUILD_DIR}/*")
 
 Dir['tasks/**/*.rake'].each { |t| load t }
 
-task after_test_success: %i[tag trigger_next_builds]
+task after_test_success: %i[tag]
 
 task :tag do
   sh 'git tag -f tests_passed'
