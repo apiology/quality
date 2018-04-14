@@ -225,3 +225,4 @@
 
 * pep8 -> pycodestyle tool rename
 * python 2.7 -> 3.6 in Docker image
+* Force-update rest-client to avoid CVEs
