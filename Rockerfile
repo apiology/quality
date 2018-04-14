@@ -1,5 +1,5 @@
 FROM alpine:latest
-RUN apk update && apk add --no-cache ruby ruby-irb ruby-dev make gcc libc-dev git icu-dev zlib-dev g++ cmake && gem install --no-ri --no-rdoc io-console bigdecimal rake
+RUN apk update && apk add --no-cache ruby ruby-irb ruby-dev make gcc libc-dev git icu-dev zlib-dev g++ cmake openssl-dev  && gem install --no-ri --no-rdoc io-console bigdecimal rake
 VOLUME /usr/app
 RUN mkdir /usr/quality
 ADD sample-project/Rakefile /usr/quality/Rakefile
@@ -47,7 +47,7 @@ RUN cabal update && cabal install
 ENV PATH="/root/.cabal/bin:$PATH"
 
 # https://github.com/sgerrand/alpine-pkg-glibc
-RUN apk --no-cache add ca-certificates openssl openssl-dev && \
+RUN apk --no-cache add ca-certificates openssl && \
     update-ca-certificates && \
     wget -q -O /etc/apk/keys/sgerrand.rsa.pub https://raw.githubusercontent.com/sgerrand/alpine-pkg-glibc/master/sgerrand.rsa.pub && \
     wget https://github.com/sgerrand/alpine-pkg-glibc/releases/download/2.23-r3/glibc-2.23-r3.apk && \
