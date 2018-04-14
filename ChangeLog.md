@@ -215,3 +215,7 @@
 
 * RuboCop 0.52.1
 * Tested against Ruby 2.5
+
+## Changes since Quality 29.0.0
+
+* added --force-exclusion command line for RuboCop
