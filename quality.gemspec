@@ -39,6 +39,8 @@ Gem::Specification.new do |s|
   s.add_runtime_dependency('reek', ['>= 1.3.4'])
   # flay 2.6.0 contained a command-line-parsing issue
   s.add_runtime_dependency('flay', ['>= 2.4', '!= 2.6.0'])
+  # avoid security issues - CVE-2015-1820, CVE-2015-3448
+  s.add_runtime_dependency('rest-client', ['>= 1.8.0'])
   #
   # per version advice here - locks quality gem version with rubocop
   # version to avoid unexplained metric-changing surprises:
