@@ -6,7 +6,8 @@ ADD sample-project/Rakefile /usr/quality/Rakefile
 RUN gem install --no-ri --no-rdoc quality # cache dependencies, mainly - fresh version installed later on
 WORKDIR /usr/app
 COPY entrypoint.sh /
-ENTRYPOINT /entrypoint.sh
+ENTRYPOINT ["/entrypoint.sh"]
+CMD ["quality"]
 
 PUSH apiology/quality:base-latest
 
@@ -147,7 +148,8 @@ RUN gem install --no-ri --no-rdoc quality:{{ .quality_gem_version }}
 
 VOLUME /usr/app
 WORKDIR /usr/app
-ENTRYPOINT /entrypoint.sh
+ENTRYPOINT ["/entrypoint.sh"]
+CMD ["quality"]
 
 TAG apiology/quality:jumbo-{{ .quality_gem_version }}
 

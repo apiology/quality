@@ -36,13 +36,13 @@ Quality makes use of the following other tools, which do the actual checking:
 
 ## How to use - using Docker
 
-```
+```bash
 docker run -v `pwd`:/usr/app apiology/quality:latest
 ```
 
 If you'd like to customize, you can link in your own Rakefile like this:
 
-```
+```bash
 docker run -v `pwd`:/usr/app -v `pwd`/Rakefile.quality:/usr/quality/Rakefile apiology/quality:latest
 ```
 
@@ -50,6 +50,12 @@ The default 'latest' tag contains the Ruby tools in a relatively small
 image.  You can also get additional tools (see `Rockerfile` in
 this directory) by using the tag `jumbo-`(version) (e.g.,
 jumbo-latest, jumbo-x.y.z, etc)
+
+To run an individual tool, you can run like this:
+
+```bash
+docker run -v `pwd`:/usr/app apiology/quality:latest rubocop
+```
 
 ## How to use - as part of a Ruby-based Rakefile
 
