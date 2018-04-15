@@ -237,3 +237,9 @@
 * Switch internal builds to CircleCI 2.0
 * Use Ruby 2.3 for internal builds
 * Work around flake8/pycodestyle interaction issue
+
+## Changes since Quality 31.1.0
+
+* Drop pronto-eslint from image, since no JS installed
+* Add pre-caching step for quality gem dependencies
+* Allow individual tools to be run via Docker
