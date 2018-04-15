@@ -3,6 +3,7 @@ RUN apk update && apk add --no-cache ruby ruby-irb ruby-dev make gcc libc-dev gi
 VOLUME /usr/app
 RUN mkdir /usr/quality
 ADD sample-project/Rakefile /usr/quality/Rakefile
+RUN gem install --no-ri --no-rdoc quality # cache dependencies, mainly - fresh version installed later on
 WORKDIR /usr/app
 COPY entrypoint.sh /
 ENTRYPOINT /entrypoint.sh
