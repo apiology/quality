@@ -1,6 +1,7 @@
-# frozen_string_literal: true
-# ; -*-Ruby-*-
 # -*- encoding: utf-8 -*-
+# frozen_string_literal: true
+
+# ; -*-Ruby-*-
 
 $LOAD_PATH.push File.join(File.dirname(__FILE__), 'lib')
 require 'quality/version'
