@@ -243,3 +243,8 @@
 * Drop pronto-eslint from image, since no JS installed
 * Add pre-caching step for quality gem dependencies
 * Allow individual tools to be run via Docker
+
+## Changes since Quality 31.2.1
+* Default Docker runs to non-verbose
+* Output full command-line upon failure
+* Fix command-output to split lines at 80 columns.
