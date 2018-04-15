@@ -46,7 +46,7 @@ Quality::Rake::Task.new do |t|
   t.exclude_files = ['etc/scalastyle_config.xml', 'ChangeLog.md']
   t.minimum_threshold = { bigfiles: 300 }
   t.skip_tools = ['reek']
-  t.verbose = true
+  # t.verbose = true
 end
 
 task :clear_metrics do |_t|
