@@ -11,5 +11,5 @@ end
 task quality: %i[pronto]
 
 Quality::Rake::Task.new do |t|
-  t.verbose = true
+  # t.verbose = true
 end
