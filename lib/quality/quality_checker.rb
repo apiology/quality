@@ -51,7 +51,7 @@ module Quality
     def run_command(processor, &count_violations_on_line)
       runner = @process_class.new(full_cmd + ' 2>&1')
 
-      puts full_cmd if @verbose
+      puts rendered_full_cmd if @verbose
       runner.run do |file|
         processor.file = file
         @command_output = processor.process(&count_violations_on_line)
@@ -63,7 +63,7 @@ module Quality
                 @command_options[:gives_error_code_on_no_relevant_code]
       return unless exit_status.nonzero?
 
-      raise("Error detected running #{full_cmd}.  " \
+      raise("Error detected running #{rendered_full_cmd}.  " \
             "Exit status is #{exit_status}")
     end
 
@@ -80,8 +80,13 @@ module Quality
         end
     end
 
+    def rendered_full_cmd
+      full_cmd.scan(/.{1,78}/).join("\\\n")
+    end
+
     def error_too_many_violations!
-      raise("Output from #{@cmd}\n\n#{@command_output}\n\n" \
+      raise("Output from:\n\n" \
+            "#{rendered_full_cmd}\n\n#{@command_output}\n\n" \
             "Reduce total number of #{@cmd} violations " \
             "to #{existing_violations} or below!")
     end
