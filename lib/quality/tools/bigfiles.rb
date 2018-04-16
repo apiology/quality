@@ -15,6 +15,8 @@ module Quality
       end
 
       def quality_bigfiles
+        return if source_and_doc_files.empty?
+
         ratchet_quality_cmd('bigfiles',
                             args: bigfiles_args) do |line|
           line.split(':')[0].to_i

@@ -29,6 +29,8 @@ module Quality
       end
 
       def quality_jscs
+        return if js_files.empty?
+
         ratchet_quality_cmd('jscs',
                             args: jscs_args,
                             gives_error_code_on_violations: true) do |line|

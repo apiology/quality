@@ -20,6 +20,8 @@ module Quality
       end
 
       def quality_rubocop
+        return if ruby_files.empty?
+
         ratchet_quality_cmd('rubocop',
                             gives_error_code_on_violations: true,
                             args: rubocop_args) do |line|

@@ -11,6 +11,8 @@ module Quality
       end
 
       def quality_flay
+        return if ruby_files.empty?
+
         ratchet_quality_cmd('flay',
                             args: flay_args,
                             emacs_format: true) do |line|

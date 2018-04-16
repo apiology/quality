@@ -26,6 +26,8 @@ module Quality
       end
 
       def quality_flake8
+        return if python_files.empty?
+
         ratchet_quality_cmd('flake8',
                             args: flake8_args,
                             gives_error_code_on_no_relevant_code:

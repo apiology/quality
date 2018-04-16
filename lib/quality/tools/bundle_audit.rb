@@ -11,6 +11,8 @@ module Quality
       private
 
       def quality_bundle_audit
+        return if ruby_files.empty?
+
         ratchet_quality_cmd('bundle-audit',
                             args: '',
                             gives_error_code_on_violations: true) do |line|

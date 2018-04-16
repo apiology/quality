@@ -11,6 +11,8 @@ module Quality
       private
 
       def quality_reek
+        return if ruby_files.empty?
+
         args = "--single-line #{ruby_files.join(' ')}"
         ratchet_quality_cmd('reek',
                             args: args,

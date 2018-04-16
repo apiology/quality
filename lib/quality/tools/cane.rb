@@ -29,6 +29,8 @@ module Quality
       end
 
       def quality_cane
+        return if ruby_files.empty?
+
         ratchet_quality_cmd('cane', gives_error_code_on_violations: true,
                                     args: cane_args,
                                     emacs_format: true) do |line|

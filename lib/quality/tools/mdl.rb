@@ -11,10 +11,7 @@ module Quality
       end
 
       def quality_mdl
-        if mdl_args.empty?
-          puts 'No markdown files found--skipping mdl'
-          return
-        end
+        return if markdown_files.empty?
 
         ratchet_quality_cmd('mdl',
                             args: mdl_args,

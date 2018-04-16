@@ -11,6 +11,8 @@ module Quality
       private
 
       def quality_flog
+        return if ruby_files.empty?
+
         args = "--all --continue --methods-only #{ruby_files.join(' ')}"
         ratchet_quality_cmd('flog', args: args, emacs_format: true) do |line|
           self.class.count_violations_in_flog_output(line)

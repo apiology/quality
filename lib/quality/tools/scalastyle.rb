@@ -17,6 +17,8 @@ module Quality
       end
 
       def quality_scalastyle
+        return if scala_files.empty?
+
         ratchet_quality_cmd('scalastyle',
                             args: scalastyle_args,
                             gives_error_code_on_no_relevant_code: true,

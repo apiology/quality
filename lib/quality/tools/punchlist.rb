@@ -20,6 +20,8 @@ module Quality
       end
 
       def quality_punchlist
+        return if source_and_doc_files.empty?
+
         ratchet_quality_cmd('punchlist',
                             args: punchlist_args) do |_line|
           1

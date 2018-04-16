@@ -11,6 +11,8 @@ module Quality
       end
 
       def quality_eslint
+        return if js_files.empty?
+
         ratchet_quality_cmd('eslint',
                             args: eslint_args,
                             gives_error_code_on_violations: true) do |line|

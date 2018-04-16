@@ -7,6 +7,8 @@ module Quality
       private
 
       def quality_brakeman
+        return if ruby_files.empty?
+
         ratchet_quality_cmd('brakeman',
                             args: '-q --summary -f csv 2>/dev/null',
                             gives_error_code_on_no_relevant_code:

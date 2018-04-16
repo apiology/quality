@@ -11,6 +11,8 @@ module Quality
       private
 
       def quality_rails_best_practices
+        return if ruby_files.empty?
+
         ratchet_quality_cmd('rails_best_practices',
                             gives_error_code_on_violations: true) do |line|
           self.class.count_rails_best_practices_violations(line)

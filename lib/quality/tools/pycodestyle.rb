@@ -26,6 +26,8 @@ module Quality
       end
 
       def quality_pycodestyle
+        return if python_files.empty?
+
         ratchet_quality_cmd('pycodestyle',
                             args: pycodestyle_args,
                             gives_error_code_on_no_relevant_code:
