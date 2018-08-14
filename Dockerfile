@@ -46,9 +46,9 @@ ENV LANG=C.UTF-8
 # https://hub.docker.com/r/frolvlad/alpine-oraclejdk8/~/dockerfile/
 
 ENV JAVA_VERSION=8 \
-    JAVA_UPDATE=161 \
-    JAVA_BUILD=12 \
-    JAVA_PATH=2f38c3b165be4555a1fa6e98c45e0808 \
+    JAVA_UPDATE=181 \
+    JAVA_BUILD=13 \
+    JAVA_PATH=96a7b8442fe848ef90c96a2fad6ed6d1 \
     JAVA_HOME="/usr/lib/jvm/default-jvm"
 
 RUN apk add --no-cache --virtual=build-dependencies wget ca-certificates unzip && \
