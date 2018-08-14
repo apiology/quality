@@ -6,10 +6,9 @@ before_install:
 env:
   - JRUBY_OPTS="--debug"
 rvm:
-# - 2.2.10 # almost-EOL 2.2 has some kind of mocking difference that fails tests in a presumptive false positive
+  - ruby-head
   - 2.3.7
   - 2.4.4
   - 2.5.1
-  - 2.6.0-preview1
+  - 2.6.0-preview2
 #  - jruby-head # linguist gem doesn't support JRuby; bundle install doesn't work.
-  - ruby-head
