@@ -137,6 +137,7 @@ RUN apk add --no-cache python3 py3-pip && \
 
 
 RUN gem install --no-ri --no-rdoc pronto pronto-reek pronto-rubocop pronto-flake8 pronto-shellcheck pronto-flay
+ARG quality_gem_version
 RUN gem install --no-ri --no-rdoc quality:$quality_gem_version
 
 VOLUME /usr/app
