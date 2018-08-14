@@ -11,7 +11,6 @@ docker build \
        -t apiology/quality:latest \
        --build-arg quality_gem_version="${quality_gem_version:?}" \
        --target latest \
-       ${QUALITY_BUILD_ARGS} \
        .
 
 docker build \
@@ -21,7 +20,6 @@ docker build \
        -t apiology/quality:jumbo-latest \
        --build-arg quality_gem_version="${quality_gem_version:?}" \
        --target jumbo \
-       ${QUALITY_BUILD_ARGS} \
        .
 
 for tag in ${quality_gem_version:?} \
