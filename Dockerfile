@@ -1,4 +1,4 @@
-FROM alpine:latest
+FROM alpine:latest AS base
 RUN apk update && apk add --no-cache ruby ruby-irb ruby-dev make gcc libc-dev git icu-dev zlib-dev g++ cmake openssl-dev  && gem install --no-ri --no-rdoc io-console bigdecimal rake
 VOLUME /usr/app
 RUN mkdir /usr/quality
@@ -8,16 +8,11 @@ COPY entrypoint.sh /
 ENTRYPOINT ["/entrypoint.sh"]
 CMD ["quality"]
 
-PUSH apiology/quality:base-latest
+FROM base AS latest
+ARG quality_gem_version
+RUN gem install --no-ri --no-rdoc quality:${quality_gem_version}
 
-RUN gem install --no-ri --no-rdoc quality:{{ .quality_gem_version }}
-
-PUSH apiology/quality:{{ .quality_gem_version }}
-PUSH apiology/quality:{{ .quality_gem_minor_version }}
-PUSH apiology/quality:{{ .quality_gem_major_version }}
-PUSH apiology/quality:latest
-
-FROM apiology/quality:base-latest
+FROM base AS jumbo
 
 #
 # Install shellcheck
@@ -30,7 +25,7 @@ RUN echo "https://s3-us-west-2.amazonaws.com/alpine-ghc/8.0" >> /etc/apk/reposit
     apk add --no-cache ghc cabal stack
 
 # https://github.com/NLKNguyen/alpine-shellcheck/blob/master/builder/Dockerfile
-RUN apk add --no-cache build-base git
+RUN apk add --no-cache build-base git wget
 
 RUN mkdir -p /usr/src/shellcheck
 WORKDIR /usr/src/shellcheck
@@ -41,20 +36,19 @@ RUN cabal update && cabal install
 ENV PATH="/root/.cabal/bin:$PATH"
 
 # https://github.com/sgerrand/alpine-pkg-glibc
-RUN apk --no-cache add ca-certificates openssl && \
-    update-ca-certificates && \
-    wget -q -O /etc/apk/keys/sgerrand.rsa.pub https://raw.githubusercontent.com/sgerrand/alpine-pkg-glibc/master/sgerrand.rsa.pub && \
-    wget https://github.com/sgerrand/alpine-pkg-glibc/releases/download/2.23-r3/glibc-2.23-r3.apk && \
-    apk add glibc-2.23-r3.apk
+RUN apk --no-cache add ca-certificates wget && \
+    wget -q -O /etc/apk/keys/sgerrand.rsa.pub https://alpine-pkgs.sgerrand.com/sgerrand.rsa.pub && \
+    wget https://github.com/sgerrand/alpine-pkg-glibc/releases/download/2.28-r0/glibc-2.28-r0.apk && \
+    apk add glibc-2.28-r0.apk
 
 ENV LANG=C.UTF-8
 
 # https://hub.docker.com/r/frolvlad/alpine-oraclejdk8/~/dockerfile/
 
 ENV JAVA_VERSION=8 \
-    JAVA_UPDATE=161 \
-    JAVA_BUILD=12 \
-    JAVA_PATH=2f38c3b165be4555a1fa6e98c45e0808 \
+    JAVA_UPDATE=181 \
+    JAVA_BUILD=13 \
+    JAVA_PATH=96a7b8442fe848ef90c96a2fad6ed6d1 \
     JAVA_HOME="/usr/lib/jvm/default-jvm"
 
 RUN apk add --no-cache --virtual=build-dependencies wget ca-certificates unzip && \
@@ -143,16 +137,10 @@ RUN apk add --no-cache python3 py3-pip && \
 
 
 RUN gem install --no-ri --no-rdoc pronto pronto-reek pronto-rubocop pronto-flake8 pronto-shellcheck pronto-flay
-RUN gem install --no-ri --no-rdoc quality:{{ .quality_gem_version }}
+ARG quality_gem_version
+RUN gem install --no-ri --no-rdoc quality:$quality_gem_version
 
 VOLUME /usr/app
 WORKDIR /usr/app
 ENTRYPOINT ["/entrypoint.sh"]
 CMD ["quality"]
-
-TAG apiology/quality:jumbo-{{ .quality_gem_version }}
-
-PUSH apiology/quality:jumbo-{{ .quality_gem_version }}
-PUSH apiology/quality:jumbo-{{ .quality_gem_minor_version }}
-PUSH apiology/quality:jumbo-{{ .quality_gem_major_version }}
-PUSH apiology/quality:jumbo-latest
