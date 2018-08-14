@@ -1,4 +1,4 @@
-FROM alpine:latest
+FROM alpine:latest AS base
 RUN apk update && apk add --no-cache ruby ruby-irb ruby-dev make gcc libc-dev git icu-dev zlib-dev g++ cmake openssl-dev  && gem install --no-ri --no-rdoc io-console bigdecimal rake
 VOLUME /usr/app
 RUN mkdir /usr/quality
@@ -8,16 +8,11 @@ COPY entrypoint.sh /
 ENTRYPOINT ["/entrypoint.sh"]
 CMD ["quality"]
 
-PUSH apiology/quality:base-latest
+FROM base AS latest
+ARG quality_gem_version
+RUN gem install --no-ri --no-rdoc quality:${quality_gem_version}
 
-RUN gem install --no-ri --no-rdoc quality:{{ .quality_gem_version }}
-
-PUSH apiology/quality:{{ .quality_gem_version }}
-PUSH apiology/quality:{{ .quality_gem_minor_version }}
-PUSH apiology/quality:{{ .quality_gem_major_version }}
-PUSH apiology/quality:latest
-
-FROM apiology/quality:base-latest
+FROM base AS jumbo
 
 #
 # Install shellcheck
@@ -143,16 +138,9 @@ RUN apk add --no-cache python3 py3-pip && \
 
 
 RUN gem install --no-ri --no-rdoc pronto pronto-reek pronto-rubocop pronto-flake8 pronto-shellcheck pronto-flay
-RUN gem install --no-ri --no-rdoc quality:{{ .quality_gem_version }}
+RUN gem install --no-ri --no-rdoc quality:$quality_gem_version
 
 VOLUME /usr/app
 WORKDIR /usr/app
 ENTRYPOINT ["/entrypoint.sh"]
 CMD ["quality"]
-
-TAG apiology/quality:jumbo-{{ .quality_gem_version }}
-
-PUSH apiology/quality:jumbo-{{ .quality_gem_version }}
-PUSH apiology/quality:jumbo-{{ .quality_gem_minor_version }}
-PUSH apiology/quality:jumbo-{{ .quality_gem_major_version }}
-PUSH apiology/quality:jumbo-latest
