@@ -8,11 +8,52 @@ COPY entrypoint.sh /
 ENTRYPOINT ["/entrypoint.sh"]
 CMD ["quality"]
 
+
+
+
+
 FROM base AS latest
 ARG quality_gem_version
 RUN gem install --no-ri --no-rdoc quality:${quality_gem_version}
 
-FROM base AS jumbo
+
+
+
+
+
+FROM base AS python-base
+#
+# Install flake8 and pycodestyle
+#
+
+# Note: flake8 actually uses pycodestyle internally, and requires the
+# version installed be less than 2.4.0:
+#
+# https://gitlab.com/pycqa/flake8/issues/406
+# https://gitlab.com/pycqa/flake8/blob/master/setup.py
+#
+RUN apk add --no-cache python3 py3-pip && \
+    pip3 install flake8 'pycodestyle<2.4.0'
+
+
+
+
+
+FROM python-base AS python
+
+RUN gem install --no-ri --no-rdoc pronto pronto-reek pronto-rubocop pronto-flake8 pronto-flay
+ARG quality_gem_version
+RUN gem install --no-ri --no-rdoc quality:$quality_gem_version
+
+VOLUME /usr/app
+WORKDIR /usr/app
+ENTRYPOINT ["/entrypoint.sh"]
+CMD ["quality"]
+
+
+
+
+FROM python-base AS shellcheck-builder
 
 #
 # Install shellcheck
@@ -34,6 +75,31 @@ RUN git clone https://github.com/koalaman/shellcheck .
 RUN cabal update && cabal install
 
 ENV PATH="/root/.cabal/bin:$PATH"
+
+
+FROM python-base AS shellcheck-base
+
+COPY --from=4 /root/.cabal/bin /usr/local/bin
+
+
+
+
+
+FROM shellcheck-base as shellcheck
+
+RUN gem install --no-ri --no-rdoc pronto pronto-reek pronto-rubocop pronto-flake8 pronto-shellcheck pronto-flay
+ARG quality_gem_version
+RUN gem install --no-ri --no-rdoc quality:$quality_gem_version
+
+VOLUME /usr/app
+WORKDIR /usr/app
+ENTRYPOINT ["/entrypoint.sh"]
+CMD ["quality"]
+
+
+
+
+FROM shellcheck-base AS jumbo
 
 # https://github.com/sgerrand/alpine-pkg-glibc
 RUN apk --no-cache add ca-certificates wget && \

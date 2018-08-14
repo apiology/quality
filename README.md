@@ -51,6 +51,8 @@ image.  You can also get additional tools (see `Rockerfile` in
 this directory) by using the tag `jumbo-`(version) (e.g.,
 jumbo-latest, jumbo-x.y.z, etc)
 
+TODO: Put additional instructions here
+
 To run an individual tool, you can run like this:
 
 ```bash
