@@ -30,9 +30,7 @@ module Quality
       # Skip submodules and symlinks
       mode = file[:filemode]
       mode_format = (mode & 0o0170000)
-      mode_format == 0o0120000 ||
-        mode_format == 0o040000 ||
-        mode_format == 0o0160000
+      [0o0120000, 0o040000, 0o0160000].include? mode_format
     end
 
     def ok_to_process?(filename, file)
