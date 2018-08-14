@@ -1,3 +1,5 @@
+# Configuration
+
 To add configuration for the qulaity gem, you can add configuration to
 your `Rakefile` (if using the Gem directly), or `Rakefile.quality` if
 you're using the quality gem via Docker:

@@ -249,3 +249,7 @@
 * Default Docker runs to non-verbose
 * Output full command-line upon failure
 * Fix command-output to split lines at 80 columns.
+
+## Changes since Quality 31.3.0
+
+* RuboCop 0.58.2

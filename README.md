@@ -1,7 +1,7 @@
+# Quality -- code quality ratchet for Ruby
+
 [![Build Status](https://travis-ci.org/apiology/quality.png)](https://travis-ci.org/apiology/quality)
 [![Coverage Status](https://coveralls.io/repos/apiology/quality/badge.png?branch=master)](https://coveralls.io/r/apiology/quality?branch=master)
-
-# Quality -- code quality ratchet for Ruby
 
 ## Overview
 
@@ -133,7 +133,7 @@ You can pull a similar trick with code coverage using SimpleCov in
 Ruby--put 'simplecov' in your Gemfile, and add the code below into
 your test_helper.rb or spec_helper.rb.
 
-```
+```ruby
 require 'simplecov'
 SimpleCov.start
 SimpleCov.refuse_coverage_drop
