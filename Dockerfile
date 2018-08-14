@@ -1,5 +1,13 @@
-FROM alpine:latest AS base
+FROM alpine:latest AS build
 RUN apk update && apk add --no-cache ruby ruby-irb ruby-dev make gcc libc-dev git icu-dev zlib-dev g++ cmake openssl-dev  && gem install --no-ri --no-rdoc io-console bigdecimal rake
+ARG quality_gem_version
+RUN gem install --no-ri --no-rdoc quality:${quality_gem_version}
+
+
+
+
+
+FROM alpine:latest AS base
 VOLUME /usr/app
 RUN mkdir /usr/quality
 ADD sample-project/Rakefile /usr/quality/Rakefile
@@ -13,9 +21,7 @@ CMD ["quality"]
 
 
 FROM base AS latest
-ARG quality_gem_version
-RUN gem install --no-ri --no-rdoc quality:${quality_gem_version}
-
+COPY --from=0 /usr/lib/ruby/gems /usr/lib/ruby/gems
 
 
 
@@ -38,13 +44,17 @@ RUN apk add --no-cache python3 py3-pip && \
 
 
 
+FROM build AS python-build
+COPY --from=0 /usr/lib/ruby/gems /usr/lib/ruby/gems
+RUN apk update && apk add --no-cache ruby ruby-dev # TODO: Do this as another build image
+RUN gem install --no-ri --no-rdoc pronto pronto-reek pronto-rubocop pronto-flake8 pronto-flay
+
+
+
+
 
 FROM python-base AS python
-
-RUN gem install --no-ri --no-rdoc pronto pronto-reek pronto-rubocop pronto-flake8 pronto-flay
-ARG quality_gem_version
-RUN gem install --no-ri --no-rdoc quality:$quality_gem_version
-
+COPY --from=4 /usr/lib/ruby/gems /usr/lib/ruby/gems
 VOLUME /usr/app
 WORKDIR /usr/app
 ENTRYPOINT ["/entrypoint.sh"]
@@ -79,17 +89,17 @@ ENV PATH="/root/.cabal/bin:$PATH"
 
 FROM python-base AS shellcheck-base
 
-COPY --from=4 /root/.cabal/bin /usr/local/bin
-
+COPY --from=6 /root/.cabal/bin /usr/local/bin
 
 
 
 
 FROM shellcheck-base as shellcheck
 
+COPY --from=0 /usr/lib/ruby/gems /usr/lib/ruby/gems
+RUN apk update && apk add --no-cache ruby ruby-dev # TODO: Do this as another build image
 RUN gem install --no-ri --no-rdoc pronto pronto-reek pronto-rubocop pronto-flake8 pronto-shellcheck pronto-flay
 ARG quality_gem_version
-RUN gem install --no-ri --no-rdoc quality:$quality_gem_version
 
 VOLUME /usr/app
 WORKDIR /usr/app
@@ -200,11 +210,11 @@ RUN apk add --no-cache python3 py3-pip && \
     pip3 install flake8 'pycodestyle<2.4.0'
 
 
-
-
+COPY --from=0 /usr/lib/ruby/gems /usr/lib/ruby/gems
+RUN apk update && apk add --no-cache ruby ruby-dev # TODO: Do this as another build image
 RUN gem install --no-ri --no-rdoc pronto pronto-reek pronto-rubocop pronto-flake8 pronto-shellcheck pronto-flay
 ARG quality_gem_version
-RUN gem install --no-ri --no-rdoc quality:$quality_gem_version
+
 
 VOLUME /usr/app
 WORKDIR /usr/app
