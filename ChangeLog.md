@@ -253,3 +253,9 @@
 ## Changes since Quality 31.3.0
 
 * RuboCop 0.58.2
+
+## Changes since Quality 32.0.0
+
+* Reduce size of Docker build
+* Offer additional Docker targets
+* Fix buffering on output in Docker
