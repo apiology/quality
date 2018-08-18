@@ -1,5 +1,28 @@
-FROM alpine:latest AS base
-RUN apk update && apk add --no-cache ruby ruby-irb ruby-dev make gcc libc-dev git icu-dev zlib-dev g++ cmake openssl-dev  && gem install --no-ri --no-rdoc io-console bigdecimal rake
+FROM alpine:latest AS latest
+ARG quality_gem_version
+RUN apk update && \
+    apk add --no-cache ruby ruby-irb ruby-dev make gcc libc-dev git icu-dev zlib-dev g++ cmake openssl-dev coreutils && \
+    gem install --no-ri --no-rdoc bigdecimal rake etc quality:${quality_gem_version}  && \
+    strip /usr/lib/ruby/gems/2.5.0/extensions/x86_64-linux/2.5.0/rugged-0.27.4/rugged/rugged.so && \
+    apk del ruby-irb ruby-dev make gcc libc-dev icu-dev zlib-dev g++ cmake openssl-dev nghttp2 curl pax-utils && \
+    apk add --no-cache libssl1.0 icu-libs && \
+    rm -fr /usr/lib/ruby/gems/2.5.0/gems/rugged-0.27.4/vendor/libgit2/build/src \
+           /usr/lib/ruby/gems/2.5.0/gems/rugged-0.27.4/vendor/libgit2/src \
+           /usr/lib/ruby/gems/2.5.0/gems/rugged-0.27.4/ext/rugged \
+           /usr/lib/ruby/gems/2.5.0/gems/rugged-0.27.4/vendor/libgit2/build/libgit2.a \
+           /usr/lib/ruby/gems/2.5.0/gems/rugged-0.27.4/lib/rugged/rugged.so \
+           /usr/lib/ruby/gems/2.5.0/gems/unf_ext-0.0.7.5/ext/unf_ext/unf \
+           /usr/lib/ruby/gems/2.5.0/gems/kramdown-1.17.0/test \
+           /usr/lib/ruby/gems/2.5.0/gems/ruby_parser-3.11.0/lib/*.y \
+           /usr/lib/ruby/gems/2.5.0/gems/ruby_parser-3.11.0/lib/*.yy \
+           /usr/lib/ruby/gems/2.5.0/gems/ruby_parser-3.11.0/lib/*.rex \
+           /usr/lib/ruby/gems/2.5.0/cache \
+           /usr/lib/ruby/gems/2.5.0/gems/erubis-2.7.0/doc-api \
+           /usr/lib/ruby/gems/2.5.0/gems/reek-5.0.2/spec \
+           /usr/lib/ruby/gems/2.5.0/gems/kwalify-0.7.2/doc-api \
+      && \
+      echo "Done"
+
 VOLUME /usr/app
 RUN mkdir /usr/quality
 ADD sample-project/Rakefile /usr/quality/Rakefile
@@ -8,11 +31,37 @@ COPY entrypoint.sh /
 ENTRYPOINT ["/entrypoint.sh"]
 CMD ["quality"]
 
-FROM base AS latest
-ARG quality_gem_version
-RUN gem install --no-ri --no-rdoc quality:${quality_gem_version}
 
-FROM base AS jumbo
+
+FROM latest AS python
+#
+# Install flake8 and pycodestyle
+#
+
+# Note: flake8 actually uses pycodestyle internally, and requires the
+# version installed be less than 2.4.0:
+#
+# https://gitlab.com/pycqa/flake8/issues/406
+# https://gitlab.com/pycqa/flake8/blob/master/setup.py
+#
+RUN apk add --no-cache python3 py3-pip && \
+    pip3 install flake8 'pycodestyle<2.4.0' && \
+    apk del py3-pip && \
+    pip3 uninstall -y pip
+
+RUN apk update && \
+    apk add --no-cache ruby-dev gcc make g++ cmake && \
+    gem install --no-ri --no-rdoc io-console pronto pronto-reek pronto-rubocop pronto-flake8 pronto-flay && \
+    apk del ruby-dev gcc make g++ cmake
+VOLUME /usr/app
+WORKDIR /usr/app
+ENTRYPOINT ["/entrypoint.sh"]
+CMD ["quality"]
+
+
+
+
+FROM python AS shellcheck-builder
 
 #
 # Install shellcheck
@@ -34,6 +83,27 @@ RUN git clone https://github.com/koalaman/shellcheck .
 RUN cabal update && cabal install
 
 ENV PATH="/root/.cabal/bin:$PATH"
+
+
+
+
+
+FROM python as shellcheck
+
+COPY --from=2 /root/.cabal/bin /usr/local/bin
+RUN apk update && apk add --no-cache ruby ruby-dev # TODO: Do this as another build image
+RUN gem install --no-ri --no-rdoc pronto-shellcheck
+
+VOLUME /usr/app
+WORKDIR /usr/app
+ENTRYPOINT ["/entrypoint.sh"]
+CMD ["quality"]
+
+
+
+
+
+FROM shellcheck AS jumbo
 
 # https://github.com/sgerrand/alpine-pkg-glibc
 RUN apk --no-cache add ca-certificates wget && \
@@ -112,33 +182,11 @@ ENV SCALASTYLE_JAR=scalastyle_2.10-0.8.0-batch.jar
 
 COPY etc/scalastyle_config.xml /usr/src/scalastyle_config.xml
 
-RUN wget "https://oss.sonatype.org/content/repositories/releases/org/scalastyle/scalastyle_2.10/0.8.0/${SCALASTYLE_JAR}" && \
+RUN cd /usr/lib && \
+    wget "https://oss.sonatype.org/content/repositories/releases/org/scalastyle/scalastyle_2.10/0.8.0/${SCALASTYLE_JAR}" && \
     echo '#!/bin/bash' > /bin/scalastyle && \
     echo "java -jar `pwd`/${SCALASTYLE_JAR}" --config "/usr/src/scalastyle_config.xml" '${@}' >> /bin/scalastyle && \
     chmod +x /bin/scalastyle
-
-
-
-
-#
-# Install flake8 and pycodestyle
-#
-
-# Note: flake8 actually uses pycodestyle internally, and requires the
-# version installed be less than 2.4.0:
-#
-# https://gitlab.com/pycqa/flake8/issues/406
-# https://gitlab.com/pycqa/flake8/blob/master/setup.py
-#
-RUN apk add --no-cache python3 py3-pip && \
-    pip3 install flake8 'pycodestyle<2.4.0'
-
-
-
-
-RUN gem install --no-ri --no-rdoc pronto pronto-reek pronto-rubocop pronto-flake8 pronto-shellcheck pronto-flay
-ARG quality_gem_version
-RUN gem install --no-ri --no-rdoc quality:$quality_gem_version
 
 VOLUME /usr/app
 WORKDIR /usr/app

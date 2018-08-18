@@ -14,6 +14,24 @@ docker build \
        .
 
 docker build \
+       -t "apiology/quality:python-${quality_gem_version:?}" \
+       -t "apiology/quality:python-${quality_gem_minor_version:?}" \
+       -t "apiology/quality:python-${quality_gem_major_version:?}" \
+       -t apiology/quality:python-latest \
+       --build-arg quality_gem_version="${quality_gem_version:?}" \
+       --target python \
+       .
+
+docker build \
+       -t "apiology/quality:shellcheck-${quality_gem_version:?}" \
+       -t "apiology/quality:shellcheck-${quality_gem_minor_version:?}" \
+       -t "apiology/quality:shellcheck-${quality_gem_major_version:?}" \
+       -t apiology/quality:shellcheck-latest \
+       --build-arg quality_gem_version="${quality_gem_version:?}" \
+       --target shellcheck \
+       .
+
+docker build \
        -t "apiology/quality:jumbo-${quality_gem_version:?}" \
        -t "apiology/quality:jumbo-${quality_gem_minor_version:?}" \
        -t "apiology/quality:jumbo-${quality_gem_major_version:?}" \
@@ -26,6 +44,14 @@ for tag in ${quality_gem_version:?} \
            ${quality_gem_minor_version:?} \
            ${quality_gem_major_version:?} \
            latest \
+           python-${quality_gem_version:?} \
+           python-${quality_gem_minor_version:?} \
+           python-${quality_gem_major_version:?} \
+           python-latest \
+           shellcheck-${quality_gem_version:?} \
+           shellcheck-${quality_gem_minor_version:?} \
+           shellcheck-${quality_gem_major_version:?} \
+           shellcheck-latest \
            jumbo-${quality_gem_version:?} \
            jumbo-${quality_gem_minor_version:?} \
            jumbo-${quality_gem_major_version:?} \
