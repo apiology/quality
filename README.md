@@ -47,11 +47,19 @@ docker run -v `pwd`:/usr/app -v `pwd`/Rakefile.quality:/usr/quality/Rakefile api
 ```
 
 The default 'latest' tag contains the Ruby tools in a relatively small
-image.  You can also get additional tools (see `Rockerfile` in
-this directory) by using the tag `jumbo-`(version) (e.g.,
-jumbo-latest, jumbo-x.y.z, etc)
+image.  Likewise, you can point to individual versions (as `x.y.z`,
+`x.y`, or `x` with Docker tags).
 
-TODO: Put additional instructions here
+You can also get additional tools (see `Rockerfile` in
+this directory) by using the tag `prefix-`(version) (e.g.,
+`prefix-latest`, `prefix-x.y.z`, etc).
+
+Supported images:
+
+* (default): Ruby support
+* `python-<version>`: Plus support for Python tools
+* `shellcheck-<version>`: Plus support for running shellcheck against shell scripts
+* `jumbo-<version>`: Plus support for scalastyle.
 
 To run an individual tool, you can run like this:
 
