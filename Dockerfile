@@ -80,7 +80,7 @@ CMD ["quality"]
 
 
 
-FROM python AS shellcheck-builder
+FROM python-base AS shellcheck-builder
 
 #
 # Install shellcheck
