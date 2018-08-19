@@ -18,8 +18,12 @@ module Quality
 
         ratchet_quality_cmd('mdl',
                             args: mdl_args,
-                            gives_error_code_on_violations: true) do |_line|
-          1
+                            gives_error_code_on_violations: true) do |line|
+          if line =~ /\d: MD/
+            1
+          else
+            0
+          end
         end
       end
     end
