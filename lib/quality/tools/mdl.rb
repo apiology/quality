@@ -3,9 +3,7 @@
 module Quality
   module Tools
     # Adds 'bigfiles' tool support to quality gem
-    module Mdl
-      private
-
+    class Mdl < Tool
       def mdl_args
         markdown_files.join(' ')
       end

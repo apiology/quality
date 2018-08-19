@@ -3,12 +3,10 @@
 module Quality
   module Tools
     # Adds 'bundler_audit' tool support to quality gem
-    module BundleAudit
+    class BundleAudit < Tool
       def self.command_name
         'bundle-audit'
       end
-
-      private
 
       def quality_bundle_audit
         ratchet_quality_cmd('bundle-audit',

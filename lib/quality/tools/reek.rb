@@ -3,13 +3,7 @@
 module Quality
   module Tools
     # Adds 'reek' tool support to quality gem
-    module Reek
-      def self.included(base)
-        base.extend ClassMethods
-      end
-
-      private
-
+    class Reek < Tool
       def quality_reek
         args = "--single-line #{ruby_files.join(' ')}"
         ratchet_quality_cmd('reek',
@@ -20,14 +14,11 @@ module Quality
         end
       end
 
-      # See Reek.included
-      module ClassMethods
-        def count_reek_violations(line)
-          if line =~ /^  .* (.*)$/
-            1
-          else
-            0
-          end
+      def self.count_reek_violations(line)
+        if line =~ /^  .* (.*)$/
+          1
+        else
+          0
         end
       end
     end

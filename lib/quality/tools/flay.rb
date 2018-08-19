@@ -3,9 +3,7 @@
 module Quality
   module Tools
     # Adds 'flay' tool support to quality gem
-    module Flay
-      private
-
+    class Flay < Tool
       def flay_args
         "--mass 75 --timeout 99999 #{ruby_files.join(' ')}"
       end

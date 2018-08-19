@@ -6,10 +6,6 @@ require_relative 'base_test_task.rb'
 
 # Unit test the Task class
 class TestTask < BaseTestTask
-  def test_quality_task_all_tools
-    get_test_object { |_task| setup_quality_task_mocks }
-  end
-
   def test_quality_task_some_suppressed
     get_test_object(->(task) { task.skip_tools = ['flog'] }) do
       setup_quality_task_mocks(suppressed_tools: ['flog'])
