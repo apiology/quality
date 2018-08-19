@@ -1,5 +1,6 @@
 module Quality
   module Tools
+    # represents a code quality tool which can be run on source files
     class Tool
       extend ::Forwardable
 
