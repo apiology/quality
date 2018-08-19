@@ -1,8 +1,17 @@
-FROM alpine:latest AS latest
-ARG quality_gem_version
+FROM alpine:latest AS base
+
+# We install and then uninstall quality to cache the dependencies
+# while we still have the build tools installed but still be able to
+# install the very latest quality gem later on without having the disk
+# space impact of two versions.
+
 RUN apk update && \
     apk add --no-cache ruby ruby-irb ruby-dev make gcc libc-dev git icu-dev zlib-dev g++ cmake openssl-dev coreutils && \
-    gem install --no-ri --no-rdoc bigdecimal rake etc quality:${quality_gem_version}  && \
+    true # TODO
+
+RUN true && \
+    gem install --no-ri --no-rdoc bigdecimal rake etc quality && \
+    gem uninstall quality && \
     strip /usr/lib/ruby/gems/2.5.0/extensions/x86_64-linux/2.5.0/rugged-0.27.4/rugged/rugged.so && \
     apk del ruby-irb ruby-dev make gcc libc-dev icu-dev zlib-dev g++ cmake openssl-dev nghttp2 curl pax-utils && \
     apk add --no-cache libssl1.0 icu-libs && \
@@ -23,17 +32,22 @@ RUN apk update && \
       && \
       echo "Done"
 
-VOLUME /usr/app
 RUN mkdir /usr/quality
 ADD sample-project/Rakefile /usr/quality/Rakefile
-WORKDIR /usr/app
 COPY entrypoint.sh /
+
+
+FROM base AS latest
+VOLUME /usr/app
+WORKDIR /usr/app
 ENTRYPOINT ["/entrypoint.sh"]
+ARG quality_gem_version
+RUN gem install --no-ri --no-rdoc quality:${quality_gem_version}
 CMD ["quality"]
 
 
 
-FROM latest AS python
+FROM base AS python-base
 #
 # Install flake8 and pycodestyle
 #
@@ -53,9 +67,14 @@ RUN apk update && \
     apk add --no-cache ruby-dev gcc make g++ cmake && \
     gem install --no-ri --no-rdoc io-console pronto pronto-reek pronto-rubocop pronto-flake8 pronto-flay && \
     apk del ruby-dev gcc make g++ cmake
+
+
+FROM python-base AS python
 VOLUME /usr/app
 WORKDIR /usr/app
 ENTRYPOINT ["/entrypoint.sh"]
+ARG quality_gem_version
+RUN gem install --no-ri --no-rdoc quality:${quality_gem_version}
 CMD ["quality"]
 
 
@@ -88,22 +107,30 @@ ENV PATH="/root/.cabal/bin:$PATH"
 
 
 
-FROM python as shellcheck
+FROM python-base as shellcheck-base
 
-COPY --from=2 /root/.cabal/bin /usr/local/bin
+COPY --from=4 /root/.cabal/bin /usr/local/bin
 RUN apk update && apk add --no-cache ruby ruby-dev # TODO: Do this as another build image
+ARG quality_gem_version
 RUN gem install --no-ri --no-rdoc pronto-shellcheck
 
+
+
+
+
+FROM shellcheck-base as shellcheck
 VOLUME /usr/app
 WORKDIR /usr/app
 ENTRYPOINT ["/entrypoint.sh"]
+ARG quality_gem_version
+RUN gem install --no-ri --no-rdoc quality:${quality_gem_version}
 CMD ["quality"]
 
 
 
 
 
-FROM shellcheck AS jumbo
+FROM shellcheck-base AS jumbo-base
 
 # https://github.com/sgerrand/alpine-pkg-glibc
 RUN apk --no-cache add ca-certificates wget && \
@@ -188,7 +215,12 @@ RUN cd /usr/lib && \
     echo "java -jar `pwd`/${SCALASTYLE_JAR}" --config "/usr/src/scalastyle_config.xml" '${@}' >> /bin/scalastyle && \
     chmod +x /bin/scalastyle
 
+
+
+FROM jumbo-base as jumbo
 VOLUME /usr/app
 WORKDIR /usr/app
 ENTRYPOINT ["/entrypoint.sh"]
+ARG quality_gem_version
+RUN gem install --no-ri --no-rdoc quality:${quality_gem_version}
 CMD ["quality"]
