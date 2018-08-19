@@ -21,8 +21,7 @@ module Quality
                      :scalastyle_config,
                      :scalastyle_exclude,
                      :scala_files,
-                     :shell_files,
-                    )
+                     :shell_files)
     end
   end
 end
