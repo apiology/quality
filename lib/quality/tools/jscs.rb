@@ -3,9 +3,7 @@
 module Quality
   module Tools
     # Adds 'bigfiles' tool support to quality gem
-    module Jscs
-      private
-
+    class Jscs < Tool
       def jscs_args
         '-r unix ' + js_files.join(' ')
       end

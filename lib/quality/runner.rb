@@ -4,6 +4,7 @@ require 'active_support/inflector'
 require 'forwardable'
 require_relative 'which'
 require_relative 'directory_of_classes'
+require_relative 'tool'
 
 # Quality is a tool that runs quality checks on Ruby code using cane,
 # reek, flog, flay and rubocop and makes sure your numbers don't get
@@ -18,8 +19,6 @@ module Quality
   # Knows how to run different quality tools based on a configuration
   # already determined.
   class Runner
-    TOOL_CLASSES.symbols_and_classes.each { |_symbol, clazz| include clazz }
-
     extend ::Forwardable
 
     def initialize(config, gem_spec: Gem::Specification,
@@ -36,18 +35,18 @@ module Quality
     end
 
     def run_quality
-      tools.each do |tool_name, tool_exe|
-        run_quality_with_tool(tool_name, tool_exe)
+      tools.each do |tool_name, tool_exe, clazz|
+        run_quality_with_tool(tool_name, tool_exe, clazz)
       end
     end
 
-    def run_quality_with_tool(tool_name, tool_exe)
+    def run_quality_with_tool(tool_name, tool_exe, clazz)
       suppressed = @config.skip_tools.include? tool_name
       installed = @gem_spec.find_all_by_name(tool_name).any? ||
                   !@which.which(tool_exe).nil?
 
       if installed && !suppressed
-        method("quality_#{tool_name}".to_sym).call
+        clazz.new(self).method("quality_#{tool_name}".to_sym).call
       elsif !installed
         puts "#{tool_name} not installed"
       end
@@ -76,20 +75,20 @@ module Quality
       existing_violations
     end
 
-    def command_name(ancestor, name)
-      if ancestor.respond_to? :command_name
-        ancestor.command_name
+    def command_name(clazz, name)
+      if clazz.respond_to? :command_name
+        clazz.command_name
       else
         name
       end
     end
 
     def tools
-      self.class.ancestors.map do |ancestor|
-        ancestor_name = ancestor.to_s
-        next unless ancestor_name.start_with?('Quality::Tools::')
-        name = ancestor.to_s.split('::').last.underscore
-        [name, command_name(ancestor, name)]
+      TOOL_CLASSES.symbols_and_classes.map do |_symbol, clazz|
+        clazz_name = clazz.to_s
+        raise unless clazz_name.start_with?('Quality::Tools::')
+        name = clazz_name.split('::').last.underscore
+        [name, command_name(clazz, name), clazz]
       end.compact
     end
 

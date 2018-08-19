@@ -3,9 +3,7 @@
 module Quality
   module Tools
     # Adds 'rubocop' tool support to quality gem
-    module Brakeman
-      private
-
+    class Brakeman < Tool
       def quality_brakeman
         ratchet_quality_cmd('brakeman',
                             args: '-q --summary -f csv 2>/dev/null',

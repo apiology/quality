@@ -3,9 +3,7 @@
 module Quality
   module Tools
     # Adds 'punchlist' tool support to quality gem
-    module Punchlist
-      private
-
+    class Punchlist < Tool
       def punchlist_args
         glob = "--glob '#{source_and_doc_files_glob}'"
         regexp = " --regexp '#{punchlist_regexp}'" if punchlist_regexp

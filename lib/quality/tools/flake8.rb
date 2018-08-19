@@ -3,9 +3,7 @@
 module Quality
   module Tools
     # Adds 'flake8' tool support to quality gem
-    module Flake8
-      private
-
+    class Flake8 < Tool
       def flake8_args
         python_files.join(' ')
       end

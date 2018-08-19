@@ -3,9 +3,7 @@
 module Quality
   module Tools
     # Adds 'cane' tool support to quality gem
-    module Cane
-      private
-
+    class Cane < Tool
       def cane_exclude_args
         [
           "--abc-exclude '#{source_files_exclude_glob}'",

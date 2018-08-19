@@ -3,13 +3,7 @@
 module Quality
   module Tools
     # Adds 'rubocop' tool support to quality gem
-    module Rubocop
-      def self.included(base)
-        base.extend ClassMethods
-      end
-
-      private
-
+    class Rubocop < Tool
       def rubocop_args
         [
           '--force-exclusion',
@@ -27,17 +21,14 @@ module Quality
         end
       end
 
-      # See Rubocop.included
-      module ClassMethods
-        def count_rubocop_violations(line)
-          if line =~ /^.* file[s|] inspected, (.*) offence[s|] detected$/
-            0
-          elsif line =~ /^warning: .*/
-            # don't count internal rubocop errors/warnings
-            0
-          else
-            1
-          end
+      def self.count_rubocop_violations(line)
+        if line =~ /^.* file[s|] inspected, (.*) offence[s|] detected$/
+          0
+        elsif line =~ /^warning: .*/
+          # don't count internal rubocop errors/warnings
+          0
+        else
+          1
         end
       end
     end

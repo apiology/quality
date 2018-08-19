@@ -2,9 +2,6 @@
 
 # Acts as the 'Runner' class for testing the tool plug-in modules
 class MockRunner
-  include Quality::Tools::Pycodestyle
-  include Quality::Tools::Flake8
-  include Quality::Tools::Jscs
   def initialize(lines)
     @lines = lines
   end
@@ -28,8 +25,14 @@ class MockRunner
     end
   end
 
+  CHECKER = {
+    flake8: Quality::Tools::Flake8,
+    pycodestyle: Quality::Tools::Pycodestyle,
+    jscs: Quality::Tools::Jscs,
+  }.freeze
+
   def run(tool_name)
-    method("quality_#{tool_name}").call
+    CHECKER[tool_name.to_sym].new(self).method("quality_#{tool_name}").call
     sum
   end
 end

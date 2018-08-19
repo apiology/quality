@@ -3,9 +3,7 @@
 module Quality
   module Tools
     # Adds 'ShellCheck' tool support to quality gem
-    module Shellcheck
-      private
-
+    class Shellcheck < Tool
       def shellcheck_args
         "-fgcc -sbash #{shell_files.join(' ')}"
       end

@@ -3,9 +3,7 @@
 module Quality
   module Tools
     # Adds 'bigfiles' tool support to quality gem
-    module Eslint
-      private
-
+    class Eslint < Tool
       def eslint_args
         '-f unix ' + js_files.join(' ')
       end

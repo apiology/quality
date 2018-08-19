@@ -3,9 +3,7 @@
 module Quality
   module Tools
     # Adds 'pycodestyle' tool support to quality gem
-    module Pycodestyle
-      private
-
+    class Pycodestyle < Tool
       def pycodestyle_args
         python_files.join(' ')
       end
