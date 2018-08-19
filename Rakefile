@@ -70,8 +70,11 @@ end
 #
 # Before this:
 #  * Check if there's a newer RuboCop version.  If so, bump major
-#    version of quality and change quality.gemfile to point to it.
-#  * Note last version here: https://github.com/apiology/quality/releases
+#    version of quality and change quality.gemfile to point to it:
+#       https://github.com/rubocop-hq/rubocop/releases
+#       https://github.com/apiology/quality/blob/master/quality.gemspec#L51
+#  * Note last version here:
+#       https://github.com/apiology/quality/releases
 #  * Make sure version is bumped in lib/quality/version.rb
 #  * Run diff like this: git log vA.B.C...
 #  * Check Changelog.md against actual checkins; add any missing content.

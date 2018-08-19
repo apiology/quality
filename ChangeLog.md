@@ -259,3 +259,7 @@
 * Reduce size of Docker build
 * Offer additional Docker targets
 * Fix buffering on output in Docker
+
+## Changes since Quality 32.1.0
+
+* Adjust to markdownlint output format change
