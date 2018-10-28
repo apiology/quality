@@ -72,6 +72,7 @@ module Quality
     def count_existing_violations(filename)
       existing_violations = @count_io.read(filename).to_i
       raise("Problem with file #{filename}") if existing_violations < 0
+
       existing_violations
     end
 
@@ -87,6 +88,7 @@ module Quality
       TOOL_CLASSES.symbols_and_classes.map do |_symbol, clazz|
         clazz_name = clazz.to_s
         raise unless clazz_name.start_with?('Quality::Tools::')
+
         name = clazz_name.split('::').last.underscore
         [name, command_name(clazz, name), clazz]
       end.compact

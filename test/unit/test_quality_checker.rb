@@ -28,6 +28,7 @@ class TestQualityChecker < MiniTest::Test
     hwm_filename = 'my_output_dir/foo_high_water_mark'
     expect_existing_violations_read(existing_violations, hwm_filename)
     return if [minimum_threshold, num_violations].max == existing_violations
+
     if !existing_violations.nil? && num_violations < existing_violations
       @mocks[:logger].expects(:puts).with('Ratcheting quality up...')
     end
