@@ -263,3 +263,8 @@
 ## Changes since Quality 32.1.0
 
 * Adjust to markdownlint output format change
+
+## Changes since Quality 32.1.1
+
+* RuboCop 0.60
+* flake8 3.6.0
