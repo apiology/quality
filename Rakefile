@@ -70,7 +70,7 @@ end
 #
 # Before this:
 #  * Check if there's a newer RuboCop version.  If so, bump major
-#    version of quality and change quality.gemfile to point to it:
+#    version of quality and change quality.gemspec to point to it:
 #       https://github.com/rubocop-hq/rubocop/releases
 #       https://github.com/apiology/quality/blob/master/quality.gemspec#L51
 #  * Note last version here:
