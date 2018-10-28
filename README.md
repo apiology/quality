@@ -41,8 +41,8 @@ See [DOCKER.md](DOCKER.md) for info.
 ## How to use - as part of a Ruby-based Rakefile
 
 ```bash
-pip install 'pycodestyle<2.4.0' flake8
-brew install cmake icu4c shellcheck scalastyle # OS X
+pip install flake8
+brew install cmake icu4c shellcheck scalastyle # macOS
 gem install quality
 ```
 
