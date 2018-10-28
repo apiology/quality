@@ -52,14 +52,8 @@ FROM base AS python-base
 # Install flake8 and pycodestyle
 #
 
-# Note: flake8 actually uses pycodestyle internally, and requires the
-# version installed be less than 2.4.0:
-#
-# https://gitlab.com/pycqa/flake8/issues/406
-# https://gitlab.com/pycqa/flake8/blob/master/setup.py
-#
 RUN apk add --no-cache python3 py3-pip && \
-    pip3 install flake8 'pycodestyle<2.4.0' && \
+    pip3 install flake8 && \
     apk del py3-pip && \
     pip3 uninstall -y pip
 
