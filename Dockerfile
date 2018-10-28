@@ -134,49 +134,36 @@ RUN apk --no-cache add ca-certificates wget && \
 
 ENV LANG=C.UTF-8
 
-# https://hub.docker.com/r/frolvlad/alpine-oraclejdk8/~/dockerfile/
+# https://github.com/docker-library/openjdk/blob/master/12/jdk/alpine/Dockerfile
 
-ENV JAVA_VERSION=8 \
-    JAVA_UPDATE=181 \
-    JAVA_BUILD=13 \
-    JAVA_PATH=96a7b8442fe848ef90c96a2fad6ed6d1 \
-    JAVA_HOME="/usr/lib/jvm/default-jvm"
+ENV JAVA_HOME /opt/openjdk-12
+ENV PATH $JAVA_HOME/bin:$PATH
 
-RUN apk add --no-cache --virtual=build-dependencies wget ca-certificates unzip && \
-    cd "/tmp" && \
-    wget --header "Cookie: oraclelicense=accept-securebackup-cookie;" \
-        "http://download.oracle.com/otn-pub/java/jdk/${JAVA_VERSION}u${JAVA_UPDATE}-b${JAVA_BUILD}/${JAVA_PATH}/jdk-${JAVA_VERSION}u${JAVA_UPDATE}-linux-x64.tar.gz" && \
-    tar -xzf "jdk-${JAVA_VERSION}u${JAVA_UPDATE}-linux-x64.tar.gz" && \
-    mkdir -p "/usr/lib/jvm" && \
-    mv "/tmp/jdk1.${JAVA_VERSION}.0_${JAVA_UPDATE}" "/usr/lib/jvm/java-${JAVA_VERSION}-oracle" && \
-    ln -s "java-${JAVA_VERSION}-oracle" "$JAVA_HOME" && \
-    ln -s "$JAVA_HOME/bin/"* "/usr/bin/" && \
-    rm -rf "$JAVA_HOME/"*src.zip && \
-    rm -rf "$JAVA_HOME/lib/missioncontrol" \
-           "$JAVA_HOME/lib/visualvm" \
-           "$JAVA_HOME/lib/"*javafx* \
-           "$JAVA_HOME/jre/lib/plugin.jar" \
-           "$JAVA_HOME/jre/lib/ext/jfxrt.jar" \
-           "$JAVA_HOME/jre/bin/javaws" \
-           "$JAVA_HOME/jre/lib/javaws.jar" \
-           "$JAVA_HOME/jre/lib/desktop" \
-           "$JAVA_HOME/jre/plugin" \
-           "$JAVA_HOME/jre/lib/"deploy* \
-           "$JAVA_HOME/jre/lib/"*javafx* \
-           "$JAVA_HOME/jre/lib/"*jfx* \
-           "$JAVA_HOME/jre/lib/amd64/libdecora_sse.so" \
-           "$JAVA_HOME/jre/lib/amd64/"libprism_*.so \
-           "$JAVA_HOME/jre/lib/amd64/libfxplugins.so" \
-           "$JAVA_HOME/jre/lib/amd64/libglass.so" \
-           "$JAVA_HOME/jre/lib/amd64/libgstreamer-lite.so" \
-           "$JAVA_HOME/jre/lib/amd64/"libjavafx*.so \
-           "$JAVA_HOME/jre/lib/amd64/"libjfx*.so && \
-    wget --header "Cookie: oraclelicense=accept-securebackup-cookie;" \
-        "http://download.oracle.com/otn-pub/java/jce/${JAVA_VERSION}/jce_policy-${JAVA_VERSION}.zip" && \
-    unzip -jo -d "${JAVA_HOME}/jre/lib/security" "jce_policy-${JAVA_VERSION}.zip" && \
-    rm "${JAVA_HOME}/jre/lib/security/README.txt" && \
-    apk del build-dependencies && \
-    rm "/tmp/"*
+# http://jdk.java.net/
+ENV JAVA_VERSION 12-ea+14
+ENV JAVA_URL https://download.java.net/java/early_access/alpine/14/binaries/openjdk-12-ea+14_linux-x64-musl_bin.tar.gz
+ENV JAVA_SHA256 172c7d7c6859253822e03f0839f83627ffe06055f118423c6ef619a1af836b4c
+# "For Alpine Linux, builds are produced on a reduced schedule and may not be in sync with the other platforms."
+
+RUN set -eux; \
+	\
+	wget -O /openjdk.tgz "$JAVA_URL"; \
+	echo "$JAVA_SHA256 */openjdk.tgz" | sha256sum -c -; \
+	mkdir -p "$JAVA_HOME"; \
+	tar --extract --file /openjdk.tgz --directory "$JAVA_HOME" --strip-components 1; \
+	rm /openjdk.tgz; \
+	\
+# https://github.com/docker-library/openjdk/issues/212#issuecomment-420979840
+# http://openjdk.java.net/jeps/341
+	java -Xshare:dump; \
+	\
+# basic smoke test
+	java --version; \
+	javac --version
+
+# https://docs.oracle.com/javase/10/tools/jshell.htm
+# https://docs.oracle.com/javase/10/jshell/
+# https://en.wikipedia.org/wiki/JShell
 
 # https://github.com/frol/docker-alpine-scala/blob/master/Dockerfile
 ENV SCALA_VERSION=2.12.0-M5 \

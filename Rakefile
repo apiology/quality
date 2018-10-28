@@ -73,6 +73,7 @@ end
 #    version of quality and change quality.gemspec to point to it:
 #       https://github.com/rubocop-hq/rubocop/releases
 #       https://github.com/apiology/quality/blob/master/quality.gemspec#L51
+#  * Upgrade version of OpenJDK in Dockerfile
 #  * Note last version here:
 #       https://github.com/apiology/quality/releases
 #  * Make sure version is bumped in lib/quality/version.rb
