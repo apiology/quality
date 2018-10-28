@@ -134,7 +134,9 @@ RUN apk --no-cache add ca-certificates wget && \
 
 ENV LANG=C.UTF-8
 
-# https://github.com/docker-library/openjdk/blob/master/12/jdk/alpine/Dockerfile
+# To upgrade:
+# 1. Check https://jdk.java.net/12/ for latest build - see 'Alpine Linux/x64' link
+# 2. See if there's an update here: https://github.com/docker-library/openjdk/blob/master/12/jdk/alpine/Dockerfile
 
 ENV JAVA_HOME /opt/openjdk-12
 ENV PATH $JAVA_HOME/bin:$PATH
