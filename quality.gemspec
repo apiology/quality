@@ -48,7 +48,7 @@ Gem::Specification.new do |s|
   #
   # https://github.com/bbatsov/rubocop#installation
   s.add_runtime_dependency('mdl')
-  s.add_runtime_dependency('rubocop', '~> 0.60.0')
+  s.add_runtime_dependency('rubocop', '~> 0.70.0')
   # 1.19.0 was a RuboCop 0.51.0 compatibility release
   s.add_runtime_dependency('bigfiles', ['>= 0.1'])
   s.add_runtime_dependency('brakeman')
