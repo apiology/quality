@@ -84,7 +84,8 @@ end
 #    https://www.ruby-lang.org/en/downloads/releases/
 #  * Drop any Ruby versions that are eol:
 #    https://www.ruby-lang.org/en/downloads/branches/
-#  * Update .rubocop.yml#AllCops.TargetRubyVersion to the earliest supported version
+#  * Update .rubocop.yml#AllCops.TargetRubyVersion to the earliest supported
+#    version
 #  * Check in any final changes
 #  * bundle update && bundle exec rake publish_all
 task publish_all: %i[localtest release wait_for_release publish_docker]
