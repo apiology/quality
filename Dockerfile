@@ -33,6 +33,7 @@ RUN true && \
       echo "Done"
 
 RUN mkdir /usr/quality
+ADD sample-project/.pronto.yml /usr/quality/.pronto.yml
 ADD sample-project/Rakefile /usr/quality/Rakefile
 COPY entrypoint.sh /
 
