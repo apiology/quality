@@ -15,7 +15,7 @@ module Quality
       @popener.popen(@full_cmd) do |file|
         yield file
       end
-      $CHILD_STATUS.exitstatus if $CHILD_STATUS
+      $CHILD_STATUS&.exitstatus
     end
   end
 end

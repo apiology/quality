@@ -13,11 +13,11 @@ class TestCommandOutputProcessor < MiniTest::Test
   end
 
   def vanilla_file
-    file_content = <<END
-foo
-bar
-baz
-END
+    file_content = <<~TEST
+      foo
+      bar
+      baz
+    TEST
     StringIO.new(file_content)
   end
 
