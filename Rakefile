@@ -80,7 +80,13 @@ end
 #  * Check in changes
 #  * Run diff like this: git log vA.B.C...
 #  * Check Changelog.md against actual checkins; add any missing content.
+#  * Update .travis.yml with latest supported ruby Versions:
+#    https://www.ruby-lang.org/en/downloads/releases/
+#  * Drop any Ruby versions that are eol:
+#    https://www.ruby-lang.org/en/downloads/branches/
 #  * Check in any final changes
+#  * bundle update && bundle exec rake publish_all
 task publish_all: %i[localtest release wait_for_release publish_docker]
 # After this:
 #  * Verify Docker image sizes and update DOCKER.md with new numbers
+#  * Verify Travis is building
