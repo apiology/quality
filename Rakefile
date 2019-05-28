@@ -80,5 +80,7 @@ end
 #  * Check in changes
 #  * Run diff like this: git log vA.B.C...
 #  * Check Changelog.md against actual checkins; add any missing content.
-#  * Verify Docker image sizes and update DOCKER.md with new numbers
+#  * Check in any final changes
 task publish_all: %i[localtest release wait_for_release publish_docker]
+# After this:
+#  * Verify Docker image sizes and update DOCKER.md with new numbers
