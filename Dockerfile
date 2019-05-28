@@ -136,16 +136,16 @@ RUN apk --no-cache add ca-certificates wget && \
 ENV LANG=C.UTF-8
 
 # To upgrade:
-# 1. Check https://jdk.java.net/12/ for latest build - see 'Alpine Linux/x64' link
-# 2. See if there's an update here: https://github.com/docker-library/openjdk/blob/master/12/jdk/alpine/Dockerfile
+# 1. Check https://jdk.java.net/13/ for latest build - see 'Alpine Linux/x64' link
+# 2. See if there's an update here: https://github.com/docker-library/openjdk/blob/master/13/jdk/alpine/Dockerfile
 
-ENV JAVA_HOME /opt/openjdk-12
+ENV JAVA_HOME /opt/openjdk-13
 ENV PATH $JAVA_HOME/bin:$PATH
 
-# http://jdk.java.net/
-ENV JAVA_VERSION 12-ea+14
-ENV JAVA_URL https://download.java.net/java/early_access/alpine/14/binaries/openjdk-12-ea+14_linux-x64-musl_bin.tar.gz
-ENV JAVA_SHA256 172c7d7c6859253822e03f0839f83627ffe06055f118423c6ef619a1af836b4c
+# https://jdk.java.net/
+ENV JAVA_VERSION 13-ea+19
+ENV JAVA_URL https://download.java.net/java/early_access/alpine/19/binaries/openjdk-13-ea+19_linux-x64-musl_bin.tar.gz
+ENV JAVA_SHA256 010ea985fba7e3d89a9170545c4e697da983cffc442b84e65dba3baa771299a5
 # "For Alpine Linux, builds are produced on a reduced schedule and may not be in sync with the other platforms."
 
 RUN set -eux; \
@@ -157,7 +157,7 @@ RUN set -eux; \
 	rm /openjdk.tgz; \
 	\
 # https://github.com/docker-library/openjdk/issues/212#issuecomment-420979840
-# http://openjdk.java.net/jeps/341
+# https://openjdk.java.net/jeps/341
 	java -Xshare:dump; \
 	\
 # basic smoke test
