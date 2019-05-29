@@ -14,7 +14,7 @@ RUN true && \
     gem uninstall quality && \
     strip /usr/lib/ruby/gems/2.5.0/extensions/x86_64-linux/2.5.0/rugged-*/rugged/rugged.so && \
     apk del ruby-irb ruby-dev make gcc libc-dev icu-dev zlib-dev g++ cmake openssl-dev nghttp2 curl pax-utils && \
-    apk add --no-cache libssl1.0 icu-libs && \
+    apk add --no-cache libssl1.1 icu-libs && \
     rm -fr /usr/lib/ruby/gems/2.5.0/gems/rugged-0.27.4/vendor/libgit2/build/src \
            /usr/lib/ruby/gems/2.5.0/gems/rugged-0.27.4/vendor/libgit2/src \
            /usr/lib/ruby/gems/2.5.0/gems/rugged-0.27.4/ext/rugged \
