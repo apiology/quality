@@ -90,5 +90,6 @@ end
 #  * bundle update && bundle exec rake publish_all
 task publish_all: %i[localtest release wait_for_release publish_docker]
 # After this:
-#  * Verify Docker image sizes with "docker images" and update DOCKER.md with new numbers
+#  * Verify Docker image sizes with "docker images" and update
+#    DOCKER.md with new numbers
 #  * Verify Travis is building
