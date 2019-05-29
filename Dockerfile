@@ -7,9 +7,6 @@ FROM alpine:latest AS base
 
 RUN apk update && \
     apk add --no-cache ruby ruby-irb ruby-dev make gcc libc-dev git icu-dev zlib-dev g++ cmake openssl-dev coreutils && \
-    true # TODO
-
-RUN true && \
     gem install --no-ri --no-rdoc bigdecimal rake etc quality && \
     gem uninstall quality && \
     strip /usr/lib/ruby/gems/2.5.0/extensions/x86_64-linux/2.5.0/rugged-*/rugged/rugged.so && \
