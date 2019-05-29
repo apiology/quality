@@ -277,3 +277,7 @@
 ## Changes since Quality 32.0.1
 
 * pronto-flake8 compatibility fix
+
+## Changes since Quality 32.0.2
+
+* ...that hopefully works this time.
