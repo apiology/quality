@@ -20,10 +20,11 @@ this directory) by using the tag `prefix-`(version) (e.g.,
 
 Supported images:
 
-* (default): Ruby support
-* `python-<version>`: Plus support for Python tools
-* `shellcheck-<version>`: Plus support for running shellcheck against shell scripts
-* `jumbo-<version>`: Plus support for scalastyle.
+* (default): Ruby support (155MB)
+* `python-<version>`: Plus support for Python tools (204MB)
+* `shellcheck-<version>`: Plus support for running shellcheck against
+  shell scripts (226MB)
+* `jumbo-<version>`: Plus support for scalastyle. (595MB)
 
 To run an individual tool, you can run like this:
 
