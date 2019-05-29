@@ -57,7 +57,7 @@ RUN apk add --no-cache python3 py3-pip && \
 
 RUN apk update && \
     apk add --no-cache ruby-dev gcc make g++ cmake && \
-    gem install --no-ri --no-rdoc io-console pronto pronto-reek pronto-rubocop pronto-flake8 pronto-flay && \
+    gem install --no-ri --no-rdoc io-console pronto:0.9.5 'pronto-reek:<0.10.0' 'pronto-rubocop:<0.10.0' 'pronto-flake8:<0.10.0' 'pronto-flay:<0.10.0' && \
     apk del ruby-dev gcc make g++ cmake
 
 
@@ -103,8 +103,7 @@ FROM python-base as shellcheck-base
 
 COPY --from=4 /root/.cabal/bin /usr/local/bin
 RUN apk update && apk add --no-cache ruby ruby-dev # TODO: Do this as another build image
-ARG quality_gem_version
-RUN gem install --no-ri --no-rdoc pronto-shellcheck
+RUN gem install --no-ri --no-rdoc 'pronto-shellcheck:<0.10.0'
 
 
 
