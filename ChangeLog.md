@@ -273,3 +273,7 @@
 
 * RuboCop 0.70.0
 * OpenJDK 13-ea-19 in Dockerfile
+
+## Changes since Quality 32.0.1
+
+* pronto-flake8 compatibility fix
