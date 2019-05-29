@@ -69,10 +69,13 @@ Gem::Specification.new do |s|
   # https://github.com/bundler/bundler/issues/3401
   s.add_development_dependency('minitest', ['~> 5'])
   s.add_development_dependency('mocha')
-  s.add_development_dependency('pronto', ['>=0.9.5'])
+  # pronto-flake8 requires pronto 0.9.5 :(
+  s.add_development_dependency('pronto', ['0.9.5'])
   s.add_development_dependency('pronto-flake8')
-  s.add_development_dependency('pronto-reek')
-  s.add_development_dependency('pronto-rubocop')
+  # pronto-reek 0.10.0 requires pronto 0.10.0
+  s.add_development_dependency('pronto-reek', ['<0.10.0'])
+  # pronto-rubocop 0.10.0 requires pronto 0.10.0
+  s.add_development_dependency('pronto-rubocop', ['<0.10.0'])
   s.add_development_dependency('rake', ['!= 10.4.2'])
   s.add_development_dependency('simplecov')
 end
