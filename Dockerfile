@@ -12,7 +12,7 @@ RUN apk update && \
 RUN true && \
     gem install --no-ri --no-rdoc bigdecimal rake etc quality && \
     gem uninstall quality && \
-    strip /usr/lib/ruby/gems/2.5.0/extensions/x86_64-linux/2.5.0/rugged-0.27.4/rugged/rugged.so && \
+    strip /usr/lib/ruby/gems/2.5.0/extensions/x86_64-linux/2.5.0/rugged-*/rugged/rugged.so && \
     apk del ruby-irb ruby-dev make gcc libc-dev icu-dev zlib-dev g++ cmake openssl-dev nghttp2 curl pax-utils && \
     apk add --no-cache libssl1.0 icu-libs && \
     rm -fr /usr/lib/ruby/gems/2.5.0/gems/rugged-0.27.4/vendor/libgit2/build/src \
