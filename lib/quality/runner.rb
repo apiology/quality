@@ -42,12 +42,14 @@ module Quality
 
     def run_quality_with_tool(tool_name, tool_exe, clazz)
       suppressed = @config.skip_tools.include? tool_name
+      return if suppressed
+
       installed = @gem_spec.find_all_by_name(tool_name).any? ||
                   !@which.which(tool_exe).nil?
 
-      if installed && !suppressed
+      if installed
         clazz.new(self).method("quality_#{tool_name}".to_sym).call
-      elsif !installed
+      else
         puts "#{tool_name} not installed"
       end
     end
