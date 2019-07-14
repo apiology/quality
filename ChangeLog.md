@@ -269,15 +269,15 @@
 * RuboCop 0.60
 * flake8 3.6.0
 
-## Changes since Quality 32.0.0
+## Changes since Quality 33.0.0
 
 * RuboCop 0.70.0
 * OpenJDK 13-ea-19 in Dockerfile
 
-## Changes since Quality 32.0.1
+## Changes since Quality 33.0.1
 
 * pronto-flake8 compatibility fix
 
-## Changes since Quality 32.0.2
+## Changes since Quality 33.0.2
 
 * ...that hopefully works this time.
