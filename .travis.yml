@@ -7,7 +7,8 @@ env:
   - JRUBY_OPTS="--debug"
 rvm:
   - ruby-head
-  - 2.4.6
-  - 2.5.5
-  - 2.6.3
+  - 2.4.9
+  - 2.5.7
+  - 2.6.5
+  - 2.7.0-preview3
 #  - jruby-head # linguist gem doesn't support JRuby; bundle install doesn't work.
