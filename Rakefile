@@ -30,7 +30,8 @@ end
 
 task :pronto do
   formatter = '-f github_status' if ENV.key? 'PRONTO_GITHUB_ACCESS_TOKEN'
-  sh "pronto run #{formatter} -c origin/master --no-exit-code --unstaged || true"
+  sh "pronto run #{formatter} -c origin/master --no-exit-code --unstaged "\
+     "|| true"
   sh "pronto run #{formatter} -c origin/master --no-exit-code --staged || true"
   sh "pronto run #{formatter} -c origin/master --no-exit-code || true"
   sh 'git fetch --tags'
