@@ -63,7 +63,6 @@ task localtest: %i[clear_metrics test quality]
 
 task default: [:localtest]
 
-
 task :wait_for_release do
   sleep 80
 end
