@@ -29,7 +29,7 @@ task :tag do
 end
 
 task :pronto do
-  formatter = '-f github' if ENV.key? 'PRONTO_GITHUB_ACCESS_TOKEN'
+  formatter = '-f github_pr' if ENV.key? 'PRONTO_GITHUB_ACCESS_TOKEN'
   sh "pronto run #{formatter} -c origin/master --no-exit-code --unstaged "\
      "|| true"
   sh "pronto run #{formatter} -c origin/master --no-exit-code --staged || true"
@@ -51,12 +51,12 @@ Quality::Rake::Task.new do |t|
   # t.verbose = true
 end
 
-
 task :clear_metrics do |_t|
   puts Time.now
   ret = system('git checkout coverage/.last_run.json *_high_water_mark')
   raise unless ret
 end
+
 
 task localtest: %i[clear_metrics test quality]
 
