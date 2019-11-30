@@ -6,8 +6,9 @@ before_install:
 env:
   - JRUBY_OPTS="--debug"
 rvm:
-  - ruby-head
-  - 2.4.6
-  - 2.5.5
-  - 2.6.3
+  # - ruby-head # excess warning logging
+  - 2.4.9
+  - 2.5.7
+  - 2.6.5
+  # - 2.7.0-preview2 # See ruby-head - same issue
 #  - jruby-head # linguist gem doesn't support JRuby; bundle install doesn't work.
