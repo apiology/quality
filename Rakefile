@@ -38,6 +38,7 @@ task :pronto do
   sh "pronto run #{formatter} -c tests_passed --no-exit-code || true"
 end
 
+
 task :update_bundle_audit do
   sh 'bundle-audit update'
 end
