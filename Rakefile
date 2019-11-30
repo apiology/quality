@@ -58,8 +58,8 @@ task :clear_metrics do |_t|
   raise unless ret
 end
 
-
 task localtest: %i[clear_metrics test quality]
+
 
 task default: [:localtest]
 
