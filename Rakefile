@@ -29,11 +29,15 @@ task :tag do
 end
 
 task :pronto do
-  sh 'pronto run -c origin/master --no-exit-code --unstaged || true'
-  sh 'pronto run -c origin/master --no-exit-code --staged || true'
-  sh 'pronto run -c origin/master --no-exit-code || true'
+  formatter = '-f github_pr' if ENV.key? 'PRONTO_GITHUB_ACCESS_TOKEN'
+  ENV['PRONTO_PULL_REQUEST_ID'] =
+    ENV['TRAVIS_PULL_REQUEST'] || ENV['CIRCLE_PULL_REQUEST']
+  sh "pronto run #{formatter} -c origin/master --no-exit-code --unstaged "\
+     "|| true"
+  sh "pronto run #{formatter} -c origin/master --no-exit-code --staged || true"
+  sh "pronto run #{formatter} -c origin/master --no-exit-code || true"
   sh 'git fetch --tags'
-  sh 'pronto run -c tests_passed --no-exit-code || true'
+  sh "pronto run #{formatter} -c tests_passed --no-exit-code || true"
 end
 
 task :update_bundle_audit do
