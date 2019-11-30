@@ -38,7 +38,6 @@ task :pronto do
   sh "pronto run #{formatter} -c tests_passed --no-exit-code || true"
 end
 
-
 task :update_bundle_audit do
   sh 'bundle-audit update'
 end
@@ -51,6 +50,7 @@ Quality::Rake::Task.new do |t|
   t.skip_tools = ['reek']
   # t.verbose = true
 end
+
 
 task :clear_metrics do |_t|
   puts Time.now
