@@ -30,7 +30,8 @@ end
 
 task :pronto do
   formatter = '-f github_pr' if ENV.key? 'PRONTO_GITHUB_ACCESS_TOKEN'
-  sh "pronto run #{formatter} --no-exit-code || true"
+  ENV['PRONTO_PULL_REQUEST_ID'] =
+    ENV['TRAVIS_PULL_REQUEST'] || ENV['CIRCLE_PULL_REQUEST']
   sh "pronto run #{formatter} -c origin/master --no-exit-code --unstaged "\
      "|| true"
   sh "pronto run #{formatter} -c origin/master --no-exit-code --staged || true"
@@ -60,8 +61,8 @@ end
 
 task localtest: %i[clear_metrics test quality]
 
-
 task default: [:localtest]
+
 
 task :wait_for_release do
   sleep 80
