@@ -75,7 +75,6 @@ task :publish_docker do
 end
 
 #
-#
 # Before this:
 #  * Check if there's a newer RuboCop version.  If so:
 #    * Bump major version of quality and change quality.gemspec to point to it:
