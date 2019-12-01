@@ -74,6 +74,12 @@ task :publish_docker do
   sh './publish-docker-image.sh'
 end
 
+task :prerelease do
+  sh 'git fetch --tags --force'
+end
+
+task release: [:prerelease]
+
 #
 # Before this:
 #  * Check if there's a newer RuboCop version.  If so:
