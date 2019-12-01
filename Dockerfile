@@ -7,8 +7,7 @@ FROM alpine:latest AS base
 
 RUN apk update && \
     apk add --no-cache ruby ruby-irb ruby-dev make gcc libc-dev git icu-dev zlib-dev g++ cmake openssl-dev coreutils && \
-    gem install --no-ri --no-rdoc bigdecimal rake etc quality bundler && \
-    gem install --no-ri --no-rdoc -v '<2' bundler && \
+    gem install --no-ri --no-rdoc bigdecimal rake etc quality bundler io-console pronto:0.9.5 'pronto-reek:<0.10.0' 'pronto-rubocop:<0.10.0' 'pronto-flay:<0.10.0' 'bundler:<2' && \
     gem uninstall quality && \
     strip /usr/lib/ruby/gems/2.5.0/extensions/x86_64-linux/2.5.0/rugged-*/rugged/rugged.so && \
     apk del ruby-irb ruby-dev make gcc libc-dev icu-dev zlib-dev g++ cmake openssl-dev nghttp2 curl pax-utils && \
@@ -55,11 +54,7 @@ RUN apk add --no-cache python3 py3-pip && \
     pip3 install flake8 && \
     apk del py3-pip && \
     pip3 uninstall -y pip
-
-RUN apk update && \
-    apk add --no-cache ruby-dev gcc make g++ cmake && \
-    gem install --no-ri --no-rdoc io-console pronto:0.9.5 'pronto-reek:<0.10.0' 'pronto-rubocop:<0.10.0' 'pronto-flake8:<0.10.0' 'pronto-flay:<0.10.0' && \
-    apk del ruby-dev gcc make g++ cmake
+RUN gem install --no-ri --no-rdoc 'pronto-flake8:<0.10.0'
 
 
 FROM python-base AS python
