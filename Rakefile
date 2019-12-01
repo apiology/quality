@@ -39,7 +39,7 @@ task :pronto do
      "|| true"
   sh "pronto run #{formatter} -c origin/master --no-exit-code --staged || true"
   sh "pronto run #{formatter} -c origin/master --no-exit-code || true"
-  sh 'git fetch --tags'
+  sh 'git fetch --tags --force'
   sh "pronto run #{formatter} -c tests_passed --no-exit-code || true"
 end
 
