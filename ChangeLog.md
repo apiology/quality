@@ -281,3 +281,13 @@
 ## Changes since Quality 33.0.2
 
 * ...that hopefully works this time.
+
+## Changes since Quality 34.0.2
+
+* Install bundler v1 and v2 in Docker image
+* Bump RuboCop version
+* Document and use Pronto and its GitHub PR reporter
+
+## Changes since Quality 35.0.0
+
+* Fix rake task error - ArgumentError: wrong number of arguments (#116)

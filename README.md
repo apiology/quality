@@ -96,6 +96,16 @@ rake ratchet
 
 See [CONFIGURATION.md](CONFIGURATION.md)
 
+## Pronto
+
+To help better understand which warnings came from your current set of
+changes, consider using
+[Pronto](https://github.com/prontolabs/pronto), which provides
+incremental reporting from different quality tools, and can add
+comments directly to PR reviews.  You can see an example in this
+project's
+[Rakefile](https://github.com/apiology/quality/blob/master/Rakefile)
+
 ## Vendored files
 
 Quality uses GitHub's [linguist](https://github.com/github/linguist)

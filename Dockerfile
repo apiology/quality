@@ -7,7 +7,8 @@ FROM alpine:latest AS base
 
 RUN apk update && \
     apk add --no-cache ruby ruby-irb ruby-dev make gcc libc-dev git icu-dev zlib-dev g++ cmake openssl-dev coreutils && \
-    gem install --no-ri --no-rdoc bigdecimal rake etc quality && \
+    gem install --no-ri --no-rdoc bigdecimal rake etc quality bundler && \
+    gem install --no-ri --no-rdoc -v '<2' bundler && \
     gem uninstall quality && \
     strip /usr/lib/ruby/gems/2.5.0/extensions/x86_64-linux/2.5.0/rugged-*/rugged/rugged.so && \
     apk del ruby-irb ruby-dev make gcc libc-dev icu-dev zlib-dev g++ cmake openssl-dev nghttp2 curl pax-utils && \
@@ -132,16 +133,17 @@ RUN apk --no-cache add ca-certificates wget && \
 ENV LANG=C.UTF-8
 
 # To upgrade:
-# 1. Check https://jdk.java.net/13/ for latest build - see 'Alpine Linux/x64' link
-# 2. See if there's an update here: https://github.com/docker-library/openjdk/blob/master/13/jdk/alpine/Dockerfile
+# 1. Check https://jdk.java.net/14/ for latest build - see 'Alpine Linux/x64' link
+# 2. See if there's an update here: https://github.com/docker-library/openjdk/blob/master/14/jdk/alpine/Dockerfile
 
-ENV JAVA_HOME /opt/openjdk-13
+ENV JAVA_HOME /opt/openjdk-14
 ENV PATH $JAVA_HOME/bin:$PATH
 
 # https://jdk.java.net/
-ENV JAVA_VERSION 13-ea+19
-ENV JAVA_URL https://download.java.net/java/early_access/alpine/19/binaries/openjdk-13-ea+19_linux-x64-musl_bin.tar.gz
-ENV JAVA_SHA256 010ea985fba7e3d89a9170545c4e697da983cffc442b84e65dba3baa771299a5
+# > Java Development Kit builds, from Oracle
+ENV JAVA_VERSION 14-ea+15
+ENV JAVA_URL https://download.java.net/java/early_access/alpine/15/binaries/openjdk-14-ea+15_linux-x64-musl_bin.tar.gz
+ENV JAVA_SHA256 76091da1b6ed29788f0cf85454d23900a4134286e5feb571247e5861f618d3cd
 # "For Alpine Linux, builds are produced on a reduced schedule and may not be in sync with the other platforms."
 
 RUN set -eux; \
