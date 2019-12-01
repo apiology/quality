@@ -84,9 +84,9 @@ module Quality
         end
         @dsl.define_task(quality_name) { @runner.run_quality }
         @dsl.define_task(ratchet_name) { @runner.run_ratchet }
-        @runner.tools.each do |tool_name, tool_exe|
+        @runner.tools.each do |tool_name, tool_exe, clazz|
           @dsl.define_task(tool_name) do
-            @runner.run_quality_with_tool(tool_name, tool_exe)
+            @runner.run_quality_with_tool(tool_name, tool_exe, clazz)
           end
         end
       end
