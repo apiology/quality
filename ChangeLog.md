@@ -291,3 +291,7 @@
 ## Changes since Quality 35.0.0
 
 * Fix rake task error - ArgumentError: wrong number of arguments (#116)
+
+## Changes since Quality 35.0.1
+
+* Bring pronto into base Docker image
