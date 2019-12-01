@@ -74,6 +74,7 @@ task :publish_docker do
   sh './publish-docker-image.sh'
 end
 
+
 #
 # Before this:
 #  * Check if there's a newer RuboCop version.  If so:
