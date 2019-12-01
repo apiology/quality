@@ -76,10 +76,13 @@ end
 
 #
 # Before this:
-#  * Check if there's a newer RuboCop version.  If so, bump major
-#    version of quality and change quality.gemspec to point to it:
+#  * Check if there's a newer RuboCop version.  If so:
+#    * Bump major version of quality and change quality.gemspec to point to it:
 #       https://github.com/rubocop-hq/rubocop/releases
 #       https://github.com/apiology/quality/blob/master/quality.gemspec#L51
+#    * bundle update
+#    * bundle exec rubocop -a
+#    * bundle exec rake quality # make fixes/bumps as needed
 #  * Upgrade version of OpenJDK in Dockerfile
 #  * Note last version here:
 #       https://github.com/apiology/quality/releases
@@ -94,6 +97,8 @@ end
 #  * Update .rubocop.yml#AllCops.TargetRubyVersion to the earliest supported
 #    version
 #  * Check in any final changes
+#  * Merge PR
+#  * git checkout master && git pull
 #  * bundle update && bundle exec rake publish_all
 task publish_all: %i[localtest release wait_for_release publish_docker]
 # After this:

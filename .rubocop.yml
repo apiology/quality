@@ -16,10 +16,10 @@ Style/TrailingCommaInHashLiteral:
 
 # I use keyword arguments for a poor man's dependency injection to cut
 # down on the magic in my tests.
-ParameterLists:
+Metrics/ParameterLists:
   CountKeywordArgs: false
 
-Encoding:
+Style/Encoding:
   Enabled: false
 
 # If i'm using one function name and returning the contents of an
@@ -28,7 +28,7 @@ Encoding:
 #
 # attr_reader :something_else
 # alias_method :something, :something_else
-TrivialAccessors:
+Style/TrivialAccessors:
    ExactNameMatch: true
 
 #
