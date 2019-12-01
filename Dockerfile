@@ -8,7 +8,7 @@ FROM alpine:latest AS base
 RUN apk update && \
     apk add --no-cache ruby ruby-irb ruby-dev make gcc libc-dev git icu-dev zlib-dev g++ cmake openssl-dev coreutils && \
     gem install --no-ri --no-rdoc bigdecimal rake etc quality bundler && \
-    gem install -v '<2' bundler && \
+    gem install --no-ri --no-rdoc -v '<2' bundler && \
     gem uninstall quality && \
     strip /usr/lib/ruby/gems/2.5.0/extensions/x86_64-linux/2.5.0/rugged-*/rugged/rugged.so && \
     apk del ruby-irb ruby-dev make gcc libc-dev icu-dev zlib-dev g++ cmake openssl-dev nghttp2 curl pax-utils && \
