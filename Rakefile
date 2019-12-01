@@ -94,6 +94,7 @@ end
 #  * Update .rubocop.yml#AllCops.TargetRubyVersion to the earliest supported
 #    version
 #  * Check in any final changes
+#  * Merge PR
 #  * bundle update && bundle exec rake publish_all
 task publish_all: %i[localtest release wait_for_release publish_docker]
 # After this:
