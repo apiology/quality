@@ -98,6 +98,7 @@ end
 #    version
 #  * Check in any final changes
 #  * Merge PR
+#  * git checkout master && git pull
 #  * bundle update && bundle exec rake publish_all
 task publish_all: %i[localtest release wait_for_release publish_docker]
 # After this:
