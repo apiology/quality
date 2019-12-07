@@ -7,7 +7,7 @@ FROM alpine:latest AS base
 
 RUN apk update && \
     apk add --no-cache ruby ruby-irb ruby-dev make gcc libc-dev git icu-dev zlib-dev g++ cmake openssl-dev coreutils && \
-    gem install --no-ri --no-rdoc bigdecimal rake etc quality bundler io-console pronto:0.9.5 'pronto-reek:<0.10.0' 'pronto-rubocop:<0.10.0' 'pronto-flay:<0.10.0' 'bundler:<2' && \
+    gem install --no-ri --no-rdoc bigdecimal rake etc quality bundler io-console pronto pronto-reek pronto-rubocop pronto-flay 'bundler:<2' && \
     gem uninstall quality && \
     strip /usr/lib/ruby/gems/2.5.0/extensions/x86_64-linux/2.5.0/rugged-*/rugged/rugged.so && \
     apk del ruby-irb ruby-dev make gcc libc-dev icu-dev zlib-dev g++ cmake openssl-dev nghttp2 curl pax-utils && \
@@ -54,7 +54,7 @@ RUN apk add --no-cache python3 py3-pip && \
     pip3 install flake8 && \
     apk del py3-pip && \
     pip3 uninstall -y pip
-RUN gem install --no-ri --no-rdoc 'pronto-flake8:<0.10.0'
+RUN gem install --no-ri --no-rdoc pronto-flake8
 
 
 FROM python-base AS python
@@ -99,7 +99,7 @@ FROM python-base as shellcheck-base
 
 COPY --from=4 /root/.cabal/bin /usr/local/bin
 RUN apk update && apk add --no-cache ruby ruby-dev # TODO: Do this as another build image
-RUN gem install --no-ri --no-rdoc 'pronto-shellcheck:<0.10.0'
+RUN gem install --no-ri --no-rdoc pronto-shellcheck
 
 
 
