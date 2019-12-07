@@ -295,3 +295,7 @@
 ## Changes since Quality 35.0.1
 
 * Bring pronto into base Docker image
+
+## Changes since Quality 35.1.1
+
+* Update Pronto
