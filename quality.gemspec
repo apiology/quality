@@ -63,14 +63,12 @@ Gem::Specification.new do |s|
   # Workaround for
   # https://github.com/bundler/bundler/issues/3401
   s.add_development_dependency('minitest', ['~> 5'])
-  s.add_development_dependency('mocha')
-  # pronto-flake8 requires pronto 0.9.5 :(
-  s.add_development_dependency('pronto', ['0.9.5'])
+  # https://github.com/apiology/quality/issues/121
+  s.add_development_dependency('mocha', ['!= 1.10.1', '!= 1.10.0'])
+  s.add_development_dependency('pronto')
   s.add_development_dependency('pronto-flake8')
-  # pronto-reek 0.10.0 requires pronto 0.10.0
-  s.add_development_dependency('pronto-reek', ['<0.10.0'])
-  # pronto-rubocop 0.10.0 requires pronto 0.10.0
-  s.add_development_dependency('pronto-rubocop', ['<0.10.0'])
+  s.add_development_dependency('pronto-reek')
+  s.add_development_dependency('pronto-rubocop')
   s.add_development_dependency('rake', ['!= 10.4.2'])
   s.add_development_dependency('simplecov')
 end
