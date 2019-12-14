@@ -15,6 +15,12 @@ require_relative '../../lib/quality/rake/task'
 require 'minitest/autorun'
 require 'mocha/setup'
 
+Mocha.configure do |c|
+  # https://github.com/apiology/quality/issues/121
+  # https://github.com/freerange/mocha/issues/436
+  c.reinstate_undocumented_behaviour_from_v1_9 = true
+end
+
 def get_initializer_mocks(clazz, skip_these_keys: [])
   parameters = clazz.instance_method(:initialize).parameters
   named_parameters = parameters.select do |name, _value|
