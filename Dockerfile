@@ -54,7 +54,14 @@ RUN apk add --no-cache python3 py3-pip && \
     pip3 install flake8 && \
     apk del py3-pip && \
     pip3 uninstall -y pip
-RUN gem install --no-ri --no-rdoc pronto-flake8
+
+# pronto-flake8 doesn't have an official release whose gemspec allows
+# pronto 0.10.0 as of yet, so let's install the fixed version from GitHub:
+#
+# https://github.com/scoremedia/pronto-flake8/pull/7
+#
+# RUN gem install --no-ri --no-rdoc pronto-flake8
+RUN gem install specific_install && gem specific_install -l https://github.com/scoremedia/pronto-flake8
 
 
 FROM python-base AS python
