@@ -64,7 +64,8 @@ Gem::Specification.new do |s|
   # https://github.com/bundler/bundler/issues/3401
   s.add_development_dependency('minitest', ['~> 5'])
   # https://github.com/apiology/quality/issues/121
-  s.add_development_dependency('mocha', ['!= 1.10.1', '!= 1.10.0'])
+  # https://github.com/freerange/mocha/issues/436
+  s.add_development_dependency('mocha', ['<1.10'])
   s.add_development_dependency('pronto')
   s.add_development_dependency('pronto-flake8')
   s.add_development_dependency('pronto-reek')

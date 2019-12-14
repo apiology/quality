@@ -299,3 +299,7 @@
 ## Changes since Quality 35.1.1
 
 * Update Pronto
+
+## Changes since Quality 35.2.0
+
+* Fix gem conflict with pronto-flake8 and pronto 0.10.0
