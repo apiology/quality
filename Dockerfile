@@ -61,7 +61,7 @@ RUN apk add --no-cache python3 py3-pip && \
 # https://github.com/scoremedia/pronto-flake8/pull/7
 #
 # RUN gem install --no-ri --no-rdoc pronto-flake8
-RUN gem install --no-ri --no-rdoc specific_install && gem specific_install -l https://github.com/scoremedia/pronto-flake8
+RUN gem install --no-ri --no-rdoc specific_install && gem specific_install -l https://github.com/apiology/pronto-flake8 relax_pronto_requirement
 
 
 FROM python-base AS python
