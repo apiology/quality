@@ -80,7 +80,10 @@ class TestTask < BaseTestTask
     method("expect_#{tool_name}_run").call(quality_checker)
     file = self.class.sample_output(tool_name)
     lines = file.lines.map(&:strip)
-    quality_checker.expects(:execute).multiple_yields(*lines)
+    expectation = quality_checker.expects(:execute)
+    unless tool_name == 'shellcheck'
+      expectation.with_block_given.multiple_yields(*lines)
+    end
   end
 
   def expect_gemspec_tool_found(tool_name, was_found)
