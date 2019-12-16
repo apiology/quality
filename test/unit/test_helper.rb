@@ -13,7 +13,7 @@ end
 SimpleCov.refuse_coverage_drop
 require_relative '../../lib/quality/rake/task'
 require 'minitest/autorun'
-require 'mocha/setup'
+require 'mocha/minitest'
 
 def get_initializer_mocks(clazz, skip_these_keys: [])
   parameters = clazz.instance_method(:initialize).parameters
