@@ -64,7 +64,7 @@ module Quality
       return unless exit_status.nonzero?
 
       raise("Error detected running #{rendered_full_cmd}.  " \
-            "Exit status is #{exit_status}")
+            "Exit status is #{exit_status}.  Output was #{@command_output}")
     end
 
     MAX_VIOLATIONS = 9_999_999_999
