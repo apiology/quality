@@ -303,3 +303,9 @@
 ## Changes since Quality 35.2.0
 
 * Fix gem conflict with pronto-flake8 and pronto 0.10.0
+
+## Changes since Quality 35.2.1
+
+* Bump RuboCop version
+* Report output upon tool failure
+* Internal build improvements

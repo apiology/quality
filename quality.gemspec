@@ -43,7 +43,7 @@ Gem::Specification.new do |s|
   #
   # https://github.com/bbatsov/rubocop#installation
   s.add_runtime_dependency('mdl')
-  s.add_runtime_dependency('rubocop', '~> 0.77.0')
+  s.add_runtime_dependency('rubocop', '~> 0.78.0')
   # 1.19.0 was a RuboCop 0.51.0 compatibility release
   s.add_runtime_dependency('bigfiles', ['>= 0.1'])
   s.add_runtime_dependency('brakeman')
@@ -71,5 +71,4 @@ Gem::Specification.new do |s|
   s.add_development_dependency('pronto-reek')
   s.add_development_dependency('pronto-rubocop')
   s.add_development_dependency('rake', ['!= 10.4.2'])
-  s.add_development_dependency('simplecov')
 end
