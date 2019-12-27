@@ -1,5 +1,10 @@
-AllCops:
-  TargetRubyVersion: 2.4
+# I like trailing commas in maps.  They let me insert new elements and
+# see them as one line in a diff, not two.
+Style/TrailingCommaInHashLiteral:
+  EnforcedStyleForMultiline: comma
+
+Style/TrailingCommaInArrayLiteral:
+  EnforcedStyleForMultiline: comma
 
 Style/StringLiterals:
     EnforcedStyle: single_quotes
@@ -7,12 +12,6 @@ Style/StringLiterals:
       - single_quotes
       - double_quotes
     ConsistentQuotesInMultiline: true
-
-Style/TrailingCommaInArrayLiteral:
-  EnforcedStyleForMultiline: comma
-
-Style/TrailingCommaInHashLiteral:
-  EnforcedStyleForMultiline: comma
 
 # I use keyword arguments for a poor man's dependency injection to cut
 # down on the magic in my tests.
@@ -48,3 +47,8 @@ Style/CommentAnnotation:
        W"
     - "XX\
        X"
+
+AllCops:
+  TargetRubyVersion: 2.4
+
+require: rubocop-rspec

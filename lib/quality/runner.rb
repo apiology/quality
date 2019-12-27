@@ -71,7 +71,7 @@ module Quality
 
     def count_existing_violations(filename)
       existing_violations = @count_io.read(filename).to_i
-      raise("Problem with file #{filename}") if existing_violations < 0
+      raise("Problem with file #{filename}") if existing_violations.negative?
 
       existing_violations
     end
