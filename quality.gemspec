@@ -70,5 +70,6 @@ Gem::Specification.new do |s|
   s.add_development_dependency('pronto-flake8')
   s.add_development_dependency('pronto-reek')
   s.add_development_dependency('pronto-rubocop')
+  s.add_development_dependency('pronto-punchlist')
   s.add_development_dependency('rake', ['!= 10.4.2'])
 end
