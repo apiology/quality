@@ -5,7 +5,7 @@
 
 ## Overview
 
-TODO: Quality is a tool that runs quality checks on code in git repos using
+Quality is a tool that runs quality checks on code in git repos using
 different analysis tools and makes sure your numbers don't get any
 worse over time.
 
