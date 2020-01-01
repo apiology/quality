@@ -27,12 +27,11 @@ VERSION_FILE = 'lib/quality.rb'
 
 CLOBBER.include("#{BUILD_DIR}/*")
 
-Dir['tasks/**/*.rake'].each { |t| load t }
-
 desc 'Placeholder for things to run after tests succeed in CI'
 task after_test_success: %i[tag]
 
-desc 'Tag that tests have succeeded at this point in CI, for future use in pronto'
+desc 'Tag that tests have succeeded at this point in CI, ' \
+     'for future use in pronto'
 task :tag do
   sh 'git tag -f tests_passed'
   sh 'git push -f origin tests_passed'
