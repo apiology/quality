@@ -76,7 +76,7 @@ task :clear_metrics do |_t|
 end
 
 desc 'Standard build when running on a workstation'
-task localtest: %i[clear_metrics test quality]
+task localtest: %i[clear_metrics spec test feature spec quality]
 
 desc 'Standard build'
 task default: [:localtest]
