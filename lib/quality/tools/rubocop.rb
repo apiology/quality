@@ -7,8 +7,9 @@ module Quality
       def rubocop_args
         [
           '--force-exclusion',
-          '--require rubocop-rspec',
           '--require rubocop-minitest',
+          '--require rubocop-rake',
+          '--require rubocop-rspec',
           '--format emacs',
           *ruby_files,
         ].join(' ')

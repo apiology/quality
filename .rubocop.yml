@@ -54,3 +54,4 @@ AllCops:
 require:
   - rubocop-rspec
   - rubocop-minitest
+  - rubocop-rake
