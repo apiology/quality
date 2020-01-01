@@ -1,2 +1,5 @@
 text:
   format: "%{color_location}: [%{runner}] %{msg}"
+
+github_pr:
+  format: "[%{runner}] %{msg}"
