@@ -27,15 +27,17 @@ VERSION_FILE = 'lib/quality.rb'
 
 CLOBBER.include("#{BUILD_DIR}/*")
 
-Dir['tasks/**/*.rake'].each { |t| load t }
-
+desc 'Placeholder for things to run after tests succeed in CI'
 task after_test_success: %i[tag]
 
+desc 'Tag that tests have succeeded at this point in CI, ' \
+     'for future use in pronto'
 task :tag do
   sh 'git tag -f tests_passed'
   sh 'git push -f origin tests_passed'
 end
 
+desc 'Look for incremental quality issues'
 task :pronto do
   formatter = '-f github_pr' if ENV.key? 'PRONTO_GITHUB_ACCESS_TOKEN'
   if ENV.key? 'TRAVIS_PULL_REQUEST'
@@ -51,10 +53,12 @@ task :pronto do
   sh "pronto run #{formatter} -c tests_passed --no-exit-code || true"
 end
 
+desc 'Update definitions used in bundle-audit'
 task :update_bundle_audit do
   sh 'bundle-audit update'
 end
 
+desc 'Verify and report on code quality issues'
 task quality: %i[pronto update_bundle_audit]
 
 Quality::Rake::Task.new do |t|
@@ -64,28 +68,35 @@ Quality::Rake::Task.new do |t|
   # t.verbose = true
 end
 
+desc 'Rebaseline quality thresholds to last commit'
 task :clear_metrics do |_t|
   puts Time.now
   ret = system('git checkout coverage/.last_run.json *_high_water_mark')
   raise unless ret
 end
 
+desc 'Standard build when running on a workstation'
 task localtest: %i[clear_metrics test quality]
 
+desc 'Standard build'
 task default: [:localtest]
 
+desc 'Give RubyGems a chance to propogate release before using it'
 task :wait_for_release do
   sleep 80
 end
 
+desc 'Push up a new Docker image to hub.docker.com'
 task :publish_docker do
   sh './publish-docker-image.sh'
 end
 
+desc 'Placeholder for anything to be done before prepping a release'
 task :prerelease do
   sh 'git fetch --tags --force'
 end
 
+desc 'Release to RubyGems'
 task release: [:prerelease]
 
 #
@@ -115,6 +126,7 @@ task release: [:prerelease]
 #  * Merge PR
 #  * git checkout master && git pull
 #  * bundle update && bundle exec rake publish_all
+desc 'Publish a release to RubyGems and hub.docker.com'
 task publish_all: %i[localtest release wait_for_release publish_docker]
 # After this:
 #  * Verify Docker image sizes with "docker images" and update

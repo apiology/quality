@@ -49,6 +49,8 @@ Gem::Specification.new do |s|
   s.add_runtime_dependency('brakeman')
   s.add_runtime_dependency('punchlist', ['>= 1.1'])
   s.add_runtime_dependency('rails_best_practices')
+  s.add_runtime_dependency('rubocop-minitest')
+  s.add_runtime_dependency('rubocop-rake')
   s.add_runtime_dependency('rubocop-rspec', ['>=1.19.0'])
 
   # need above 3.2.2 to support Ruby 2.0 syntax
