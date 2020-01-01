@@ -55,7 +55,8 @@ Gem::Specification.new do |s|
   # not directly required - this is to workaround this issue:
   #  https://github.com/octokit/octokit.rb/issues/1177
   #
-  # This causes a "uninitialized constant Faraday::Error::ClientError (NameError)"
+  # This causes:
+  #  "uninitialized constant Faraday::Error::ClientError (NameError)"
   s.add_runtime_dependency('faraday', ['<1'])
 
   # need above 3.2.2 to support Ruby 2.0 syntax
