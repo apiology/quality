@@ -51,4 +51,6 @@ Style/CommentAnnotation:
 AllCops:
   TargetRubyVersion: 2.4
 
-require: rubocop-rspec
+require:
+  - rubocop-rspec
+  - rubocop-minitest

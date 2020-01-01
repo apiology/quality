@@ -8,6 +8,7 @@ module Quality
         [
           '--force-exclusion',
           '--require rubocop-rspec',
+          '--require rubocop-minitest',
           '--format emacs',
           *ruby_files,
         ].join(' ')
