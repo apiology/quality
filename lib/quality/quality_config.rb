@@ -4,6 +4,7 @@ require_relative 'threshold'
 
 module Quality
   # TODO: Figure out name, how this relates to Quality::Config - document that
+  # TODO: Why didn't SimpleCov numbers rise?'
   # Configuration of quality gem
   class QualityConfig
     def initialize(tool_name,
