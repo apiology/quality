@@ -1,4 +1,3 @@
-# -*- encoding: utf-8 -*-
 # frozen_string_literal: true
 
 # ; -*-Ruby-*-
@@ -71,8 +70,6 @@ Gem::Specification.new do |s|
   # Workaround for
   # https://github.com/bundler/bundler/issues/3401
   s.add_development_dependency('minitest', ['~> 5'])
-  # https://github.com/apiology/quality/issues/121
-  # https://github.com/freerange/mocha/issues/436
   s.add_development_dependency('mocha')
   s.add_development_dependency('pronto')
   s.add_development_dependency('pronto-flake8')
@@ -80,4 +77,5 @@ Gem::Specification.new do |s|
   s.add_development_dependency('pronto-reek')
   s.add_development_dependency('pronto-rubocop')
   s.add_development_dependency('rake', ['!= 10.4.2'])
+  s.add_development_dependency('rspec')
 end
