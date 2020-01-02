@@ -309,3 +309,8 @@
 * Bump RuboCop version
 * Report output upon tool failure
 * Internal build improvements
+
+## Changes since Quality 36.1.0
+
+* Add Quality::Threshold for external config
+* Add rubocop-minitest and rubocop-rake plugins

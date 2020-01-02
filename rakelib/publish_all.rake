@@ -5,7 +5,7 @@
 #  * Check if there's a newer RuboCop version.  If so:
 #    * Bump major version of quality and change quality.gemspec to point to it:
 #       https://github.com/rubocop-hq/rubocop/releases
-#       https://github.com/apiology/quality/blob/master/quality.gemspec#L51
+#       https://github.com/apiology/quality/blob/master/quality.gemspec#L45
 #    * bundle update
 #    * bundle exec rubocop -a
 #    * bundle exec rake quality # make fixes/bumps as needed
@@ -18,7 +18,7 @@
 #  * Run diff like this: git log vA.B.C...
 #  * Check Changelog.md against actual checkins; add any missing content.
 #  * Update .travis.yml with latest supported ruby Versions:
-#    https://www.ruby-lang.org/en/downloads/releases/
+#    https://www.ruby-lang.org/en/downloads/
 #  * Drop any Ruby versions that are eol:
 #    https://www.ruby-lang.org/en/downloads/branches/
 #  * Update .rubocop.yml#AllCops.TargetRubyVersion to the earliest supported
