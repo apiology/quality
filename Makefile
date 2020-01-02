@@ -1,3 +1,5 @@
+.PHONY: spec feature
+
 all: localtest
 
 localtest:
@@ -5,6 +7,12 @@ localtest:
 
 test:
 	@bundle exec rake test
+
+feature:
+	@bundle exec rake feature
+
+spec:
+	@bundle exec rake spec
 
 rubocop:
 	@bundle exec rake rubocop

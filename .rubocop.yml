@@ -1,4 +1,4 @@
-# I like trailing commas in maps.  They let me insert new elements and
+# I like trailing commas in hashes.  They let me insert new elements and
 # see them as one line in a diff, not two.
 Style/TrailingCommaInHashLiteral:
   EnforcedStyleForMultiline: comma
@@ -6,22 +6,12 @@ Style/TrailingCommaInHashLiteral:
 Style/TrailingCommaInArrayLiteral:
   EnforcedStyleForMultiline: comma
 
-Style/StringLiterals:
-    EnforcedStyle: single_quotes
-    SupportedStyles:
-      - single_quotes
-      - double_quotes
-    ConsistentQuotesInMultiline: true
-
 # I use keyword arguments for a poor man's dependency injection to cut
 # down on the magic in my tests.
 Metrics/ParameterLists:
   CountKeywordArgs: false
 
-Style/Encoding:
-  Enabled: false
-
-# If i'm using one function name and returning the contents of an
+# If I'm using one function name and returning the contents of an
 # attribute, that's OK.  The alternative would be this, which I find
 # confusing and often not really what I mean:
 #
@@ -31,7 +21,7 @@ Style/TrivialAccessors:
    ExactNameMatch: true
 
 #
-# Add 'X XX' to the standard list
+# Add 'XX X' to the standard list
 #
 Style/CommentAnnotation:
    Keywords:
@@ -40,16 +30,46 @@ Style/CommentAnnotation:
     - "FIXM\
        E"
     - "OPTIMIZ\
-      E"
+       E"
     - "HAC\
-      K"
+       K"
     - "REVIE\
        W"
     - "XX\
        X"
 
+# https://stackoverflow.com/questions/40934345/rubocop-25-line-block-size-and-rspec-tests
+Metrics/BlockLength:
+  # Exclude DSLs
+  Exclude:
+    - 'Rakefile'
+    - '*.gemspec'
+    - '**/*.rake'
+    - 'spec/**/*.rb'
+    - 'feature/**/*.rb'
+
+# http://www.betterspecs.org/#single
+#
+# > in tests that are not isolated (e.g. ones that integrate with a
+# > DB, an external webservice, or end-to-end-tests), you take a
+# > massive performance hit to do the same setup over and over again,
+# > just to set a different expectation in each test. In these sorts
+# > of slower tests, I think it's fine to specify more than one
+# > isolated behavior.
+RSpec/MultipleExpectations:
+  Exclude:
+    - 'feature/**/*.rb'
+
+Style/StringLiterals:
+    EnforcedStyle: single_quotes
+    SupportedStyles:
+      - single_quotes
+      - double_quotes
+    ConsistentQuotesInMultiline: true
+
 AllCops:
   TargetRubyVersion: 2.4
+
 
 require:
   - rubocop-rspec

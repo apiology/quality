@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require_relative '../tool'
+
 module Quality
   module Tools
     # Adds 'bigfiles' tool support to quality gem
