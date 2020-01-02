@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 module Quality
+  # TODO: Can I convince the rest of the code to use this?
+
   # Calculate threshold for quality gem tool
   class Threshold
     attr_reader :tool_name
@@ -23,6 +25,10 @@ module Quality
 
         0
       end
+    end
+
+    def under_limit?(total_lines)
+      total_lines <= threshold
     end
   end
 end
