@@ -1,0 +1,17 @@
+# frozen_string_literal: true
+
+desc 'Look for incremental quality issues'
+task :pronto do
+  formatter = '-f github_pr' if ENV.key? 'PRONTO_GITHUB_ACCESS_TOKEN'
+  if ENV.key? 'TRAVIS_PULL_REQUEST'
+    ENV['PRONTO_PULL_REQUEST_ID'] = ENV['TRAVIS_PULL_REQUEST']
+  elsif ENV.key? 'CIRCLE_PULL_REQUEST'
+    ENV['PRONTO_PULL_REQUEST_ID'] = ENV['CIRCLE_PULL_REQUEST'].split('/').last
+  end
+  sh "pronto run #{formatter} -c origin/master --no-exit-code --unstaged "\
+     "|| true"
+  sh "pronto run #{formatter} -c origin/master --no-exit-code --staged || true"
+  sh "pronto run #{formatter} -c origin/master --no-exit-code || true"
+  sh 'git fetch --tags --force'
+  sh "pronto run #{formatter} -c tests_passed --no-exit-code || true"
+end
