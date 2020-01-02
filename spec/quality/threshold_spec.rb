@@ -10,6 +10,7 @@ describe Quality::Threshold do
   end
   let(:count_file) { class_double(File) }
   let(:count_io) { class_double(IO) }
+  let(:tool_name) { 'foo' }
   let(:metrics_filename) { "metrics/#{tool_name}_high_water_mark" }
 
   before do
@@ -27,51 +28,33 @@ describe Quality::Threshold do
     subject { quality_threshold.threshold }
 
     context 'when high water mark file exists' do
-      let(:tool_name) { 'bigfiles' }
       let(:file_exists) { true }
       let(:high_water_mark) { 923 }
 
       it { is_expected.to be high_water_mark }
     end
 
-    context 'when high water mark file does not exist with bigfiles' do
+    context 'when high water mark file does not exist' do
       let(:file_exists) { false }
-      let(:tool_name) { 'bigfiles' }
 
-      it { is_expected.to be 300 }
-    end
-
-    context 'when high water mark file does not exist with another tool' do
-      let(:file_exists) { false }
-      let(:tool_name) { 'another_tool' }
-
-      it { is_expected.to be 0 }
+      it { is_expected.to be nil }
     end
   end
 
-  describe '#under_limit?' do
-    subject { quality_threshold.under_limit?(total_lines) }
-
-    let(:tool_name) { 'bigfiles' }
+  describe '#write_violations' do
+    let(:new_violations) { instance_double(Integer) }
     let(:file_exists) { true }
-    let(:high_water_mark) { 99 }
+    let(:file) { instance_double(File) }
 
-    context 'when above threshold' do
-      let(:total_lines) { 100 }
-
-      it { is_expected.to be false }
+    before do
+      allow(count_file).to receive(:open).with(metrics_filename, 'w')
+                                         .and_yield(file)
+      allow(file).to receive(:write).with(new_violations.to_s + "\n")
     end
 
-    context 'when below threshold' do
-      let(:total_lines) { 98 }
-
-      it { is_expected.to be true }
-    end
-
-    context 'when at threshold' do
-      let(:total_lines) { 99 }
-
-      it { is_expected.to be true }
+    it 'is written' do
+      quality_threshold.write_violations(new_violations)
+      expect(file).to have_received(:write).with(new_violations.to_s + "\n")
     end
   end
 end

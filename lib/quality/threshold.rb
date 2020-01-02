@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
 module Quality
-  # TODO: Can I convince the rest of the code to use this?
-
   # Calculate threshold for quality gem tool
   class Threshold
     attr_reader :tool_name
@@ -18,17 +16,13 @@ module Quality
     end
 
     def threshold
-      if @count_file.exist?(@filename)
-        @count_io.read(@filename).to_i
-      else
-        return 300 if tool_name == 'bigfiles'
-
-        0
-      end
+      return @count_io.read(@filename).to_i if @count_file.exist?(@filename)
     end
 
-    def under_limit?(total_lines)
-      total_lines <= threshold
+    def write_violations(new_violations)
+      @count_file.open(@filename, 'w') do |file|
+        file.write(new_violations.to_s + "\n")
+      end
     end
   end
 end

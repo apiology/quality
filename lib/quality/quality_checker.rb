@@ -3,6 +3,7 @@
 require_relative 'command_output_processor'
 require_relative 'process'
 require_relative 'ruby_spawn'
+require_relative 'threshold'
 
 module Quality
   # Runs a quality-checking, command, checks it agaist the existing
@@ -28,7 +29,10 @@ module Quality
       @command_options = command_options
       @verbose = verbose
       @count_dir.mkdir(output_dir) unless @count_file.exists?(output_dir)
-      @filename = File.join(output_dir, "#{cmd}_high_water_mark")
+      @threshold = Quality::Threshold.new(cmd,
+                                          count_io: count_io,
+                                          count_file: count_file,
+                                          output_dir: output_dir)
       @process_class = process_class
     end
 
@@ -70,14 +74,7 @@ module Quality
     MAX_VIOLATIONS = 9_999_999_999
 
     def existing_violations
-      @existing_violations ||=
-        begin
-          if @count_file.exist?(@filename)
-            @count_io.read(@filename).to_i
-          else
-            MAX_VIOLATIONS
-          end
-        end
+      @existing_violations ||= (@threshold.threshold || MAX_VIOLATIONS)
     end
 
     def rendered_full_cmd
@@ -126,9 +123,7 @@ module Quality
     end
 
     def write_violations(new_violations)
-      @count_file.open(@filename, 'w') do |file|
-        file.write(new_violations.to_s + "\n")
-      end
+      @threshold.write_violations(new_violations)
     end
   end
 end
