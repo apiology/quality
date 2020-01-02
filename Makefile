@@ -5,6 +5,9 @@ all: localtest
 localtest:
 	@bundle exec rake localtest
 
+test:
+	@bundle exec rake test
+
 feature:
 	@bundle exec rake feature
 
