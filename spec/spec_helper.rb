@@ -2,6 +2,9 @@
 
 require 'simplecov'
 
+SimpleCov.formatters = [
+  SimpleCov::Formatter::HTMLFormatter,
+]
 SimpleCov.start do
   # this dir used by TravisCI
   add_filter 'vendor'
