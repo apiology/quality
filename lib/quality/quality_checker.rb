@@ -3,7 +3,7 @@
 require_relative 'command_output_processor'
 require_relative 'process'
 require_relative 'ruby_spawn'
-require_relative 'threshold'
+require 'high_water_mark/threshold'
 
 module Quality
   # Runs a quality-checking, command, checks it agaist the existing
@@ -29,10 +29,10 @@ module Quality
       @command_options = command_options
       @verbose = verbose
       @count_dir.mkdir(output_dir) unless @count_file.exists?(output_dir)
-      @threshold = Quality::Threshold.new(cmd,
-                                          count_io: count_io,
-                                          count_file: count_file,
-                                          output_dir: output_dir)
+      @threshold = HighWaterMark::Threshold.new(cmd,
+                                                count_io: count_io,
+                                                count_file: count_file,
+                                                output_dir: output_dir)
       @process_class = process_class
     end
 
