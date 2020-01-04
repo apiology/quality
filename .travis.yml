@@ -1,5 +1,6 @@
 sudo: false
 language: ruby
+cache: bundler
 # without --debug, JRuby doesn't support coverage reporting
 before_install:
   - gem install bundler
