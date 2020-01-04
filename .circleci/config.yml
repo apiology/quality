@@ -9,12 +9,12 @@ jobs:
     steps:
       - checkout
       - type: cache-restore
-        key: quality-{{ checksum "quality.gemspec" }}-{{ checksum "Gemfile" }}
+        key: quality-v2-{{ checksum "quality.gemspec" }}-{{ checksum "Gemfile" }}
       - run: bundle install --jobs=4
       - type: cache-save
-        key: quality-{{ checksum "quality.gemspec" }}-{{ checksum "Gemfile" }}
+        key: quality-v2-{{ checksum "quality.gemspec" }}-{{ checksum "Gemfile" }}
         paths:
-          - "vendor/bundle"
+          - "/home/circleci/vendor/bundle"
       - run: bundle exec rake --jobs=4 ci
       - run:
           command: bundle exec rake after_test_success
