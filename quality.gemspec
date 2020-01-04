@@ -43,13 +43,15 @@ Gem::Specification.new do |s|
   # https://github.com/bbatsov/rubocop#installation
   s.add_runtime_dependency('mdl')
   s.add_runtime_dependency('rubocop', '~> 0.78.0')
-  # 1.19.0 was a RuboCop 0.51.0 compatibility release
-  s.add_runtime_dependency('bigfiles', ['>= 0.1'])
+  # 0.2.0 had a fatal bug
+  s.add_runtime_dependency('bigfiles', ['>= 0.1', '!= 0.2.0'])
   s.add_runtime_dependency('brakeman')
+  s.add_runtime_dependency('high_water_mark')
   s.add_runtime_dependency('punchlist', ['>= 1.1'])
   s.add_runtime_dependency('rails_best_practices')
   s.add_runtime_dependency('rubocop-minitest')
   s.add_runtime_dependency('rubocop-rake')
+  # 1.19.0 was a RuboCop 0.51.0 compatibility release
   s.add_runtime_dependency('rubocop-rspec', ['>=1.19.0'])
   # not directly required - this is to workaround this issue:
   #  https://github.com/octokit/octokit.rb/issues/1177
