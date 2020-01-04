@@ -8,10 +8,14 @@ task :pronto do
   elsif ENV.key? 'CIRCLE_PULL_REQUEST'
     ENV['PRONTO_PULL_REQUEST_ID'] = ENV['CIRCLE_PULL_REQUEST'].split('/').last
   end
-  sh "pronto run #{formatter} -c origin/master --no-exit-code --unstaged "\
+  sh "bundle exec " \
+     "pronto run #{formatter} -c origin/master --no-exit-code --unstaged "\
      "|| true"
-  sh "pronto run #{formatter} -c origin/master --no-exit-code --staged || true"
-  sh "pronto run #{formatter} -c origin/master --no-exit-code || true"
+  sh "bundle exec " \
+     "pronto run #{formatter} -c origin/master --no-exit-code --staged || true"
+  sh "bundle exec " \
+     "pronto run #{formatter} -c origin/master --no-exit-code || true"
   sh 'git fetch --tags --force'
-  sh "pronto run #{formatter} -c tests_passed --no-exit-code || true"
+  sh "bundle exec " \
+     "pronto run #{formatter} -c tests_passed --no-exit-code || true"
 end
