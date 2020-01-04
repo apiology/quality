@@ -314,3 +314,8 @@
 
 * Add Quality::Threshold for external config
 * Add rubocop-minitest and rubocop-rake plugins
+
+## Changes since Quality 37.0.0
+
+* Resolve circular dependency with bigfiles by creating
+  high\_water\_mark gem.
