@@ -8,6 +8,7 @@ jobs:
       - checkout
       - type: cache-restore
         key: quality-{{ checksum "quality.gemspec" }}-{{ checksum "Gemfile" }}
+      - run: "env | grep bundle"
       - run: bundle config set path 'vendor/bundle'
       - run: bundle install --jobs=4
       - run: bundle exec rake --jobs=4 ci
