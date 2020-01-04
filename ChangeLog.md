@@ -319,3 +319,7 @@
 
 * Resolve circular dependency with bigfiles by creating
   high\_water\_mark gem.
+
+## Changes since Quality 37.0.1
+
+* Add pronto-bigfiles in Docker image
