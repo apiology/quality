@@ -4,14 +4,13 @@ jobs:
     working_directory: ~/quality
     docker:
       - image: apiology/circleci-ruby:latest
+    environment:
+      BUNDLE_PATH: '/home/circleci/vendor/bundle'
     steps:
       - checkout
       - type: cache-restore
         key: quality-{{ checksum "quality.gemspec" }}-{{ checksum "Gemfile" }}
-      - run:
-          command: bundle install --jobs=4
-          environment:
-            BUNDLE_PATH: '/home/circleci/vendor/bundle'
+      - run: bundle install --jobs=4
       - type: cache-save
         key: quality-{{ checksum "quality.gemspec" }}-{{ checksum "Gemfile" }}
         paths:
