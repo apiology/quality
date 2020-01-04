@@ -1,4 +1,4 @@
-FROM alpine:latest AS base
+FROM alpine:3.11 AS base
 
 # We install and then uninstall quality to cache the dependencies
 # while we still have the build tools installed but still be able to
@@ -7,25 +7,26 @@ FROM alpine:latest AS base
 
 RUN apk update && \
     apk add --no-cache ruby ruby-irb ruby-dev make gcc libc-dev git icu-dev zlib-dev g++ cmake openssl-dev coreutils && \
-    gem install --no-ri --no-rdoc bigdecimal rake etc quality bundler io-console pronto pronto-reek pronto-rubocop pronto-flay pronto-punchlist pronto-bigfiles 'bundler:<2' && \
+    gem update --system && \
+    gem install --no-doc rdoc bigdecimal rake etc quality bundler io-console pronto pronto-reek pronto-rubocop pronto-flay pronto-punchlist pronto-bigfiles 'bundler:<2' && \
     gem uninstall quality && \
-    strip /usr/lib/ruby/gems/2.5.0/extensions/x86_64-linux/2.5.0/rugged-*/rugged/rugged.so && \
+    strip /usr/lib/ruby/gems/*/extensions/x86_64-linux-musl/*/rugged-*/rugged/rugged.so && \
     apk del ruby-irb ruby-dev make gcc libc-dev icu-dev zlib-dev g++ cmake openssl-dev nghttp2 curl pax-utils && \
     apk add --no-cache libssl1.1 icu-libs && \
-    rm -fr /usr/lib/ruby/gems/2.5.0/gems/rugged-0.27.4/vendor/libgit2/build/src \
-           /usr/lib/ruby/gems/2.5.0/gems/rugged-0.27.4/vendor/libgit2/src \
-           /usr/lib/ruby/gems/2.5.0/gems/rugged-0.27.4/ext/rugged \
-           /usr/lib/ruby/gems/2.5.0/gems/rugged-0.27.4/vendor/libgit2/build/libgit2.a \
-           /usr/lib/ruby/gems/2.5.0/gems/rugged-0.27.4/lib/rugged/rugged.so \
-           /usr/lib/ruby/gems/2.5.0/gems/unf_ext-0.0.7.5/ext/unf_ext/unf \
-           /usr/lib/ruby/gems/2.5.0/gems/kramdown-1.17.0/test \
-           /usr/lib/ruby/gems/2.5.0/gems/ruby_parser-3.11.0/lib/*.y \
-           /usr/lib/ruby/gems/2.5.0/gems/ruby_parser-3.11.0/lib/*.yy \
-           /usr/lib/ruby/gems/2.5.0/gems/ruby_parser-3.11.0/lib/*.rex \
-           /usr/lib/ruby/gems/2.5.0/cache \
-           /usr/lib/ruby/gems/2.5.0/gems/erubis-2.7.0/doc-api \
-           /usr/lib/ruby/gems/2.5.0/gems/reek-5.0.2/spec \
-           /usr/lib/ruby/gems/2.5.0/gems/kwalify-0.7.2/doc-api \
+    rm -fr /usr/lib/ruby/gems/*/gems/rugged-*/vendor/libgit2/build/src \
+           /usr/lib/ruby/gems/*/gems/rugged-*/vendor/libgit2/src \
+           /usr/lib/ruby/gems/*/gems/rugged-*/ext/rugged \
+           /usr/lib/ruby/gems/*/gems/rugged-*/vendor/libgit2/build/libgit2.a \
+           /usr/lib/ruby/gems/*/gems/rugged-*/lib/rugged/rugged.so \
+           /usr/lib/ruby/gems/*/gems/unf_ext-*/ext/unf_ext/unf \
+           /usr/lib/ruby/gems/*/gems/kramdown-*/test \
+           /usr/lib/ruby/gems/*/gems/ruby_parser-*/lib/*.y \
+           /usr/lib/ruby/gems/*/gems/ruby_parser-*/lib/*.yy \
+           /usr/lib/ruby/gems/*/gems/ruby_parser-*/lib/*.rex \
+           /usr/lib/ruby/gems/*/cache \
+           /usr/lib/ruby/gems/*/gems/erubis-*/doc-api \
+           /usr/lib/ruby/gems/*/gems/reek-*/spec \
+           /usr/lib/ruby/gems/*/gems/kwalify-*/doc-api \
       && \
       echo "Done"
 
@@ -40,7 +41,7 @@ VOLUME /usr/app
 WORKDIR /usr/app
 ENTRYPOINT ["/entrypoint.sh"]
 ARG quality_gem_version
-RUN gem install --no-ri --no-rdoc quality:${quality_gem_version}
+RUN gem install --no-doc quality:${quality_gem_version}
 CMD ["quality"]
 
 
@@ -60,8 +61,8 @@ RUN apk add --no-cache python3 py3-pip && \
 #
 # https://github.com/scoremedia/pronto-flake8/pull/7
 #
-# RUN gem install --no-ri --no-rdoc pronto-flake8
-RUN gem install --no-ri --no-rdoc specific_install && gem specific_install -l https://github.com/apiology/pronto-flake8 -b relax_pronto_requirement
+# RUN gem install --no-doc pronto-flake8
+RUN gem install --no-doc specific_install && gem specific_install -l https://github.com/apiology/pronto-flake8 -b relax_pronto_requirement
 
 
 
@@ -70,7 +71,7 @@ VOLUME /usr/app
 WORKDIR /usr/app
 ENTRYPOINT ["/entrypoint.sh"]
 ARG quality_gem_version
-RUN gem install --no-ri --no-rdoc quality:${quality_gem_version}
+RUN gem install --no-doc quality:${quality_gem_version}
 CMD ["quality"]
 
 
@@ -107,7 +108,7 @@ FROM python-base as shellcheck-base
 
 COPY --from=4 /root/.cabal/bin /usr/local/bin
 RUN apk update && apk add --no-cache ruby ruby-dev # TODO: Do this as another build image
-RUN gem install --no-ri --no-rdoc pronto-shellcheck
+RUN gem install --no-doc pronto-shellcheck
 
 
 
@@ -118,7 +119,7 @@ VOLUME /usr/app
 WORKDIR /usr/app
 ENTRYPOINT ["/entrypoint.sh"]
 ARG quality_gem_version
-RUN gem install --no-ri --no-rdoc quality:${quality_gem_version}
+RUN gem install --no-doc quality:${quality_gem_version}
 CMD ["quality"]
 
 
@@ -207,5 +208,5 @@ VOLUME /usr/app
 WORKDIR /usr/app
 ENTRYPOINT ["/entrypoint.sh"]
 ARG quality_gem_version
-RUN gem install --no-ri --no-rdoc quality:${quality_gem_version}
+RUN gem install --no-doc quality:${quality_gem_version}
 CMD ["quality"]
