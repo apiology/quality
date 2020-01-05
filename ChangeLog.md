@@ -323,3 +323,7 @@
 ## Changes since Quality 37.0.1
 
 * Add pronto-bigfiles in Docker image
+
+## Changes since Quality 37.1.0
+
+Remove fork of pronto-flake8 in Docker image
