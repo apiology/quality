@@ -147,11 +147,15 @@ Quality uses [semantic versioning](http://semver.org/)--any incompatible changes
 (including new tools being added) will come out as major number
 updates.
 
-This includes RuboCop upgrades - the quality gem locks in a specific
-minor version of RuboCop to avoid your metrics being bumped and
-breaking your build.
+New versions of rubocop, however, will often introduce new rules, which
+won't be universally adhered to in your code, which in turn may ratchet your
+metrics in the wrong direction!  As a result of this we recommend
+you lock your Gemfile to a specific minor version of rubocop.
 
-Expect your build to break on major upgrades if you use RuboCop.
+Expect your build to break on major upgrades of this gem,
+and minor version upgrades of rubocop.  Because this gem requires
+rubocop, rubocop will get updated when you update this gem, unless
+you have an explicit constraint on rubocop preventing it (AND YOU SHOULD!).
 
 ## Supported Ruby Versions
 
