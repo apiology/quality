@@ -42,7 +42,7 @@ Gem::Specification.new do |s|
   #
   # https://github.com/bbatsov/rubocop#installation
   s.add_runtime_dependency('mdl')
-  s.add_runtime_dependency('rubocop', '~> 0.78.0')
+  s.add_runtime_dependency('rubocop', '>= 0.78')
   # 0.2.0 had a fatal bug
   s.add_runtime_dependency('bigfiles', ['>= 0.1', '!= 0.2.0'])
   s.add_runtime_dependency('brakeman')

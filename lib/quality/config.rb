@@ -4,6 +4,7 @@
 # https://github.com/xsc/lein-ancient/issues/29
 # https://github.com/xsc/lein-ancient/releases
 
+require 'forwardable'
 require_relative 'linguist_source_file_globber'
 
 module Quality
