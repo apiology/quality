@@ -1,4 +1,4 @@
-FROM alpine:3.11 AS base
+FROM alpine:3.12 AS base
 
 # We install and then uninstall quality to cache the dependencies
 # while we still have the build tools installed but still be able to
@@ -131,34 +131,59 @@ RUN apk --no-cache add ca-certificates wget && \
 ENV LANG=C.UTF-8
 
 # To upgrade:
-# 1. Check https://jdk.java.net/14/ for latest build - see 'Alpine Linux/x64' link
-# 2. See if there's an update here: https://github.com/docker-library/openjdk/blob/master/14/jdk/alpine/Dockerfile
+# 1. Check https://jdk.java.net/16/ for latest build - see 'Alpine Linux/x64' link
+# 2. See if there's an update here: https://github.com/docker-library/openjdk/blob/master/16/jdk/alpine3.12/Dockerfile
 
-ENV JAVA_HOME /opt/openjdk-14
+RUN apk add --no-cache java-cacerts
+
+ENV JAVA_HOME /opt/openjdk-16
 ENV PATH $JAVA_HOME/bin:$PATH
 
 # https://jdk.java.net/
+# >
 # > Java Development Kit builds, from Oracle
-ENV JAVA_VERSION 14-ea+15
-ENV JAVA_URL https://download.java.net/java/early_access/alpine/15/binaries/openjdk-14-ea+15_linux-x64-musl_bin.tar.gz
-ENV JAVA_SHA256 76091da1b6ed29788f0cf85454d23900a4134286e5feb571247e5861f618d3cd
+# >
+ENV JAVA_VERSION 16-ea+5
 # "For Alpine Linux, builds are produced on a reduced schedule and may not be in sync with the other platforms."
 
 RUN set -eux; \
 	\
-	wget -O /openjdk.tgz "$JAVA_URL"; \
-	echo "$JAVA_SHA256 */openjdk.tgz" | sha256sum -c -; \
+	arch="$(apk --print-arch)"; \
+# this "case" statement is generated via "update.sh"
+	case "$arch" in \
+# amd64
+		x86_64) \
+			downloadUrl=https://download.java.net/java/early_access/alpine/5/binaries/openjdk-16-ea+5_linux-x64-musl_bin.tar.gz; \
+			downloadSha256=1ec940bea148a7ececda635c209de3836fe4e6511f5d49d4248cf6d52c77aac8; \
+			;; \
+# fallback
+		*) echo >&2 "error: unsupported architecture: '$arch'"; exit 1 ;; \
+	esac; \
+	\
+	wget -O openjdk.tgz "$downloadUrl"; \
+	echo "$downloadSha256 *openjdk.tgz" | sha256sum -c -; \
+	\
 	mkdir -p "$JAVA_HOME"; \
-	tar --extract --file /openjdk.tgz --directory "$JAVA_HOME" --strip-components 1; \
-	rm /openjdk.tgz; \
+	tar --extract \
+		--file openjdk.tgz \
+		--directory "$JAVA_HOME" \
+		--strip-components 1 \
+		--no-same-owner \
+	; \
+	rm openjdk.tgz; \
+	\
+# see "java-cacerts" package installed above (which maintains "/etc/ssl/certs/java/cacerts" for us)
+	rm -rf "$JAVA_HOME/lib/security/cacerts"; \
+	ln -sT /etc/ssl/certs/java/cacerts "$JAVA_HOME/lib/security/cacerts"; \
 	\
 # https://github.com/docker-library/openjdk/issues/212#issuecomment-420979840
 # https://openjdk.java.net/jeps/341
 	java -Xshare:dump; \
 	\
 # basic smoke test
-	java --version; \
-	javac --version
+	fileEncoding="$(echo 'System.out.println(System.getProperty("file.encoding"))' | jshell -s -)"; [ "$fileEncoding" = 'UTF-8' ]; rm -rf ~/.java; \
+	javac --version; \
+	java --version
 
 # https://docs.oracle.com/javase/10/tools/jshell.htm
 # https://docs.oracle.com/javase/10/jshell/
