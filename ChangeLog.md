@@ -327,3 +327,10 @@
 ## Changes since Quality 37.1.0
 
 Remove fork of pronto-flake8 in Docker image
+
+## Changes since Quality 37.1.1
+
+Upgrade supported Faraday
+Update RuboCop to 0.92.0
+Update JDK and Alpine in Docker image
+Ruby 2.4 is unsupported

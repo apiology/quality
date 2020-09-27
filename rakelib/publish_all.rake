@@ -19,7 +19,7 @@
 #  * Check Changelog.md against actual checkins; add any missing content.
 #  * Update .travis.yml with latest supported ruby Versions:
 #    https://www.ruby-lang.org/en/downloads/
-#  * Drop any Ruby versions that are eol:
+#  * Drop any Ruby versions that are eol in .travis.yml
 #    https://www.ruby-lang.org/en/downloads/branches/
 #  * Update .rubocop.yml#AllCops.TargetRubyVersion to the earliest supported
 #    version

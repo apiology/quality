@@ -20,9 +20,7 @@ module Quality
         args = [
           "-f '#{ruby_files_glob}'",
         ]
-        unless exclude_files.nil? || exclude_files.empty?
-          args += cane_exclude_args
-        end
+        args += cane_exclude_args unless exclude_files.nil? || exclude_files.empty?
         args.join(' ')
       end
 

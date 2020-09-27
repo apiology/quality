@@ -68,7 +68,7 @@ Style/StringLiterals:
     ConsistentQuotesInMultiline: true
 
 AllCops:
-  TargetRubyVersion: 2.4
+  TargetRubyVersion: 2.5
 
 
 require:

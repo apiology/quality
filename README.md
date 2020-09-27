@@ -149,7 +149,9 @@ updates.
 
 This includes RuboCop upgrades - the quality gem locks in a specific
 minor version of RuboCop to avoid your metrics being bumped and
-breaking your build.
+breaking your build.  This lock affects both the Docker-based quality
+gem (helping to ensure build stability for floating major versions) as
+well as the gem when included directly in your project's gems.
 
 Expect your build to break on major upgrades if you use RuboCop.
 

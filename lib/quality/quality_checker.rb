@@ -110,9 +110,7 @@ module Quality
     end
 
     def report_violations(existing)
-      if existing != MAX_VIOLATIONS
-        @logger.puts "Existing violations: #{existing}"
-      end
+      @logger.puts "Existing violations: #{existing}" if existing != MAX_VIOLATIONS
       @logger.puts "Found #{@violations} #{@cmd} violations"
     end
 
