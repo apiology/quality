@@ -53,8 +53,7 @@ FROM base AS python-base
 
 RUN apk add --no-cache python3 py3-pip && \
     pip3 install flake8 && \
-    apk del py3-pip && \
-    pip3 uninstall -y pip
+    apk del py3-pip
 
 RUN gem install --no-doc pronto-flake8
 
