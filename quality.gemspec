@@ -73,6 +73,7 @@ Gem::Specification.new do |s|
   s.add_development_dependency('pronto-flake8')
   s.add_development_dependency('pronto-punchlist')
   s.add_development_dependency('pronto-rubocop')
-  s.add_development_dependency('rake', ['!= 10.4.2'])
+  # https://github.com/advisories/GHSA-jppv-gw3r-w3q8
+  s.add_development_dependency('rake', ['>= 12.3.3'])
   s.add_development_dependency('rspec')
 end
