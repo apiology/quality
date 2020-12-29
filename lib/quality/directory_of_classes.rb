@@ -1,5 +1,13 @@
 # frozen_string_literal: true
 
+# this 'time' require statement is needed as of active_support, which
+# tries to remap the xmlschema method.  Turns out there are two 'Time'
+# classes - methods get added when you "require 'time'".
+#
+# https://github.com/rails/rails/pull/40859
+#
+# https://app.circleci.com/pipelines/github/apiology/checkoff/46/workflows/27702e5f-ce86-4960-8b5e-f5277ddf159e/jobs/124
+require 'time'
 require 'active_support'
 require 'active_support/core_ext'
 
