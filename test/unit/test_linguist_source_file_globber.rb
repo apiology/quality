@@ -98,6 +98,6 @@ class TestLinguistSourceFileGlobber < MiniTest::Test
   def get_test_object(&twiddle_mocks)
     @mocks = get_initializer_mocks(Quality::LinguistSourceFileGlobber)
     yield @mocks unless twiddle_mocks.nil?
-    Quality::LinguistSourceFileGlobber.new(@mocks)
+    Quality::LinguistSourceFileGlobber.new(**@mocks)
   end
 end
