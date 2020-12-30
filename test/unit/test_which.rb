@@ -66,6 +66,6 @@ class TestWhich < MiniTest::Test
   def get_test_object(separator, &twiddle_mocks)
     @mocks = create_mocks(separator)
     yield unless twiddle_mocks.nil?
-    Quality::Which.new(@mocks)
+    Quality::Which.new(**@mocks)
   end
 end

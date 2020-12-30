@@ -102,6 +102,6 @@ class TestConfig < MiniTest::Test
   def get_test_object(&twiddle_mocks)
     @mocks = get_initializer_mocks(Quality::Config)
     yield @mocks unless twiddle_mocks.nil?
-    Quality::Config.new(@mocks)
+    Quality::Config.new(**@mocks)
   end
 end

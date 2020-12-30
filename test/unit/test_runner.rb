@@ -30,6 +30,6 @@ class TestRunner < MiniTest::Test
   def get_test_object(&twiddle_mocks)
     mocks = get_initializer_mocks(Quality::Runner)
     yield mocks unless twiddle_mocks.nil?
-    Quality::Runner.new(config, mocks)
+    Quality::Runner.new(config, **mocks)
   end
 end

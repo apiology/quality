@@ -22,6 +22,6 @@ class TestProcess < MiniTest::Test
   def get_test_object(cmd, &twiddle_mocks)
     @mocks = test_mocks
     yield unless twiddle_mocks.nil?
-    Quality::Process.new(cmd, @mocks)
+    Quality::Process.new(cmd, **@mocks)
   end
 end

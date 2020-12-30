@@ -14,7 +14,7 @@ class BaseTestTask < MiniTest::Test
   def get_test_object(fiddle_with_task = ->(_task) {}, &twiddle_mocks)
     @mocks = get_initializer_mocks(Quality::Rake::Task)
     yield @mocks unless twiddle_mocks.nil?
-    Quality::Rake::Task.new(@mocks) { |task| fiddle_with_task.call(task) }
+    Quality::Rake::Task.new(**@mocks) { |task| fiddle_with_task.call(task) }
   end
 
   def expect_tools_tasks_defined(tools)

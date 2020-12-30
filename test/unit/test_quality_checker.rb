@@ -103,6 +103,6 @@ class TestQualityChecker < MiniTest::Test
     @mocks = test_mocks
     yield unless twiddle_mocks.nil?
     Quality::QualityChecker.new(cmd, options, output_dir, verbose,
-                                minimum_threshold, @mocks)
+                                minimum_threshold, **@mocks)
   end
 end
