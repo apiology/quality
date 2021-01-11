@@ -32,6 +32,23 @@ Before this:
 
 After this:
 
-* Verify Docker image sizes with "docker images" and update
+* Verify Docker image sizes with `docker images apiology/quality` and update
   DOCKER.md with new numbers
 * Verify Travis is building
+
+## Maintaining Docker image size
+
+Look at the output of: `docker images apiology/quality`.
+
+For each one to optimize:
+
+```sh
+docker run --entrypoint /bin/sh -it apiology/quality:${target_tag:?}
+apk add file # so you can tell whether shared libraries are stripped
+cd /
+alias d='du -s -k $(find . -maxdepth 1 | grep -v \^\.\$) | sort -n 2>/dev/null'
+```
+
+You can now recurse and see if you can identify files that shouldn't
+exist, then modify Dockerfile to purge those before they get commited
+to a layer.
