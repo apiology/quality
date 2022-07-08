@@ -47,7 +47,7 @@ do
 
   echo "Looking at ${repo:?}..."
   set +e
-  if ! (cd "${repo:?}" && git config user.email "${EMAIL:?}" && git config user.name "${NAME:?}" && git stash && git checkout master >/dev/null 2>&1 && git pull >/dev/null && "${CURDIR:?}/upgrade-quality-gem-in-repo" "${NEW_VERSION:?}" "${TRACKING_FILENAME:?}" "${DEFAULT_VERSION:?}")
+  if ! (cd "${repo:?}" && git config user.email "${EMAIL:?}" && git config user.name "${NAME:?}" && git stash && git checkout main >/dev/null 2>&1 && git pull >/dev/null && "${CURDIR:?}/upgrade-quality-gem-in-repo" "${NEW_VERSION:?}" "${TRACKING_FILENAME:?}" "${DEFAULT_VERSION:?}")
   then
     FAILED_REPOS="${FAILED_REPOS} ${repo:?}"
   fi
@@ -64,4 +64,3 @@ then
 fi
 
 exit 0
-

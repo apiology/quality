@@ -103,7 +103,7 @@ changes, consider using
 incremental reporting from different quality tools, and can add
 comments directly to PR reviews.  You can see an example in this
 project's
-[Rakefile](https://github.com/apiology/quality/blob/master/Rakefile)
+[Rakefile](https://github.com/apiology/quality/blob/main/Rakefile)
 
 ## Vendored files
 
