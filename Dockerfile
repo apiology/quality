@@ -1,4 +1,4 @@
-FROM alpine:3.12 AS base
+FROM alpine:3.16 AS base
 
 # We install and then uninstall quality to cache the dependencies
 # while we still have the build tools installed but still be able to
@@ -130,32 +130,29 @@ RUN apk --no-cache add ca-certificates wget && \
 ENV LANG=C.UTF-8
 
 # To upgrade:
-# 1. Check https://jdk.java.net/16/ for latest build - see 'Alpine Linux/x64' link
-# 2. See if there's an update here: https://github.com/docker-library/openjdk/blob/master/16/jdk/alpine3.12/Dockerfile
+# 1. Check https://jdk.java.net/19/ for latest build - see 'Alpine Linux/x64' link
+# 2. See if there's an update here: https://github.com/docker-library/openjdk/blob/master/19/jdk/alpine3.16/Dockerfile
 
 RUN apk add --no-cache java-cacerts
 
-ENV JAVA_HOME /opt/openjdk-16
+ENV JAVA_HOME /opt/openjdk-19
 ENV PATH $JAVA_HOME/bin:$PATH
 
 # https://jdk.java.net/
 # >
 # > Java Development Kit builds, from Oracle
 # >
-ENV JAVA_VERSION 16-ea+5
+ENV JAVA_VERSION 19-ea+5
 # "For Alpine Linux, builds are produced on a reduced schedule and may not be in sync with the other platforms."
 
 RUN set -eux; \
 	\
 	arch="$(apk --print-arch)"; \
-# this "case" statement is generated via "update.sh"
 	case "$arch" in \
-# amd64
-		x86_64) \
-			downloadUrl=https://download.java.net/java/early_access/alpine/5/binaries/openjdk-16-ea+5_linux-x64-musl_bin.tar.gz; \
-			downloadSha256=1ec940bea148a7ececda635c209de3836fe4e6511f5d49d4248cf6d52c77aac8; \
+		'x86_64') \
+			downloadUrl='https://download.java.net/java/early_access/alpine/5/binaries/openjdk-19-ea+5_linux-x64-musl_bin.tar.gz'; \
+			downloadSha256='0ee67a41fe97341f131bd4f065ed6092d55c15de5f00f8ba1e57d21eefb2c787'; \
 			;; \
-# fallback
 		*) echo >&2 "error: unsupported architecture: '$arch'"; exit 1 ;; \
 	esac; \
 	\
@@ -169,10 +166,10 @@ RUN set -eux; \
 		--strip-components 1 \
 		--no-same-owner \
 	; \
-	rm openjdk.tgz; \
+	rm openjdk.tgz*; \
 	\
-# see "java-cacerts" package installed above (which maintains "/etc/ssl/certs/java/cacerts" for us)
 	rm -rf "$JAVA_HOME/lib/security/cacerts"; \
+# see "java-cacerts" package installed above (which maintains "/etc/ssl/certs/java/cacerts" for us)
 	ln -sT /etc/ssl/certs/java/cacerts "$JAVA_HOME/lib/security/cacerts"; \
 	\
 # https://github.com/docker-library/openjdk/issues/212#issuecomment-420979840
@@ -183,10 +180,6 @@ RUN set -eux; \
 	fileEncoding="$(echo 'System.out.println(System.getProperty("file.encoding"))' | jshell -s -)"; [ "$fileEncoding" = 'UTF-8' ]; rm -rf ~/.java; \
 	javac --version; \
 	java --version
-
-# https://docs.oracle.com/javase/10/tools/jshell.htm
-# https://docs.oracle.com/javase/10/jshell/
-# https://en.wikipedia.org/wiki/JShell
 
 # https://github.com/frol/docker-alpine-scala/blob/master/Dockerfile
 ENV SCALA_VERSION=2.12.0-M5 \
