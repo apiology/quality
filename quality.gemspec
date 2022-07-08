@@ -1,36 +1,46 @@
-# -*- encoding: utf-8 -*-
-$:.push File.join(File.dirname(__FILE__), "lib")
+# coding: ascii
+# frozen_string_literal: true
+
+lib = File.expand_path('lib', __dir__)
+$LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require 'quality/version'
 
-Gem::Specification.new do |s|
-  s.name = %q{quality}
-  s.version = Quality::VERSION
+Gem::Specification.new do |spec|
+  spec.name          = 'quality'
+  spec.version       = Quality::VERSION
+  spec.authors       = ["Vince Broz"]
+  spec.email         = ['vince@broz.cc']
+  spec.summary       = "Code quality ratchet for Ruby"
+  spec.homepage      = 'https://github.com/apiology/quality'
+  spec.license       = 'MIT license'
+  spec.required_ruby_version = '>= 2.6'
 
-  s.authors = ['Vince Broz']
-  #s.default_executable = %q{quality}
-  s.description = %q{Quality is a tool that runs quality checks on Ruby
-code using cane, reek, flog and flay, and makes sure 
-your numbers don't get any worse over time.
-}
-  s.email = ["vince@broz.cc"]
-  #s.executables = ["quality"]
-  #s.extra_rdoc_files = ["CHANGELOG", "License.txt"]
-  s.files = Dir["License.txt", "README.md",
-                "Rakefile",
-                #"bin/quality",
-                "{lib}/**/*",
-                "quality.gemspec" ] & `git ls-files -z`.split("\0")
-  #s.rdoc_options = ["--main", "README.md"]
-  s.require_paths = ["lib"]
-  #s.rubyforge_project = %q{quality}
-  s.rubygems_version = %q{1.3.6}
-  s.summary = %q{Code quality tools for Ruby}
+  spec.files = Dir.chdir(File.expand_path(__dir__)) do
+    `git ls-files -z`.split("\x0").reject do |f|
+      f.match(%r{^(test|spec|features)/})
+    end
+  end
+  spec.bindir        = 'exe'
+  spec.executables   = spec.files.grep(%r{^exe/}) { |f| File.basename(f) }
+  spec.require_paths = ['lib']
 
-  s.add_runtime_dependency(%q<cane>, [">= 2.6"])
-  s.add_runtime_dependency(%q<reek>, [">= 1.3.1"])
-  s.add_runtime_dependency(%q<flog>, [">= 4.1.1"])
-  s.add_runtime_dependency(%q<flay>, [">= 2.4"])
+  # spec.add_runtime_dependency 'activesupport'
 
-  s.add_development_dependency(%q<bundler>, [">= 1.1"])
-  s.add_development_dependency(%q<rake>)
+  spec.add_development_dependency 'bump'
+  spec.add_development_dependency 'bundler'
+  spec.add_development_dependency 'mdl'
+  # 0.58.0 and 0.57.0 don't seem super compatible with signatures, and
+  # magit doesn't seem to want to use the bundled version at the moment,
+  # so let's favor the more recent version...
+  spec.add_development_dependency 'overcommit', ['>=0.58.0']
+  spec.add_development_dependency 'pry'
+  spec.add_development_dependency 'rake', '~> 13.0'
+  spec.add_development_dependency 'rspec', '>=3.4'
+  spec.add_development_dependency 'rubocop'
+  spec.add_development_dependency 'rubocop-rake'
+  spec.add_development_dependency 'rubocop-rspec'
+  # ensure version with branch coverage
+  spec.add_development_dependency 'simplecov', ['>=0.18.0']
+  spec.add_development_dependency 'simplecov-lcov'
+  spec.add_development_dependency 'undercover'
 end
