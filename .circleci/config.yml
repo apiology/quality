@@ -1,6 +1,11 @@
 ---
 version: 2.1
 
+quality_gem_version: &quality_gem_version "39"
+
+orbs:
+  quality: bluelabs/quality@0.0.2
+
 commands:
   run_with_languages:
     description: "Run the given command in an environment that includes relevant langauges in the PATH"
@@ -66,20 +71,6 @@ commands:
           command: |
             curl -fLSs \
             https://raw.githubusercontent.com/CircleCI-Public/circleci-cli/master/install.sh | sudo bash
-  overcommit:
-    description: "Run overcommit"
-    steps:
-      - set_up_environment
-      - run_with_languages:
-          label: Run overcommit
-          command: |
-            # Coax overcommit into working
-            git config --global user.email "test@test.test"
-            git config --global user.name "Test Test"
-            bundle exec overcommit --sign
-            bundle exec overcommit --sign pre-commit
-
-            bundle exec overcommit --run
 
 jobs:
   overcommit:
@@ -127,10 +118,16 @@ workflows:
                 - main
     jobs:
       - build
-      - overcommit
-  overcommit:
+      - quality/check-quality-job:
+          custom_rakefile: Rakefile.quality
+          image_tag: *quality_gem_version
+  quality:
+    when:
+      equal: [<< pipeline.git.branch >>, "main"]
     jobs:
-      - overcommit
+      - quality/check-quality-job:
+          custom_rakefile: Rakefile.quality
+          image_tag: *quality_gem_version
   build:
     jobs:
       - build
