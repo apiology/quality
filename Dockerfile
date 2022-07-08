@@ -83,7 +83,7 @@ RUN echo "https://s3-us-west-2.amazonaws.com/alpine-ghc/8.0" >> /etc/apk/reposit
     apk add --no-cache ghc cabal stack
 
 # https://github.com/NLKNguyen/alpine-shellcheck/blob/master/builder/Dockerfile
-RUN apk add --no-cache build-base git wget
+RUN apk add --no-cache build-base git wget libffi-dev
 
 RUN mkdir -p /usr/src/shellcheck
 WORKDIR /usr/src/shellcheck
