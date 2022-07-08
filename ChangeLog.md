@@ -341,4 +341,3 @@ Update JDK and Alpine in Docker image
 Update to latest pronto, RuboCop.
 Retire pronto-flake8.
 Ensure use of bigfiles with config file support
-xo
