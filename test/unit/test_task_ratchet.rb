@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require_relative 'test_helper'
-require_relative 'base_test_task.rb'
+require_relative 'base_test_task'
 
 # Test the process of finding fewer problems and tweaking down the
 # numbers

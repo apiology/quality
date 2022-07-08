@@ -1,6 +1,6 @@
 # Quality -- code quality ratchet for Ruby
 
-[![Build Status](https://travis-ci.org/apiology/quality.png)](https://travis-ci.org/apiology/quality)
+[![CircleCI](https://circleci.com/gh/apiology/quality.svg?style=svg)](https://circleci.com/gh/apiology/quality)
 
 ## Overview
 
@@ -159,14 +159,18 @@ Expect your build to break on major upgrades if you use RuboCop.
 
 Tested against Ruby >=2.2--does not support Ruby 1.9.x or JRuby.
 
-## Contributing
+## Contributions
 
-* Fork the repo
-* Create a feature branch
-* Submit a github pull request
+This project, as with all others, rests on the shoulders of a broad
+ecosystem supported by many volunteers doing thankless work, along
+with specific contributors.
 
-Many thanks to all contributors, especially [@andyw8](https://github.com/andyw8),
-who has contributed some great improvements.
+In particular I'd like to call out:
+
+* [Audrey Roy Greenfeld](https://github.com/audreyfeldroy) for the
+  cookiecutter tool and associated examples, which keep my many
+  projects building with shared boilerplate with a minimum of fuss.
+
 
 ## License
 

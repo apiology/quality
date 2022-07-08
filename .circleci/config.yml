@@ -1,5 +1,101 @@
-version: 2
+---
+version: 2.1
+
+commands:
+  run_with_languages:
+    description: "Run the given command in an environment that includes relevant langauges in the PATH"
+    parameters:
+      command:
+        type: string
+        description: "What command to execute"
+      label:
+        type: string
+        description: "What to label the run"
+        default: <<parameters.command>>
+    steps:
+      - run:
+          name: <<parameters.label>>
+          command: |
+            export PATH="${HOME}/.pyenv/bin:${PATH}"
+            export PATH="${HOME}/.rbenv/bin:${HOME}/.rbenv/shims:${PATH}"
+            export PATH="${HOME}/project/node_modules/.bin:${PATH}"
+            eval "$(pyenv init --path)"
+            eval "$(pyenv virtualenv-init -)"
+            eval "$(rbenv init -)"
+            export BUNDLE_PATH=vendor/bundle
+
+            <<parameters.command>>
+          environment:
+            # https://app.circleci.com/pipelines/github/apiology/cookiecutter-pypackage/4/workflows/29074dc8-944c-4600-8aaa-5116575fed90/jobs/4
+            "LC_ALL": "C.UTF-8"
+            "LANG": "C.UTF-8"
+  set_up_environment:
+    description: "Install source environment"
+    steps:
+      - checkout
+      - run: |
+          sed -E -e 's/quality \([[:digit:]]+.[[:digit:]]+.[[:digit:]]+\)/quality (0.1.0)/g' \
+          Gemfile.lock > Gemfile.lock.deversioned
+      - restore_cache:
+          key: gems-v1-{{ checksum "Gemfile.lock.deversioned" }}
+      - restore_cache:
+          key: wheels-v1-{{ checksum "requirements_dev.txt" }}
+      - run:
+          name: Initialize packages
+          command: |
+            export BUNDLE_PATH=vendor/bundle
+            './fix.sh'
+      - run:
+          name: Verify Gemfile.lock
+          command: |
+            if ! git diff --exit-code Gemfile.lock
+            then
+              >&2 echo "Please resolve changes to Gemfile.lock after bundle install to avoid caching difficulties"
+              exit 1
+            fi
+      - save_cache:
+          key: gems-v1-{{ checksum "Gemfile.lock.deversioned" }}
+          paths:
+            - "vendor/bundle"
+      - save_cache:
+          key: wheels-v1-{{ checksum "requirements_dev.txt" }}
+          paths:
+            - "/home/circleci/.cache/pip/wheels"
+      - run:
+          name: Download new circleci tool
+          command: |
+            curl -fLSs \
+            https://raw.githubusercontent.com/CircleCI-Public/circleci-cli/master/install.sh | sudo bash
+  overcommit:
+    description: "Run overcommit"
+    steps:
+      - set_up_environment
+      - run_with_languages:
+          label: Run overcommit
+          command: |
+            # Coax overcommit into working
+            git config --global user.email "test@test.test"
+            git config --global user.name "Test Test"
+            bundle exec overcommit --sign
+            bundle exec overcommit --sign pre-commit
+
+            bundle exec overcommit --run
+
 jobs:
+  overcommit:
+    docker:
+      - image: apiology/circleci-ruby:latest
+    steps:
+      - when:
+          condition:
+            equal: [<< pipeline.git.branch >>, "main"]
+          steps:
+            - overcommit
+      - unless:
+          condition:
+            equal: [<< pipeline.git.branch >>, "main"]
+          steps:
+            - run: echo "overcommit only runs on main branch"
   build:
     working_directory: ~/quality
     docker:
@@ -7,17 +103,34 @@ jobs:
     environment:
       BUNDLE_PATH: '/home/circleci/vendor/bundle'
     steps:
-      - checkout
-      - type: cache-restore
-        key: quality-v2-{{ checksum "quality.gemspec" }}-{{ checksum "Gemfile" }}
-      - run: bundle install --jobs=4
-      - type: cache-save
-        key: quality-v2-{{ checksum "quality.gemspec" }}-{{ checksum "Gemfile" }}
-        paths:
-          - "/home/circleci/vendor/bundle"
-      - run: bundle exec rake --jobs=4 ci
-      - run:
-          command: bundle exec rake after_test_success
+      - set_up_environment
+      - run_with_languages:
+          label: Test
+          command: |
+            bundle exec rake citest
+            # https://github.com/bluelabsio/records-mover/blob/master/Makefile#L25
+            git status --porcelain coverage/.last_run.json
+            git diff coverage/.last_run.json
+            test -z "$(git status --porcelain coverage/.last_run.json)"
+    # This seemed to shave 5ish% of the build time off when added
+    resource_class: large
+
+workflows:
+  version: 2
+  weekly:
+    triggers:
+      - schedule:
+          cron: "0 0 * * 6"
           filters:
             branches:
-              only: master
+              only:
+                - main
+    jobs:
+      - build
+      - overcommit
+  overcommit:
+    jobs:
+      - overcommit
+  build:
+    jobs:
+      - build

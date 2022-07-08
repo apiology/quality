@@ -23,4 +23,4 @@ Quality::Rake::Task.new do |task|
 end
 
 desc 'Verify and report on code quality issues'
-task quality: %i[pronto update_bundle_audit]
+task quality: %i[pronto update_bundle_audit overcommit]

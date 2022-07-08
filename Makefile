@@ -1,27 +1,64 @@
-.PHONY: spec feature
+.PHONY: clean test help quality localtest spec feature
+.DEFAULT_GOAL := default
 
-all: localtest
+define PRINT_HELP_PYSCRIPT
+import re, sys
 
-localtest:
-	@bundle exec rake localtest
+for line in sys.stdin:
+	match = re.match(r'^([a-zA-Z_-]+):.*?## (.*)$$', line)
+	if match:
+		target, help = match.groups()
+		print("%-20s %s" % (target, help))
+endef
+export PRINT_HELP_PYSCRIPT
 
-test:
-	@bundle exec rake test
+help:
+	@python -c "$$PRINT_HELP_PYSCRIPT" < $(MAKEFILE_LIST)
 
-feature:
-	@bundle exec rake feature
+default: localtest ## run default tests and quality
 
-spec:
+requirements_dev.txt.installed: requirements_dev.txt
+	pip install -q --disable-pip-version-check -r requirements_dev.txt
+	touch requirements_dev.txt.installed
+
+pip_install: requirements_dev.txt.installed ## Install Python dependencies
+
+# bundle install doesn't get run here so that we can catch it below in
+# fresh-checkout and fresh-rbenv cases
+Gemfile.lock: Gemfile
+
+# Ensure any Gemfile.lock changes ensure a bundle is installed.
+Gemfile.lock.installed: Gemfile.lock
+	bundle install
+	touch Gemfile.lock.installed
+
+bundle_install: Gemfile.lock.installed ## Install Ruby dependencies
+
+clear_metrics: ## remove or reset result artifacts created by tests and quality tools
+	bundle exec rake clear_metrics
+
+clean: clear_metrics ## remove all built artifacts
+
+test: spec ## run tests quickly
+
+typecheck: ## validate types in code and configuration
+
+overcommit: ## run precommit quality checks
+	bundle exec overcommit --run
+
+quality: overcommit ## run precommit quality checks
+
+spec: ## Run lower-level tests
 	@bundle exec rake spec
 
-rubocop:
-	@bundle exec rake rubocop
+feature: ## Run higher-level tests
+	@bundle exec rake feature
 
-punchlist:
-	@bundle exec rake punchlist
+localtest: ## run default local actions
+	@bundle exec rake localtest
 
-quality:
-	@bundle exec rake quality
+repl:  ## Load up quality in pry
+	@bundle exec rake repl
 
 update_from_cookiecutter: ## Bring in changes from template project used to create this repo
 	bundle exec overcommit --uninstall

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'quality/directory_of_classes.rb'
+require 'quality/directory_of_classes'
 
 # Tests that run individual tools as part of the test
 class BaseTestTask < MiniTest::Test

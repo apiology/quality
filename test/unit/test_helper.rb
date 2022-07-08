@@ -1,13 +1,19 @@
 # frozen_string_literal: true
 
 require 'simplecov'
+require 'simplecov-lcov'
 
-SimpleCov.formatters = [
-  SimpleCov::Formatter::HTMLFormatter,
-]
+SimpleCov::Formatter::LcovFormatter.config.report_with_single_file = true
+SimpleCov.formatters = SimpleCov::Formatter::MultiFormatter.new(
+  [
+    SimpleCov::Formatter::HTMLFormatter,
+    SimpleCov::Formatter::LcovFormatter,
+  ]
+)
 
 SimpleCov.start do
   add_filter 'vendor' # Don't include vendored stuff
+  enable_coverage(:branch) # Report branch coverage to trigger branch-level undercover warnings
 end
 SimpleCov.refuse_coverage_drop
 require_relative '../../lib/quality/rake/task'
