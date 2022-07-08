@@ -1,42 +1,12 @@
-# I like trailing commas in hashes.  They let me insert new elements and
-# see them as one line in a diff, not two.
-Style/TrailingCommaInHashLiteral:
-  EnforcedStyleForMultiline: comma
+---
+Layout/LineLength:
+  Max: 120
 
-Style/TrailingCommaInArrayLiteral:
-  EnforcedStyleForMultiline: comma
+Layout/MultilineMethodCallIndentation:
+  EnforcedStyle: indented
 
-# I use keyword arguments for a poor man's dependency injection to cut
-# down on the magic in my tests.
-Metrics/ParameterLists:
-  CountKeywordArgs: false
-
-# If I'm using one function name and returning the contents of an
-# attribute, that's OK.  The alternative would be this, which I find
-# confusing and often not really what I mean:
-#
-# attr_reader :something_else
-# alias_method :something, :something_else
-Style/TrivialAccessors:
-   ExactNameMatch: true
-
-#
-# Add 'XX X' to the standard list
-#
-Style/CommentAnnotation:
-   Keywords:
-    - "TOD\
-       O"
-    - "FIXM\
-       E"
-    - "OPTIMIZ\
-       E"
-    - "HAC\
-       K"
-    - "REVIE\
-       W"
-    - "XX\
-       X"
+Lint/UnusedMethodArgument:
+  AllowUnusedKeywordArguments: true
 
 # https://stackoverflow.com/questions/40934345/rubocop-25-line-block-size-and-rspec-tests
 Metrics/BlockLength:
@@ -47,6 +17,35 @@ Metrics/BlockLength:
     - '**/*.rake'
     - 'spec/**/*.rb'
     - 'feature/**/*.rb'
+
+# I use keyword arguments for a poor man's dependency injection to cut
+# down on the magic in my tests.
+Metrics/ParameterLists:
+  CountKeywordArgs: false
+
+Naming/HeredocDelimiterNaming:
+  Enabled: false
+
+Naming/MethodParameterName:
+  Enabled: true
+  AllowedNames:
+    # I don't think things on this list are a terribly hard convention
+    # for folks to learn.  bbatsov also doesn't care much for this
+    # check:
+    #
+    # https://github.com/rubocop-hq/rubocop/issues/3666
+    - e # exception
+    - x # cartesian coordinates
+    - y # cartesian coordinates
+
+# by default (EnforcedStyle=NormalCase) this rule doesn't like
+# things like check_1, check_2, etc and wants check1, check2, etc. I
+# like the former.
+#
+# https://docs.rubocop.org/rubocop/cops_naming.html#namingvariablenumber
+Naming/VariableNumber:
+  Enabled: true
+  EnforcedStyle: snake_case
 
 # http://www.betterspecs.org/#single
 #
@@ -60,18 +59,55 @@ RSpec/MultipleExpectations:
   Exclude:
     - 'feature/**/*.rb'
 
+#
+# Add 'XX X' to the standard list
+#
+Style/CommentAnnotation:
+  Keywords:
+    - "TOD\
+       O"
+    - "FIXM\
+       E"
+    - "OPTIMIZ\
+       E"
+    - "HAC\
+       K"
+    - "REVIE\
+       W"
+    - "XX\
+       X"
+
 Style/StringLiterals:
-    EnforcedStyle: single_quotes
-    SupportedStyles:
-      - single_quotes
-      - double_quotes
-    ConsistentQuotesInMultiline: true
+  EnforcedStyle: single_quotes
+  SupportedStyles:
+    - single_quotes
+    - double_quotes
+  ConsistentQuotesInMultiline: true
+
+# I like trailing commas in arrays and hashes.  They let me insert new
+# elements and see them as one line in a diff, not two.
+Style/TrailingCommaInArrayLiteral:
+  EnforcedStyleForMultiline: comma
+
+Style/TrailingCommaInHashLiteral:
+  EnforcedStyleForMultiline: comma
+
+# If I'm using one function name and returning the contents of an
+# attribute, that's OK.  The alternative would be this, which I find
+# confusing and often not really what I mean:
+#
+# attr_reader :something_else
+# alias_method :something, :something_else
+Style/TrivialAccessors:
+  ExactNameMatch: true
 
 AllCops:
-  TargetRubyVersion: 2.5
-
+  NewCops: enable
+  TargetRubyVersion: 2.6
+  Exclude:
+    - 'bin/*'
+    - 'vendor/**/*'
 
 require:
-  - rubocop-rspec
-  - rubocop-minitest
   - rubocop-rake
+  - rubocop-rspec

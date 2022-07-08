@@ -4,10 +4,8 @@ module Quality
   # Class processes output from a code quality command, tweaking it
   # for editor output and counting the number of violations found
   class CommandOutputProcessor
-    attr_accessor :emacs_format
-    attr_accessor :file
-    attr_reader :found_output
-    attr_reader :violations
+    attr_accessor :emacs_format, :file
+    attr_reader :found_output, :violations
 
     def initialize
       @emacs_format = false

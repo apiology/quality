@@ -1,8 +1,8 @@
 #!/usr/bin/env ruby
 # frozen_string_literal: true
 
-require_relative 'test_helper.rb'
-require_relative 'base_test_task.rb'
+require_relative 'test_helper'
+require_relative 'base_test_task'
 
 # Unit test the Task class
 class TestTask < BaseTestTask
@@ -43,7 +43,7 @@ class TestTask < BaseTestTask
 
   def expect_minimum_threshold_pulled
     @mocks[:config].expects(:minimum_threshold)
-                   .returns(bigfiles: 300).at_least(1)
+      .returns(bigfiles: 300).at_least(1)
   end
 
   def expect_tools_configured(suppressed_tools, uninstalled_tools)
@@ -81,13 +81,13 @@ class TestTask < BaseTestTask
     file = self.class.sample_output(tool_name)
     lines = file.lines.map(&:strip)
     quality_checker.expects(:execute).with_block_given
-                   .multiple_yields(*lines).at_least(0)
+      .multiple_yields(*lines).at_least(0)
     quality_checker.expects(:execute).with_no_block_given.at_least(0)
   end
 
   def expect_gemspec_tool_found(tool_name, was_found)
     @mocks[:gem_spec].expects(:find_all_by_name)
-                     .with(tool_name).returns([was_found])
+      .with(tool_name).returns([was_found])
   end
 
   def self.sample_output(tool_name)
@@ -127,19 +127,19 @@ class TestTask < BaseTestTask
 
   def expect_find_markdown_files
     @mocks[:config].expects(:markdown_files).returns(['file1.md', 'file2.md'])
-                   .at_least(1)
+      .at_least(1)
   end
 
   def expect_find_scala_files
     @mocks[:config].expects(:scala_files).returns(['s1.scala', 's2.scala'])
-                   .at_least(1)
+      .at_least(1)
   end
 
   def expect_find_source_files
     @mocks[:config].expects(:source_files).returns(['fake1.py', 'README.md'])
-                   .at_least(0)
+      .at_least(0)
     @mocks[:config].expects(:source_files_glob).returns('{fake1.py,README.md}')
-                   .at_least(0)
+      .at_least(0)
   end
 
   def expect_find_exclude_files
@@ -148,6 +148,6 @@ class TestTask < BaseTestTask
 
   def expect_find_exclude_glob
     @mocks[:config].expects(:source_files_exclude_glob)
-                   .returns('{**/vendor/**,db/schema.rb}').at_least(1)
+      .returns('{**/vendor/**,db/schema.rb}').at_least(1)
   end
 end

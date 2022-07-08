@@ -70,12 +70,12 @@ class TestLinguistSourceFileGlobber < MiniTest::Test
 
   def tree_results
     [
-      ['', type: :blob, name: 'a.rb'],
-      ['', type: :tree, name: 'foo'],
-      ['foo/', type: :blob, name: 'b.md'],
-      ['', type: :blob, name: 'c'],
-      ['', type: :blob, name: 'd.jsx'],
-      ['', type: :blob, name: 'e.cfg'],
+      ['', { type: :blob, name: 'a.rb' }],
+      ['', { type: :tree, name: 'foo' }],
+      ['foo/', { type: :blob, name: 'b.md' }],
+      ['', { type: :blob, name: 'c' }],
+      ['', { type: :blob, name: 'd.jsx' }],
+      ['', { type: :blob, name: 'e.cfg' }],
     ]
   end
 

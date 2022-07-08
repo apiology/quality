@@ -10,7 +10,7 @@ class TestQualityChecker < MiniTest::Test
                           minimum_threshold)
     command_output_processor = expect_create_new_processor
     command_output_processor.expects(:emacs_format=)
-                            .with(command_options[:emacs_format])
+      .with(command_options[:emacs_format])
     expect_run_command(command_output_processor)
     expect_new_violations_determined(num_violations)
     expect_twiddle_high_water_mark_files(num_violations, existing_violations,
@@ -20,7 +20,7 @@ class TestQualityChecker < MiniTest::Test
   def expect_new_violations_determined(num_violations)
     command_output_processor.expects(:violations).returns(num_violations)
     @mocks[:logger].expects(:puts)
-                   .with("Found #{num_violations} foo violations")
+      .with("Found #{num_violations} foo violations")
   end
 
   def expect_twiddle_high_water_mark_files(num_violations, existing_violations,
@@ -44,7 +44,7 @@ class TestQualityChecker < MiniTest::Test
 
   def expect_process_created(command)
     @mocks[:process_class].expects(:new).with(command + ' 2>&1')
-                          .returns(process)
+      .returns(process)
   end
 
   def expect_process_class_initialized
@@ -81,9 +81,9 @@ class TestQualityChecker < MiniTest::Test
     else
       expect_file_exist?(hwm_filename, true)
       @mocks[:count_io].expects(:read).with(hwm_filename)
-                       .returns(existing_violations.to_s)
+        .returns(existing_violations.to_s)
       @mocks[:logger].expects(:puts)
-                     .with("Existing violations: #{existing_violations}")
+        .with("Existing violations: #{existing_violations}")
     end
   end
 

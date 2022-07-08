@@ -12,12 +12,12 @@ class TestWhich < MiniTest::Test
   def expect_path_queried(dirname, binpath, executable, directory,
                           extension = '')
     @mocks[:file].expects(:join).with(dirname, "#{cmd}#{extension}")
-                 .returns(binpath)
+      .returns(binpath)
     @mocks[:file].expects(:executable?).with(binpath)
-                 .returns(executable)
+      .returns(executable)
     @mocks[:file].expects(:directory?).with(binpath)
-                 .returns(directory)
-                 .at_least(0)
+      .returns(directory)
+      .at_least(0)
   end
 
   def mock_unix
