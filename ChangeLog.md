@@ -334,3 +334,11 @@ Upgrade supported Faraday
 Update RuboCop to 0.92.0
 Update JDK and Alpine in Docker image
 Ruby 2.4 is unsupported
+
+## Changes since Quality 38.0.1
+
+Update JDK and Alpine in Docker image
+Update to latest pronto, RuboCop.
+Retire pronto-flake8.
+Ensure use of bigfiles with config file support
+xo
