@@ -11,10 +11,8 @@ module Quality
       @popener = dependencies[:popener] || IO
     end
 
-    def run
-      @popener.popen(@full_cmd) do |file|
-        yield file
-      end
+    def run(&block)
+      @popener.popen(@full_cmd, &block)
       $CHILD_STATUS&.exitstatus
     end
   end

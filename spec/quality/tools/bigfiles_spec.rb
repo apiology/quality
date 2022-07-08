@@ -9,6 +9,6 @@ describe Quality::Tools::Bigfiles do
   let(:bigfiles) { described_class.new(runner) }
 
   it 'can be created' do
-    expect(bigfiles).not_to be(nil)
+    expect(bigfiles).not_to be_nil
   end
 end

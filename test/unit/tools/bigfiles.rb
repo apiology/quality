@@ -11,7 +11,7 @@ module Test
 
         def bigfiles_expected_args
           "--glob '" + expected_source_files_glob + "' " \
-          "--exclude-glob '{**/vendor/**,db/schema.rb}'"
+                                                    "--exclude-glob '{**/vendor/**,db/schema.rb}'"
         end
 
         def expect_bigfiles_run(quality_checker)

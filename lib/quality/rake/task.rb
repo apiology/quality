@@ -10,6 +10,7 @@ module Rake
   # Define this in advance so that confused requires succeed
   module DSL
   end
+
   class Task
   end
 end

@@ -9,10 +9,10 @@ module Quality
     end
 
     def invocation
-      if !@args.empty?
-        "#{cmd_with_ruby_hack_prefix} #{@args}"
-      else
+      if @args.empty?
         cmd_with_ruby_hack_prefix.to_s
+      else
+        "#{cmd_with_ruby_hack_prefix} #{@args}"
       end
     end
 
