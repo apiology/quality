@@ -3,7 +3,7 @@ PATH
   specs:
     quality (38.0.1)
       activesupport
-      bigfiles (>= 0.1, != 0.2.0)
+      bigfiles (>= 0.3.0, != 0.2.0)
       brakeman
       bundler-audit
       cane (>= 2.6)

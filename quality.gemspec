@@ -69,7 +69,8 @@ Gem::Specification.new do |spec|
   spec.add_runtime_dependency('mdl')
   spec.add_runtime_dependency('rubocop', '~> 0.92.0')
   # 0.2.0 had a fatal bug
-  spec.add_runtime_dependency('bigfiles', ['>= 0.1', '!= 0.2.0'])
+  # 0.3.0 introduces config files
+  spec.add_runtime_dependency('bigfiles', ['>= 0.3.0', '!= 0.2.0'])
   spec.add_runtime_dependency('brakeman')
   spec.add_runtime_dependency('high_water_mark')
   spec.add_runtime_dependency('punchlist', ['>= 1.1'])
