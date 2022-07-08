@@ -55,7 +55,7 @@ RUN apk add --no-cache python3 py3-pip && \
     pip3 install flake8 && \
     apk del py3-pip
 
-RUN gem install --no-doc pronto-flake8
+# RUN gem install --no-doc pronto-flake8  # does not yet support pronto 0.11
 
 
 
