@@ -63,4 +63,3 @@ requirements_dev.txt.installed
 /coverage/index.html
 /coverage/lcov/
 /pkg
-/Gemfile.lock
