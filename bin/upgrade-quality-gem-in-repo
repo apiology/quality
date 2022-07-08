@@ -7,7 +7,7 @@ import fileinput
 import glob
 from semver import version_newer_than
 from quality_docker import tag_to_version, ensure_passes, create_new_tag
-from github import ensure_master_branch_and_clean_checkout, force_create_branch
+from github import ensure_main_branch_and_clean_checkout, force_create_branch
 
 
 def upgrade_and_rebaseline(new_tag, tracking_filename):
@@ -83,7 +83,7 @@ def upgrade_quality_gem(new_version, tracking_filename):
 
     old_version = tag_to_version(old_tag)
 
-    ensure_master_branch_and_clean_checkout()
+    ensure_main_branch_and_clean_checkout()
 
     print("old_version is " + old_version)
 

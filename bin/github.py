@@ -1,14 +1,14 @@
 import subprocess
 
 
-def ensure_master_branch_and_clean_checkout():
+def ensure_main_branch_and_clean_checkout():
     current_branch = subprocess.check_output(["git",
                                               "rev-parse",
                                               "--abbrev-ref",
                                               "HEAD"]).rstrip("\r\n")
 
-    if (current_branch != "master"):
-        print("Please change to master branch from [" + current_branch + "]")
+    if (current_branch != "main"):
+        print("Please change to main branch from [" + current_branch + "]")
         exit(1)
 
     git_changes = subprocess.check_output(["git",

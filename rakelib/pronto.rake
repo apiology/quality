@@ -9,12 +9,12 @@ task :pronto do
     ENV['PRONTO_PULL_REQUEST_ID'] = ENV['CIRCLE_PULL_REQUEST'].split('/').last
   end
   sh "bundle exec " \
-     "pronto run #{formatter} -c origin/master --no-exit-code --unstaged "\
+     "pronto run #{formatter} -c origin/main --no-exit-code --unstaged "\
      "|| true"
   sh "bundle exec " \
-     "pronto run #{formatter} -c origin/master --no-exit-code --staged || true"
+     "pronto run #{formatter} -c origin/main --no-exit-code --staged || true"
   sh "bundle exec " \
-     "pronto run #{formatter} -c origin/master --no-exit-code || true"
+     "pronto run #{formatter} -c origin/main --no-exit-code || true"
   sh 'git fetch --tags --force'
   sh "bundle exec " \
      "pronto run #{formatter} -c tests_passed --no-exit-code || true"
