@@ -7,8 +7,8 @@ module Test
       module Scalastyle
         def scalastyle_expected_args
           " -c 'project/scalastyle_config.xml' "\
-          " -x 'src/test/scala'"\
-          " s1.scala s2.scala"
+            " -x 'src/test/scala'"\
+            " s1.scala s2.scala"
         end
 
         def expect_find_scalastyle_config

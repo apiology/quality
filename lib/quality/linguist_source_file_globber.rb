@@ -96,22 +96,18 @@ module Quality
     end
 
     def source_files
-      @source_files ||= begin
-        real_files_matching do |blob|
-          !blob.language.nil? && !blob.documentation?
-        end
+      @source_files ||= real_files_matching do |blob|
+        !blob.language.nil? && !blob.documentation?
       end
     end
 
     def source_and_doc_files
-      @source_and_doc_files ||= begin
-        real_files_matching do |blob, _filename|
-          if blob.documentation? || !blob.language.nil?
-            true
-          else
-            # puts "Excluding #{filename} from source_and_doc_files"
-            false
-          end
+      @source_and_doc_files ||= real_files_matching do |blob, _filename|
+        if blob.documentation? || !blob.language.nil?
+          true
+        else
+          # puts "Excluding #{filename} from source_and_doc_files"
+          false
         end
       end
     end

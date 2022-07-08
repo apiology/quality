@@ -1,0 +1,4 @@
+---
+bigfiles:
+  exclude:
+    glob: fix.sh

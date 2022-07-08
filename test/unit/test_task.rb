@@ -96,7 +96,7 @@ class TestTask < BaseTestTask
 
   def expected_ruby_source_glob
     '{fake1.rb,fake2.rb,features/featuresfake1.rb,' \
-    'lib/libfake1.rb,test/testfake1.rb}'
+      'lib/libfake1.rb,test/testfake1.rb}'
   end
 
   def expect_find_ruby_files
