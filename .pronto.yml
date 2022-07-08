@@ -1,3 +1,4 @@
+---
 text:
   format: "%{color_location}: [%{runner}] %{msg}"
 

@@ -1,0 +1,13 @@
+{
+    "_template": "https://github.com/apiology/cookiecutter-gem",
+    "email": "vince@broz.cc",
+    "full_name": "Vince Broz",
+    "github_username": "apiology",
+    "module_name": "Quality",
+    "open_source_license": "MIT license",
+    "project_name": "Quality",
+    "project_short_description": "Code quality ratchet for Ruby",
+    "project_slug": "quality",
+    "type_of_github_repo": "public",
+    "version": "38.0.1"
+}

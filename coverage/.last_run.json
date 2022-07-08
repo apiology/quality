@@ -1,5 +1,6 @@
 {
   "result": {
-    "covered_percent": 97.81
+    "line": 97.8,
+    "branch": 72.48
   }
 }
