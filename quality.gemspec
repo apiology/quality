@@ -38,9 +38,9 @@ Gem::Specification.new do |spec|
   # magit doesn't seem to want to use the bundled version at the moment,
   # so let's favor the more recent version...
   spec.add_development_dependency 'overcommit', ['>=0.58.0']
-  spec.add_development_dependency('pronto')
+  spec.add_development_dependency('pronto', '>=0.11')
   spec.add_development_dependency('pronto-bigfiles')
-  spec.add_development_dependency('pronto-flake8')
+  # spec.add_development_dependency('pronto-flake8') # does not yet support pronto 0.11
   spec.add_development_dependency('pronto-punchlist')
   spec.add_development_dependency('pronto-rubocop')
   spec.add_development_dependency 'pry'
@@ -67,7 +67,7 @@ Gem::Specification.new do |spec|
   #
   # https://github.com/bbatsov/rubocop#installation
   spec.add_runtime_dependency('mdl')
-  spec.add_runtime_dependency('rubocop', '~> 0.92.0')
+  spec.add_runtime_dependency('rubocop', '~> 1.22.0')
   # 0.2.0 had a fatal bug
   # 0.3.0 introduces config files
   spec.add_runtime_dependency('bigfiles', ['>= 0.3.0', '!= 0.2.0'])
