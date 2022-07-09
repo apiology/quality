@@ -74,7 +74,7 @@ commands:
           label: Run quality
           command: |
             pwd  # TODO
-            bundle-audit update # TODO
+            bundle exec bundle-audit update # TODO
             bundle exec pronto run -f github_pr -c origin/main --no-exit-code --unstaged  # TODO
             bundle exec rake quality
 
