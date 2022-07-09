@@ -1,11 +1,6 @@
 ---
 version: 2.1
 
-quality_gem_version: &quality_gem_version "39"
-
-orbs:
-  quality: bluelabs/quality@0.0.2
-
 commands:
   run_with_languages:
     description: "Run the given command in an environment that includes relevant langauges in the PATH"
@@ -71,9 +66,17 @@ commands:
           command: |
             curl -fLSs \
             https://raw.githubusercontent.com/CircleCI-Public/circleci-cli/master/install.sh | sudo bash
+  quality:
+    description: "Run quality"
+    steps:
+      - set_up_environment
+      - run_with_languages:
+          label: Run quality
+          command: |
+            bundle exec rake quality
 
 jobs:
-  overcommit:
+  quality:
     docker:
       - image: apiology/circleci-ruby:latest
     steps:
@@ -81,18 +84,16 @@ jobs:
           condition:
             equal: [<< pipeline.git.branch >>, "main"]
           steps:
-            - overcommit
+            - quality
       - unless:
           condition:
             equal: [<< pipeline.git.branch >>, "main"]
           steps:
-            - run: echo "overcommit only runs on main branch"
+            - run: echo "quality only runs on main branch"
   build:
     working_directory: ~/quality
     docker:
       - image: apiology/circleci-ruby:latest
-    environment:
-      BUNDLE_PATH: '/home/circleci/vendor/bundle'
     steps:
       - set_up_environment
       - run_with_languages:
@@ -118,16 +119,12 @@ workflows:
                 - main
     jobs:
       - build
-      - quality/check-quality-job:
-          custom_rakefile: Rakefile.quality
-          image_tag: *quality_gem_version
+      - quality
   quality:
     #    when:
     #      equal: [<< pipeline.git.branch >>, "main"]
     jobs:
-      - quality/check-quality-job:
-          custom_rakefile: Rakefile.quality
-          image_tag: *quality_gem_version
+      - quality
   build:
     jobs:
       - build
