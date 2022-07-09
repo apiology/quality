@@ -74,6 +74,7 @@ commands:
           label: Run quality
           command: |
             pwd  # TODO
+            bundle exec pronto run -f github_pr -c origin/main --no-exit-code --unstaged  # TODO
             bundle exec rake quality
 
 jobs:
