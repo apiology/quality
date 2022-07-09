@@ -73,6 +73,7 @@ commands:
       - run_with_languages:
           label: Run quality
           command: |
+            pwd  # TODO
             bundle exec rake quality
 
 jobs:
