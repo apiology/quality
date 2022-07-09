@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
-require 'bundler'
-Bundler.require
+require 'bundler/setup'
 
 desc 'Look for incremental quality issues'
 task :pronto do
