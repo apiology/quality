@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-require 'bundler'
 require 'quality/rake/task'
 
 Quality::Rake::Task.new do |task|
