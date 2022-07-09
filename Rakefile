@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'bundler'
+
 # Dear package maintainers,
 #
 # I really don't care that some rando package I use is using another
