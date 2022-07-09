@@ -73,6 +73,8 @@ commands:
       - run_with_languages:
           label: Run quality
           command: |
+            type bundle # TODO
+            gem list | grep bundle  # TODO
             pwd  # TODO
             bundle exec bundle-audit update # TODO
             bundle exec pronto run -f github_pr -c origin/main --no-exit-code --unstaged  # TODO
