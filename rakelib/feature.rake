@@ -1,6 +1,10 @@
 # frozen_string_literal: true
 
-require 'rspec/core/rake_task'
+begin
+  require 'rspec/core/rake_task'
+rescue LoadError
+  true
+end
 
 desc 'Run features'
 RSpec::Core::RakeTask.new(:feature) do |task|
