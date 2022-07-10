@@ -76,6 +76,7 @@ commands:
             set -x
             ls vendor/bundle
             rbenv rehash
+            gem install bundler:2.3.17
             bundle check # TODO
             env  # TODO
             type bundle # TODO
