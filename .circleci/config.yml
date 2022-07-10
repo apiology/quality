@@ -74,6 +74,7 @@ commands:
           label: Run quality
           command: |
             set -x
+            ls vendor/bundle
             bundle check # TODO
             env  # TODO
             type bundle # TODO
