@@ -73,6 +73,7 @@ commands:
       - run_with_languages:
           label: Run quality
           command: |
+            set -x
             bundle check # TODO
             env  # TODO
             type bundle # TODO
