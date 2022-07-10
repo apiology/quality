@@ -14,9 +14,9 @@ ENV['PATH'] = [exec_dir, ENV['PATH']].join(File::PATH_SEPARATOR)
 #    capture_exec.rb
 def exec_io(*cmd)
   cmd = cmd.flatten
-  out_err, _exit_code = Open3.capture2e(*cmd)
+  all_out, _exit_code = Open3.capture2e(*cmd)
 
-  out_err
+  all_out
 end
 
 RSpec.configure do |config|

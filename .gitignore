@@ -62,4 +62,3 @@ requirements_dev.txt.installed
 /coverage/assets/
 /coverage/index.html
 /coverage/lcov/
-/pkg
