@@ -74,6 +74,7 @@ commands:
 
 jobs:
   overcommit:
+    working_directory: ~/quality
     docker:
       - image: apiology/circleci-ruby:latest
     steps:

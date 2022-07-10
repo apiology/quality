@@ -20,7 +20,6 @@ def exec_io(*cmd)
     'RUBYOPT' => '-W0',
   }
   all_out, _exit_code = Open3.capture2e(env, *cmd)
-
   all_out
 end
 
