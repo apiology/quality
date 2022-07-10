@@ -137,21 +137,18 @@ ensure_bundle() {
   # doing a 'bundle update' on a about-to-be-published gem after
   # bumping a gem version.
 
-  # Version 2.3.17 seems mysteriously required for running quality
-  # gem?
-  # https://app.circleci.com/pipelines/github/apiology/quality/92/workflows/72503594-f2ae-4f58-b850-f2ca1e649cfb/jobs/529
   need_better_bundler=false
   if [ "${bundler_version_major}" -lt 2 ]
   then
     need_better_bundler=true
   elif [ "${bundler_version_major}" -eq 2 ]
   then
-    if [ "${bundler_version_minor}" -lt 3 ]
+    if [ "${bundler_version_minor}" -lt 2 ]
     then
       need_better_bundler=true
-    elif [ "${bundler_version_minor}" -eq 3 ]
+    elif [ "${bundler_version_minor}" -eq 2 ]
     then
-      if [ "${bundler_version_patch}" -lt 17 ]
+      if [ "${bundler_version_patch}" -lt 22 ]
       then
         need_better_bundler=true
       fi
