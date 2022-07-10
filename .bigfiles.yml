@@ -1,4 +1,4 @@
 ---
 bigfiles:
   exclude:
-    glob: fix.sh
+    glob: '{fix.sh,Changelog.md,Gemfile.lock,Dockerfile}'
