@@ -91,7 +91,6 @@ jobs:
             equal: [<< pipeline.git.branch >>, "main"]
           steps:
             - run: echo "quality only runs on main branch"
-            - quality  # TODO
   build:
     working_directory: ~/quality
     docker:
