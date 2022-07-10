@@ -73,17 +73,7 @@ commands:
       - run_with_languages:
           label: Run quality
           command: |
-            set -x
-            ls vendor/bundle
-            rbenv rehash
-            gem install bundler:2.3.17
-            bundle check # TODO
-            env  # TODO
-            type bundle # TODO
-            gem list
-            pwd  # TODO
-            bundle exec bundle-audit update # TODO
-            bundle exec pronto run -f github_pr -c origin/main --no-exit-code --unstaged  # TODO
+            gem install bundler:2.3.17  # TODO DEbug
             bundle exec rake quality
 
 jobs:
