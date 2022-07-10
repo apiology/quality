@@ -136,7 +136,6 @@ ensure_bundle() {
   # update --conservative' flag works as expected - important when
   # doing a 'bundle update' on a about-to-be-published gem after
   # bumping a gem version.
-
   need_better_bundler=false
   if [ "${bundler_version_major}" -lt 2 ]
   then
