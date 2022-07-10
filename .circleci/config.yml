@@ -80,8 +80,6 @@ jobs:
     working_directory: ~/quality
     docker:
       - image: apiology/circleci-ruby:latest
-    environment:
-      BUNDLE_PATH: '/home/circleci/vendor/bundle' # TODO
     steps:
       - when:
           condition:
