@@ -73,7 +73,6 @@ commands:
       - run_with_languages:
           label: Run quality
           command: |
-            # gem install bundler:2.3.17  # TODO DEbug
             bundle exec rake quality
 
 jobs:
