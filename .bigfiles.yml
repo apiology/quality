@@ -1,4 +1,4 @@
 ---
 bigfiles:
   exclude:
-    glob: '{fix.sh,Changelog.md,Gemfile.lock,Dockerfile}'
+    glob: '{fix.sh,ChangeLog.md,Gemfile.lock,Dockerfile,etc/scalastyle_config.xml}'
