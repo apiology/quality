@@ -273,6 +273,7 @@ GEM
 
 PLATFORMS
   x86_64-darwin-20
+  x86_64-darwin-21
   x86_64-linux
 
 DEPENDENCIES
@@ -297,4 +298,4 @@ DEPENDENCIES
   undercover
 
 BUNDLED WITH
-   2.2.25
+   2.3.23

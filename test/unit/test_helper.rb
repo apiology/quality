@@ -13,6 +13,7 @@ SimpleCov.formatters = SimpleCov::Formatter::MultiFormatter.new(
 
 SimpleCov.start do
   add_filter 'vendor' # Don't include vendored stuff
+  track_files '{app,lib}/**/*.rb'
   enable_coverage(:branch) # Report branch coverage to trigger branch-level undercover warnings
 end
 SimpleCov.refuse_coverage_drop
