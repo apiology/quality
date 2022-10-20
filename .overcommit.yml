@@ -66,6 +66,9 @@ PrePush:
     enabled: true
     env:
       RAILS_ENV: test
+  Minitest:
+    command: ['ruby', '-Ilib:test/unit:lib/quality', '-rbundler/setup', '-rminitest', "-e 'exit! Minitest.run'"]
+    enabled: true
 
 #PostCheckout:
 #  ALL: # Special hook name that customizes all hooks of this type
