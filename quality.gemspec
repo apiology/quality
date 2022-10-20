@@ -18,7 +18,7 @@ Gem::Specification.new do |spec|
   spec.summary       = 'Code quality ratchet for Ruby'
   spec.homepage      = 'https://github.com/apiology/quality'
   spec.license       = 'MIT license'
-  spec.required_ruby_version = '>= 2.6'
+  spec.required_ruby_version = '>= 2.7'
   spec.files = Dir['CODE_OF_CONDUCT.md', 'LICENSE.txt', 'README.md',
                    '{lib}/quality.rb',
                    '{lib}/quality/**/*.rb',
@@ -88,4 +88,7 @@ Gem::Specification.new do |spec|
 
   # cane has an unadvertised dependency on json
   spec.add_runtime_dependency('json')
+  spec.metadata = {
+    'rubygems_mfa_required' => 'true',
+  }
 end
