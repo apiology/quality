@@ -37,9 +37,9 @@ commands:
           sed -E -e 's/quality \([[:digit:]]+.[[:digit:]]+.[[:digit:]]+\)/quality (0.1.0)/g' \
           Gemfile.lock > Gemfile.lock.deversioned
       - restore_cache:
-          key: gems-v1-{{ checksum "Gemfile.lock.deversioned" }}
+          key: gems-v2-{{ checksum "Gemfile.lock.deversioned" }}
       - restore_cache:
-          key: wheels-v1-{{ checksum "requirements_dev.txt" }}
+          key: wheels-v2-{{ checksum "requirements_dev.txt" }}
       - run:
           name: Initialize packages
           command: |
@@ -54,11 +54,11 @@ commands:
               exit 1
             fi
       - save_cache:
-          key: gems-v1-{{ checksum "Gemfile.lock.deversioned" }}
+          key: gems-v2-{{ checksum "Gemfile.lock.deversioned" }}
           paths:
             - "vendor/bundle"
       - save_cache:
-          key: wheels-v1-{{ checksum "requirements_dev.txt" }}
+          key: wheels-v2-{{ checksum "requirements_dev.txt" }}
           paths:
             - "/home/circleci/.cache/pip/wheels"
       - run:
@@ -104,13 +104,8 @@ jobs:
     steps:
       - set_up_environment
       - run_with_languages:
-          label: Test
-          command: |
-            bundle exec rake citest
-            # https://github.com/bluelabsio/records-mover/blob/master/Makefile#L25
-            git status --porcelain coverage/.last_run.json
-            git diff coverage/.last_run.json
-            test -z "$(git status --porcelain coverage/.last_run.json)"
+          label: test
+          command: make citest cicoverage
     # This seemed to shave 5ish% of the build time off when added
     resource_class: large
 

@@ -7,7 +7,7 @@ require 'quality'
 # already installed.
 root_dir = RSpec::Core::RubyProject.root
 exec_dir = File.join(File::SEPARATOR, root_dir, 'bin')
-ENV['PATH'] = [exec_dir, ENV['PATH']].join(File::PATH_SEPARATOR)
+ENV['PATH'] = [exec_dir, ENV.fetch('PATH')].join(File::PATH_SEPARATOR)
 
 # Courtesy of:
 # https://raw.github.com/cupakromer/tao-of-tdd/master/adder/spec/support/

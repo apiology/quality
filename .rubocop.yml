@@ -59,6 +59,13 @@ RSpec/MultipleExpectations:
   Exclude:
     - 'feature/**/*.rb'
 
+# Ensure we reference constants on classes in instance_double() so
+# that a renamed class is caught and doubles are always actually
+# verified.
+RSpec/VerifiedDoubleReference:
+  Enabled: true
+  EnforcedStyle: constant
+
 #
 # Add 'XX X' to the standard list
 #
@@ -103,7 +110,7 @@ Style/TrivialAccessors:
 
 AllCops:
   NewCops: enable
-  TargetRubyVersion: 2.6
+  TargetRubyVersion: 2.7
   Exclude:
     - 'bin/*'
     - 'vendor/**/*'

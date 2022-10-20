@@ -17,6 +17,15 @@
 # Uncomment the following lines to make the configuration take effect.
 
 PreCommit:
+  # Extend default config at https://github.com/sds/overcommit/blob/master/config/default.yml
+  BrokenSymlinks:
+    enabled: true
+    description: 'Check for broken symlinks'
+    quiet: true
+    exclude:
+      # This is a symlink to sibling checkout of vincelifedaily, used
+      # only in local development
+      - config/env.1p
   RuboCop:
     enabled: true
     on_warn: fail # Treat all warnings as failures
@@ -29,6 +38,10 @@ PreCommit:
       - '**/Gemfile'
       - '**/Rakefile'
       - 'bin/*'
+      - 'script/*'
+    exclude:
+      - db/migrate/*.rb
+      - db/schema.rb
   PythonFlake8:
     enabled: true
     on_warn: fail
@@ -37,6 +50,7 @@ PreCommit:
     on_warn: fail
     include:
       - '.envrc'
+      - '**/*.sh'
   YamlLint:
     enabled: true
     on_warn: fail
@@ -46,6 +60,12 @@ PreCommit:
     include:
       - '.circleci/config.yml'
     enabled: true
+
+PrePush:
+  RSpec:
+    enabled: true
+    env:
+      RAILS_ENV: test
 
 #PostCheckout:
 #  ALL: # Special hook name that customizes all hooks of this type

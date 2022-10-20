@@ -15,7 +15,7 @@ export PRINT_HELP_PYSCRIPT
 help:
 	@python -c "$$PRINT_HELP_PYSCRIPT" < $(MAKEFILE_LIST)
 
-default: localtest ## run default tests and quality
+default: clean-coverage test coverage quality ## run default typechecking, tests and quality
 
 requirements_dev.txt.installed: requirements_dev.txt
 	pip install -q --disable-pip-version-check -r requirements_dev.txt
@@ -41,6 +41,8 @@ clean: clear_metrics ## remove all built artifacts
 
 test: spec ## run tests quickly
 
+citest: test ## Run unit tests from CircleCI
+
 typecheck: ## validate types in code and configuration
 
 overcommit: ## run precommit quality checks
@@ -59,6 +61,26 @@ localtest: ## run default local actions
 
 repl:  ## Load up quality in pry
 	@bundle exec rake repl
+
+clean-coverage:
+	@bundle exec rake clear_metrics
+
+coverage: test report-coverage ## check code coverage
+	@bundle exec rake undercover
+
+report-coverage: test ## Report summary of coverage to stdout, and generate HTML, XML coverage report
+
+report-coverage-to-codecov: report-coverage ## use codecov.io for PR-scoped code coverage reports
+	@curl -Os https://uploader.codecov.io/latest/linux/codecov
+	@chmod +x codecov
+	@./codecov --file coverage/lcov/quality.lcov --nonZero
+
+# https://github.com/bluelabsio/records-mover/blob/master/Makefile#L25
+cicoverage: report-coverage-to-codecov ## check code coverage, then report to codecov
+	@echo "Looking for un-checked-in unit test coverage metrics..."
+	@git status --porcelain coverage/.last_run.json
+	@git diff coverage/.last_run.json
+	@test -z "$(git status --porcelain coverage/.last_run.json)"
 
 update_from_cookiecutter: ## Bring in changes from template project used to create this repo
 	bundle exec overcommit --uninstall

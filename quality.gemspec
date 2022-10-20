@@ -13,7 +13,7 @@ Gem::Specification.new do |spec|
   spec.summary       = "Code quality ratchet for Ruby"
   spec.homepage      = 'https://github.com/apiology/quality'
   spec.license       = 'MIT license'
-  spec.required_ruby_version = '>= 2.6'
+  spec.required_ruby_version = '>= 2.7'
 
   spec.files = Dir.chdir(File.expand_path(__dir__)) do
     `git ls-files -z`.split("\x0").reject do |f|
@@ -36,11 +36,15 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'pry'
   spec.add_development_dependency 'rake', '~> 13.0'
   spec.add_development_dependency 'rspec', '>=3.4'
-  spec.add_development_dependency 'rubocop'
+  spec.add_development_dependency 'rubocop', ['~> 1.36']
   spec.add_development_dependency 'rubocop-rake'
-  spec.add_development_dependency 'rubocop-rspec'
+  # ensure version with RSpec/VerifiedDoubleReference
+  spec.add_development_dependency 'rubocop-rspec', ['>=0.18.0']
   # ensure version with branch coverage
   spec.add_development_dependency 'simplecov', ['>=0.18.0']
   spec.add_development_dependency 'simplecov-lcov'
   spec.add_development_dependency 'undercover'
+  spec.metadata = {
+    'rubygems_mfa_required' => 'true',
+  }
 end
