@@ -44,10 +44,11 @@ module Quality
     end
 
     def preprocess_line_for_emacs
-      if @current_line =~ /^ *(\S*.rb:[0-9]*) *(.*)/
-        Regexp.last_match[1] + ': ' + Regexp.last_match[2] + "\n"
-      elsif @current_line =~ /^ *(.*) +(\S*.rb:[0-9]*) *(.*)/
-        Regexp.last_match[2] + ': ' + Regexp.last_match[1] + "\n"
+      case @current_line
+      when /^ *(\S*.rb:[0-9]*) *(.*)/
+        "#{Regexp.last_match[1]}: #{Regexp.last_match[2]}\n"
+      when /^ *(.*) +(\S*.rb:[0-9]*) *(.*)/
+        "#{Regexp.last_match[2]}: #{Regexp.last_match[1]}\n"
       else
         @current_line
       end
