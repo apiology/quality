@@ -9,7 +9,7 @@ task :pronto do
     ENV['PRONTO_PULL_REQUEST_ID'] = ENV['CIRCLE_PULL_REQUEST'].split('/').last
   end
   sh "bundle exec " \
-     "pronto run #{formatter} -c origin/main --no-exit-code --unstaged "\
+     "pronto run #{formatter} -c origin/main --no-exit-code --unstaged " \
      "|| true"
   sh "bundle exec " \
      "pronto run #{formatter} -c origin/main --no-exit-code --staged || true"

@@ -67,7 +67,7 @@ Gem::Specification.new do |spec|
   #
   # https://github.com/bbatsov/rubocop#installation
   spec.add_runtime_dependency('mdl')
-  spec.add_runtime_dependency('rubocop', '~> 1.22.0')
+  spec.add_runtime_dependency('rubocop', '~> 1.39.0')
   # 0.2.0 had a fatal bug
   # 0.3.0 introduces config files
   spec.add_runtime_dependency('bigfiles', ['>= 0.3.0', '!= 0.2.0'])
