@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    quality (40.0.0)
+    quality (40.0.1)
       activesupport
       bigfiles (>= 0.3.0, != 0.2.0)
       brakeman

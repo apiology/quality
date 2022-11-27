@@ -5,6 +5,6 @@
 # any worse over time.
 # :nocov:
 module Quality
-  VERSION = '40.0.0'
+  VERSION = '40.0.1'
 end
 # :nocov:
