@@ -59,11 +59,7 @@ for tag in ${quality_gem_version:?} \
            shellcheck-${quality_gem_version:?} \
            shellcheck-${quality_gem_minor_version:?} \
            shellcheck-${quality_gem_major_version:?} \
-           shellcheck-latest \
-           jumbo-${quality_gem_version:?} \
-           jumbo-${quality_gem_minor_version:?} \
-           jumbo-${quality_gem_major_version:?} \
-           jumbo-latest
+           shellcheck-latest
 do
   docker push "apiology/quality:${tag:?}"
 done
