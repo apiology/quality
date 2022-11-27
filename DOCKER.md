@@ -24,7 +24,6 @@ Supported images:
 * `python-<version>`: Plus support for Python tools (198MB)
 * `shellcheck-<version>`: Plus support for running shellcheck against
   shell scripts (207MB)
-* `jumbo-<version>`: Plus support for scalastyle. (574MB)
 
 To run an individual tool, you can run like this:
 

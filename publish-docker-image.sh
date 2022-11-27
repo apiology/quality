@@ -37,17 +37,6 @@ docker build \
        --pull \
        .
 
-docker build \
-       -t "apiology/quality:jumbo-${quality_gem_version:?}" \
-       -t "apiology/quality:jumbo-${quality_gem_minor_version:?}" \
-       -t "apiology/quality:jumbo-${quality_gem_major_version:?}" \
-       -t apiology/quality:jumbo-latest \
-       --build-arg quality_gem_version="${quality_gem_version:?}" \
-       --target jumbo \
-       --progress plain \
-       --pull \
-       .
-
 for tag in ${quality_gem_version:?} \
            ${quality_gem_minor_version:?} \
            ${quality_gem_major_version:?} \
