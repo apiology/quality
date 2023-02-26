@@ -153,7 +153,7 @@ GEM
     octokit (4.25.1)
       faraday (>= 1, < 3)
       sawyer (~> 0.9)
-    overcommit (0.59.1)
+    overcommit (0.60.0)
       childprocess (>= 0.6.3, < 5)
       iniparse (~> 1.4)
       rexml (~> 3.2)
@@ -281,7 +281,9 @@ GEM
 PLATFORMS
   x86_64-darwin-20
   x86_64-darwin-21
+  x86_64-darwin-22
   x86_64-linux
+  x86_64-linux-musl
 
 DEPENDENCIES
   bump
@@ -291,7 +293,7 @@ DEPENDENCIES
   mdl
   minitest (~> 5)
   mocha
-  overcommit (>= 0.58.0)
+  overcommit (>= 0.60.0, < 0.61.0)
   pronto (>= 0.11)
   pronto-bigfiles
   pronto-punchlist
@@ -306,4 +308,4 @@ DEPENDENCIES
   webmock
 
 BUNDLED WITH
-   2.3.23
+   2.3.26
