@@ -37,7 +37,7 @@ Gem::Specification.new do |spec|
   # 0.58.0 and 0.57.0 don't seem super compatible with signatures, and
   # magit doesn't seem to want to use the bundled version at the moment,
   # so let's favor the more recent version...
-  spec.add_development_dependency 'overcommit', ['>=0.58.0']
+  spec.add_development_dependency 'overcommit', ['>=0.60.0', '<0.61.0']
   spec.add_development_dependency('pronto', '>=0.11')
   spec.add_development_dependency('pronto-bigfiles')
   # spec.add_development_dependency('pronto-flake8') # does not yet support pronto 0.11
@@ -50,6 +50,7 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'simplecov', ['>=0.18.0']
   spec.add_development_dependency 'simplecov-lcov'
   spec.add_development_dependency 'undercover'
+  spec.add_development_dependency 'webmock'
 
   spec.add_runtime_dependency('activesupport')
   spec.add_runtime_dependency('bundler-audit')
