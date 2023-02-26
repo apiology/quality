@@ -28,6 +28,7 @@ Gem::Specification.new do |spec|
 
   spec.add_development_dependency 'bump'
   spec.add_development_dependency 'bundler'
+  spec.add_development_dependency 'fakeweb'
   spec.add_development_dependency 'mdl'
   # 0.58.0 and 0.57.0 don't seem super compatible with signatures, and
   # magit doesn't seem to want to use the bundled version at the moment,
@@ -36,14 +37,17 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'pry'
   spec.add_development_dependency 'rake', '~> 13.0'
   spec.add_development_dependency 'rspec', '>=3.4'
-  spec.add_development_dependency 'rubocop', ['~> 1.36']
+  # I haven't adapted things to Gemspec/DevelopmentDependencies yet,
+  # which arrives in 1.44
+  spec.add_development_dependency 'rubocop', ['~> 1.36', '<1.44']
   spec.add_development_dependency 'rubocop-rake'
   # ensure version with RSpec/VerifiedDoubleReference
-  spec.add_development_dependency 'rubocop-rspec', ['>=0.18.0']
+  spec.add_development_dependency 'rubocop-rspec', ['>=2.10.0']
   # ensure version with branch coverage
   spec.add_development_dependency 'simplecov', ['>=0.18.0']
   spec.add_development_dependency 'simplecov-lcov'
   spec.add_development_dependency 'undercover'
+  spec.add_development_dependency 'webmock'
   spec.metadata = {
     'rubygems_mfa_required' => 'true',
   }

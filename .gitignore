@@ -57,8 +57,4 @@ requirements_dev.txt.installed
 /pkg/
 /spec/reports/
 /tmp/
-/coverage/.resultset.json
-/coverage/.resultset.json.lock
-/coverage/assets/
-/coverage/index.html
-/coverage/lcov/
+/coverage/

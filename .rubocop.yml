@@ -59,6 +59,18 @@ RSpec/MultipleExpectations:
   Exclude:
     - 'feature/**/*.rb'
 
+# Bump this up a bit for now.  I find useful, readable specs at level
+# 4, for now at least.
+#
+# The logic here makes sense to me:
+# https://github.com/datarockets/ruby-style/issues/36
+RSpec/NestedGroups:
+  Max: 4
+
+# Likewise
+RSpec/MultipleMemoizedHelpers:
+  Max: 8
+
 # Ensure we reference constants on classes in instance_double() so
 # that a renamed class is caught and doubles are always actually
 # verified.
