@@ -17,7 +17,8 @@ SimpleCov.start do
   track_files '{app,lib}/**/*.rb'
   enable_coverage(:branch) # Report branch coverage to trigger branch-level undercover warnings
 end
-# SimpleCov.refuse_coverage_drop # currently most coverage comes from test/, not spec/
+
+require 'webmock/rspec'
 
 RSpec.configure do |config|
   config.order = 'random'

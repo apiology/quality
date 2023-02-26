@@ -50,6 +50,7 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'simplecov', ['>=0.18.0']
   spec.add_development_dependency 'simplecov-lcov'
   spec.add_development_dependency 'undercover'
+  spec.add_development_dependency 'webmock'
 
   spec.add_runtime_dependency('activesupport')
   spec.add_runtime_dependency('bundler-audit')
